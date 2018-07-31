@@ -10,13 +10,21 @@ class WP_CPT {
 
 	}
 
+	public static function add( $args = array() ) {
+
+		$CPT = new WP_CPT( $args );
+
+		$CPT->init();
+
+	}
+
 	public function init() {
 
 		add_action( 'init', array( $this, 'register' ), 10 );
 
 	}
 
-	public function register() {
+	private function register() {
 
 	}
 

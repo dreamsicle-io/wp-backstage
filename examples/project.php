@@ -22,7 +22,6 @@ function wpcpt_init() {
 		'singular_base' => 'project', 
 		'archive_base'  => 'projects', 
 		'rest_base'     => 'projects', 
-		'hierarchical'  => true, 
 	) );
 
 }

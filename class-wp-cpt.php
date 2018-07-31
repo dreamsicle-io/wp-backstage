@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * WP CPT
+ * 
+ * @version  0.0.1
+ */
 class WP_CPT {
 
 	/**
@@ -66,7 +70,10 @@ class WP_CPT {
 	/**
 	 * Add
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @param   string  $slug 
+	 * @param   array   $args 
+	 * @return  void 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
@@ -93,7 +100,10 @@ class WP_CPT {
 	/**
 	 * Construct
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @param   string  $slug 
+	 * @param   array   $args 
+	 * @return  void 
 	 */
 	function __construct( $slug = '', $args = array() ) {
 
@@ -108,7 +118,8 @@ class WP_CPT {
 	/**
 	 * Init
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @return  void 
 	 */
 	public function init() {
 
@@ -119,7 +130,8 @@ class WP_CPT {
 	/**
 	 * Set Errors
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @return  void 
 	 */
 	public function set_errors() {
 
@@ -195,7 +207,9 @@ class WP_CPT {
 	/**
 	 * Get Label
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @param   string  $template 
+	 * @return  void 
 	 */
 	public function get_label( $template = '' ) {
 
@@ -212,7 +226,8 @@ class WP_CPT {
 	/**
 	 * Register
 	 * 
-	 * @since 0.0.1
+	 * @since   0.0.1
+	 * @return  void 
 	 */
 	public function register() {
 

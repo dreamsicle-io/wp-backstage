@@ -1,34 +1,31 @@
 <?php
 
 /**
- * Require the class
- */
-require get_stylesheet_directory() . '/includes/wp-cpt-factory/class-wp-cpt.php';
-
-/**
  * WPCPT Init
  *
  * Initialize all custom post types in this
  * function, which is then called by the 
  * `after_setup_theme` hook. 
  */
-function wpcpt_init() {
+function wpcpt_init_projects() {
 
 	WP_CPT::add( 'project', array(
-		'menu_name'     => __( 'Portfolio', 'wpcpt' ), 
-		'singular_name' => __( 'Project', 'wpcpt' ), 
-		'plural_name'   => __( 'Projects', 'wpcpt' ), 
-		'description'   => __( 'A portfolio of projects.', 'wpcpt' ), 
-		'singular_base' => 'project', 
-		'archive_base'  => 'projects', 
-		'rest_base'     => 'projects', 
-		'meta_boxes'    => array(
+		'menu_name'      => __( 'Portfolio', 'wpcpt' ), 
+		'singular_name'  => __( 'Project', 'wpcpt' ), 
+		'plural_name'    => __( 'Projects', 'wpcpt' ), 
+		'description'    => __( 'A portfolio of projects.', 'wpcpt' ), 
+		'singular_base'  => 'project', 
+		'archive_base'   => 'projects', 
+		'rest_base'      => 'projects', 
+		'group_meta_key' => 'wpcpt_project_meta',
+		'meta_boxes'     => array(
 			array(
-				'id'        => 'wpcpt_project_details', 
-				'title'     => __( 'Project Details', 'wpcpt' ), 
-				'context'   => 'normal', 
-				'priority'  => 'high', 
-				'fields'    => array(
+				'id'          => 'wpcpt_project_details', 
+				'title'       => __( 'Project Details', 'wpcpt' ), 
+				'description' => __( 'These extra meta fields control further details about the portfolio project. <a href="#">Example Link</a>', 'wpcpt' ), 
+				'context'     => 'normal', 
+				'priority'    => 'high', 
+				'fields'      => array(
 					array( 
 						'type'        => 'text', 
 						'name'        => 'wpcpt_text_field', 
@@ -62,4 +59,4 @@ function wpcpt_init() {
 
 }
 
-add_action( 'after_setup_theme', 'wpcpt_init', 10 );
+add_action( 'after_setup_theme', 'wpcpt_init_projects', 10 );

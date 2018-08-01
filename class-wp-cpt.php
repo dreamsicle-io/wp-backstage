@@ -21,46 +21,6 @@ class WP_CPT {
 	public $args = array();
 
 	/**
-	 * Arg Types
-	 * 
-	 * @since 0.0.1
-	 */
-	public $arg_types = array(
-		'menu_name'       => 'string', 
-		'singular_name'   => 'string', 
-		'plural_name'     => 'string', 
-		'thumbnail_label' => 'string', 
-		'description'     => 'string', 
-		'public'          => 'boolean', 
-		'hierarchical'    => 'boolean', 
-		'with_front'      => 'boolean', 
-		'rest_base'       => 'string', 
-		'menu_icon'       => 'string', 
-		'capability_type' => array( 'post', 'page' ), 
-		'taxonomies'      => array(), 
-	);
-
-	/**
-	 * Default Args
-	 * 
-	 * @since 0.0.1
-	 */
-	public $default_args = array(
-		'menu_name'       => '', 
-		'singular_name'   => '', 
-		'plural_name'     => '', 
-		'thumbnail_label' => '', 
-		'description'     => '', 
-		'public'          => true, 
-		'hierarchical'    => false, 
-		'with_front'      => false, 
-		'rest_base'       => '', 
-		'menu_icon'       => 'dashicons-admin-post', 
-		'capability_type' => 'post', 
-		'taxonomies'      => array(), 
-	);
-
-	/**
 	 * Errors
 	 * 
 	 * @since 0.0.1
@@ -82,11 +42,9 @@ class WP_CPT {
 		if ( ! empty( $CPT->errors ) ) {
 
 			foreach ( $CPT->errors as $error ) {
-
 				if ( is_wp_error( $error ) ) {
 					echo $error;
 				}
-
 			}
 
 			return;
@@ -109,7 +67,21 @@ class WP_CPT {
 
 		$this->slug = sanitize_title_with_dashes( $slug );
 		
-		$this->args = wp_parse_args( $args, $this->default_args );
+		$this->args = wp_parse_args( $args, array(
+			'menu_name'       => '', 
+			'singular_name'   => '', 
+			'plural_name'     => '', 
+			'thumbnail_label' => '', 
+			'description'     => '', 
+			'public'          => true, 
+			'hierarchical'    => false, 
+			'with_front'      => false, 
+			'rest_base'       => '', 
+			'menu_icon'       => 'dashicons-admin-post', 
+			'capability_type' => 'post', 
+			'taxonomies'      => array(), 
+			'meta_boxes'      => array(), 
+		) );
 
 		$this->set_errors();
 
@@ -124,6 +96,7 @@ class WP_CPT {
 	public function init() {
 
 		add_action( 'init', array( $this, 'register' ), 10 );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 
 	}
 
@@ -136,70 +109,7 @@ class WP_CPT {
 	public function set_errors() {
 
 		if ( empty( $this->slug ) ) {
-
 			$this->errors[] = new WP_Error( 'slug', esc_html__( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
-		
-		}
-
-		foreach ( $this->args as $key => $value ) {
-			
-			if ( ! empty( $this->arg_types[$key] ) ) {
-				
-				$arg_type = $this->arg_types[$key];
-				
-				if ( is_array( $arg_type ) ) {
-					
-					if ( ! in_array( $value, $arg_type ) ) {
-						
-						$this->errors[] = new WP_Error( 'arg', sprintf(
-							esc_html__( 'The value "%1$s" for key "%2$s" is not one of [%3$s].', 'WP_CPT' ), 
-							$value, 
-							$key, 
-							implode( ', ', $arg_type )
-						) );
-
-					}
-
-				} else {
-
-					$has_error = false;
-
-					switch ( $arg_type ) {
-						case 'string':
-							$has_error = ! is_string( $value );
-							break;
-						case 'boolean':
-							$has_error = ! is_bool( $value );
-							break;
-						case 'integer':
-							$has_error = ! is_int( $value );
-							break;
-						case 'float':
-							$has_error = ( ! is_float( $value ) && ! is_int( $value ) );
-							break;
-						case 'object':
-							$has_error = ! is_object( $value );
-							break;
-						case 'array':
-							$has_error = ! is_array( $value );
-							break;
-					}
-
-					if ( $has_error ) {
-
-						$this->errors[] = new WP_Error( 'arg', sprintf(
-							esc_html__( 'The value "%1$s" for key "%2$s" is not of type "%3$s".', 'WP_CPT' ), 
-							$value, 
-							$key, 
-							$arg_type
-						) );
-
-					}
-
-				}
-
-			}
-
 		}
 
 	}
@@ -209,7 +119,7 @@ class WP_CPT {
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $template 
-	 * @return  void 
+	 * @return  string 
 	 */
 	public function get_label( $template = '' ) {
 
@@ -307,5 +217,132 @@ class WP_CPT {
 		register_post_type( $this->slug, $args );
 
 	}
+
+	/**
+	 * Add Meta Boxes
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function add_meta_boxes() {
+
+		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
+
+			foreach ( $this->args['meta_boxes'] as $meta_box ) {
+
+				$meta_box = wp_parse_args( $meta_box, array( 
+					'id'       => '', 
+					'title'    => '', 
+					'context'  => '', 
+					'priority' => '', 
+					'fields'   => array(), 
+				) );
+
+				add_meta_box( 
+					$meta_box['id'], 
+					$meta_box['title'], 
+					array( $this, 'render_meta_box' ), 
+					$this->slug, 
+					$meta_box['context'], 
+					$meta_box['priority'], 
+					array( 
+						'fields' => $meta_box['fields'],  
+					)
+				);
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Render Meta Box
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_meta_box( $post = null, $meta_box = array() ) {
+
+		$meta_box = wp_parse_args( $meta_box, array(
+			'id'       => '', 
+			'title'    => '', 
+			'args'     => array(
+				'fields' => array(), 
+			), 
+		) );
+
+		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
+			foreach ( $meta_box['args']['fields'] as $field ) {
+				$this->render_input( $field, $post );
+			}
+		}
+
+	}
+
+	/**
+	 * Render Input
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_input( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, array(
+			'type'        => 'text', 
+			'name'        => '', 
+			'label'       => '', 
+			'description' => '', 
+			'input_attrs' => array(),
+		) );
+
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true );
+		$formatted_attrs = array();
+
+		if ( is_array( $field['input_attrs'] ) && ! empty( $field['input_attrs'] ) ) {
+			foreach ( $field['input_attrs'] as $attr_key => $attr_value ) {
+				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $attr_key ), esc_attr( $attr_value ) );
+			}
+		} ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo esc_html( $field['label'] ); 
+				
+				?></label>
+
+				<br/>
+
+				<input 
+				class="widefat"
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php echo implode( ' ', $formatted_attrs ); ?>>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo esc_html( $field['description'] ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
 
 }

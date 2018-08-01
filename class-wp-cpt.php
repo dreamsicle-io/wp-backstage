@@ -28,6 +28,38 @@ class WP_CPT {
 	public $errors = array();
 
 	/**
+	 * KSES for P Tags
+	 *
+	 * @since 0.0.1
+	 */
+	public $kses_p = array(
+		'a' => array(
+			'class'  => array(), 
+			'id'     => array(), 
+			'style'  => array(), 
+			'href'   => array(),
+			'title'  => array(), 
+			'target' => array(), 
+			'rel'    => array(), 
+		),
+		'br' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'em' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'strong' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+	);
+
+	/**
 	 * Add
 	 * 
 	 * @since   0.0.1
@@ -109,7 +141,7 @@ class WP_CPT {
 	public function set_errors() {
 
 		if ( empty( $this->slug ) ) {
-			$this->errors[] = new WP_Error( 'slug', esc_html__( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
+			$this->errors[] = new WP_Error( 'slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
 		}
 
 	}
@@ -273,9 +305,20 @@ class WP_CPT {
 		) );
 
 		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
+			
 			foreach ( $meta_box['args']['fields'] as $field ) {
-				$this->render_input( $field, $post );
+
+				if ( $field['type'] === 'textarea' ) {
+
+					$this->render_textarea( $field, $post );
+
+				} else {
+
+					$this->render_input( $field, $post );
+
+				}
 			}
+
 		}
 
 	}
@@ -312,7 +355,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] ); 
+					echo wp_kses( $field['label'], $this->kses_p ); 
 				
 				?></label>
 
@@ -335,7 +378,81 @@ class WP_CPT {
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
 				class="description"><?php 
 
-					echo esc_html( $field['description'] ); 
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	public static function format_attrs( $attrs = array() ) {
+
+		$formatted_attrs = array();
+
+		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
+			foreach ( $attrs as $key => $value ) {
+				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $key ), esc_attr( $value ) );
+			}
+		}
+
+		return implode( ' ', $formatted_attrs );
+	}
+
+	/**
+	 * Render Input
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_textarea( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, array(
+			'name'        => '', 
+			'label'       => '', 
+			'description' => '', 
+			'input_attrs' => array(),
+		) );
+
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></label>
+
+				<br/>
+
+				<textarea 
+				class="widefat"
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php echo $this::format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					echo esc_textarea( $value );
+
+				?></textarea>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
 				
 				?></p>
 

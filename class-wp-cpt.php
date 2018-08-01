@@ -565,6 +565,10 @@ class WP_CPT {
 			case 'text':
 				$value = sanitize_text_field( $value );
 				break;
+			
+			case 'textarea':
+				$value = sanitize_textarea_field( $value );
+				break;
 
 			case 'number':
 				$value = floatval( $value );

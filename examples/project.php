@@ -46,6 +46,15 @@ function wpcpt_init() {
 							'step'        => 1,
 						), 
 					),
+					array( 
+						'type'        => 'textarea', 
+						'name'        => 'wpcpt_textarea_field', 
+						'label'       => __( 'Textarea field', 'wpcpt' ), 
+						'description' => __( 'Please enter no more than 240 characters.', 'wpcpt' ), 
+						'input_attrs' => array(
+							'maxlength' => 240, 
+						), 
+					),
 				), 
 			),
 		), 

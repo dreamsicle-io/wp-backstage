@@ -120,22 +120,6 @@ class WP_CPT {
 
 		$CPT = new WP_CPT( $slug, $args );
 
-		if ( ! empty( $CPT->errors ) ) {
-
-			foreach ( $CPT->errors as $error ) {
-				
-				if ( is_wp_error( $error ) ) {
-				
-					echo $error;
-				
-				}
-			
-			}
-
-			return;
-
-		}
-
 		$CPT->init();
 
 	}
@@ -157,12 +141,56 @@ class WP_CPT {
 	}
 
 	/**
+	 * Has Errors
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  Whether the instance has errors or not. 
+	 */
+	public function has_errors() {
+
+		return is_array( $this->errors ) && ! empty( $this->errors );
+
+	}
+
+	/**
+	 * Print Errors
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function print_errors() {
+
+		if ( $this->has_errors() ) {
+
+			foreach ( $this->errors as $error ) {
+				
+				if ( is_wp_error( $error ) ) {
+				
+					printf( esc_html__( 'Error: %1$s' ), $error->get_error_message() );
+				
+				}
+			
+			}
+
+		}
+
+	}
+
+	/**
 	 * Init
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
 	 */
 	public function init() {
+
+		if ( $this->has_errors() ) {
+			
+			$this->print_errors();
+			
+			return;
+
+		}
 
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );

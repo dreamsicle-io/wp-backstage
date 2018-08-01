@@ -22,6 +22,33 @@ function wpcpt_init() {
 		'singular_base' => 'project', 
 		'archive_base'  => 'projects', 
 		'rest_base'     => 'projects', 
+		'meta_boxes'    => array(
+			array(
+				'id'        => 'wpcpt_project_details', 
+				'title'     => __( 'Project Details', 'wpcpt' ), 
+				'context'   => 'normal', 
+				'priority'  => 'high', 
+				'fields'    => array(
+					array( 
+						'type'        => 'text', 
+						'name'        => 'wpcpt_text_field', 
+						'label'       => __( 'Text field', 'wpcpt' ), 
+						'description' => __( 'Please enter some text.', 'wpcpt' ), 
+					),
+					array( 
+						'type'        => 'number', 
+						'name'        => 'wpcpt_number_field', 
+						'label'       => __( 'Number field', 'wpcpt' ), 
+						'description' => __( 'Please enter a number from 0-100.', 'wpcpt' ), 
+						'input_attrs' => array(
+							'min'         => 0,
+							'max'         => 100,
+							'step'        => 1,
+						), 
+					),
+				), 
+			),
+		), 
 	) );
 
 }

@@ -28,6 +28,55 @@ class WP_CPT {
 	public $errors = array();
 
 	/**
+	 * Default Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_args = array(
+		'menu_name'       => '', 
+		'singular_name'   => '', 
+		'plural_name'     => '', 
+		'thumbnail_label' => '', 
+		'description'     => '', 
+		'public'          => true, 
+		'hierarchical'    => false, 
+		'with_front'      => false, 
+		'rest_base'       => '', 
+		'menu_icon'       => 'dashicons-admin-post', 
+		'capability_type' => 'post', 
+		'taxonomies'      => array(), 
+		'meta_boxes'      => array(), 
+	);
+
+	/**
+	 * Default Meta Box Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_meta_box_args = array( 
+		'id'          => '', 
+		'title'       => '', 
+		'description' => '', 
+		'context'     => '', 
+		'priority'    => '', 
+		'fields'      => array(), 
+	);
+
+	/**
+	 * Default Field Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_field_args = array(
+		'type'        => 'text', 
+		'name'        => '', 
+		'label'       => '', 
+		'title'       => '', 
+		'description' => '', 
+		'input_attrs' => array(),
+	);
+
+	/**
 	 * KSES for P Tags
 	 *
 	 * @since 0.0.1
@@ -74,9 +123,13 @@ class WP_CPT {
 		if ( ! empty( $CPT->errors ) ) {
 
 			foreach ( $CPT->errors as $error ) {
+				
 				if ( is_wp_error( $error ) ) {
+				
 					echo $error;
+				
 				}
+			
 			}
 
 			return;
@@ -98,23 +151,7 @@ class WP_CPT {
 	function __construct( $slug = '', $args = array() ) {
 
 		$this->slug = sanitize_title_with_dashes( $slug );
-		
-		$this->args = wp_parse_args( $args, array(
-			'menu_name'       => '', 
-			'singular_name'   => '', 
-			'plural_name'     => '', 
-			'thumbnail_label' => '', 
-			'description'     => '', 
-			'public'          => true, 
-			'hierarchical'    => false, 
-			'with_front'      => false, 
-			'rest_base'       => '', 
-			'menu_icon'       => 'dashicons-admin-post', 
-			'capability_type' => 'post', 
-			'taxonomies'      => array(), 
-			'meta_boxes'      => array(), 
-		) );
-
+		$this->args = wp_parse_args( $args, $this->default_args );
 		$this->set_errors();
 
 	}
@@ -129,6 +166,7 @@ class WP_CPT {
 
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
+		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10 );
 
 	}
 
@@ -141,7 +179,9 @@ class WP_CPT {
 	public function set_errors() {
 
 		if ( empty( $this->slug ) ) {
+			
 			$this->errors[] = new WP_Error( 'slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
+		
 		}
 
 	}
@@ -204,10 +244,10 @@ class WP_CPT {
 		);
 
 		$rewrite = array(
-			'slug'       => $this->slug,
+			'slug'       => ! empty( $this->args['singular_base'] ) ? $this->args['singular_base'] : $this->slug,
 			'with_front' => $this->args['with_front'],
-			'pages'      => $this->args['public'],
-			'feeds'      => $this->args['public'],
+			'pages'      => true,
+			'feeds'      => true,
 		);
 
 		$support = array( 
@@ -240,7 +280,7 @@ class WP_CPT {
 			'has_archive'         => ( $this->args['public'] && ! empty( $this->args['archive_base'] ) ) ? $this->args['archive_base'] : false,
 			'exclude_from_search' => ! $this->args['public'],
 			'publicly_queryable'  => $this->args['public'],
-			'rewrite'             => $rewrite,
+			'rewrite'             => $this->args['public'] ? $rewrite : false,
 			'capability_type'     => $this->args['capability_type'],
 			'show_in_rest'        => ( $this->args['public'] && ! empty( $this->args['rest_base'] ) ),
 			'rest_base'           => $this->args['rest_base'],
@@ -262,13 +302,7 @@ class WP_CPT {
 
 			foreach ( $this->args['meta_boxes'] as $meta_box ) {
 
-				$meta_box = wp_parse_args( $meta_box, array( 
-					'id'       => '', 
-					'title'    => '', 
-					'context'  => '', 
-					'priority' => '', 
-					'fields'   => array(), 
-				) );
+				$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
 
 				add_meta_box( 
 					$meta_box['id'], 
@@ -278,7 +312,8 @@ class WP_CPT {
 					$meta_box['context'], 
 					$meta_box['priority'], 
 					array( 
-						'fields' => $meta_box['fields'],  
+						'description' => $meta_box['description'], 
+						'fields'      => $meta_box['fields'], 
 					)
 				);
 
@@ -297,10 +332,11 @@ class WP_CPT {
 	public function render_meta_box( $post = null, $meta_box = array() ) {
 
 		$meta_box = wp_parse_args( $meta_box, array(
-			'id'       => '', 
-			'title'    => '', 
-			'args'     => array(
-				'fields' => array(), 
+			'id'    => '', 
+			'title' => '', 
+			'args'  => array(
+				'descripton' => '',
+				'fields'     => array(), 
 			), 
 		) );
 
@@ -317,10 +353,40 @@ class WP_CPT {
 					$this->render_input( $field, $post );
 
 				}
+
 			}
 
 		}
 
+		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
+
+			<p><?php 
+
+				echo wp_kses( $meta_box['args']['description'], $this->kses_p );
+
+			?></p>
+
+		<?php }
+
+	}
+
+	/**
+	 * Format Attrs
+	 * 
+	 * @since   0.0.1
+	 * @return  string  The imploded, escaped, formatted attributes.
+	 */
+	public static function format_attrs( $attrs = array() ) {
+
+		$formatted_attrs = array();
+
+		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
+			foreach ( $attrs as $key => $value ) {
+				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $key ), esc_attr( $value ) );
+			}
+		}
+
+		return implode( ' ', $formatted_attrs );
 	}
 
 	/**
@@ -331,23 +397,9 @@ class WP_CPT {
 	 */
 	public function render_input( $field = array(), $post = null ) {
 
-		$field = wp_parse_args( $field, array(
-			'type'        => 'text', 
-			'name'        => '', 
-			'label'       => '', 
-			'description' => '', 
-			'input_attrs' => array(),
-		) );
-
+		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true );
-		$formatted_attrs = array();
-
-		if ( is_array( $field['input_attrs'] ) && ! empty( $field['input_attrs'] ) ) {
-			foreach ( $field['input_attrs'] as $attr_key => $attr_value ) {
-				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $attr_key ), esc_attr( $attr_value ) );
-			}
-		} ?>
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
 
 		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
@@ -368,7 +420,7 @@ class WP_CPT {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="<?php echo esc_attr( $value ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php echo implode( ' ', $formatted_attrs ); ?>>
+				<?php echo $this::format_attrs( $field['input_attrs'] ); ?>>
 			
 			</p>
 
@@ -388,19 +440,6 @@ class WP_CPT {
 
 	<?php }
 
-	public static function format_attrs( $attrs = array() ) {
-
-		$formatted_attrs = array();
-
-		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
-			foreach ( $attrs as $key => $value ) {
-				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $key ), esc_attr( $value ) );
-			}
-		}
-
-		return implode( ' ', $formatted_attrs );
-	}
-
 	/**
 	 * Render Input
 	 * 
@@ -409,13 +448,7 @@ class WP_CPT {
 	 */
 	public function render_textarea( $field = array(), $post = null ) {
 
-		$field = wp_parse_args( $field, array(
-			'name'        => '', 
-			'label'       => '', 
-			'description' => '', 
-			'input_attrs' => array(),
-		) );
-
+		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
 		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
 
@@ -461,5 +494,114 @@ class WP_CPT {
 		</div>
 
 	<?php }
+
+	/**
+	 * Get Fields
+	 * 
+	 * @since   0.0.1
+	 * @return  array  
+	 */
+	public function get_fields() {
+
+		$fields = array();
+
+		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
+			
+			foreach ( $this->args['meta_boxes'] as $meta_box ) {
+			
+				if ( is_array( $meta_box ) && isset( $meta_box['fields'] ) && ! empty( $meta_box['fields'] ) ) {
+			
+					$fields = array_merge( $fields, $meta_box['fields'] );
+			
+				}
+			
+			}
+		
+		}
+
+		return $fields;
+
+	}
+
+	/**
+	 * Sanitize Field
+	 * 
+	 * @since   0.0.1
+	 * @return  mixed  The sanitized value according to the field type. 
+	 */
+	public function sanitize_field( $field = array(), $value = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+
+		switch ( $field['type'] ) {
+			case 'text':
+				$value = sanitize_text_field( $value );
+				break;
+
+			case 'number':
+				$value = floatval( $value );
+				break;
+
+			case 'url':
+				$value = esc_url( $value );
+				break;
+			
+			case 'email':
+				$value = sanitize_email( $value );
+				break;
+			
+			default:
+				$value = esc_attr( $value );
+				break;
+		}
+
+		return $value;
+
+	}
+
+	/**
+	 * Save
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function save( $post_id = 0, $post = null, $update = false ) {
+
+		if ( ! $post_id > 0 ) { return; }
+		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+		if ( ! $_POST || empty( $_POST ) ) { return; }
+		if ( $_POST['post_type'] !== $this->slug ) { return; }
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			$values = array();
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				if ( isset( $_POST[$field['name']] ) ) {
+
+					$value = $this::sanitize_field( $field, $_POST[$field['name']] );
+
+					update_post_meta( $post_id, $field['name'], $value );
+
+					$values[$field['name']] = $value;
+
+				}
+
+			}
+
+			if ( ! empty( $this->args['group_meta_key'] ) ) {
+
+				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
+
+			}
+
+		}
+
+	}
 
 }

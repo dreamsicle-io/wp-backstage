@@ -35,6 +35,22 @@ function wpcpt_init_default() {
 						'is_sortable' => true, 
 					),
 					array( 
+						'type'        => 'url', 
+						'name'        => 'wpcpt_url_field', 
+						'label'       => __( 'URL field', 'wpcpt' ), 
+						'description' => __( 'Please enter a valid URL.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+					),
+					array( 
+						'type'        => 'email', 
+						'name'        => 'wpcpt_email_field', 
+						'label'       => __( 'Email field', 'wpcpt' ), 
+						'description' => __( 'Please enter a valid Email.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+					),
+					array( 
 						'type'        => 'number', 
 						'name'        => 'wpcpt_number_field', 
 						'label'       => __( 'Number field', 'wpcpt' ), 
@@ -52,8 +68,6 @@ function wpcpt_init_default() {
 						'name'        => 'wpcpt_textarea_field', 
 						'label'       => __( 'Textarea field', 'wpcpt' ), 
 						'description' => __( 'Please enter no more than 240 characters.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
 						'input_attrs' => array(
 							'maxlength' => 240, 
 						), 

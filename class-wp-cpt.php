@@ -420,7 +420,8 @@ class WP_CPT {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_thumbnail_column' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
@@ -883,56 +884,62 @@ class WP_CPT {
 	}
 
 	/**
-	 * Manage Admin Columns
+	 * Manage Thumbnail Columns
 	 * 
 	 * @since   0.0.1
-	 * @return  array  The filtered registered columns. 
+	 * @return  array  The filtered columns.
 	 */
-	public function manage_admin_columns( $columns = array() ) {
+	public function manage_thumbnail_column( $columns = array() ) {
 
-		// set the thumbnail column
-		if ( post_type_supports( $this->slug, 'thumbnail' ) ) {
-			
-			// store the cb column
-			$cb_column = isset( $columns['cb'] ) ? $columns['cb'] : '';
+		if ( is_array( $columns ) && ! empty( $columns ) ) {
 
-			// unset the CB column
-			if ( ! empty( $cb_column ) ) {
-				unset( $columns['cb'] );
+			foreach ( $columns as $column_key => $column_label ) {
+
+				unset( $columns[$column_key] );
+
+				if ( $column_key === 'cb' ) {
+
+					$columns[$column_key] = $column_label;
+
+					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i>';
+					$columns['thumbnail'] .= '<span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
+
+				} else {
+
+					$columns[$column_key] = $column_label;
+
+				}
+
 			}
-
-			$icon = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i>';
-			$label = '<span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
-
-			// these will be placed before all other columns, 
-			// make sure to add the CB back
-			$first_columns = array( 
-				'cb'        => $cb_column, 
-				'thumbnail' => $icon . $label, 
-			);
-
-			// place the thumbnail column before all others
-			$columns = array_merge( $first_columns, $columns );
 		
 		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Manage Field Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered columns. 
+	 */
+	public function manage_field_columns( $columns = array() ) {
 		
 		$fields = $this->get_fields();
 
 		// Add field columns
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
 
-			// store the comments and date columns
-			$comments_column = isset( $columns['comments'] ) ? $columns['comments'] : '';
-			$date_column = isset( $columns['date'] ) ? $columns['date'] : '';
+			$columns_to_remove = array( 'comments', 'date' );
+			$removed_columns = array();
 
-			// unset the comments columns
-			if ( ! empty( $comments_column ) ) { 
-				unset( $columns['comments'] ); 
-			}
-
-			// unset the date columns
-			if ( ! empty( $date_column ) ) { 
-				unset( $columns['date'] ); 
+			// unset removed columns to make space 
+			// also ensure storage of the original
+			// column for resetting later
+			foreach ( $columns_to_remove as $removed ) {
+				$removed_columns[$removed] = $columns[$removed];
+				unset( $columns[$removed] );
 			}
 
 			foreach ( $fields as $field ) {
@@ -947,14 +954,9 @@ class WP_CPT {
 
 			}
 
-			// reset the comments column
-			if ( ! empty( $comments_column ) ) {
-				$columns['comments'] = $comments_column;
-			}
-
-			// reset the date column
-			if ( ! empty( $date_column ) ) {
-				$columns['date'] = $date_column;
+			// reset stored removed columns
+			foreach ( $columns_to_remove as $removed ) {
+				$columns[$removed] = $removed_columns[$removed];
 			}
 
 		}
@@ -1085,9 +1087,19 @@ class WP_CPT {
 
 		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
 
-		if ( ! empty( $field ) ) {
+		if ( is_array( $field ) && ! empty( $field ) ) {
 
-			$query->set( 'meta_key', $field['name'] );
+			$query->set( 'meta_query', array(
+				'relation' => 'OR',
+				array(
+					'key'     => $field['name'], 
+					'compare' => 'EXISTS'
+				),
+				array(
+					'key'     => $field['name'], 
+					'compare' => 'NOT EXISTS'
+				)
+			) );
 
 			if ( $field['type'] === 'number' ) {
 				

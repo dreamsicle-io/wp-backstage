@@ -108,6 +108,8 @@ class WP_CPT {
 		'label'       => '', 
 		'title'       => '', 
 		'description' => '', 
+		'has_column'  => '', 
+		'is_sortable' => '', 
 		'input_attrs' => array(),
 	);
 
@@ -142,6 +144,11 @@ class WP_CPT {
 			'style' => array(), 
 		),
 		'code' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'i' => array(
 			'class' => array(), 
 			'id'    => array(), 
 			'style' => array(), 
@@ -875,50 +882,72 @@ class WP_CPT {
 	 */
 	public function manage_admin_columns( $columns = array() ) {
 
+		// set the thumbnail column
+		if ( post_type_supports( $this->slug, 'thumbnail' ) ) {
+			
+			// store the cb column
+			$cb_column = isset( $columns['cb'] ) ? $columns['cb'] : '';
+
+			// unset the CB column
+			if ( ! empty( $cb_column ) ) {
+				unset( $columns['cb'] );
+			}
+
+			$icon = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i>';
+			$label = '<span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
+
+			// these will be placed before all other columns, 
+			// make sure to add the CB back
+			$first_columns = array( 
+				'cb'        => $cb_column, 
+				'thumbnail' => $icon . $label, 
+			);
+
+			// place the thumbnail column before all others
+			$columns = array_merge( $first_columns, $columns );
+		
+		}
+		
 		$fields = $this->get_fields();
-
-		// store the comments and date columns
-		$comments_column = isset( $columns['comments'] ) ? $columns['comments'] : '';
-		$date_column = isset( $columns['date'] ) ? $columns['date'] : '';
-
-		// unset the comments column
-		if ( ! empty( $comments_column ) ) {
-
-			unset( $columns['comments'] );
-
-		}
-
-		// unset the date column
-		if ( ! empty( $date_column ) ) {
-
-			unset( $columns['date'] );
-
-		}
 
 		// Add field columns
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			// store the comments and date columns
+			$comments_column = isset( $columns['comments'] ) ? $columns['comments'] : '';
+			$date_column = isset( $columns['date'] ) ? $columns['date'] : '';
+
+			// unset the comments columns
+			if ( ! empty( $comments_column ) ) { 
+				unset( $columns['comments'] ); 
+			}
+
+			// unset the date columns
+			if ( ! empty( $date_column ) ) { 
+				unset( $columns['date'] ); 
+			}
 
 			foreach ( $fields as $field ) {
 
 				$field = wp_parse_args( $field, $this->default_field_args );
 
-				$columns[$field['name']] = $field['label'];
+				if ( $field['has_column'] ) {
+
+					$columns[$field['name']] = $field['label'];
+
+				}
 
 			}
 
-		}
+			// reset the comments column
+			if ( ! empty( $comments_column ) ) {
+				$columns['comments'] = $comments_column;
+			}
 
-		// reset the comments column
-		if ( ! empty( $comments_column ) ) {
-		
-			$columns['comments'] = $comments_column;
-
-		}
-
-		// reset the date column
-		if ( ! empty( $date_column ) ) {
-		
-			$columns['date'] = $date_column;
+			// reset the date column
+			if ( ! empty( $date_column ) ) {
+				$columns['date'] = $date_column;
+			}
 
 		}
 
@@ -942,7 +971,11 @@ class WP_CPT {
 
 				$field = wp_parse_args( $field, $this->default_field_args );
 
-				$columns[$field['name']] = $field['name'];
+				if ( $field['has_column'] && $field['is_sortable'] ) {
+
+					$columns[$field['name']] = $field['name'];
+
+				}
 
 			}
 
@@ -960,17 +993,77 @@ class WP_CPT {
 	 */
 	public function render_admin_column( $column = '', $post_id = 0 ) {
 
-		$value = get_post_meta( $post_id, $column, true );
+		// render thumbnail column
+		if ( post_type_supports( $this->slug, 'thumbnail' ) && ( $column === 'thumbnail' ) ) { ?>
+		
+			<a 
+			title="<?php the_title_attribute( array( '', '', true, $post_id ) ); ?>"
+			href="<?php echo esc_url( get_edit_post_link( $post_id ) ); ?>" 
+			style="display:block; width:40px; height:40px; overflow:hidden; background-color:#e7e7e7;"><?php 
 
-		if ( ! empty( $value ) ) {
+				if ( has_post_thumbnail( $post_id ) ) {
 
-			echo wp_kses_post( $value );
+					echo get_the_post_thumbnail( $post_id, 'thumbnail' );
 
-		} else {
+				}
 
-			echo '&horbar;';
+			?></a>
+
+		<?php } else {
+
+			$field = $this->get_field_by( 'name', $column );
+
+			if ( ! empty( $field ) ) {
+
+				$value = get_post_meta( $post_id, $column, true );
+
+				if ( ! empty( $value ) ) {
+
+					echo wp_kses_post( $value );
+
+				} else {
+
+					echo '&horbar;';
+
+				}
+
+			}
 
 		}
+
+	}
+
+	/**
+	 * Get Field By
+	 * 
+	 * @since   0.0.1
+	 * @return  array  the field if found, or an empty array.
+	 */
+	public function get_field_by( $key = '', $value = null ) {
+
+		$fields = $this->get_fields();
+		$result = array();
+
+		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
+
+					$result = $field;
+
+					// break the foreach once the condition is met.
+					break;
+
+				}
+
+			}
+
+		}
+
+		return $result;
 
 	}
 
@@ -982,30 +1075,19 @@ class WP_CPT {
 	 */
 	public function manage_sorting( $query = null ) {
 
-		$fields = $this->get_fields();
-		$orderby = $query->get( 'orderby' );
+		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
 
-		if ( ! empty( $orderby ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
+		if ( ! empty( $field ) ) {
 
-			foreach ( $fields as $field ) {
+			$query->set( 'meta_key', $field['name'] );
 
-				$field = wp_parse_args( $field, $this->default_field_args );
+			if ( $field['type'] === 'number' ) {
+				
+				$query->set( 'orderby', 'meta_value_num' );
 
-				if ( $orderby === $field['name'] ) {
+			} else {
 
-					$query->set( 'meta_key', $field['name'] );
-
-					if ( $field['type'] === 'number' ) {
-						
-						$query->set( 'orderby', 'meta_value_num' );
-
-					} else {
-
-						$query->set( 'orderby', 'meta_value' );
-
-					}
-
-				}
+				$query->set( 'orderby', 'meta_value' );
 
 			}
 

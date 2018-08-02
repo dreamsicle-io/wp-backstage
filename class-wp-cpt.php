@@ -891,21 +891,30 @@ class WP_CPT {
 	 */
 	public function manage_thumbnail_column( $columns = array() ) {
 
+		// loop the columns so that the new columns can
+		// be inserted where they are wanted
 		if ( is_array( $columns ) && ! empty( $columns ) ) {
 
 			foreach ( $columns as $column_key => $column_label ) {
 
+				// unset this column to make room for the new column,
+				// all information needed to reset the column is already here
 				unset( $columns[$column_key] );
 
+				// if the loop is currently at the checkbox column, 
+				// reset the checkbox column followed by the new 
+				// thumbnail column
 				if ( $column_key === 'cb' ) {
 
+					// if the loop is currently at the checkbox column, 
+					// reset the checkbox column followed by the new 
+					// thumbnail column
 					$columns[$column_key] = $column_label;
-
-					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i>';
-					$columns['thumbnail'] .= '<span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
+					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
 
 				} else {
 
+					// else reset the column as is
 					$columns[$column_key] = $column_label;
 
 				}

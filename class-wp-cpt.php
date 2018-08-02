@@ -610,9 +610,17 @@ class WP_CPT {
 		$formatted_attrs = array();
 
 		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
+			
 			foreach ( $attrs as $key => $value ) {
-				$formatted_attrs[] = sprintf( esc_attr( '%1$s="%2$s"' ), $key, $value );
+				
+				$formatted_attrs[] = sprintf( 
+					'%1$s="%2$s"', 
+					esc_attr( $key ), 
+					esc_attr( $value ) 
+				);
+
 			}
+			
 		}
 
 		return implode( ' ', $formatted_attrs );

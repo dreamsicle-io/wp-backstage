@@ -28,6 +28,26 @@ class WP_CPT {
 	public $errors = array();
 
 	/**
+	 * Notices
+	 * 
+	 * @since 0.0.1
+	 */
+	public $notices = array();
+
+	/**
+	 * Notices
+	 * 
+	 * @since 0.0.1
+	 */
+	public $hidden_meta_boxes = array( 
+		'trackbacksdiv', 
+		'slugdiv', 
+		'authordiv', 
+		'commentstatusdiv', 
+		'postcustom', 
+	);
+
+	/**
 	 * Default Args
 	 * 
 	 * @since 0.0.1
@@ -46,7 +66,10 @@ class WP_CPT {
 		'capability_type' => 'post', 
 		'supports'        => array(
 			'title', 
+			'slug', 
+			'author', 
 			'editor', 
+			'excerpt', 
 			'thumbnail', 
 			'comments', 
 			'trackbacks', 
@@ -56,6 +79,7 @@ class WP_CPT {
 		), 
 		'taxonomies'      => array(), 
 		'meta_boxes'      => array(), 
+		'debug'           => false, 
 	);
 
 	/**
@@ -69,6 +93,7 @@ class WP_CPT {
 		'description' => '', 
 		'context'     => '', 
 		'priority'    => '', 
+		'hidden'      => '', 
 		'fields'      => array(), 
 	);
 
@@ -112,6 +137,11 @@ class WP_CPT {
 			'style' => array(), 
 		),
 		'strong' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'code' => array(
 			'class' => array(), 
 			'id'    => array(), 
 			'style' => array(), 
@@ -163,6 +193,40 @@ class WP_CPT {
 	}
 
 	/**
+	 * Replace Args With Notice
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function replace_args_with_notice( $keys = array(), $replace = null ) {
+
+		if ( is_array( $keys ) && ! empty( $keys ) ) {
+
+			foreach ( $keys as $key ) {
+
+				if ( empty( $this->args[$key] ) ) {
+
+					$this->args[$key] = $replace;
+
+					$this->notices[] = new WP_Error( 
+						'arg_replacement', 
+						sprintf( 
+							/* translators: 1: arg key, 2: replacement */
+							__( 'The %1$s key was empty; using %2$s as the value.', 'WP_CPT' ), 
+							'<code>' . $key . '</code>', 
+							'<code>' . $replace . '</code>'
+						) 
+					);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
 	 * Set Args
 	 * 
 	 * @since   0.0.1
@@ -180,29 +244,22 @@ class WP_CPT {
 
 		if ( empty( $this->args['thumbnail_label'] ) ) {
 
-			$this->args['thumbnail_label'] = __( 'Featured Image', 'WP_CPT' );
+			$this->replace_args_with_notice( 
+				array( 'thumbnail_label' ), 
+				__( 'Featured Image', 'WP_CPT' ) 
+			);
 
 		}
 
-		foreach ( array( 'singular_base', 'archive_base', 'rest_base' ) as $key ) {
+		$this->replace_args_with_notice( 
+			array( 'singular_base', 'archive_base', 'rest_base' ), 
+			$this->slug 
+		);
 
-			if ( empty( $this->args[$key] ) ) {
-
-				$this->args[$key] = $this->slug;
-
-			}
-
-		}
-
-		foreach ( array( 'menu_name', 'singular_name', 'plural_name' ) as $key ) {
-
-			if ( empty( $this->args[$key] ) ) {
-
-				$this->args[$key] = $this->slug;
-
-			}
-
-		}
+		$this->replace_args_with_notice( 
+			array( 'menu_name', 'singular_name', 'plural_name' ), 
+			$this->slug 
+		);
 
 	}
 
@@ -249,13 +306,14 @@ class WP_CPT {
 				if ( is_wp_error( $error ) ) {
 
 					$message = sprintf( 
-						/* translators: 1: error message. */
-						__( 'Error: %1$s', 'WP_CPT' ), 
+						/* translators: 1: post type slug, 3: error message. */
+						__( 'Error [%1$s]: %2$s', 'WP_CPT' ), 
+						$this->slug, 
 						$error->get_error_message() 
 					); ?>
 
 					<div class="notice notice-error">
-						
+
 						<p><?php 
 				
 							echo wp_kses( $message, $this->kses_p );
@@ -269,6 +327,63 @@ class WP_CPT {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Has Notices
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  Whether the instance has notices or not. 
+	 */
+	public function has_notices() {
+
+		return is_array( $this->notices ) && ! empty( $this->notices );
+
+	}
+
+	/**
+	 * Print Notices
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function print_notices() {
+
+		if ( $this->has_notices() ) {
+
+			foreach ( $this->notices as $notice ) {
+				
+				if ( is_wp_error( $notice ) ) {
+
+					$message = sprintf( 
+						/* translators: 1: post type slug, 3: error message. */
+						__( 'Warning [%1$s]: %2$s', 'WP_CPT' ), 
+						$this->slug, 
+						$notice->get_error_message() 
+					); ?>
+
+					<div class="notice notice-warning">
+
+						<p><?php 
+				
+							echo wp_kses( $message, $this->kses_p );
+
+						?></p>
+
+					</div>
+				
+				<?php }
+			
+			}
+
+		}
+
+	}
+
+	public function is_debugging() {
+
+		return boolval( $this->args['debug'] );
 
 	}
 
@@ -288,9 +403,20 @@ class WP_CPT {
 
 		}
 
+		if ( $this->has_notices() && $this->is_debugging() ) {
+			
+			add_action( 'admin_notices', array( $this, 'print_notices' ) );
+			
+		}
+
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10 );
+		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
+		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
+		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 
 	}
 
@@ -697,6 +823,189 @@ class WP_CPT {
 			if ( ! empty( $this->args['group_meta_key'] ) ) {
 
 				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Manage Default Hidden Meta Boxes
+	 *
+	 * Note that this will only work if the post type UI has never 
+	 * been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen = null ) {
+
+		if ( $screen->post_type === $this->slug ) {
+
+			$hidden = array_merge( $hidden, $this->hidden_meta_boxes );
+
+			if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
+
+				foreach ( $this->args['meta_boxes'] as $meta_box ) {
+
+					$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
+
+					if ( $meta_box['hidden'] ) {
+
+						$hidden[] = $meta_box['id'];
+
+					}
+
+				}
+
+			}
+
+		}
+
+		return $hidden;
+
+	}
+
+	/**
+	 * Manage Admin Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered registered columns. 
+	 */
+	public function manage_admin_columns( $columns = array() ) {
+
+		$fields = $this->get_fields();
+
+		// store the comments and date columns
+		$comments_column = isset( $columns['comments'] ) ? $columns['comments'] : '';
+		$date_column = isset( $columns['date'] ) ? $columns['date'] : '';
+
+		// unset the comments column
+		if ( ! empty( $comments_column ) ) {
+
+			unset( $columns['comments'] );
+
+		}
+
+		// unset the date column
+		if ( ! empty( $date_column ) ) {
+
+			unset( $columns['date'] );
+
+		}
+
+		// Add field columns
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				$columns[$field['name']] = $field['label'];
+
+			}
+
+		}
+
+		// reset the comments column
+		if ( ! empty( $comments_column ) ) {
+		
+			$columns['comments'] = $comments_column;
+
+		}
+
+		// reset the date column
+		if ( ! empty( $date_column ) ) {
+		
+			$columns['date'] = $date_column;
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Manage Sortable Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered sortable columns. 
+	 */
+	public function manage_sortable_columns( $columns = array() ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				$columns[$field['name']] = $field['name'];
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Render Admin Column
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function render_admin_column( $column = '', $post_id = 0 ) {
+
+		$value = get_post_meta( $post_id, $column, true );
+
+		if ( ! empty( $value ) ) {
+
+			echo wp_kses_post( $value );
+
+		} else {
+
+			echo '&horbar;';
+
+		}
+
+	}
+
+	/**
+	 * Manage Sorting
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function manage_sorting( $query = null ) {
+
+		$fields = $this->get_fields();
+		$orderby = $query->get( 'orderby' );
+
+		if ( ! empty( $orderby ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				if ( $orderby === $field['name'] ) {
+
+					$query->set( 'meta_key', $field['name'] );
+
+					if ( $field['type'] === 'number' ) {
+						
+						$query->set( 'orderby', 'meta_value_num' );
+
+					} else {
+
+						$query->set( 'orderby', 'meta_value' );
+
+					}
+
+				}
 
 			}
 

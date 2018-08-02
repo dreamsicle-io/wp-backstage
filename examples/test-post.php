@@ -9,6 +9,8 @@
  */
 function wpcpt_init_default() {
 
+	// WP_CPT::add();
+
 	WP_CPT::add( 'wpcpt_test_post', array(
 		'menu_name'      => __( 'Test Posts', 'wpcpt' ), 
 		'singular_name'  => __( 'Test Post', 'wpcpt' ), 

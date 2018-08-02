@@ -9,7 +9,7 @@
  */
 function wpcpt_init_default() {
 
-	WP_CPT::add( 'shlinkty_pop' );
+	WP_CPT::add( 'wpcpt_custom_post_type' );
 
 }
 

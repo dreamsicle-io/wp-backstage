@@ -44,6 +44,16 @@ class WP_CPT {
 		'rest_base'       => '', 
 		'menu_icon'       => 'dashicons-admin-post', 
 		'capability_type' => 'post', 
+		'supports'        => array(
+			'title', 
+			'editor', 
+			'thumbnail', 
+			'comments', 
+			'trackbacks', 
+			'revisions', 
+			'custom-fields', 
+			'page-attributes', 
+		), 
 		'taxonomies'      => array(), 
 		'meta_boxes'      => array(), 
 	);
@@ -134,9 +144,81 @@ class WP_CPT {
 	 */
 	function __construct( $slug = '', $args = array() ) {
 
-		$this->slug = sanitize_title_with_dashes( $slug );
-		$this->args = wp_parse_args( $args, $this->default_args );
+		$this->set_slug( $slug );
+		$this->set_args( $args );
 		$this->set_errors();
+
+	}
+
+	/**
+	 * Set Slug
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  Whether the instance has errors or not. 
+	 */
+	public function set_slug( $slug = '' ) {
+
+		$this->slug = sanitize_title_with_dashes( $slug );
+
+	}
+
+	/**
+	 * Set Args
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  Whether the instance has errors or not. 
+	 */
+	public function set_args( $args = array() ) {
+
+		if ( current_theme_supports( 'post-formats' ) ) {
+
+			$this->default_args['supports'][] = 'post-formats';
+			
+		}
+
+		$this->args = wp_parse_args( $args, $this->default_args );
+
+		if ( empty( $this->args['thumbnail_label'] ) ) {
+
+			$this->args['thumbnail_label'] = __( 'Featured Image', 'WP_CPT' );
+
+		}
+
+		foreach ( array( 'singular_base', 'archive_base', 'rest_base' ) as $key ) {
+
+			if ( empty( $this->args[$key] ) ) {
+
+				$this->args[$key] = $this->slug;
+
+			}
+
+		}
+
+		foreach ( array( 'menu_name', 'singular_name', 'plural_name' ) as $key ) {
+
+			if ( empty( $this->args[$key] ) ) {
+
+				$this->args[$key] = $this->slug;
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Set Errors
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function set_errors() {
+
+		if ( empty( $this->slug ) ) {
+			
+			$this->errors[] = new WP_Error( 'slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
+		
+		}
 
 	}
 
@@ -165,10 +247,24 @@ class WP_CPT {
 			foreach ( $this->errors as $error ) {
 				
 				if ( is_wp_error( $error ) ) {
+
+					$message = sprintf( 
+						/* translators: 1: error message. */
+						__( 'Error: %1$s', 'WP_CPT' ), 
+						$error->get_error_message() 
+					); ?>
+
+					<div class="notice notice-error">
+						
+						<p><?php 
 				
-					printf( esc_html__( 'Error: %1$s' ), $error->get_error_message() );
+							echo wp_kses( $message, $this->kses_p );
+
+						?></p>
+
+					</div>
 				
-				}
+				<?php }
 			
 			}
 
@@ -186,7 +282,7 @@ class WP_CPT {
 
 		if ( $this->has_errors() ) {
 			
-			$this->print_errors();
+			add_action( 'admin_notices', array( $this, 'print_errors' ) );
 			
 			return;
 
@@ -195,22 +291,6 @@ class WP_CPT {
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10 );
-
-	}
-
-	/**
-	 * Set Errors
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function set_errors() {
-
-		if ( empty( $this->slug ) ) {
-			
-			$this->errors[] = new WP_Error( 'slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
-		
-		}
 
 	}
 
@@ -278,23 +358,11 @@ class WP_CPT {
 			'feeds'      => true,
 		);
 
-		$support = array( 
-			'title', 
-			'editor', 
-			'thumbnail', 
-			'comments', 
-			'trackbacks', 
-			'revisions', 
-			'custom-fields', 
-			'page-attributes', 
-			'post-formats' 
-		);
-
 		$args = array(
 			'label'               => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
 			'description'         => $this->args['description'], 
 			'labels'              => $labels,
-			'supports'            => $support,
+			'supports'            => $this->args['supports'], 
 			'taxonomies'          => $this->args['taxonomies'],
 			'hierarchical'        => $this->args['hierarchical'],
 			'public'              => $this->args['public'],
@@ -410,7 +478,7 @@ class WP_CPT {
 
 		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
 			foreach ( $attrs as $key => $value ) {
-				$formatted_attrs[] = sprintf( '%1$s="%2$s"', esc_attr( $key ), esc_attr( $value ) );
+				$formatted_attrs[] = sprintf( esc_attr( '%1$s="%2$s"' ), $key, $value );
 			}
 		}
 

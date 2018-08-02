@@ -32,13 +32,6 @@ class WP_CPT {
 	 * 
 	 * @since 0.0.1
 	 */
-	public $notices = array();
-
-	/**
-	 * Notices
-	 * 
-	 * @since 0.0.1
-	 */
 	public $hidden_meta_boxes = array( 
 		'trackbacksdiv', 
 		'slugdiv', 
@@ -61,6 +54,8 @@ class WP_CPT {
 		'public'          => true, 
 		'hierarchical'    => false, 
 		'with_front'      => false, 
+		'singular_base'       => '', 
+		'archive_base'       => '', 
 		'rest_base'       => '', 
 		'menu_icon'       => 'dashicons-admin-post', 
 		'capability_type' => 'post', 
@@ -79,7 +74,16 @@ class WP_CPT {
 		), 
 		'taxonomies'      => array(), 
 		'meta_boxes'      => array(), 
-		'debug'           => false, 
+	);
+
+	/**
+	 * Required Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $required_args = array(
+		'singular_name', 
+		'plural_name', 
 	);
 
 	/**
@@ -200,40 +204,6 @@ class WP_CPT {
 	}
 
 	/**
-	 * Replace Args With Notice
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function replace_args_with_notice( $keys = array(), $replace = null ) {
-
-		if ( is_array( $keys ) && ! empty( $keys ) ) {
-
-			foreach ( $keys as $key ) {
-
-				if ( empty( $this->args[$key] ) ) {
-
-					$this->args[$key] = $replace;
-
-					$this->notices[] = new WP_Error( 
-						'arg_replacement', 
-						sprintf( 
-							/* translators: 1: arg key, 2: replacement */
-							__( 'The %1$s key was empty; using %2$s as the value.', 'WP_CPT' ), 
-							'<code>' . $key . '</code>', 
-							'<code>' . $replace . '</code>'
-						) 
-					);
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
 	 * Set Args
 	 * 
 	 * @since   0.0.1
@@ -251,22 +221,39 @@ class WP_CPT {
 
 		if ( empty( $this->args['thumbnail_label'] ) ) {
 
-			$this->replace_args_with_notice( 
-				array( 'thumbnail_label' ), 
-				__( 'Featured Image', 'WP_CPT' ) 
-			);
+			$this->args['thumbnail_label'] = __( 'Featured Image', 'WP_CPT' );
 
 		}
 
-		$this->replace_args_with_notice( 
-			array( 'singular_base', 'archive_base', 'rest_base' ), 
-			$this->slug 
-		);
+		if ( empty( $this->args['singular_base'] ) ) {
 
-		$this->replace_args_with_notice( 
-			array( 'menu_name', 'singular_name', 'plural_name' ), 
-			$this->slug 
-		);
+			$this->args['singular_base'] = $this->slug;
+
+		}
+
+		if ( empty( $this->args['archive_base'] ) ) {
+
+			$this->args['archive_base'] = $this->slug;
+
+		}
+
+		if ( empty( $this->args['menu_name'] ) ) {
+
+			if ( ! empty( $this->args['plural_name'] ) ) {
+
+				$this->args['menu_name'] = $this->args['plural_name'];
+
+			} elseif ( ! empty( $this->args['singular_name'] ) ) {
+
+				$this->args['menu_name'] = $this->args['singular_name'];
+
+			} else {
+
+				$this->args['menu_name'] = $this->slug;
+
+			}
+
+		}
 
 	}
 
@@ -280,8 +267,30 @@ class WP_CPT {
 
 		if ( empty( $this->slug ) ) {
 			
-			$this->errors[] = new WP_Error( 'slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
+			$this->errors[] = new WP_Error( 'required_slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
 		
+		} elseif ( in_array( $this->slug, get_post_types() ) ) {
+
+			$this->errors[] = new WP_Error( 'post_type_exists', __( 'A post type with this slug already exists.', 'WP_CPT' ) );
+
+		}
+
+		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+
+			foreach ( $this->required_args as $required_arg ) {
+
+				if ( empty( $this->args[$required_arg] ) ) {
+
+					$this->errors[] = new WP_Error( 'required_arg', sprintf( 
+						/* translators: 1: required arg key. */
+						__( 'The %1$s key is required.', 'WP_CPT' ), 
+						'<code>' . $required_arg . '</code>'
+					) );
+
+				}
+
+			}
+
 		}
 
 	}
@@ -338,63 +347,6 @@ class WP_CPT {
 	}
 
 	/**
-	 * Has Notices
-	 * 
-	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has notices or not. 
-	 */
-	public function has_notices() {
-
-		return is_array( $this->notices ) && ! empty( $this->notices );
-
-	}
-
-	/**
-	 * Print Notices
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function print_notices() {
-
-		if ( $this->has_notices() ) {
-
-			foreach ( $this->notices as $notice ) {
-				
-				if ( is_wp_error( $notice ) ) {
-
-					$message = sprintf( 
-						/* translators: 1: post type slug, 3: error message. */
-						__( 'Warning [%1$s]: %2$s', 'WP_CPT' ), 
-						$this->slug, 
-						$notice->get_error_message() 
-					); ?>
-
-					<div class="notice notice-warning">
-
-						<p><?php 
-				
-							echo wp_kses( $message, $this->kses_p );
-
-						?></p>
-
-					</div>
-				
-				<?php }
-			
-			}
-
-		}
-
-	}
-
-	public function is_debugging() {
-
-		return boolval( $this->args['debug'] );
-
-	}
-
-	/**
 	 * Init
 	 * 
 	 * @since   0.0.1
@@ -410,18 +362,11 @@ class WP_CPT {
 
 		}
 
-		if ( $this->has_notices() && $this->is_debugging() ) {
-			
-			add_action( 'admin_notices', array( $this, 'print_notices' ) );
-			
-		}
-
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_thumbnail_column' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_field_columns' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
@@ -884,17 +829,17 @@ class WP_CPT {
 	}
 
 	/**
-	 * Manage Thumbnail Columns
+	 * Add Thumbnail Columns
 	 * 
 	 * @since   0.0.1
 	 * @return  array  The filtered columns.
 	 */
-	public function manage_thumbnail_column( $columns = array() ) {
+	public function add_thumbnail_column( $columns = array() ) {
 
-		// loop the columns so that the new columns can
-		// be inserted where they are wanted
 		if ( is_array( $columns ) && ! empty( $columns ) ) {
 
+			// loop the columns so that the new columns can
+			// be inserted where they are wanted
 			foreach ( $columns as $column_key => $column_label ) {
 
 				// unset this column to make room for the new column,
@@ -928,47 +873,70 @@ class WP_CPT {
 	}
 
 	/**
-	 * Manage Field Columns
+	 * Add Field Columns
 	 * 
 	 * @since   0.0.1
 	 * @return  array  The filtered columns. 
 	 */
-	public function manage_field_columns( $columns = array() ) {
+	public function add_field_columns( $columns = array() ) {
+
+		if ( is_array( $columns ) && ! empty( $columns ) ) {
 		
-		$fields = $this->get_fields();
+			$fields = $this->get_fields();
 
-		// Add field columns
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			// Add all field columns
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
 
-			$columns_to_remove = array( 'comments', 'date' );
-			$removed_columns = array();
+				// set which columns should be removed to make way 
+				// for new columns (will be added back later as is), 
+				// date is included by default, but sometimes comments
+				// are there, and this should be at the end as well
+				$columns_to_remove = array( 'comments', 'date' );
+				$removed_columns = array();
 
-			// unset removed columns to make space 
-			// also ensure storage of the original
-			// column for resetting later
-			foreach ( $columns_to_remove as $removed ) {
-				$removed_columns[$removed] = $columns[$removed];
-				unset( $columns[$removed] );
-			}
+				// unset removed columns to make space 
+				// also ensure storage of the original
+				// column for resetting later
+				foreach ( $columns_to_remove as $removed ) {
+					$removed_columns[$removed] = $columns[$removed];
+					unset( $columns[$removed] );
+				}
 
-			foreach ( $fields as $field ) {
+				foreach ( $fields as $field ) {
 
-				$field = wp_parse_args( $field, $this->default_field_args );
+					$field = wp_parse_args( $field, $this->default_field_args );
 
-				if ( $field['has_column'] ) {
+					if ( $field['has_column'] ) {
 
-					$columns[$field['name']] = $field['label'];
+						$columns[$field['name']] = $field['label'];
 
+					}
+
+				}
+
+				// reset stored removed columns
+				foreach ( $columns_to_remove as $removed ) {
+					$columns[$removed] = $removed_columns[$removed];
 				}
 
 			}
 
-			// reset stored removed columns
-			foreach ( $columns_to_remove as $removed ) {
-				$columns[$removed] = $removed_columns[$removed];
-			}
-
 		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Manage Admin Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered columns. 
+	 */
+	public function manage_admin_columns( $columns = array() ) {
+
+		$columns = $this->add_thumbnail_column( $columns );
+		$columns = $this->add_field_columns( $columns );
 
 		return $columns;
 
@@ -1005,15 +973,14 @@ class WP_CPT {
 	}
 
 	/**
-	 * Render Admin Column
+	 * Render Thumbnail
 	 * 
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	public function render_admin_column( $column = '', $post_id = 0 ) {
+	public function render_thumbnail( $post_id = 0 ) {
 
-		// render thumbnail column
-		if ( post_type_supports( $this->slug, 'thumbnail' ) && ( $column === 'thumbnail' ) ) { ?>
+		if ( post_type_supports( $this->slug, 'thumbnail' ) ) { ?>
 		
 			<a 
 			title="<?php the_title_attribute( array( '', '', true, $post_id ) ); ?>"
@@ -1028,7 +995,23 @@ class WP_CPT {
 
 			?></a>
 
-		<?php } else {
+		<?php }
+
+	}
+
+	/**
+	 * Render Admin Column
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function render_admin_column( $column = '', $post_id = 0 ) {
+
+		if ( $column === 'thumbnail' ) {
+
+			$this->render_thumbnail( $post_id );
+
+		} else {
 
 			$field = $this->get_field_by( 'name', $column );
 

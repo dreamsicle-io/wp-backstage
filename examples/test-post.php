@@ -42,7 +42,6 @@ function wpcpt_init_default() {
 						'label'       => __( 'URL', 'wpcpt' ), 
 						'description' => __( 'Please enter a valid URL.', 'wpcpt' ), 
 						'has_column'  => true, 
-						'is_sortable' => true, 
 					),
 					array( 
 						'type'        => 'email', 
@@ -50,7 +49,6 @@ function wpcpt_init_default() {
 						'label'       => __( 'Email', 'wpcpt' ), 
 						'description' => __( 'Please enter a valid Email.', 'wpcpt' ), 
 						'has_column'  => true, 
-						'is_sortable' => true, 
 					),
 					array( 
 						'type'        => 'number', 
@@ -84,6 +82,30 @@ function wpcpt_init_default() {
 				'priority'    => 'low', 
 				'hidden'      => true, 
 				'fields'      => array(), 
+			),
+		), 
+		'taxonomies' => array(
+			array(
+				'slug'          => 'wpcpt_test_category', 
+				'singular_name' => __( 'Test Category', 'wpcpt' ), 
+				'plural_name'   => __( 'Test Categories', 'wpcpt' ), 
+				'description'   => __( 'This is a test hierarchical taxonomy.', 'wpcpt' ), 
+				'public'        => true, 
+				'hierarchical'  => true, 
+				'with_front'    => false, 
+				'archive_base'  => 'test-category', 
+				'rest_base'     => 'test-tag', 
+			),
+			array(
+				'slug'          => 'wpcpt_test_tag', 
+				'singular_name' => __( 'Test Tag', 'wpcpt' ), 
+				'plural_name'   => __( 'Test Tags', 'wpcpt' ), 
+				'description'   => __( 'This is a test non-hierarchical taxonomy.', 'wpcpt' ), 
+				'public'        => true, 
+				'hierarchical'  => false, 
+				'with_front'    => false, 
+				'archive_base'  => 'test-tag', 
+				'rest_base'     => 'test-tags', 
 			),
 		), 
 	) );

@@ -77,6 +77,22 @@ class WP_CPT {
 	);
 
 	/**
+	 * Default Taxonomy Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_taxonomy_args = array(
+		'singular_name'   => '', 
+		'plural_name'     => '', 
+		'description'     => '', 
+		'public'          => true, 
+		'hierarchical'    => true, 
+		'with_front'      => false, 
+		'archive_base'    => '', 
+		'rest_base'       => '', 
+	);
+
+	/**
 	 * Required Args
 	 * 
 	 * @since 0.0.1
@@ -363,6 +379,7 @@ class WP_CPT {
 		}
 
 		add_action( 'init', array( $this, 'register' ), 10 );
+		add_action( 'init', array( $this, 'register_taxonomies' ), 10 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
@@ -388,6 +405,24 @@ class WP_CPT {
 			$this->args['singular_name'], 
 			$this->args['plural_name'], 
 			$this->args['thumbnail_label'] 
+		);
+
+	}
+
+	/**
+	 * Get Taxonomy Label
+	 * 
+	 * @since   0.0.1
+	 * @param   string  $template 
+	 * @return  string 
+	 */
+	public function get_taxonomy_label( $template = '', $taxonomy = array() ) {
+
+		return sprintf(
+			/* translators: 1: taxonomy singular name, 2: taxonomy plural name. */
+			$template,
+			$taxonomy['singular_name'], 
+			$taxonomy['plural_name']
 		);
 
 	}
@@ -442,7 +477,6 @@ class WP_CPT {
 			'description'         => $this->args['description'], 
 			'labels'              => $labels,
 			'supports'            => $this->args['supports'], 
-			'taxonomies'          => $this->args['taxonomies'],
 			'hierarchical'        => $this->args['hierarchical'],
 			'public'              => $this->args['public'],
 			'show_ui'             => true,
@@ -462,6 +496,64 @@ class WP_CPT {
 		);
 
 		register_post_type( $this->slug, $args );
+
+	}
+
+	public function register_taxonomies() {
+
+		if ( is_array( $this->args['taxonomies'] ) && ! empty( $this->args['taxonomies'] ) ) {
+
+			foreach ( $this->args['taxonomies'] as $taxonomy ) {
+
+				$taxonomy = wp_parse_args( $taxonomy, $this->default_taxonomy_args );
+
+				$labels = array(
+					'name'                       => $taxonomy['plural_name'],
+					'singular_name'              => $taxonomy['singular_name'],
+					'menu_name'                  => $taxonomy['plural_name'],
+					'all_items'                  => $this->get_taxonomy_label( __( 'All %2$s', 'WP_CPT' ), $taxonomy ),
+					'parent_item'                => $this->get_taxonomy_label( __( 'Parent %1$s', 'WP_CPT' ), $taxonomy ),
+					'parent_item_colon'          => $this->get_taxonomy_label( __( 'Parent %1$s:', 'WP_CPT' ), $taxonomy ),
+					'new_item_name'              => $this->get_taxonomy_label( __( 'New %1$s Name', 'WP_CPT' ), $taxonomy ),
+					'add_new_item'               => $this->get_taxonomy_label( __( 'Add New %1$s', 'WP_CPT' ), $taxonomy ),
+					'edit_item'                  => $this->get_taxonomy_label( __( 'Edit %1$s', 'WP_CPT' ), $taxonomy ),
+					'update_item'                => $this->get_taxonomy_label( __( 'Update %1$s', 'WP_CPT' ), $taxonomy ),
+					'view_item'                  => $this->get_taxonomy_label( __( 'View %1$s', 'WP_CPT' ), $taxonomy ),
+					'separate_items_with_commas' => $this->get_taxonomy_label( __( 'Separate %2$s with commas', 'WP_CPT' ), $taxonomy ),
+					'add_or_remove_items'        => $this->get_taxonomy_label( __( 'Add or remove %2$s', 'WP_CPT' ), $taxonomy ),
+					'choose_from_most_used'      => $this->get_taxonomy_label( __( 'Choose from the most used %2$s', 'WP_CPT' ), $taxonomy ),
+					'popular_items'              => $this->get_taxonomy_label( __( 'Popular %2$s', 'WP_CPT' ), $taxonomy ),
+					'search_items'               => $this->get_taxonomy_label( __( 'Search %2$s', 'WP_CPT' ), $taxonomy ),
+					'not_found'                  => $this->get_taxonomy_label( __( 'No %2$s Found', 'WP_CPT' ), $taxonomy ),
+					'no_terms'                   => $this->get_taxonomy_label( __( 'No %2$s', 'WP_CPT' ), $taxonomy ),
+					'items_list'                 => $this->get_taxonomy_label( __( '%2$s list', 'WP_CPT' ), $taxonomy ),
+					'items_list_navigation'      => $this->get_taxonomy_label( __( '%2$s list navigation', 'WP_CPT' ), $taxonomy ),
+				);
+
+				$rewrite = array(
+					'slug'                       => $taxonomy['archive_base'],
+					'with_front'                 => $taxonomy['with_front'],
+					'hierarchical'               => $taxonomy['hierarchical'],
+				);
+
+				$args = array(
+					'labels'                     => $labels,
+					'hierarchical'               => $taxonomy['hierarchical'],
+					'public'                     => $taxonomy['public'],
+					'show_ui'                    => true,
+					'show_admin_column'          => true,
+					'show_in_nav_menus'          => $taxonomy['public'],
+					'show_tagcloud'              => $taxonomy['public'],
+					'rewrite'                    => $taxonomy['public'] ? $rewrite : false,
+					'show_in_rest'               => ( $taxonomy['public'] && ! empty( $taxonomy['rest_base'] ) ),
+					'rest_base'                  => $taxonomy['rest_base'],
+				);
+
+				register_taxonomy( $taxonomy['slug'], $this->slug, $args );
+
+			}
+
+		}
 
 	}
 

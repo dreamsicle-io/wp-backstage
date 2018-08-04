@@ -20,6 +20,19 @@ function wpcpt_init_default() {
 		'archive_base'   => 'test-posts', 
 		'rest_base'      => 'test-posts', 
 		'group_meta_key' => 'wpcpt_test_post_meta',
+		'supports'       => array(
+			'title', 
+			'slug', 
+			'author', 
+			'editor', 
+			'excerpt', 
+			'thumbnail', 
+			'comments', 
+			'trackbacks', 
+			'revisions', 
+			'custom-fields', 
+			'page-attributes', 
+		), 
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wpcpt_test_post_fields', 
@@ -51,6 +64,13 @@ function wpcpt_init_default() {
 						'has_column'  => true, 
 					),
 					array( 
+						'type'        => 'tel', 
+						'name'        => 'wpcpt_phone_field', 
+						'label'       => __( 'Phone', 'wpcpt' ), 
+						'description' => __( 'Please enter a phone number.', 'wpcpt' ), 
+						'has_column'  => true, 
+					),
+					array( 
 						'type'        => 'number', 
 						'name'        => 'wpcpt_number_field', 
 						'label'       => __( 'Number', 'wpcpt' ), 
@@ -64,12 +84,104 @@ function wpcpt_init_default() {
 						), 
 					),
 					array( 
+						'type'        => 'checkbox', 
+						'name'        => 'wpcpt_checkbox_field', 
+						'label'       => __( 'Checkbox', 'wpcpt' ), 
+						'description' => __( 'Toggle the checkbox.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+					),
+					array( 
 						'type'        => 'textarea', 
 						'name'        => 'wpcpt_textarea_field', 
 						'label'       => __( 'Textarea', 'wpcpt' ), 
 						'description' => __( 'Please enter no more than 240 characters.', 'wpcpt' ), 
 						'input_attrs' => array(
 							'maxlength' => 240, 
+						), 
+					),
+					array( 
+						'type'        => 'select', 
+						'name'        => 'wpcpt_select_field', 
+						'label'       => __( 'Select', 'wpcpt' ), 
+						'description' => __( 'Please select an option.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+						'options'     => array(
+							array( 
+								'value'     => '', 
+								'label'    => __( '&horbar; Select an Option &horbar;', 'wpcpt' )
+							),
+							array( 
+								'value'     => 'option_1', 
+								'label'    => __( 'Option 1'), 
+							),
+							array( 
+								'value'     => 'option_2', 
+								'label'    => __( 'Option 2'), 
+							),
+							array( 
+								'value'     => 'option_3', 
+								'label'    => __( 'Option 3'), 
+								'disabled' => true, 
+							),
+							array( 
+								'value'     => 'option_4', 
+								'label'    => __( 'Option 4'), 
+							),
+						), 
+					),
+					array( 
+						'type'        => 'radio', 
+						'name'        => 'wpcpt_radio_field', 
+						'label'       => __( 'Radio', 'wpcpt' ), 
+						'description' => __( 'Please select an option.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+						'options'     => array(
+							array( 
+								'value'     => 'option_1', 
+								'label'    => __( 'Option 1'), 
+							),
+							array( 
+								'value'     => 'option_2', 
+								'label'    => __( 'Option 2'), 
+							),
+							array( 
+								'value'     => 'option_3', 
+								'label'    => __( 'Option 3'), 
+								'disabled' => true, 
+							),
+							array( 
+								'value'     => 'option_4', 
+								'label'    => __( 'Option 4'), 
+							),
+						), 
+					),
+					array( 
+						'type'        => 'checkbox_set', 
+						'name'        => 'wpcpt_checkbox_set_field', 
+						'label'       => __( 'Checkbox Set', 'wpcpt' ), 
+						'description' => __( 'Please select all that apply.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'options'     => array(
+							array( 
+								'value'     => 'option_1', 
+								'label'    => __( 'Option 1'), 
+							),
+							array( 
+								'value'     => 'option_2', 
+								'label'    => __( 'Option 2'), 
+							),
+							array( 
+								'value'     => 'option_3', 
+								'label'    => __( 'Option 3'), 
+								'disabled' => true, 
+							),
+							array( 
+								'value'     => 'option_4', 
+								'label'    => __( 'Option 4'), 
+							),
 						), 
 					),
 				), 

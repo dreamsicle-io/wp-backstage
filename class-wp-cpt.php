@@ -127,10 +127,23 @@ class WP_CPT {
 		'name'        => '', 
 		'label'       => '', 
 		'title'       => '', 
+		'disabled'    => false, 
 		'description' => '', 
 		'has_column'  => '', 
 		'is_sortable' => '', 
+		'options'     => array(),
 		'input_attrs' => array(),
+	);
+
+	/**
+	 * Default Option Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_option_args = array(
+		'value'       => '', 
+		'label'       => '', 
+		'disabled'    => false,
 	);
 
 	/**
@@ -378,15 +391,47 @@ class WP_CPT {
 
 		}
 
-		add_action( 'init', array( $this, 'register' ), 10 );
-		add_action( 'init', array( $this, 'register_taxonomies' ), 10 );
+		add_action( 'init', array( $this, 'register_post_type' ), 0 );
+		add_action( 'init', array( $this, 'register_taxonomies' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
+		add_filter( 'edit_form_top', array( $this, 'render_edit_nonces' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
+
+	}
+
+	/**
+	 * Enqueue Admin Scripts
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function enqueue_admin_scripts() {
+
+		$screen = get_current_screen();
+
+		if ( $screen->id === $this->slug ) {
+
+			wp_enqueue_media();
+
+		}
+
+	}
+
+	/**
+	 * Render nonce
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function render_edit_nonces() {
+
+		wp_nonce_field( 'edit', sprintf( '_%1$s_nonce', $this->slug ) );
 
 	}
 
@@ -433,7 +478,7 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function register() {
+	public function register_post_type() {
 
 		$labels = array(
 			'name'                  => $this->args['plural_name'],
@@ -615,6 +660,22 @@ class WP_CPT {
 
 					$this->render_textarea( $field, $post );
 
+				} elseif ( $field['type'] === 'select' ) {
+
+					$this->render_select( $field, $post );
+
+				} elseif ( $field['type'] === 'radio' ) {
+
+					$this->render_radio( $field, $post );
+
+				} elseif ( $field['type'] === 'checkbox' ) {
+
+					$this->render_checkbox( $field, $post );
+
+				} elseif ( $field['type'] === 'checkbox_set' ) {
+
+					$this->render_checkbox_set( $field, $post );
+
 				} else {
 
 					$this->render_input( $field, $post );
@@ -643,7 +704,7 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  string  The imploded, escaped, formatted attributes.
 	 */
-	public static function format_attrs( $attrs = array() ) {
+	public function format_attrs( $attrs = array() ) {
 
 		$formatted_attrs = array();
 
@@ -695,7 +756,8 @@ class WP_CPT {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="<?php echo esc_attr( $value ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php echo $this::format_attrs( $field['input_attrs'] ); ?>>
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
 			</p>
 
@@ -716,7 +778,57 @@ class WP_CPT {
 	<?php }
 
 	/**
-	 * Render Input
+	 * Render Checkbox
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_checkbox( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<input 
+				type="checkbox" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="1" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php checked( true, $value ); ?>
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p ); 
+				
+				?></label>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Textarea
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
@@ -746,7 +858,8 @@ class WP_CPT {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="<?php echo esc_attr( $value ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php echo $this::format_attrs( $field['input_attrs'] ); ?>><?php 
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
 					echo esc_textarea( $value );
 
@@ -769,6 +882,243 @@ class WP_CPT {
 		</div>
 
 	<?php }
+
+	/**
+	 * Render Select
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_select( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></label>
+
+				<br/>
+
+				<select 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+						foreach ( $field['options'] as $option ) { 
+
+							$option = wp_parse_args( $option, $this->default_option_args );
+							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+
+							<option 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php selected( $option['value'], $value ); ?>
+							<?php disabled( true, $option['disabled'] ); ?>><?php 
+
+								echo strip_tags( $option_label );
+
+							?></option>
+
+						<?php }
+
+					}
+
+				?></select>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Radio
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_radio( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<fieldset 
+			id="<?php echo esc_attr( $id ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+
+				<legend><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></legend>
+
+				<?php 
+				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+					foreach ( $field['options'] as $option ) { 
+
+						$option = wp_parse_args( $option, $this->default_option_args );
+						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+
+						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+
+							<input
+							type="radio" 
+							id="<?php echo esc_attr( $input_id ); ?>" 
+							name="<?php echo esc_attr( $field['name'] ); ?>" 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
+							<?php checked( $option['value'], $value ); ?>
+							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
+
+							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+
+								echo wp_kses( $option_label, $this->kses_p );
+							
+							?></label>
+
+						</div>
+
+					<?php }
+
+				} ?>
+			
+			</fieldset>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Checkbox Set
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_checkbox_set( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<fieldset 
+			id="<?php echo esc_attr( $id ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+
+				<legend><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></legend>
+
+				<?php 
+				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+					foreach ( $field['options'] as $option ) { 
+
+						$option = wp_parse_args( $option, $this->default_option_args );
+						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+
+						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+
+							<input
+							type="checkbox" 
+							id="<?php echo esc_attr( $input_id ); ?>" 
+							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
+							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
+							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
+
+							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+
+								echo strip_tags( $option_label );
+							
+							?></label>
+
+						</div>
+
+					<?php }
+
+				} ?>
+			
+			</fieldset>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	public function get_media_uploader_label( $template = '', $field = array() ) {
+
+		if ( ! empty( $template ) ) {
+
+			return sprintf( 
+				/* translators: 1: image label. */
+				$template, 
+				$field['label'] 
+			);
+
+		} else {
+
+			return $field['label'];
+
+		}
+
+	}
 
 	/**
 	 * Get Fields
@@ -829,6 +1179,14 @@ class WP_CPT {
 				$value = sanitize_email( $value );
 				break;
 			
+			case 'checkbox':
+				$value = boolval( $value );
+				break;
+			
+			case 'checkbox_set':
+				$value = array_map( 'esc_attr', $value );
+				break;
+			
 			default:
 				$value = esc_attr( $value );
 				break;
@@ -846,10 +1204,14 @@ class WP_CPT {
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
 
+		$nonce_key = sprintf( '_%1$s_nonce', $this->slug );
+
 		if ( ! $post_id > 0 ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( $_POST['post_type'] !== $this->slug ) { return; }
+		if ( empty( $_POST[$nonce_key] ) ) { return; }
+		if ( ! wp_verify_nonce( $_POST[$nonce_key], 'edit' ) ) { return; }
 
 		$fields = $this->get_fields();
 
@@ -863,13 +1225,17 @@ class WP_CPT {
 
 				if ( isset( $_POST[$field['name']] ) ) {
 
-					$value = $this::sanitize_field( $field, $_POST[$field['name']] );
+					$value = $this->sanitize_field( $field, $_POST[$field['name']] );
 
 					update_post_meta( $post_id, $field['name'], $value );
 
 					$values[$field['name']] = $value;
 
-				}
+				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
+
+					update_post_meta( $post_id, $field['name'], false );
+
+				} 
 
 			}
 
@@ -947,7 +1313,7 @@ class WP_CPT {
 					// reset the checkbox column followed by the new 
 					// thumbnail column
 					$columns[$column_key] = $column_label;
-					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->thumbnail_label ) . '</span>';
+					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . strip_tags( $this->thumbnail_label ) . '</span>';
 
 				} else {
 
@@ -1092,6 +1458,79 @@ class WP_CPT {
 	}
 
 	/**
+	 * Get Column Content
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function get_column_content( $value = null, $field = array() ) {
+
+		$content = '&horbar;';
+
+		if ( is_array( $field ) && ! empty( $field ) ) {
+
+			switch ( $field['type'] ) {
+				case 'url':
+					$content = '<a href="' . esc_url( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_url( $value ) . '</a>';
+					break;
+				case 'email':
+					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_attr( $value ) . '</a>';
+					break;
+				case 'tel':
+					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_attr( $value ) . '</a>';
+					break;
+				case 'radio':
+					$labels = $this->get_option_labels( $field );
+					$content = $labels[$value];
+					break;
+				case 'select':
+					$labels = $this->get_option_labels( $field );
+					$content = $labels[$value];
+					break;
+				case 'checkbox':
+					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_attr__( 'true', 'WP_CPT' ) . '</span>' : '&horbar;';
+					break;
+				case 'checkbox_set':
+					if ( is_array( $value ) && ! empty( $value ) ) {
+						$option_labels = $this->get_option_labels( $field );
+						foreach( $value as $key ) {
+							$labels[] = $option_labels[$key];
+						}
+					}
+					$content = implode( ', ', $labels );
+					break;
+			}
+
+		}
+
+		return $content;
+
+	}
+
+	/**
+	 * Get Option Labels
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function get_option_labels( $field, $post_id = 0 ) {
+		
+		$option_labels = array();
+		
+		if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+			
+			foreach( $field['options'] as $option ) {
+				
+				$option_labels[$option['value']] = $option['label'];
+		
+			}
+		
+		}
+
+		return $option_labels;
+	}
+
+	/**
 	 * Render Admin Column
 	 * 
 	 * @since   0.0.1
@@ -1113,7 +1552,7 @@ class WP_CPT {
 
 				if ( ! empty( $value ) ) {
 
-					echo wp_kses_post( $value );
+					echo wp_kses_post( $this->get_column_content( $value, $field ) );
 
 				} else {
 
@@ -1169,29 +1608,36 @@ class WP_CPT {
 	 */
 	public function manage_sorting( $query = null ) {
 
-		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
+		$query_post_type = $query->get( 'post_type' );
+		$is_post_type = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
+		
+		if ( $is_post_type ) {
 
-		if ( is_array( $field ) && ! empty( $field ) ) {
+			$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
 
-			$query->set( 'meta_query', array(
-				'relation' => 'OR',
-				array(
-					'key'     => $field['name'], 
-					'compare' => 'EXISTS'
-				),
-				array(
-					'key'     => $field['name'], 
-					'compare' => 'NOT EXISTS'
-				)
-			) );
+			if ( is_array( $field ) && ! empty( $field ) ) {
 
-			if ( $field['type'] === 'number' ) {
-				
-				$query->set( 'orderby', 'meta_value_num' );
+				$query->set( 'meta_query', array(
+					'relation' => 'OR',
+					array(
+						'key'     => $field['name'], 
+						'compare' => 'EXISTS'
+					),
+					array(
+						'key'     => $field['name'], 
+						'compare' => 'NOT EXISTS'
+					)
+				) );
 
-			} else {
+				if ( $field['type'] === 'number' ) {
+					
+					$query->set( 'orderby', 'meta_value_num' );
 
-				$query->set( 'orderby', 'meta_value' );
+				} else {
+
+					$query->set( 'orderby', 'meta_value' );
+
+				}
 
 			}
 

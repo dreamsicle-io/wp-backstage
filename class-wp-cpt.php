@@ -77,6 +77,16 @@ class WP_CPT {
 	);
 
 	/**
+	 * Required Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $required_args = array(
+		'singular_name', 
+		'plural_name', 
+	);
+
+	/**
 	 * Default Taxonomy Args
 	 * 
 	 * @since 0.0.1
@@ -90,16 +100,6 @@ class WP_CPT {
 		'with_front'      => false, 
 		'archive_base'    => '', 
 		'rest_base'       => '', 
-	);
-
-	/**
-	 * Required Args
-	 * 
-	 * @since 0.0.1
-	 */
-	public $required_args = array(
-		'singular_name', 
-		'plural_name', 
 	);
 
 	/**
@@ -133,6 +133,7 @@ class WP_CPT {
 		'is_sortable' => '', 
 		'options'     => array(),
 		'input_attrs' => array(),
+		'args'        => array(), 
 	);
 
 	/**
@@ -144,6 +145,16 @@ class WP_CPT {
 		'value'       => '', 
 		'label'       => '', 
 		'disabled'    => false,
+	);
+
+	/**
+	 * Default Media Uploader Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_media_uploader_args = array(
+		'multiple' => '', 
+		'type'     => '', 
 	);
 
 	/**
@@ -402,6 +413,7 @@ class WP_CPT {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
 
 	}
 
@@ -413,13 +425,30 @@ class WP_CPT {
 	 */
 	public function enqueue_admin_scripts() {
 
-		$screen = get_current_screen();
+		if ( ! $this->is_screen( 'id', $this->slug ) ) {
+			return;
+		}
 
-		if ( $screen->id === $this->slug ) {
-
+		if ( ! empty( $this->get_field_by( 'type', 'media' ) ) && ! wp_script_is( 'media-editor', 'enqueued' ) ) {
+			
 			wp_enqueue_media();
 
 		}
+
+	}
+
+
+	/**
+	 * Is Screen
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  If the match was successful or not. 
+	 */
+	public function is_screen( $key = '', $value = '' ) {
+
+		$screen = get_current_screen();
+
+		return ( $value === $screen->$key );
 
 	}
 
@@ -603,524 +632,6 @@ class WP_CPT {
 	}
 
 	/**
-	 * Add Meta Boxes
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function add_meta_boxes() {
-
-		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
-
-			foreach ( $this->args['meta_boxes'] as $meta_box ) {
-
-				$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
-
-				add_meta_box( 
-					$meta_box['id'], 
-					$meta_box['title'], 
-					array( $this, 'render_meta_box' ), 
-					$this->slug, 
-					$meta_box['context'], 
-					$meta_box['priority'], 
-					array( 
-						'description' => $meta_box['description'], 
-						'fields'      => $meta_box['fields'], 
-					)
-				);
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Render Meta Box
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_meta_box( $post = null, $meta_box = array() ) {
-
-		$meta_box = wp_parse_args( $meta_box, array(
-			'id'    => '', 
-			'title' => '', 
-			'args'  => array(
-				'descripton' => '',
-				'fields'     => array(), 
-			), 
-		) );
-
-		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
-			
-			foreach ( $meta_box['args']['fields'] as $field ) {
-
-				if ( $field['type'] === 'textarea' ) {
-
-					$this->render_textarea( $field, $post );
-
-				} elseif ( $field['type'] === 'select' ) {
-
-					$this->render_select( $field, $post );
-
-				} elseif ( $field['type'] === 'radio' ) {
-
-					$this->render_radio( $field, $post );
-
-				} elseif ( $field['type'] === 'checkbox' ) {
-
-					$this->render_checkbox( $field, $post );
-
-				} elseif ( $field['type'] === 'checkbox_set' ) {
-
-					$this->render_checkbox_set( $field, $post );
-
-				} else {
-
-					$this->render_input( $field, $post );
-
-				}
-
-			}
-
-		}
-
-		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
-
-			<p><?php 
-
-				echo wp_kses( $meta_box['args']['description'], $this->kses_p );
-
-			?></p>
-
-		<?php }
-
-	}
-
-	/**
-	 * Format Attrs
-	 * 
-	 * @since   0.0.1
-	 * @return  string  The imploded, escaped, formatted attributes.
-	 */
-	public function format_attrs( $attrs = array() ) {
-
-		$formatted_attrs = array();
-
-		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
-			
-			foreach ( $attrs as $key => $value ) {
-				
-				$formatted_attrs[] = sprintf( 
-					'%1$s="%2$s"', 
-					esc_attr( $key ), 
-					esc_attr( $value ) 
-				);
-
-			}
-			
-		}
-
-		return implode( ' ', $formatted_attrs );
-	}
-
-	/**
-	 * Render Input
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_input( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
-
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p ); 
-				
-				?></label>
-
-				<br/>
-
-				<input 
-				class="widefat"
-				type="<?php echo esc_attr( $field['type'] ); ?>" 
-				name="<?php echo esc_attr( $field['name'] ); ?>" 
-				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
-				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php disabled( true, $field['disabled'] ); ?>
-				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
-			
-			</p>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p ); 
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	/**
-	 * Render Checkbox
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_checkbox( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
-
-				<input 
-				type="checkbox" 
-				name="<?php echo esc_attr( $field['name'] ); ?>" 
-				id="<?php echo esc_attr( $id ); ?>" 
-				value="1" 
-				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php checked( true, $value ); ?>
-				<?php disabled( true, $field['disabled'] ); ?>
-				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
-
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p ); 
-				
-				?></label>
-			
-			</p>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p ); 
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	/**
-	 * Render Textarea
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_textarea( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
-
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p );
-				
-				?></label>
-
-				<br/>
-
-				<textarea 
-				class="widefat"
-				type="<?php echo esc_attr( $field['type'] ); ?>" 
-				name="<?php echo esc_attr( $field['name'] ); ?>" 
-				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
-				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php disabled( true, $field['disabled'] ); ?>
-				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
-
-					echo esc_textarea( $value );
-
-				?></textarea>
-			
-			</p>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p );
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	/**
-	 * Render Select
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_select( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
-
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p );
-				
-				?></label>
-
-				<br/>
-
-				<select 
-				name="<?php echo esc_attr( $field['name'] ); ?>" 
-				id="<?php echo esc_attr( $id ); ?>" 
-				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php disabled( true, $field['disabled'] ); ?>
-				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
-
-					if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
-
-						foreach ( $field['options'] as $option ) { 
-
-							$option = wp_parse_args( $option, $this->default_option_args );
-							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
-
-							<option 
-							value="<?php echo esc_attr( $option['value'] ); ?>"
-							<?php selected( $option['value'], $value ); ?>
-							<?php disabled( true, $option['disabled'] ); ?>><?php 
-
-								echo strip_tags( $option_label );
-
-							?></option>
-
-						<?php }
-
-					}
-
-				?></select>
-			
-			</p>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p );
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	/**
-	 * Render Radio
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_radio( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<fieldset 
-			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
-
-				<legend><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p );
-				
-				?></legend>
-
-				<?php 
-				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
-
-					foreach ( $field['options'] as $option ) { 
-
-						$option = wp_parse_args( $option, $this->default_option_args );
-						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
-						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
-
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
-
-							<input
-							type="radio" 
-							id="<?php echo esc_attr( $input_id ); ?>" 
-							name="<?php echo esc_attr( $field['name'] ); ?>" 
-							value="<?php echo esc_attr( $option['value'] ); ?>"
-							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
-							<?php checked( $option['value'], $value ); ?>
-							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
-
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
-
-								echo wp_kses( $option_label, $this->kses_p );
-							
-							?></label>
-
-						</div>
-
-					<?php }
-
-				} ?>
-			
-			</fieldset>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p );
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	/**
-	 * Render Checkbox Set
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_checkbox_set( $field = array(), $post = null ) {
-
-		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
-
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
-
-			<fieldset 
-			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
-
-				<legend><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p );
-				
-				?></legend>
-
-				<?php 
-				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
-
-					foreach ( $field['options'] as $option ) { 
-
-						$option = wp_parse_args( $option, $this->default_option_args );
-						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
-						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
-
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
-
-							<input
-							type="checkbox" 
-							id="<?php echo esc_attr( $input_id ); ?>" 
-							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
-							value="<?php echo esc_attr( $option['value'] ); ?>"
-							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
-							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
-							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
-
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
-
-								echo strip_tags( $option_label );
-							
-							?></label>
-
-						</div>
-
-					<?php }
-
-				} ?>
-			
-			</fieldset>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p );
-				
-				?></p>
-
-			<?php } ?>
-
-		</div>
-
-	<?php }
-
-	public function get_media_uploader_label( $template = '', $field = array() ) {
-
-		if ( ! empty( $template ) ) {
-
-			return sprintf( 
-				/* translators: 1: image label. */
-				$template, 
-				$field['label'] 
-			);
-
-		} else {
-
-			return $field['label'];
-
-		}
-
-	}
-
-	/**
 	 * Get Fields
 	 * 
 	 * @since   0.0.1
@@ -1185,6 +696,22 @@ class WP_CPT {
 			
 			case 'checkbox_set':
 				$value = array_map( 'esc_attr', $value );
+				break;
+
+			case 'media':
+				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+				if ( $args['multiple'] ) {
+					if ( ! empty( $value ) ) {
+						$value = array_map( 'intval', explode( ',', $value ) );
+					} else {
+						$value = null;
+					}
+				} else {
+					$value = absint( $value );
+					if ( ! $value > 0 ) {
+						$value = null;
+					}
+				}
 				break;
 			
 			default:
@@ -1644,5 +1171,883 @@ class WP_CPT {
 		}
 
 	}
+
+	/**
+	 * Add Meta Boxes
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function add_meta_boxes() {
+
+		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
+
+			foreach ( $this->args['meta_boxes'] as $meta_box ) {
+
+				$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
+
+				add_meta_box( 
+					$meta_box['id'], 
+					$meta_box['title'], 
+					array( $this, 'render_meta_box' ), 
+					$this->slug, 
+					$meta_box['context'], 
+					$meta_box['priority'], 
+					array( 
+						'description' => $meta_box['description'], 
+						'fields'      => $meta_box['fields'], 
+					)
+				);
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Render Meta Box
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_meta_box( $post = null, $meta_box = array() ) {
+
+		$meta_box = wp_parse_args( $meta_box, array(
+			'id'    => '', 
+			'title' => '', 
+			'args'  => array(
+				'descripton' => '',
+				'fields'     => array(), 
+			), 
+		) );
+
+		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
+			
+			foreach ( $meta_box['args']['fields'] as $field ) {
+
+				if ( $field['type'] === 'textarea' ) {
+
+					$this->render_textarea( $field, $post );
+
+				} elseif ( $field['type'] === 'select' ) {
+
+					$this->render_select( $field, $post );
+
+				} elseif ( $field['type'] === 'radio' ) {
+
+					$this->render_radio( $field, $post );
+
+				} elseif ( $field['type'] === 'checkbox' ) {
+
+					$this->render_checkbox( $field, $post );
+
+				} elseif ( $field['type'] === 'checkbox_set' ) {
+
+					$this->render_checkbox_set( $field, $post );
+
+				} elseif ( $field['type'] === 'media' ) {
+
+					$this->render_media_uploader( $field, $post );
+
+				} else {
+
+					$this->render_input( $field, $post );
+
+				}
+
+			}
+
+		}
+
+		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
+
+			<p><?php 
+
+				echo wp_kses( $meta_box['args']['description'], $this->kses_p );
+
+			?></p>
+
+		<?php }
+
+	}
+
+	/**
+	 * Format Attrs
+	 * 
+	 * @since   0.0.1
+	 * @return  string  The imploded, escaped, formatted attributes.
+	 */
+	public function format_attrs( $attrs = array() ) {
+
+		$formatted_attrs = array();
+
+		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
+			
+			foreach ( $attrs as $key => $value ) {
+				
+				$formatted_attrs[] = sprintf( 
+					'%1$s="%2$s"', 
+					esc_attr( $key ), 
+					esc_attr( $value ) 
+				);
+
+			}
+			
+		}
+
+		return implode( ' ', $formatted_attrs );
+	}
+
+	/**
+	 * Render Input
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_input( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p ); 
+				
+				?></label>
+
+				<br/>
+
+				<input 
+				class="widefat"
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Checkbox
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_checkbox( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<input 
+				type="checkbox" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="1" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php checked( true, $value ); ?>
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p ); 
+				
+				?></label>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Textarea
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_textarea( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></label>
+
+				<br/>
+
+				<textarea 
+				class="widefat"
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					echo esc_textarea( $value );
+
+				?></textarea>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Select
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_select( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></label>
+
+				<br/>
+
+				<select 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+						foreach ( $field['options'] as $option ) { 
+
+							$option = wp_parse_args( $option, $this->default_option_args );
+							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+
+							<option 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php selected( $option['value'], $value ); ?>
+							<?php disabled( true, $option['disabled'] ); ?>><?php 
+
+								echo strip_tags( $option_label );
+
+							?></option>
+
+						<?php }
+
+					}
+
+				?></select>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Radio
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_radio( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<fieldset 
+			id="<?php echo esc_attr( $id ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+
+				<legend><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></legend>
+
+				<?php 
+				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+					foreach ( $field['options'] as $option ) { 
+
+						$option = wp_parse_args( $option, $this->default_option_args );
+						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+
+						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+
+							<input
+							type="radio" 
+							id="<?php echo esc_attr( $input_id ); ?>" 
+							name="<?php echo esc_attr( $field['name'] ); ?>" 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
+							<?php checked( $option['value'], $value ); ?>
+							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
+
+							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+
+								echo wp_kses( $option_label, $this->kses_p );
+							
+							?></label>
+
+						</div>
+
+					<?php }
+
+				} ?>
+			
+			</fieldset>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Checkbox Set
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_checkbox_set( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<fieldset 
+			id="<?php echo esc_attr( $id ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+
+				<legend><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p );
+				
+				?></legend>
+
+				<?php 
+				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+
+					foreach ( $field['options'] as $option ) { 
+
+						$option = wp_parse_args( $option, $this->default_option_args );
+						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+
+						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+
+							<input
+							type="checkbox" 
+							id="<?php echo esc_attr( $input_id ); ?>" 
+							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
+							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
+							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
+
+							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+
+								echo strip_tags( $option_label );
+							
+							?></label>
+
+						</div>
+
+					<?php }
+
+				} ?>
+			
+			</fieldset>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	public function get_media_uploader_label( $template = '', $field = array() ) {
+
+		if ( ! empty( $template ) ) {
+
+			return sprintf( 
+				/* translators: 1: image label. */
+				$template, 
+				$field['label'] 
+			);
+
+		} else {
+
+			return $field['label'];
+
+		}
+
+	}
+
+	
+	/**
+	 * Render Media Uploader Thumbnail
+	 *
+	 * @since   0.0.1 
+	 * @param   string  $attachment_id 
+	 * @param   string  $type           `template` or `clone`.
+	 * @return  void
+	 */
+	public function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone' ) {
+
+		$orientation_class = 'portrait';
+		$src = '';
+
+		if ( ( $attachment_id > 0 ) && ( $type === 'clone' ) ) {
+
+			$image_attrs = wp_get_attachment_image_src( $attachment_id, 'medium', true );
+			
+			$src = $image_attrs[0];
+
+			if ( $image_attrs[1] > $image_attrs[2] ) {
+
+				$orientation_class = 'landscape';
+
+			}
+
+		}
+
+		if ( ( $attachment_id > 0 ) || ( $type === 'template' ) ) { ?>
+
+			<figure 
+			tabindex="0" 
+			class="attachment" 
+			style="<?php echo ($type === 'template') ? 'display:none;' : ''; ?>"
+			<?php echo sprintf( 'data-media-uploader-%1$s', $type ); ?>>
+
+				<div class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>">
+
+					<div class="thumbnail">
+
+						<div class="centered">
+
+							<img src="<?php echo esc_url( $src ); ?>">
+
+						</div>
+
+					</div>
+
+				</div>	
+
+			</figure>
+
+		<?php }
+
+	}
+
+
+
+	/**
+	 * Render Checkbox Set
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_media_uploader( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true );
+		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args ); ?>
+
+		<fieldset 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-media-uploader="<?php echo esc_attr( $id ); ?>"
+		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
+		data-media-uploader-type="<?php echo esc_attr( $args['type'] ); ?>"
+		data-media-uploader-title="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Select %1$s', 'WP_CPT' ), $field ) ); ?>"
+		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Set %1$s', 'WP_CPT' ), $field ) ); ?>">
+				
+			<legend id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>">
+
+				<a 
+				href="#"
+				style="color:inherit;text-decoration:inherit;"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_p ); 
+			
+				?></a>
+
+			</legend>
+
+			<div 
+			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
+			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>">
+
+				<?php $this->render_media_uploader_thumbnail( '', 'template' ); ?>
+
+				<a 
+				href="#"
+				title="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Change %1$s', 'WP_CPT' ), $field ) ); ?>"
+				style="display:block;"><?php 
+
+					if ( ! empty( $value ) ) {
+
+						if ( is_array( $value ) ) {
+
+							foreach ( $value as $attachment_id ) {
+
+								$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone' );
+
+							}
+
+						} else {
+
+							$this->render_media_uploader_thumbnail( absint( $value ), 'clone' );
+						}
+
+					}
+
+				?></a>
+
+			</div>
+
+			<p>
+
+				<button 
+				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
+				type="button"
+				class="button"
+				<?php disabled( true, ( $value > 0 ) ); ?>><?php 
+
+						echo esc_html( $this->get_media_uploader_label( __( 'Set %1$s', 'WP_CPT' ), $field ) ); 
+
+				?></button>
+
+				<button 
+				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
+				type="button" 
+				class="button"
+				<?php disabled( false, ( $value > 0 ) ); ?>><?php 
+
+						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
+
+				?></button>
+
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+
+				?></p>
+
+			<?php } ?>
+
+			<input 
+			type="hidden" 
+			id="<?php echo esc_attr( $id ); ?>" 
+			name="<?php echo esc_attr( $field['name'] ); ?>" 
+			value="<?php echo esc_attr( implode( ',', $value ) ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" />
+
+		</fieldset>
+
+	<?php }
+
+	/**
+	 * Get Fields
+	 * 
+	 * @since   0.0.1
+	 * @return  array  
+	 */
+	public function inline_media_uploader_script() {
+
+		if ( ! $this->is_screen( 'id', $this->slug ) ) {
+			return;
+		}
+
+		if ( ! wp_script_is( 'media-editor', 'enqueued' ) || empty( $this->get_field_by( 'type', 'media' ) ) ) {
+			return;
+		} ?>
+
+		<script>
+
+			(function() {
+
+				function handleSet(e, uploader = null, modal = null) {
+					e.preventDefault();
+					if (uploader && modal) {
+						const fieldId = uploader.getAttribute('data-media-uploader');
+
+						modal.on('open', function() {
+							const selection = modal.state().get('selection');
+							const focus = modal.state().get('active');
+							const input = uploader.querySelector('#' + fieldId);
+							
+							if (input) {
+								const selected = input.value.split(',');
+								var attachments = [];
+								for (var i = 0; i < selected.length; i++) {
+									const attachmentId = parseInt(selected[i], 10);
+									attachments.push(wp.media.attachment(attachmentId));
+								}
+								if (attachments && (attachments.length > 0)) {
+									selection.add(attachments);
+								}
+							}
+						});
+
+						modal.on('select', function() {
+							const selection = modal.state().get('selection').toJSON();
+							if (selection && (selection.length > 0)) {
+								const input = uploader.querySelector('#' + fieldId);
+								const preview = uploader.querySelector('#' + fieldId + '_preview');
+								const set = uploader.querySelector('#' + fieldId + '_button_set');
+								const remove = uploader.querySelector('#' + fieldId + '_button_remove');
+								var saveIds = [];
+
+								if (preview) {
+									const previewLink = preview.querySelector('a');
+									const previewTemplate = preview.querySelector('[data-media-uploader-template]');
+									const previewClones = preview.querySelectorAll('[data-media-uploader-clone]');
+									if (previewClones && (previewClones.length > 0)) {
+										for (var i = 0; i < previewClones.length; i++) {
+											previewLink.removeChild(previewClones[i]);
+										}
+									}
+									if (previewLink && previewTemplate) {
+										for (var i = 0; i < selection.length; i++) {
+											const attachment = selection[i];
+											const newItem = previewTemplate.cloneNode(true);
+											const newItemImg = newItem.querySelector('img');
+
+											newItem.removeAttribute('data-media-uploader-template');
+											newItem.setAttribute('data-media-uploader-clone', true);
+											newItemImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
+											newItem.style.display = 'block';
+											
+											if (attachment.width > attachment.height) {
+												const attachmentContainer = newItem.querySelector('.attachment-preview');
+												attachmentContainer.classList.remove('portrait');
+												attachmentContainer.classList.add('landscape');
+											}
+
+											previewLink.appendChild(newItem);
+											saveIds.push(parseInt(attachment.id, 10));
+										}
+									}
+									preview.style.display = 'block';
+								}
+								if (input) {
+									input.value = saveIds.join(',');
+								}
+								if (set) {
+									set.setAttribute('disabled', true);
+								}
+								if (remove) {
+									remove.removeAttribute('disabled');
+								}
+							}
+						});
+
+						modal.open();
+					}
+				}
+
+				function handleRemove(e, uploader = null) {
+					e.preventDefault();
+					if (uploader) {
+						const fieldId = uploader.getAttribute('data-media-uploader');
+						const input = uploader.querySelector('#' + fieldId);
+						const preview = uploader.querySelector('#' + fieldId + '_preview');
+						const set = uploader.querySelector('#' + fieldId + '_button_set');
+						const remove = uploader.querySelector('#' + fieldId + '_button_remove');
+
+						if (preview) {
+							const previewClones = preview.querySelectorAll('[data-media-uploader-clone]');
+							if (previewClones && (previewClones.length > 0)) {
+								for (var i = 0; i < previewClones.length; i++) {
+									const previewLink = preview.querySelector('a');
+									previewLink.removeChild(previewClones[i]);
+								}
+							}
+							preview.style.display = 'none';
+						}
+						if (input) {
+							input.value = '';
+						}
+						if (set) {
+							set.removeAttribute('disabled');
+						}
+						if (remove) {
+							remove.setAttribute('disabled', true);
+						}
+					}
+				}
+
+				function init(uploader = null) {
+					if (uploader) {
+
+						const fieldId = uploader.getAttribute('data-media-uploader');
+						const legendLink = uploader.querySelector('#' + fieldId + '_legend > a');
+						const set = uploader.querySelector('#' + fieldId + '_button_set');
+						const remove = uploader.querySelector('#' + fieldId + '_button_remove');
+						const previewLink = uploader.querySelector('#' + fieldId + '_preview > a');
+						const multipleAttr = uploader.getAttribute('data-media-uploader-multiple');
+
+						const modal = wp.media({
+							title: uploader.getAttribute('data-media-uploader-title'),
+							multiple: (multipleAttr && (multipleAttr !== 'false')), 
+							library: {
+								type: uploader.getAttribute('data-media-uploader-type') || 'image',
+							}, 
+							button: {
+								text: uploader.getAttribute('data-media-uploader-button'),
+							},
+						});
+
+						if (legendLink) {
+							legendLink.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
+						}
+						if (set) {
+							set.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
+						}
+						if (previewLink) {
+							previewLink.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
+						}
+						if (remove) {
+							remove.addEventListener('click', function(e) { handleRemove(e, uploader); });
+						}
+
+					}
+				}
+
+				function initAll(container = null) {
+					container = container || document;
+					const uploaders = container.querySelectorAll('fieldset[data-media-uploader]');
+					if (uploaders && (uploaders.length > 0)) {
+						for (var i = 0; i < uploaders.length; i++) {
+							init(uploaders[i]);
+						}
+					}
+				}
+
+				document.addEventListener( 'DOMContentLoaded', function(e) { initAll(); });
+
+			})();
+
+		</script>
+
+	<?php }
 
 }

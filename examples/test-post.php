@@ -184,6 +184,44 @@ function wpcpt_init_default() {
 							),
 						), 
 					),
+					array( 
+						'type'        => 'media', 
+						'name'        => 'wpcpt_image_field', 
+						'label'       => __( 'Image', 'wpcpt' ), 
+						'description' => __( 'Please select or upload an image.', 'wpcpt' ), 
+						'has_column'  => true, 
+					),
+					array( 
+						'type'        => 'media', 
+						'name'        => 'wpcpt_gallery_field', 
+						'label'       => __( 'Gallery', 'wpcpt' ), 
+						'description' => __( 'Please select or upload multiple images.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'multiple' => true, 
+						), 
+					),
+					array( 
+						'type'        => 'media', 
+						'name'        => 'wpcpt_video_field', 
+						'label'       => __( 'Video', 'wpcpt' ), 
+						'description' => __( 'Please select or upload a video.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'type' => 'video', 
+						), 
+					),
+					array( 
+						'type'        => 'media', 
+						'name'        => 'wpcpt_application_field', 
+						'label'       => __( 'Documents', 'wpcpt' ), 
+						'description' => __( 'Please select or upload documents.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'multiple' => true, 
+							'type'     => 'application/pdf', 
+						), 
+					),
 				), 
 			),
 			array(

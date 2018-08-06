@@ -429,9 +429,19 @@ class WP_CPT {
 			return;
 		}
 
-		if ( ! empty( $this->get_field_by( 'type', 'media' ) ) && ! wp_script_is( 'media-editor', 'enqueued' ) ) {
+		if ( ! empty( $this->get_field_by( 'type', 'media' ) ) ) {
 			
-			wp_enqueue_media();
+			if ( ! wp_script_is( 'media-editor', 'enqueued' ) ) {
+				wp_enqueue_media();
+			}
+
+			if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
+				wp_enqueue_script( 'jquery-ui-core' );
+			}
+
+			if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
+				wp_enqueue_script( 'jquery-ui-sortable' );
+			}
 
 		}
 
@@ -758,6 +768,12 @@ class WP_CPT {
 
 					$values[$field['name']] = $value;
 
+					if ( $field['type'] === 'media' ) {
+
+						$this->handle_attachments( $post_id, $value, $field );
+
+					}
+
 				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
 
 					update_post_meta( $post_id, $field['name'], false );
@@ -770,6 +786,66 @@ class WP_CPT {
 
 				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
 
+			}
+
+		}
+
+	}
+
+	public function handle_attachments( $post_id = 0, $value = 0, $field = array() ) {
+
+		if ( $field['type'] !== 'media') {
+			return;
+		}
+
+		$media_uploader_args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+
+		if ( ! $media_uploader_args['attach'] ) {
+			return;
+		}
+
+		if ( ! empty( $value ) ) {
+			
+			if ( $media_uploader_args['multiple'] ) {
+
+				if ( is_array( $value ) && ! empty( $value ) ) {
+
+					foreach( $value as $attachment_id ) {
+
+						if ( get_post_type( $attachment_id ) === 'attachment' ) {
+
+							$parent_id = wp_get_post_parent_id( $attachment_id );
+							if ( ! $parent_id > 0 ) {
+								wp_update_post( array(
+									'ID'          => $attachment_id, 
+									'post_parent' => $post_id,
+								) );
+							}
+
+						}
+
+					}
+
+				}
+
+			} else {
+
+				if ( ! empty( $value ) ) {
+				
+					if ( get_post_type( $value ) === 'attachment' ) {
+				
+						$parent_id = wp_get_post_parent_id( $value );
+						if ( ! $parent_id > 0 ) {
+							wp_update_post( array(
+								'ID'          => $value, 
+								'post_parent' => $post_id,
+							) );
+						}
+				
+					}
+				
+				}
+			
 			}
 
 		}
@@ -840,7 +916,7 @@ class WP_CPT {
 					// reset the checkbox column followed by the new 
 					// thumbnail column
 					$columns[$column_key] = $column_label;
-					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . strip_tags( $this->thumbnail_label ) . '</span>';
+					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->args['thumbnail_label'] ) . '</span>';
 
 				} else {
 
@@ -985,37 +1061,37 @@ class WP_CPT {
 	}
 
 	/**
-	 * Get Column Content
+	 * Render Column Content
 	 * 
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	public function get_column_content( $value = null, $field = array() ) {
+	public function render_column_content( $value = null, $field = array() ) {
 
 		$content = '&horbar;';
 
-		if ( is_array( $field ) && ! empty( $field ) ) {
+		if ( ! empty( $value ) && ( is_array( $field ) && ! empty( $field ) ) ) {
 
 			switch ( $field['type'] ) {
 				case 'url':
-					$content = '<a href="' . esc_url( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_url( $value ) . '</a>';
+					$content = '<a href="' . esc_attr( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
 					break;
 				case 'email':
-					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_attr( $value ) . '</a>';
+					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>';
 					break;
 				case 'tel':
-					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_attr( $value ) . '</a>';
+					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_html( $value ) . '</a>';
 					break;
 				case 'radio':
 					$labels = $this->get_option_labels( $field );
-					$content = $labels[$value];
+					$content = esc_html( $labels[$value] );
 					break;
 				case 'select':
 					$labels = $this->get_option_labels( $field );
-					$content = $labels[$value];
+					$content = esc_html( $labels[$value] );
 					break;
 				case 'checkbox':
-					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_attr__( 'true', 'WP_CPT' ) . '</span>' : '&horbar;';
+					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'WP_CPT' ) . '</span>' : '&horbar;';
 					break;
 				case 'checkbox_set':
 					if ( is_array( $value ) && ! empty( $value ) ) {
@@ -1024,13 +1100,35 @@ class WP_CPT {
 							$labels[] = $option_labels[$key];
 						}
 					}
-					$content = implode( ', ', $labels );
+					$content = esc_html( implode( ', ', $labels ) );
+					break;
+				case 'media':
+					$thumbnail_size = 20;
+					$thumbnail_style = 'height:' . $thumbnail_size . 'px;width:auto;margin:0 4px 4px 0;display:block;float:left;border:1px solid #e1e1e1;';
+					if ( is_array( $value ) ) {
+						$value = array_map( 'absint', $value );
+					} else {
+						$value = array( absint( $value ) );
+					}
+					$attachments = array();
+					foreach( $value as $i => $attachment_id ) {
+						$attachments[] = wp_get_attachment_image( 
+							intval( $attachment_id ), 
+							array($thumbnail_size, $thumbnail_size), 
+							true, 
+							array( 
+								'style' => $thumbnail_style, 
+								'title' => get_the_title( $attachment_id ), 
+							) 
+						);
+					}
+					$content = implode( '', $attachments );
 					break;
 			}
 
 		}
 
-		return $content;
+		echo $content;
 
 	}
 
@@ -1079,7 +1177,7 @@ class WP_CPT {
 
 				if ( ! empty( $value ) ) {
 
-					echo wp_kses_post( $this->get_column_content( $value, $field ) );
+					$this->render_column_content( $value, $field );
 
 				} else {
 
@@ -1317,7 +1415,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p ); 
+					echo esc_html( $field['label'] ); 
 				
 				?></label>
 
@@ -1379,7 +1477,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p ); 
+					echo esc_html( $field['label'] ); 
 				
 				?></label>
 			
@@ -1419,7 +1517,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p );
+					echo esc_html( $field['label'] );
 				
 				?></label>
 
@@ -1475,7 +1573,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p );
+					echo esc_html( $field['label'] );
 				
 				?></label>
 
@@ -1500,7 +1598,7 @@ class WP_CPT {
 							<?php selected( $option['value'], $value ); ?>
 							<?php disabled( true, $option['disabled'] ); ?>><?php 
 
-								echo strip_tags( $option_label );
+								echo esc_html( $option_label );
 
 							?></option>
 
@@ -1548,7 +1646,7 @@ class WP_CPT {
 
 				<legend><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p );
+					echo esc_html( $field['label'] );
 				
 				?></legend>
 
@@ -1574,7 +1672,7 @@ class WP_CPT {
 
 							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
 
-								echo wp_kses( $option_label, $this->kses_p );
+								echo esc_html( $option_label );
 							
 							?></label>
 
@@ -1622,7 +1720,7 @@ class WP_CPT {
 
 				<legend><?php 
 
-					echo wp_kses( $field['label'], $this->kses_p );
+					echo esc_html( $field['label'] );
 				
 				?></legend>
 
@@ -1648,7 +1746,7 @@ class WP_CPT {
 
 							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
 
-								echo strip_tags( $option_label );
+								echo esc_html( $option_label );
 							
 							?></label>
 
@@ -1709,26 +1807,29 @@ class WP_CPT {
 		$src = '';
 
 		if ( ( $attachment_id > 0 ) && ( $type === 'clone' ) ) {
-
-			$image_attrs = wp_get_attachment_image_src( $attachment_id, 'medium', true );
 			
+			$image_attrs = wp_get_attachment_image_src( absint( $attachment_id ), 'medium', true );
 			$src = $image_attrs[0];
-
+			
 			if ( $image_attrs[1] > $image_attrs[2] ) {
-
 				$orientation_class = 'landscape';
-
 			}
 
 		}
 
-		if ( ( $attachment_id > 0 ) || ( $type === 'template' ) ) { ?>
+		if ( ( $attachment_id > 0 ) || ( $type === 'template' ) ) {
+
+			$thumbnail_type_attr = sprintf( 
+				'data-media-uploader-%1$s="%2$s"', 
+				esc_attr( $type ), 
+				( $type === 'clone' ) ? absint( $attachment_id ) : 'true' 
+			); ?>
 
 			<figure 
 			tabindex="0" 
 			class="attachment" 
 			style="<?php echo ($type === 'template') ? 'display:none;' : ''; ?>"
-			<?php echo sprintf( 'data-media-uploader-%1$s', $type ); ?>>
+			<?php echo $thumbnail_type_attr; ?>>
 
 				<div class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>">
 
@@ -1763,59 +1864,49 @@ class WP_CPT {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
 		$value = get_post_meta( $post->ID, $field['name'], true );
-		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args ); ?>
+		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'WP_CPT' ) : __( 'Set %1$s', 'WP_CPT' ); ?>
 
 		<fieldset 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		data-media-uploader="<?php echo esc_attr( $id ); ?>"
+		data-media-uploader-id="<?php echo esc_attr( $id ); ?>"
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
 		data-media-uploader-type="<?php echo esc_attr( $args['type'] ); ?>"
-		data-media-uploader-title="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Select %1$s', 'WP_CPT' ), $field ) ); ?>"
-		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Set %1$s', 'WP_CPT' ), $field ) ); ?>">
+		data-media-uploader-title="<?php echo esc_attr( $field['label'] ); ?>"
+		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>">
 				
-			<legend id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>">
+			<legend 
+			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
+			style="cursor:pointer;"><?php 
 
-				<a 
-				href="#"
-				style="color:inherit;text-decoration:inherit;"><?php 
-
-					echo wp_kses( $field['label'], $this->kses_p ); 
-			
-				?></a>
-
-			</legend>
+				echo esc_html( $field['label'] ); 
+		
+			?></legend>
 
 			<div 
 			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
-			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>">
+			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>"><?php
 
-				<?php $this->render_media_uploader_thumbnail( '', 'template' ); ?>
+				$this->render_media_uploader_thumbnail( '', 'template' ); 
 
-				<a 
-				href="#"
-				title="<?php echo esc_attr( $this->get_media_uploader_label( __( 'Change %1$s', 'WP_CPT' ), $field ) ); ?>"
-				style="display:block;"><?php 
+				if ( ! empty( $value ) ) {
 
-					if ( ! empty( $value ) ) {
+					if ( is_array( $value ) ) {
 
-						if ( is_array( $value ) ) {
+						foreach ( $value as $attachment_id ) {
 
-							foreach ( $value as $attachment_id ) {
+							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone' );
 
-								$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone' );
-
-							}
-
-						} else {
-
-							$this->render_media_uploader_thumbnail( absint( $value ), 'clone' );
 						}
 
+					} else {
+
+						$this->render_media_uploader_thumbnail( absint( $value ), 'clone' );
 					}
 
-				?></a>
+				}
 
-			</div>
+			?></div>
 
 			<p>
 
@@ -1823,17 +1914,31 @@ class WP_CPT {
 				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
 				type="button"
 				class="button"
-				<?php disabled( true, ( $value > 0 ) ); ?>><?php 
+				<?php disabled( true, ! empty( $value) ); ?>><?php 
 
-						echo esc_html( $this->get_media_uploader_label( __( 'Set %1$s', 'WP_CPT' ), $field ) ); 
+						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'WP_CPT' ), $field ) ); 
 
 				?></button>
+
+				<?php if ( $args['multiple'] ) { ?>
+
+					<button 
+					id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
+					type="button"
+					class="button"
+					<?php disabled( true, empty( $value ) ); ?>><?php 
+
+							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'WP_CPT' ), $field ) ); 
+
+					?></button>
+
+				<?php } ?>
 
 				<button 
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
 				class="button"
-				<?php disabled( false, ( $value > 0 ) ); ?>><?php 
+				<?php disabled( true, empty( $value ) ); ?>><?php 
 
 						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
 
@@ -1857,7 +1962,7 @@ class WP_CPT {
 			type="hidden" 
 			id="<?php echo esc_attr( $id ); ?>" 
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
-			value="<?php echo esc_attr( implode( ',', $value ) ); ?>"
+			value="<?php echo is_array( $value ) ? esc_attr( implode( ',', $value ) ) : esc_attr( $value ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" />
 
 		</fieldset>
@@ -1880,161 +1985,146 @@ class WP_CPT {
 			return;
 		} ?>
 
-		<script>
+		<script type="text/javascript">
 
-			(function() {
-
-				function handleSet(e, uploader = null, modal = null) {
-					e.preventDefault();
-					if (uploader && modal) {
-						const fieldId = uploader.getAttribute('data-media-uploader');
-
-						modal.on('open', function() {
-							const selection = modal.state().get('selection');
-							const focus = modal.state().get('active');
-							const input = uploader.querySelector('#' + fieldId);
-							
-							if (input) {
-								const selected = input.value.split(',');
-								var attachments = [];
-								for (var i = 0; i < selected.length; i++) {
-									const attachmentId = parseInt(selected[i], 10);
-									attachments.push(wp.media.attachment(attachmentId));
-								}
-								if (attachments && (attachments.length > 0)) {
-									selection.add(attachments);
-								}
-							}
-						});
-
-						modal.on('select', function() {
-							const selection = modal.state().get('selection').toJSON();
-							if (selection && (selection.length > 0)) {
-								const input = uploader.querySelector('#' + fieldId);
-								const preview = uploader.querySelector('#' + fieldId + '_preview');
-								const set = uploader.querySelector('#' + fieldId + '_button_set');
-								const remove = uploader.querySelector('#' + fieldId + '_button_remove');
-								var saveIds = [];
-
-								if (preview) {
-									const previewLink = preview.querySelector('a');
-									const previewTemplate = preview.querySelector('[data-media-uploader-template]');
-									const previewClones = preview.querySelectorAll('[data-media-uploader-clone]');
-									if (previewClones && (previewClones.length > 0)) {
-										for (var i = 0; i < previewClones.length; i++) {
-											previewLink.removeChild(previewClones[i]);
-										}
-									}
-									if (previewLink && previewTemplate) {
-										for (var i = 0; i < selection.length; i++) {
-											const attachment = selection[i];
-											const newItem = previewTemplate.cloneNode(true);
-											const newItemImg = newItem.querySelector('img');
-
-											newItem.removeAttribute('data-media-uploader-template');
-											newItem.setAttribute('data-media-uploader-clone', true);
-											newItemImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
-											newItem.style.display = 'block';
-											
-											if (attachment.width > attachment.height) {
-												const attachmentContainer = newItem.querySelector('.attachment-preview');
-												attachmentContainer.classList.remove('portrait');
-												attachmentContainer.classList.add('landscape');
-											}
-
-											previewLink.appendChild(newItem);
-											saveIds.push(parseInt(attachment.id, 10));
-										}
-									}
-									preview.style.display = 'block';
-								}
-								if (input) {
-									input.value = saveIds.join(',');
-								}
-								if (set) {
-									set.setAttribute('disabled', true);
-								}
-								if (remove) {
-									remove.removeAttribute('disabled');
-								}
-							}
-						});
-
-						modal.open();
-					}
-				}
-
-				function handleRemove(e, uploader = null) {
-					e.preventDefault();
-					if (uploader) {
-						const fieldId = uploader.getAttribute('data-media-uploader');
-						const input = uploader.querySelector('#' + fieldId);
-						const preview = uploader.querySelector('#' + fieldId + '_preview');
-						const set = uploader.querySelector('#' + fieldId + '_button_set');
-						const remove = uploader.querySelector('#' + fieldId + '_button_remove');
-
-						if (preview) {
-							const previewClones = preview.querySelectorAll('[data-media-uploader-clone]');
-							if (previewClones && (previewClones.length > 0)) {
-								for (var i = 0; i < previewClones.length; i++) {
-									const previewLink = preview.querySelector('a');
-									previewLink.removeChild(previewClones[i]);
-								}
-							}
-							preview.style.display = 'none';
-						}
-						if (input) {
-							input.value = '';
-						}
-						if (set) {
-							set.removeAttribute('disabled');
-						}
-						if (remove) {
-							remove.setAttribute('disabled', true);
-						}
-					}
-				}
+			(function($) {
 
 				function init(uploader = null) {
-					if (uploader) {
+					
+					if (! uploader) { 
+						return; 
+					}
+						
+					const fieldId = uploader.getAttribute('data-media-uploader-id');
+					const input = uploader.querySelector('#' + fieldId);
+					const legend = uploader.querySelector('#' + fieldId + '_legend');
+					const setButton = uploader.querySelector('#' + fieldId + '_button_set');
+					const addButton = uploader.querySelector('#' + fieldId + '_button_add');
+					const removeButton = uploader.querySelector('#' + fieldId + '_button_remove');
+					const preview = uploader.querySelector('#' + fieldId + '_preview');
+					const previewTemplate = uploader.querySelector('[data-media-uploader-template]');
+					const title = uploader.getAttribute('data-media-uploader-title');
+					const buttonText = uploader.getAttribute('data-media-uploader-button');
+					const type = uploader.getAttribute('data-media-uploader-type');
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					
+					const modal = wp.media({
+						title: title,
+						multiple: isMultiple, 
+						library: { type: type || 'image' }, 
+						button: { text: buttonText },
+					});
 
-						const fieldId = uploader.getAttribute('data-media-uploader');
-						const legendLink = uploader.querySelector('#' + fieldId + '_legend > a');
-						const set = uploader.querySelector('#' + fieldId + '_button_set');
-						const remove = uploader.querySelector('#' + fieldId + '_button_remove');
-						const previewLink = uploader.querySelector('#' + fieldId + '_preview > a');
-						const multipleAttr = uploader.getAttribute('data-media-uploader-multiple');
+					function handleOpen() {
+						modal.open();
+					}
+					function handleRemove(e = null) {
+						e.preventDefault();
+						if (isMultiple) {
+							destroySorting();
+						}
+						removeClones();
+						input.value = '';
+						preview.style.display = 'none';
+						setButton.removeAttribute('disabled');
+						removeButton.setAttribute('disabled', true);
+						if (isMultiple) {
+							addButton.setAttribute('disabled', true);
+						}
+					}
+					function handleSelect() {
+						const selection = modal.state().get('selection').toJSON();
+						if (selection && (selection.length > 0)) {
+							var saveIds = (input.value && isMultiple) ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
+							if (! isMultiple) {
+								removeClones();
+							}
+							for (var i = 0; i < selection.length; i++) {
+								const attachment = selection[i];
+								const attachmentId = parseInt(attachment.id, 10);
+								saveIds.push(attachmentId);
+								preview.appendChild(getClone(attachment));
+							}
+							input.value = saveIds.join(',');
+							preview.style.display = 'block';
+							setButton.setAttribute('disabled', true);
+							removeButton.removeAttribute('disabled');
+							if (isMultiple) {
+								addButton.removeAttribute('disabled');
+								initSorting();
+							}
+						}
+					}
+					function getClone(attachment = null) {
+						const thumbnail = previewTemplate.cloneNode(true);
+						const thumbnailImg = thumbnail.querySelector('img');
+						const orientationContainer = thumbnail.querySelector('.attachment-preview');
 
-						const modal = wp.media({
-							title: uploader.getAttribute('data-media-uploader-title'),
-							multiple: (multipleAttr && (multipleAttr !== 'false')), 
-							library: {
-								type: uploader.getAttribute('data-media-uploader-type') || 'image',
-							}, 
-							button: {
-								text: uploader.getAttribute('data-media-uploader-button'),
-							},
-						});
-
-						if (legendLink) {
-							legendLink.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
-						}
-						if (set) {
-							set.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
-						}
-						if (previewLink) {
-							previewLink.addEventListener('click', function(e) { handleSet(e, uploader, modal); });
-						}
-						if (remove) {
-							remove.addEventListener('click', function(e) { handleRemove(e, uploader); });
+						thumbnail.removeAttribute('data-media-uploader-template');
+						thumbnail.setAttribute('data-media-uploader-clone', parseInt(attachment.id, 10));
+						thumbnailImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
+						thumbnail.style.display = 'block';
+						
+						if (attachment.width > attachment.height) {
+							orientationContainer.classList.remove('portrait');
+							orientationContainer.classList.add('landscape');
+						} else {
+							orientationContainer.classList.add('portrait');
+							orientationContainer.classList.remove('landscape');
 						}
 
+						return thumbnail;
+					}
+					function removeClones() {
+						const clones = preview.querySelectorAll('[data-media-uploader-clone]');
+						if (clones && (clones.length > 0)) {
+							for (var i = 0; i < clones.length; i++) {
+								preview.removeChild(clones[i]);
+							}
+						}
+					}
+					function initSorting() {
+						$preview = $(preview);
+						if ($preview) {
+							$preview.sortable({
+								cursor: 'move', 
+								stop: function(e, ui) { handleSortStop(); },  
+							});
+						}
+					}
+					function destroySorting() {
+						$preview = $(preview);
+						if ($preview && $preview.sortable) {
+							$preview.sortable('destroy');
+						}
+					}
+					function handleSortStop() {
+						const clones = preview.querySelectorAll('[data-media-uploader-clone]');
+						const saveIds = [];
+						if (clones && (clones.length > 0)) {
+							for (var i = 0; i < clones.length; i++) {
+								const attachmentId = parseInt(clones[i].getAttribute('data-media-uploader-clone'), 10);
+								saveIds.push(attachmentId);
+							}
+						}
+						input.value = saveIds.join(',');
+					}
+
+					modal.on('select', function() { handleSelect(); });
+
+					legend.addEventListener('click', function(e) { handleOpen(); });
+					setButton.addEventListener('click', function(e) { handleOpen(); });
+					removeButton.addEventListener('click', function(e) { handleRemove(e); });
+					if (isMultiple) {
+						addButton.addEventListener('click', function(e) { handleOpen(); });
+					}
+					if (isMultiple) {
+						initSorting();
 					}
 				}
 
-				function initAll(container = null) {
-					container = container || document;
-					const uploaders = container.querySelectorAll('fieldset[data-media-uploader]');
+				function initAll() {
+					const uploaders = document.querySelectorAll('fieldset[data-media-uploader-id]');
 					if (uploaders && (uploaders.length > 0)) {
 						for (var i = 0; i < uploaders.length; i++) {
 							init(uploaders[i]);
@@ -2042,9 +2132,9 @@ class WP_CPT {
 					}
 				}
 
-				document.addEventListener( 'DOMContentLoaded', function(e) { initAll(); });
+				document.addEventListener('DOMContentLoaded', function() { initAll(); });
 
-			})();
+			})(jQuery);
 
 		</script>
 

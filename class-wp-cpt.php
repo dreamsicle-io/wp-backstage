@@ -1598,7 +1598,7 @@ class WP_CPT {
 							<?php selected( $option['value'], $value ); ?>
 							<?php disabled( true, $option['disabled'] ); ?>><?php 
 
-								echo esc_html( $option_label );
+								echo strip_tags( $option_label );
 
 							?></option>
 

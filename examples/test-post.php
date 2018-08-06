@@ -190,6 +190,9 @@ function wpcpt_init_default() {
 						'label'       => __( 'Image', 'wpcpt' ), 
 						'description' => __( 'Please select or upload an image.', 'wpcpt' ), 
 						'has_column'  => true, 
+						'args'        => array(
+							'attach' => true, 
+						), 
 					),
 					array( 
 						'type'        => 'media', 
@@ -199,6 +202,7 @@ function wpcpt_init_default() {
 						'has_column'  => true, 
 						'args'        => array(
 							'multiple' => true, 
+							'attach'   => true, 
 						), 
 					),
 					array( 
@@ -208,7 +212,8 @@ function wpcpt_init_default() {
 						'description' => __( 'Please select or upload a video.', 'wpcpt' ), 
 						'has_column'  => true, 
 						'args'        => array(
-							'type' => 'video', 
+							'type'   => 'video',
+							'attach' => true,  
 						), 
 					),
 					array( 
@@ -220,6 +225,7 @@ function wpcpt_init_default() {
 						'args'        => array(
 							'multiple' => true, 
 							'type'     => 'application/pdf', 
+							'attach'   => true, 
 						), 
 					),
 				), 

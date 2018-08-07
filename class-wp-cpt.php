@@ -1823,12 +1823,14 @@ class WP_CPT {
 				'data-media-uploader-%1$s="%2$s"', 
 				esc_attr( $type ), 
 				( $type === 'clone' ) ? absint( $attachment_id ) : 'true' 
-			); ?>
+			);
+
+			$mime_type = ( $type !== 'template' ) ? get_post_mime_type( $attachment_id ) : ''; ?>
 
 			<figure 
 			tabindex="0" 
 			class="attachment" 
-			style="<?php echo ($type === 'template') ? 'display:none;' : ''; ?>"
+			style="<?php echo ($type === 'template') ? 'display:none;' : 'display:block;'; ?>"
 			<?php echo $thumbnail_type_attr; ?>>
 
 				<div class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>">
@@ -1841,9 +1843,40 @@ class WP_CPT {
 
 						</div>
 
+						<div class="filename" style="<?php echo ( strpos( $mime_type, 'image' ) === false ) ? 'display:block;' : 'display:none;'; ?>">
+
+							<div class="filename-inside-div"><?php 
+
+								if ($type !== 'template') {
+
+									echo esc_html( basename( get_attached_file( $attachment_id ) ) );
+
+								}
+
+							?></div>
+
+						</div>
+
 					</div>
 
-				</div>	
+				</div>
+
+				<button 
+				type="button" 
+				class="check" 
+				tabindex="0">
+					
+					<i 
+					class="media-modal-icon"
+					style="background-position:-60px 0;"></i>
+
+					<span class="screen-reader-text"><?php 
+
+						echo esc_attr( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
+
+					?></span>
+
+				</button>
 
 			</figure>
 
@@ -1885,8 +1918,9 @@ class WP_CPT {
 
 			<div 
 			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
-			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>"><?php
+			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>">
 
+				<?php
 				$this->render_media_uploader_thumbnail( '', 'template' ); 
 
 				if ( ! empty( $value ) ) {
@@ -1904,9 +1938,11 @@ class WP_CPT {
 						$this->render_media_uploader_thumbnail( absint( $value ), 'clone' );
 					}
 
-				}
+				} ?>
 
-			?></div>
+			</div>
+
+			<div class="clear"></div>
 
 			<p>
 
@@ -1967,13 +2003,13 @@ class WP_CPT {
 
 		</fieldset>
 
-	<?php }
+	<?php } 
 
 	/**
-	 * Get Fields
+	 * Inline Media Uploader Script
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  void  
 	 */
 	public function inline_media_uploader_script() {
 
@@ -2003,6 +2039,7 @@ class WP_CPT {
 					const removeButton = uploader.querySelector('#' + fieldId + '_button_remove');
 					const preview = uploader.querySelector('#' + fieldId + '_preview');
 					const previewTemplate = uploader.querySelector('[data-media-uploader-template]');
+					const initialClones = uploader.querySelectorAll('[data-media-uploader-clone]');
 					const title = uploader.getAttribute('data-media-uploader-title');
 					const buttonText = uploader.getAttribute('data-media-uploader-button');
 					const type = uploader.getAttribute('data-media-uploader-type');
@@ -2015,22 +2052,13 @@ class WP_CPT {
 						button: { text: buttonText },
 					});
 
-					function handleOpen() {
+					function handleOpen(e = null) {
 						modal.open();
 					}
 					function handleRemove(e = null) {
 						e.preventDefault();
-						if (isMultiple) {
-							destroySorting();
-						}
 						removeClones();
-						input.value = '';
-						preview.style.display = 'none';
-						setButton.removeAttribute('disabled');
-						removeButton.setAttribute('disabled', true);
-						if (isMultiple) {
-							addButton.setAttribute('disabled', true);
-						}
+						resetField();
 					}
 					function handleSelect() {
 						const selection = modal.state().get('selection').toJSON();
@@ -2045,26 +2073,23 @@ class WP_CPT {
 								saveIds.push(attachmentId);
 								preview.appendChild(getClone(attachment));
 							}
-							input.value = saveIds.join(',');
-							preview.style.display = 'block';
-							setButton.setAttribute('disabled', true);
-							removeButton.removeAttribute('disabled');
+							setField(saveIds.join(','));
 							if (isMultiple) {
-								addButton.removeAttribute('disabled');
-								initSorting();
+								refreshSorting();
 							}
 						}
 					}
 					function getClone(attachment = null) {
-						const thumbnail = previewTemplate.cloneNode(true);
-						const thumbnailImg = thumbnail.querySelector('img');
-						const orientationContainer = thumbnail.querySelector('.attachment-preview');
+						const clone = previewTemplate.cloneNode(true);
+						const cloneImg = clone.querySelector('img');
+						const orientationContainer = clone.querySelector('.attachment-preview');
+						const filename = clone.querySelector('.filename > div');
 
-						thumbnail.removeAttribute('data-media-uploader-template');
-						thumbnail.setAttribute('data-media-uploader-clone', parseInt(attachment.id, 10));
-						thumbnailImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
-						thumbnail.style.display = 'block';
-						
+						clone.removeAttribute('data-media-uploader-template');
+						clone.setAttribute('data-media-uploader-clone', parseInt(attachment.id, 10));
+						cloneImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
+						clone.style.display = 'block';
+
 						if (attachment.width > attachment.height) {
 							orientationContainer.classList.remove('portrait');
 							orientationContainer.classList.add('landscape');
@@ -2072,34 +2097,51 @@ class WP_CPT {
 							orientationContainer.classList.add('portrait');
 							orientationContainer.classList.remove('landscape');
 						}
+						console.log(attachment);
+						filename.innerHTML = attachment.filename;
+						filename.style.display = (attachment.mime.indexOf('image') === -1) ? 'block' : 'none';
 
-						return thumbnail;
+						initClone(clone);
+
+						return clone;
 					}
 					function removeClones() {
-						const clones = preview.querySelectorAll('[data-media-uploader-clone]');
+						const clones = getClones();
 						if (clones && (clones.length > 0)) {
 							for (var i = 0; i < clones.length; i++) {
 								preview.removeChild(clones[i]);
 							}
 						}
 					}
+					function setField(value = null) {
+						input.value = value;
+						preview.style.display = 'block';
+						setButton.setAttribute('disabled', true);
+						removeButton.removeAttribute('disabled');
+						if (isMultiple) {
+							addButton.removeAttribute('disabled');
+						}
+					}
+					function resetField() {
+						input.value = '';
+						preview.style.display = 'none';
+						setButton.removeAttribute('disabled');
+						removeButton.setAttribute('disabled', true);
+						if (isMultiple) {
+							addButton.setAttribute('disabled', true);
+						}
+					}
 					function initSorting() {
-						$preview = $(preview);
-						if ($preview) {
-							$preview.sortable({
-								cursor: 'move', 
-								stop: function(e, ui) { handleSortStop(); },  
-							});
-						}
+						$(preview).sortable({
+							items: '[data-media-uploader-clone]', 
+							stop: handleSortStop,  
+						});
 					}
-					function destroySorting() {
-						$preview = $(preview);
-						if ($preview && $preview.sortable) {
-							$preview.sortable('destroy');
-						}
+					function refreshSorting() {
+						$(preview).sortable('refresh');
 					}
-					function handleSortStop() {
-						const clones = preview.querySelectorAll('[data-media-uploader-clone]');
+					function handleSortStop(e = null, ui = null) {
+						const clones = getClones();
 						const saveIds = [];
 						if (clones && (clones.length > 0)) {
 							for (var i = 0; i < clones.length; i++) {
@@ -2109,16 +2151,63 @@ class WP_CPT {
 						}
 						input.value = saveIds.join(',');
 					}
+					function handleCloneMouseEnter(e = null) {
+						if (e.target.getAttribute('data-media-uploader-clone')) {
+							e.target.classList.add('selected');
+							e.target.classList.add('details');
+						}
+					}
+					function handleCloneMouseLeave(e = null) {
+						if (e.target.getAttribute('data-media-uploader-clone')) {
+							e.target.classList.remove('selected');
+							e.target.classList.remove('details');
+						}
+					}
+					function handleCloneClick(e = null) {
+						e.preventDefault();
+						if (e.target.getAttribute('data-media-uploader-clone')) {
+							e.target.focus();
+						} else {
+							getParentClone(e.target).focus();
+						}
+					}
+					function handleCheckClick(e = null) {
+						e.preventDefault();
+						preview.removeChild(getParentClone(e.target));
+						const clones = getClones();
+						if (! clones || (! clones.length > 0)) {
+							resetField();
+						}
+					}
+					function initClone(clone = null) {
+						if (clone) {
+							const check = clone.querySelector('.check');
+							clone.addEventListener('mouseenter', handleCloneMouseEnter);
+							clone.addEventListener('mouseleave', handleCloneMouseLeave);
+							clone.addEventListener('click', handleCloneClick);
+							check.addEventListener('click', handleCheckClick);
+						}
+					}
+					function getClones() {
+						return preview.querySelectorAll('[data-media-uploader-clone]');
+					}
+					function getParentClone(el = null) {
+						while ((el = el.parentElement) && ! el.getAttribute('data-media-uploader-clone'));
+						return el;
+					}
 
-					modal.on('select', function() { handleSelect(); });
+					modal.on('select', handleSelect);
 
-					legend.addEventListener('click', function(e) { handleOpen(); });
-					setButton.addEventListener('click', function(e) { handleOpen(); });
-					removeButton.addEventListener('click', function(e) { handleRemove(e); });
-					if (isMultiple) {
-						addButton.addEventListener('click', function(e) { handleOpen(); });
+					legend.addEventListener('click', handleOpen);
+					setButton.addEventListener('click', handleOpen);
+					removeButton.addEventListener('click', handleRemove);
+					if (initialClones && (initialClones.length > 0)) {
+						for (var i = 0; i < initialClones.length; i++) {
+							initClone(initialClones[i]);
+						}
 					}
 					if (isMultiple) {
+						addButton.addEventListener('click', handleOpen);
 						initSorting();
 					}
 				}
@@ -2132,7 +2221,7 @@ class WP_CPT {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', function() { initAll(); });
+				document.addEventListener('DOMContentLoaded', initAll);
 
 			})(jQuery);
 

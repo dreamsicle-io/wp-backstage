@@ -224,8 +224,19 @@ function wpcpt_init_default() {
 						'has_column'  => true, 
 						'args'        => array(
 							'multiple' => true, 
-							'type'     => 'application/pdf', 
+							'type'     => 'application', 
 							'attach'   => true, 
+						), 
+					), 
+					array( 
+						'type'        => 'date', 
+						'name'        => 'wpcpt_datepicker_field', 
+						'label'       => __( 'Date', 'wpcpt' ), 
+						'description' => __( 'Please select a date.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+						'args'        => array(
+							'format' => 'yy-mm-dd', 
 						), 
 					),
 				), 

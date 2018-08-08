@@ -158,6 +158,15 @@ class WP_CPT {
 	);
 
 	/**
+	 * Default Datepicker Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_date_args = array(
+		'format' => 'yy-mm-dd', 
+	);
+
+	/**
 	 * KSES for P Tags
 	 *
 	 * @since 0.0.1
@@ -414,6 +423,7 @@ class WP_CPT {
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_datepicker_script' ), 10 );
 
 	}
 
@@ -429,18 +439,54 @@ class WP_CPT {
 			return;
 		}
 
-		if ( ! empty( $this->get_field_by( 'type', 'media' ) ) ) {
-			
-			if ( ! wp_script_is( 'media-editor', 'enqueued' ) ) {
-				wp_enqueue_media();
-			}
+		$has_media_uploader = ! empty( $this->get_field_by( 'type', 'media' ) );
+		$has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
+		$has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
+
+		if ( $has_media_uploader || $has_date ) {
 
 			if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-ui-core' );
 			}
 
+			if ( ! wp_script_is( 'jquery-ui-theme-default', 'enqueued' ) ) {
+				wp_enqueue_style( 
+					'jquery-ui-theme-default', 
+					'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', 
+					array(), 
+					'1.12.1' 
+				);
+			}
+
+		}
+
+		if ( $has_media_uploader ) {
+			
+			if ( ! wp_script_is( 'media-editor', 'enqueued' ) ) {
+				wp_enqueue_media();
+			}
+
 			if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-ui-sortable' );
+			}
+
+		}
+
+		if ( $has_date ) {
+
+			if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) ) {
+				wp_enqueue_script( 'jquery-ui-datepicker' );
+			}
+
+		}
+
+		if ( $has_color ) {
+
+			if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
+				wp_enqueue_script( 'wp-color-picker' );
+			}
+			if ( ! wp_style_is( 'wp-color-picker', 'enqueued' ) ) {
+				wp_enqueue_style( 'wp-color-picker' );
 			}
 
 		}
@@ -677,8 +723,6 @@ class WP_CPT {
 	 */
 	public function sanitize_field( $field = array(), $value = null ) {
 
-		$field = wp_parse_args( $field, $this->default_field_args );
-
 		switch ( $field['type'] ) {
 			case 'text':
 				$value = sanitize_text_field( $value );
@@ -689,7 +733,11 @@ class WP_CPT {
 				break;
 
 			case 'number':
-				$value = floatval( $value );
+				if ( $value !== '' ) {
+					$value = floatval( $value );
+				} else {
+					$value = null;
+				}
 				break;
 
 			case 'url':
@@ -1242,25 +1290,29 @@ class WP_CPT {
 
 			if ( is_array( $field ) && ! empty( $field ) ) {
 
-				$query->set( 'meta_query', array(
-					'relation' => 'OR',
-					array(
-						'key'     => $field['name'], 
-						'compare' => 'EXISTS'
-					),
-					array(
-						'key'     => $field['name'], 
-						'compare' => 'NOT EXISTS'
-					)
-				) );
+				if ( $field['is_sortable'] ) {
 
-				if ( $field['type'] === 'number' ) {
-					
-					$query->set( 'orderby', 'meta_value_num' );
+					$query->set( 'meta_query', array(
+						'relation' => 'OR',
+						array(
+							'key'     => $field['name'], 
+							'compare' => 'EXISTS'
+						),
+						array(
+							'key'     => $field['name'], 
+							'compare' => 'NOT EXISTS'
+						)
+					) );
 
-				} else {
+					if ( $field['type'] === 'number' ) {
+						
+						$query->set( 'orderby', 'meta_value_num' );
 
-					$query->set( 'orderby', 'meta_value' );
+					} else {
+
+						$query->set( 'orderby', 'meta_value' );
+
+					}
 
 				}
 
@@ -1348,6 +1400,14 @@ class WP_CPT {
 
 					$this->render_media_uploader( $field, $post );
 
+				} elseif ( $field['type'] === 'date' ) {
+
+					$this->render_date( $field, $post );
+
+				} elseif ( $field['type'] === 'color' ) {
+
+					$this->render_color( $field, $post );
+
 				} else {
 
 					$this->render_input( $field, $post );
@@ -1424,6 +1484,62 @@ class WP_CPT {
 				<input 
 				class="widefat"
 				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Date
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_date( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true );
+		$args = wp_parse_args( $field['args'], $this->default_date_args ); ?>
+
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-datepicker-id="<?php echo esc_attr( $id ); ?>"
+		data-datepicker-format="<?php echo esc_attr( $args['format'] ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo esc_html( $field['label'] ); 
+				
+				?></label>
+
+				<br/>
+
+				<input 
+				class="widefat"
+				type="text" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="<?php echo esc_attr( $value ); ?>" 
@@ -1799,12 +1915,15 @@ class WP_CPT {
 	 * @since   0.0.1 
 	 * @param   string  $attachment_id 
 	 * @param   string  $type           `template` or `clone`.
+	 * @param   string  $args           media uploader field args.
 	 * @return  void
 	 */
-	public function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone' ) {
+	public function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone', $args = array() ) {
 
 		$orientation_class = 'portrait';
 		$src = '';
+		$cursor_style = ( $args['multiple'] ) ? 'cursor:move;' : 'cursor:normal;';
+		$display_style = ( $type === 'template' ) ? 'display:none;' : 'display:block;';
 
 		if ( ( $attachment_id > 0 ) && ( $type === 'clone' ) ) {
 			
@@ -1830,10 +1949,12 @@ class WP_CPT {
 			<figure 
 			tabindex="0" 
 			class="attachment" 
-			style="<?php echo ($type === 'template') ? 'display:none;' : 'display:block;'; ?>"
+			style="<?php echo esc_attr( $cursor_style . $display_style ); ?>"
 			<?php echo $thumbnail_type_attr; ?>>
 
-				<div class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>">
+				<div 
+				class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>"
+				style="<?php echo esc_attr( $cursor_style ); ?>">
 
 					<div class="thumbnail">
 
@@ -1884,8 +2005,6 @@ class WP_CPT {
 
 	}
 
-
-
 	/**
 	 * Render Checkbox Set
 	 * 
@@ -1921,7 +2040,7 @@ class WP_CPT {
 			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>">
 
 				<?php
-				$this->render_media_uploader_thumbnail( '', 'template' ); 
+				$this->render_media_uploader_thumbnail( '', 'template', $args ); 
 
 				if ( ! empty( $value ) ) {
 
@@ -1929,13 +2048,13 @@ class WP_CPT {
 
 						foreach ( $value as $attachment_id ) {
 
-							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone' );
+							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone', $args );
 
 						}
 
 					} else {
 
-						$this->render_media_uploader_thumbnail( absint( $value ), 'clone' );
+						$this->render_media_uploader_thumbnail( absint( $value ), 'clone', $args );
 					}
 
 				} ?>
@@ -1950,6 +2069,7 @@ class WP_CPT {
 				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
 				type="button"
 				class="button"
+				style="<?php echo ! empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
 				<?php disabled( true, ! empty( $value) ); ?>><?php 
 
 						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'WP_CPT' ), $field ) ); 
@@ -1962,6 +2082,7 @@ class WP_CPT {
 					id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
 					type="button"
 					class="button"
+					style="<?php echo empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
 					<?php disabled( true, empty( $value ) ); ?>><?php 
 
 							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'WP_CPT' ), $field ) ); 
@@ -1974,6 +2095,7 @@ class WP_CPT {
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
 				class="button"
+				style="<?php echo empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
 				<?php disabled( true, empty( $value ) ); ?>><?php 
 
 						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
@@ -2050,6 +2172,7 @@ class WP_CPT {
 						multiple: isMultiple, 
 						library: { type: type || 'image' }, 
 						button: { text: buttonText },
+						frame: 'select', 
 					});
 
 					function handleOpen(e = null) {
@@ -2097,7 +2220,6 @@ class WP_CPT {
 							orientationContainer.classList.add('portrait');
 							orientationContainer.classList.remove('landscape');
 						}
-						console.log(attachment);
 						filename.innerHTML = attachment.filename;
 						filename.style.display = (attachment.mime.indexOf('image') === -1) ? 'block' : 'none';
 
@@ -2113,22 +2235,34 @@ class WP_CPT {
 							}
 						}
 					}
+					function enableButton(button = null) {
+						if (button) {
+							button.removeAttribute('disabled', true);
+							button.style.display = 'inline-block';
+						}
+					}
+					function disableButton(button = null) {
+						if (button) {
+							button.setAttribute('disabled', true);
+							button.style.display = 'none';
+						}
+					}
 					function setField(value = null) {
 						input.value = value;
 						preview.style.display = 'block';
-						setButton.setAttribute('disabled', true);
-						removeButton.removeAttribute('disabled');
+						disableButton(setButton);
+						enableButton(removeButton);
 						if (isMultiple) {
-							addButton.removeAttribute('disabled');
+							enableButton(addButton);
 						}
 					}
 					function resetField() {
 						input.value = '';
 						preview.style.display = 'none';
-						setButton.removeAttribute('disabled');
-						removeButton.setAttribute('disabled', true);
+						enableButton(setButton);
+						disableButton(removeButton);
 						if (isMultiple) {
-							addButton.setAttribute('disabled', true);
+							disableButton(addButton);
 						}
 					}
 					function initSorting() {
@@ -2173,9 +2307,16 @@ class WP_CPT {
 					}
 					function handleCheckClick(e = null) {
 						e.preventDefault();
-						preview.removeChild(getParentClone(e.target));
-						const clones = getClones();
-						if (! clones || (! clones.length > 0)) {
+						const clone = getParentClone(e.target);
+						const attachmentId = parseInt(clone.getAttribute('data-media-uploader-clone'), 10);
+						var values = input.value ? input.value.split(',').map(function(id) { return parseInt(id, 10); }) : [];
+						const valuesIndex = values.indexOf(attachmentId);
+						if (valuesIndex !== -1) {
+							const removed = values.splice(valuesIndex, 1);
+						}
+						input.value = values.join(',');
+						preview.removeChild(clone);
+						if (! input.value) {
 							resetField();
 						}
 					}
@@ -2213,10 +2354,59 @@ class WP_CPT {
 				}
 
 				function initAll() {
-					const uploaders = document.querySelectorAll('fieldset[data-media-uploader-id]');
+					const uploaders = document.querySelectorAll('[data-media-uploader-id]');
 					if (uploaders && (uploaders.length > 0)) {
 						for (var i = 0; i < uploaders.length; i++) {
 							init(uploaders[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', initAll);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Datepicker Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_datepicker_script() {
+
+		if ( ! $this->is_screen( 'id', $this->slug ) ) {
+			return;
+		}
+
+		if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) || empty( $this->get_field_by( 'type', 'date' ) ) ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init(datepicker = null) {
+					if (datepicker) { 
+						const fieldId = datepicker.getAttribute('data-datepicker-id');
+						const format = datepicker.getAttribute('data-datepicker-format');
+						const input = datepicker.querySelector('#' + fieldId);
+
+						$(input).datepicker({
+							dateFormat: format || 'yy-mm-dd', 
+						});
+					}
+				}
+
+				function initAll() {
+					const datepickers = document.querySelectorAll('[data-datepicker-id]');
+					if (datepickers && (datepickers.length > 0)) {
+						for (var i = 0; i < datepickers.length; i++) {
+							init(datepickers[i]);
 						}
 					}
 				}

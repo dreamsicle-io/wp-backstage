@@ -28,6 +28,13 @@ class WP_CPT {
 	public $errors = array();
 
 	/**
+	 * Date Format
+	 * 
+	 * @since 0.0.1
+	 */
+	public $date_format = '';
+
+	/**
 	 * Notices
 	 * 
 	 * @since 0.0.1
@@ -158,12 +165,30 @@ class WP_CPT {
 	);
 
 	/**
-	 * Default Datepicker Args
+	 * Default Date Args
 	 * 
 	 * @since 0.0.1
 	 */
 	public $default_date_args = array(
 		'format' => 'yy-mm-dd', 
+	);
+
+	/**
+	 * Default Color Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_color_args = array(
+		'palettes' => true, 
+	);
+
+	/**
+	 * Default Code Args
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_code_args = array(
+		'type' => 'htmlmixed', 
 	);
 
 	/**
@@ -186,6 +211,34 @@ class WP_CPT {
 			'id'    => array(), 
 			'style' => array(), 
 		),
+		'em' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'strong' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'code' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+		'i' => array(
+			'class' => array(), 
+			'id'    => array(), 
+			'style' => array(), 
+		),
+	);
+
+	/**
+	 * KSES for Label Tags
+	 *
+	 * @since 0.0.1
+	 */
+	public $kses_label = array(
 		'em' => array(
 			'class' => array(), 
 			'id'    => array(), 
@@ -234,6 +287,7 @@ class WP_CPT {
 	 */
 	function __construct( $slug = '', $args = array() ) {
 
+		$this->date_format = get_option( 'date_format' );
 		$this->set_slug( $slug );
 		$this->set_args( $args );
 		$this->set_errors();
@@ -424,6 +478,7 @@ class WP_CPT {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_datepicker_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_colorpicker_script' ), 10 );
 
 	}
 
@@ -442,6 +497,7 @@ class WP_CPT {
 		$has_media_uploader = ! empty( $this->get_field_by( 'type', 'media' ) );
 		$has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
 		$has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
+		$code_editors = $this->get_fields_by( 'type', 'code' );
 
 		if ( $has_media_uploader || $has_date ) {
 
@@ -487,6 +543,39 @@ class WP_CPT {
 			}
 			if ( ! wp_style_is( 'wp-color-picker', 'enqueued' ) ) {
 				wp_enqueue_style( 'wp-color-picker' );
+			}
+
+		}
+
+		if ( ! empty( $code_editors ) ) {
+
+			$global_settings =  array( 
+				'codemirror' => array(
+					'lineWrapping' => false, 
+				), 
+			);
+
+			foreach ( $code_editors as $code_editor ) {
+
+				$code_editor_args = wp_parse_args( $code_editor['args'], $this->default_code_args );
+
+				$code_editor_settings = wp_enqueue_code_editor( array_merge( $global_settings, array( 
+					'type' => $code_editor_args['type'], 
+				) ) );
+
+				if ( $code_editor_settings ) {
+
+					wp_add_inline_script(
+						'code-editor',
+						sprintf(
+							'jQuery( function() { wp.codeEditor.initialize( "%1$s", %2$s ); } );',
+							sanitize_title_with_dashes( $code_editor['name'] ), 
+							wp_json_encode( $code_editor_settings )
+						)
+					);
+
+				}
+
 			}
 
 		}
@@ -727,11 +816,12 @@ class WP_CPT {
 			case 'text':
 				$value = sanitize_text_field( $value );
 				break;
-			
 			case 'textarea':
 				$value = sanitize_textarea_field( $value );
 				break;
-
+			case 'code':
+				$value = $value;
+				break;
 			case 'number':
 				if ( $value !== '' ) {
 					$value = floatval( $value );
@@ -739,23 +829,18 @@ class WP_CPT {
 					$value = null;
 				}
 				break;
-
 			case 'url':
 				$value = esc_url( $value );
 				break;
-			
 			case 'email':
 				$value = sanitize_email( $value );
 				break;
-			
 			case 'checkbox':
 				$value = boolval( $value );
 				break;
-			
 			case 'checkbox_set':
 				$value = array_map( 'esc_attr', $value );
 				break;
-
 			case 'media':
 				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
 				if ( $args['multiple'] ) {
@@ -771,7 +856,6 @@ class WP_CPT {
 					}
 				}
 				break;
-			
 			default:
 				$value = esc_attr( $value );
 				break;
@@ -1141,6 +1225,18 @@ class WP_CPT {
 				case 'checkbox':
 					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'WP_CPT' ) . '</span>' : '&horbar;';
 					break;
+				case 'textarea':
+					$content = $value ? wpautop( sanitize_textarea_field( $value ) ) : '&horbar;';
+					break;
+				case 'code':
+					$content = $value ? '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>' : '&horbar;';
+					break;
+				case 'color':
+					$content = $value ? '<i style="display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';" title="' . esc_attr( $value ) . '"></i>' : '&horbar;';
+					break;
+				case 'date':
+					$content = $value ? date( $this->date_format, strtotime( $value ) ) : '&horbar;';
+					break;
 				case 'checkbox_set':
 					if ( is_array( $value ) && ! empty( $value ) ) {
 						$option_labels = $this->get_option_labels( $field );
@@ -1171,6 +1267,9 @@ class WP_CPT {
 						);
 					}
 					$content = implode( '', $attachments );
+					break;
+				default:
+					$content = $value;
 					break;
 			}
 
@@ -1240,6 +1339,37 @@ class WP_CPT {
 	}
 
 	/**
+	 * Get Fields By
+	 * 
+	 * @since   0.0.1
+	 * @return  array  the fields if found, or an empty array.
+	 */
+	public function get_fields_by( $key = '', $value = null ) {
+
+		$fields = $this->get_fields();
+		$result = array();
+
+		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
+
+					$result[] = $field;
+
+				}
+
+			}
+
+		}
+
+		return $result;
+
+	}
+
+	/**
 	 * Get Field By
 	 * 
 	 * @since   0.0.1
@@ -1248,7 +1378,7 @@ class WP_CPT {
 	public function get_field_by( $key = '', $value = null ) {
 
 		$fields = $this->get_fields();
-		$result = array();
+		$result = null;
 
 		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
 
@@ -1376,42 +1506,37 @@ class WP_CPT {
 			
 			foreach ( $meta_box['args']['fields'] as $field ) {
 
-				if ( $field['type'] === 'textarea' ) {
-
-					$this->render_textarea( $field, $post );
-
-				} elseif ( $field['type'] === 'select' ) {
-
-					$this->render_select( $field, $post );
-
-				} elseif ( $field['type'] === 'radio' ) {
-
-					$this->render_radio( $field, $post );
-
-				} elseif ( $field['type'] === 'checkbox' ) {
-
-					$this->render_checkbox( $field, $post );
-
-				} elseif ( $field['type'] === 'checkbox_set' ) {
-
-					$this->render_checkbox_set( $field, $post );
-
-				} elseif ( $field['type'] === 'media' ) {
-
-					$this->render_media_uploader( $field, $post );
-
-				} elseif ( $field['type'] === 'date' ) {
-
-					$this->render_date( $field, $post );
-
-				} elseif ( $field['type'] === 'color' ) {
-
-					$this->render_color( $field, $post );
-
-				} else {
-
-					$this->render_input( $field, $post );
-
+				switch ( $field['type'] ) {
+					case 'textarea':
+						$this->render_textarea( $field, $post );
+						break;
+					case 'select':
+						$this->render_select( $field, $post );
+						break;
+					case 'radio':
+						$this->render_radio( $field, $post );
+						break;
+					case 'checkbox':
+						$this->render_checkbox( $field, $post );
+						break;
+					case 'checkbox_set':
+						$this->render_checkbox_set( $field, $post );
+						break;
+					case 'media':
+						$this->render_media_uploader( $field, $post );
+						break;
+					case 'date':
+						$this->render_date( $field, $post );
+						break;
+					case 'color':
+						$this->render_color( $field, $post );
+						break;
+					case 'code':
+						$this->render_code( $field, $post );
+						break;
+					default:
+						$this->render_input( $field, $post );
+						break;
 				}
 
 			}
@@ -1475,7 +1600,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] ); 
+					echo wp_kses( $field['label'], $this->kses_label ); 
 				
 				?></label>
 
@@ -1531,7 +1656,70 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] ); 
+					echo wp_kses( $field['label'], $this->kses_label ); 
+				
+				?></label>
+
+				<br/>
+
+				<input 
+				class="widefat"
+				type="text" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Color
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_color( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true );
+		$args = wp_parse_args( $field['args'], $this->default_color_args );
+
+		if ( is_array( $args['palettes'] ) ) {
+			$palettes = implode( ',', array_map( 'esc_attr', $args['palettes'] ) );
+		} else {
+			$palettes = $args['palettes'] ? 'true' : 'false';
+		} ?>
+
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-colorpicker-id="<?php echo esc_attr( $id ); ?>"
+		data-colorpicker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
+		data-colorpicker-palettes="<?php echo $palettes; ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_label ); 
 				
 				?></label>
 
@@ -1593,7 +1781,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] ); 
+					echo wp_kses( $field['label'], $this->kses_label ); 
 				
 				?></label>
 			
@@ -1633,7 +1821,63 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] );
+					echo wp_kses( $field['label'], $this->kses_label );
+				
+				?></label>
+
+				<br/>
+
+				<textarea 
+				class="widefat"
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				value="<?php echo esc_attr( $value ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					echo esc_textarea( $value );
+
+				?></textarea>
+			
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render Code
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_code( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+
+					echo wp_kses( $field['label'], $this->kses_label );
 				
 				?></label>
 
@@ -1689,7 +1933,7 @@ class WP_CPT {
 
 				<label for="<?php echo esc_attr( $id ); ?>"><?php 
 
-					echo esc_html( $field['label'] );
+					echo wp_kses( $field['label'], $this->kses_label );
 				
 				?></label>
 
@@ -1762,7 +2006,7 @@ class WP_CPT {
 
 				<legend><?php 
 
-					echo esc_html( $field['label'] );
+					echo wp_kses( $field['label'], $this->kses_label );
 				
 				?></legend>
 
@@ -1836,7 +2080,7 @@ class WP_CPT {
 
 				<legend><?php 
 
-					echo esc_html( $field['label'] );
+					echo wp_kses( $field['label'], $this->kses_label );
 				
 				?></legend>
 
@@ -2031,7 +2275,7 @@ class WP_CPT {
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
 			style="cursor:pointer;"><?php 
 
-				echo esc_html( $field['label'] ); 
+				echo wp_kses( $field['label'], $this->kses_label ); 
 		
 			?></legend>
 
@@ -2135,11 +2379,7 @@ class WP_CPT {
 	 */
 	public function inline_media_uploader_script() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) ) {
-			return;
-		}
-
-		if ( ! wp_script_is( 'media-editor', 'enqueued' ) || empty( $this->get_field_by( 'type', 'media' ) ) ) {
+		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'media' ) ) ) {
 			return;
 		} ?>
 
@@ -2378,11 +2618,7 @@ class WP_CPT {
 	 */
 	public function inline_datepicker_script() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) ) {
-			return;
-		}
-
-		if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) || empty( $this->get_field_by( 'type', 'date' ) ) ) {
+		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'date' ) ) ) {
 			return;
 		} ?>
 
@@ -2407,6 +2643,59 @@ class WP_CPT {
 					if (datepickers && (datepickers.length > 0)) {
 						for (var i = 0; i < datepickers.length; i++) {
 							init(datepickers[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', initAll);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Colorpicker Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_colorpicker_script() {
+
+		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'color' ) ) ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init(colorpicker = null) {
+					if (colorpicker) { 
+						const fieldId = colorpicker.getAttribute('data-colorpicker-id');
+						const input = colorpicker.querySelector('#' + fieldId);
+						var palettes = colorpicker.getAttribute('data-colorpicker-palettes');
+
+						if ((palettes === 'true') || (palettes === 'false')) {
+							palettes = (palettes === 'true');
+						} else {
+							palettes = palettes.split(',');
+						}
+
+						$(input).wpColorPicker({
+							defaultColor: false, // bool
+							hide: true, // bool
+							palettes: palettes // bool, []
+						});
+					}
+				}
+
+				function initAll() {
+					const colorpickers = document.querySelectorAll('[data-colorpicker-id]');
+					if (colorpickers && (colorpickers.length > 0)) {
+						for (var i = 0; i < colorpickers.length; i++) {
+							init(colorpickers[i]);
 						}
 					}
 				}

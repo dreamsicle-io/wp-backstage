@@ -239,6 +239,53 @@ function wpcpt_init_default() {
 							'format' => 'yy-mm-dd', 
 						), 
 					),
+					array( 
+						'type'        => 'color', 
+						'name'        => 'wpcpt_color_field', 
+						'label'       => __( 'Color', 'wpcpt' ), 
+						'description' => __( 'Please select a color.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'palettes' => true, 
+						),
+					),
+					array( 
+						'type'        => 'color', 
+						'name'        => 'wpcpt_color_palette_field', 
+						'label'       => __( 'Color with Custom Palettes', 'wpcpt' ), 
+						'description' => __( 'Please select a color.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'palettes' => array( '#ffffff', '#000000', '#67b0ff', '#ff9900' ), 
+						),
+					),
+					array( 
+						'type'        => 'code', 
+						'name'        => 'wpcpt_html_field', 
+						'label'       => __( 'Code (HTML)', 'wpcpt' ), 
+						'description' => __( 'Please enter some code.', 'wpcpt' ), 
+						'has_column'  => true, 
+					),
+					array( 
+						'type'        => 'code', 
+						'name'        => 'wpcpt_php_field', 
+						'label'       => __( 'Code (CSS)', 'wpcpt' ), 
+						'description' => __( 'Please enter some code.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'type' => 'css', 
+						),
+					),
+					array( 
+						'type'        => 'code', 
+						'name'        => 'wpcpt_js_field', 
+						'label'       => __( 'Code (JavaScript)', 'wpcpt' ), 
+						'description' => __( 'Please enter some code.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'args'        => array(
+							'type' => 'javascript', 
+						),
+					),
 				), 
 			),
 			array(

@@ -240,6 +240,14 @@ function wpcpt_init_default() {
 						), 
 					),
 					array( 
+						'type'        => 'time', 
+						'name'        => 'wpcpt_time_field', 
+						'label'       => __( 'Time', 'wpcpt' ), 
+						'description' => __( 'Please set a time.', 'wpcpt' ), 
+						'has_column'  => true, 
+						'is_sortable' => true, 
+					),
+					array( 
 						'type'        => 'color', 
 						'name'        => 'wpcpt_color_field', 
 						'label'       => __( 'Color', 'wpcpt' ), 

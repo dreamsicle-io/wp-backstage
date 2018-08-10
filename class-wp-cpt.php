@@ -261,6 +261,8 @@ class WP_CPT {
 		),
 	);
 
+	public $time_pieces = array();
+
 	/**
 	 * Add
 	 * 
@@ -288,6 +290,20 @@ class WP_CPT {
 	function __construct( $slug = '', $args = array() ) {
 
 		$this->date_format = get_option( 'date_format' );
+		$this->time_pieces = array(
+			'hour'   => array( 
+				'label'          => __( 'Hour', 'WP_CPT' ),  
+				'number_options' => 24,  
+			), 
+			'minute' => array( 
+				'label'          => __( 'Minute', 'WP_CPT' ),  
+				'number_options' => 60,  
+			), 
+			'second' => array( 
+				'label'          => __( 'Second', 'WP_CPT' ),  
+				'number_options' => 60, 
+			), 
+		);
 		$this->set_slug( $slug );
 		$this->set_args( $args );
 		$this->set_errors();
@@ -840,6 +856,9 @@ class WP_CPT {
 				break;
 			case 'checkbox_set':
 				$value = array_map( 'esc_attr', $value );
+				break;
+			case 'time':
+				$value = implode( ':', array_map( 'esc_attr', $value ) );
 				break;
 			case 'media':
 				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
@@ -1528,6 +1547,9 @@ class WP_CPT {
 					case 'date':
 						$this->render_date( $field, $post );
 						break;
+					case 'time':
+						$this->render_time( $field, $post );
+						break;
 					case 'color':
 						$this->render_color( $field, $post );
 						break;
@@ -1687,6 +1709,110 @@ class WP_CPT {
 			<?php } ?>
 
 		</div>
+
+	<?php }
+
+	/**
+	 * Render Time Options
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_time_options( $number = 0, $selected = '' ) {
+
+		if ( ! $number > 0 ) {
+			return;
+		}
+
+		for ($i = 0; $i < $number; $i++) {
+			$option = esc_attr( $i );
+			var_dump( count_chars( $option ) );
+			if ( strlen( $option ) === 1 ) {
+				$option = '0' . $option;
+			}
+			printf( '<option value="%1$s" %2$s>%1$s</option>', esc_attr( $option ), selected( $option, $selected ) );
+		}
+
+	}
+
+	/**
+	 * Render Time
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_time( $field = array(), $post = null ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = get_post_meta( $post->ID, $field['name'], true );
+		$value_pieces = ! empty( $value ) ? explode( ':', $value ) : array(); ?>
+
+		<fieldset id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<legend><?php 
+
+				echo wp_kses( $field['label'], $this->kses_label ); 
+			
+			?></legend>
+
+			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<?php 
+				$i = 0;
+				foreach( $this->time_pieces as $piece_key => $piece ) {
+
+					$select_name = sprintf( '%1$s[%2$s]', $field['name'], $piece_key );
+					$select_id = sprintf( '%1$s_%2$s', $id, $piece_key ); ?>
+
+					<span style="display:inline-block;vertical-align:top;">
+
+						<label for="<?php echo esc_attr( $select_id ); ?>"><?php 
+
+							echo wp_kses( $piece['label'], $this->kses_label ); 
+						
+						?></label>
+
+						<br/>
+
+						<select 
+						name="<?php echo esc_attr( $select_name ); ?>" 
+						id="<?php echo esc_attr( $select_id ); ?>" 
+						aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+						<?php disabled( true, $field['disabled'] ); ?>
+						<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php
+
+							$this->render_time_options( $piece['number_options'], $value_pieces[$i] );
+
+						?></select>
+
+						<?php 
+						if ( ($i + 1) < count( $this->time_pieces ) ) {
+							echo '<span class="sep">:</span>';
+						} ?>
+
+					</span>
+
+					<?php 
+					$i++;
+
+				} ?>
+
+			</p>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</fieldset>
 
 	<?php }
 

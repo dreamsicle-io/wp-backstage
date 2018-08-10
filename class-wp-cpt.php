@@ -160,7 +160,7 @@ class WP_CPT {
 	 * @since 0.0.1
 	 */
 	public $default_media_uploader_args = array(
-		'multiple' => '', 
+		'multiple' => false, 
 		'type'     => '', 
 	);
 

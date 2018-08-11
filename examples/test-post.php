@@ -1,337 +1,356 @@
 <?php
 
 /**
- * WPCPT Init
+ * WP Backstage Init
  *
  * Initialize all custom post types in this
  * function, which is then called by the 
  * `after_setup_theme` hook. 
  */
-function wpcpt_init_default() {
+function wp_backstage_init() {
 
-	// WP_CPT::add();
-
-	WP_CPT::add( 'wpcpt_test_post', array(
-		'menu_name'      => __( 'Test Posts', 'wpcpt' ), 
-		'singular_name'  => __( 'Test Post', 'wpcpt' ), 
-		'plural_name'    => __( 'Test Posts', 'wpcpt' ), 
-		'description'    => __( 'Testing all fields.', 'wpcpt' ), 
-		'singular_base'  => 'test-post', 
-		'archive_base'   => 'test-posts', 
-		'rest_base'      => 'test-posts', 
-		'group_meta_key' => 'wpcpt_test_post_meta',
-		'supports'       => array(
-			'title', 
-			'slug', 
-			'author', 
-			'editor', 
-			'excerpt', 
-			'thumbnail', 
-			'comments', 
-			'trackbacks', 
-			'revisions', 
-			'custom-fields', 
-			'page-attributes', 
+	$all_fields = array(
+		array( 
+			'type'        => 'text', 
+			'name'        => 'wp_backstage_text_field', 
+			'label'       => __( 'Text', 'wp_backstage' ), 
+			'description' => __( 'Please enter some text.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+		),
+		array( 
+			'type'        => 'url', 
+			'name'        => 'wp_backstage_url_field', 
+			'label'       => __( 'URL', 'wp_backstage' ), 
+			'description' => __( 'Please enter a valid URL.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
+		array( 
+			'type'        => 'email', 
+			'name'        => 'wp_backstage_email_field', 
+			'label'       => __( 'Email', 'wp_backstage' ), 
+			'description' => __( 'Please enter a valid Email.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
+		array( 
+			'type'        => 'tel', 
+			'name'        => 'wp_backstage_phone_field', 
+			'label'       => __( 'Phone', 'wp_backstage' ), 
+			'description' => __( 'Please enter a phone number.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
+		array( 
+			'type'        => 'number', 
+			'name'        => 'wp_backstage_number_field', 
+			'label'       => __( 'Number', 'wp_backstage' ), 
+			'description' => __( 'Please enter a number from 0-100.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+			'input_attrs' => array(
+				'min'         => 0,
+				'max'         => 100,
+				'step'        => 1,
+			), 
+		),
+		array( 
+			'type'        => 'checkbox', 
+			'name'        => 'wp_backstage_checkbox_field', 
+			'label'       => __( 'Checkbox', 'wp_backstage' ), 
+			'description' => __( 'Toggle the checkbox.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+		),
+		array( 
+			'type'        => 'textarea', 
+			'name'        => 'wp_backstage_textarea_field', 
+			'label'       => __( 'Textarea', 'wp_backstage' ), 
+			'description' => __( 'Please enter no more than 240 characters.', 'wp_backstage' ), 
+			'input_attrs' => array(
+				'maxlength' => 240, 
+			), 
+		),
+		array( 
+			'type'        => 'select', 
+			'name'        => 'wp_backstage_select_field', 
+			'label'       => __( 'Select', 'wp_backstage' ), 
+			'description' => __( 'Please select an option.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+			'options'     => array(
+				array( 
+					'value'     => '', 
+					'label'    => __( '&horbar; Select an Option &horbar;', 'wp_backstage' )
+				),
+				array( 
+					'value'     => 'option_1', 
+					'label'    => __( 'Option 1'), 
+				),
+				array( 
+					'value'     => 'option_2', 
+					'label'    => __( 'Option 2'), 
+				),
+				array( 
+					'value'     => 'option_3', 
+					'label'    => __( 'Option 3'), 
+					'disabled' => true, 
+				),
+				array( 
+					'value'     => 'option_4', 
+					'label'    => __( 'Option 4'), 
+				),
+			), 
+		),
+		array( 
+			'type'        => 'radio', 
+			'name'        => 'wp_backstage_radio_field', 
+			'label'       => __( 'Radio', 'wp_backstage' ), 
+			'description' => __( 'Please select an option.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+			'options'     => array(
+				array( 
+					'value'     => 'option_1', 
+					'label'    => __( 'Option 1'), 
+				),
+				array( 
+					'value'     => 'option_2', 
+					'label'    => __( 'Option 2'), 
+				),
+				array( 
+					'value'     => 'option_3', 
+					'label'    => __( 'Option 3'), 
+					'disabled' => true, 
+				),
+				array( 
+					'value'     => 'option_4', 
+					'label'    => __( 'Option 4'), 
+				),
+			), 
+		),
+		array( 
+			'type'        => 'checkbox_set', 
+			'name'        => 'wp_backstage_checkbox_set_field', 
+			'label'       => __( 'Checkbox Set', 'wp_backstage' ), 
+			'description' => __( 'Please select all that apply.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'options'     => array(
+				array( 
+					'value'     => 'option_1', 
+					'label'    => __( 'Option 1'), 
+				),
+				array( 
+					'value'     => 'option_2', 
+					'label'    => __( 'Option 2'), 
+				),
+				array( 
+					'value'     => 'option_3', 
+					'label'    => __( 'Option 3'), 
+					'disabled' => true, 
+				),
+				array( 
+					'value'     => 'option_4', 
+					'label'    => __( 'Option 4'), 
+				),
+			), 
+		),
+		array( 
+			'type'        => 'media', 
+			'name'        => 'wp_backstage_image_field', 
+			'label'       => __( 'Image', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload an image.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'attach' => true, 
+			), 
+		),
+		array( 
+			'type'        => 'media', 
+			'name'        => 'wp_backstage_gallery_field', 
+			'label'       => __( 'Gallery', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload multiple images.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'multiple' => true, 
+				'attach'   => true, 
+			), 
+		),
+		array( 
+			'type'        => 'media', 
+			'name'        => 'wp_backstage_video_field', 
+			'label'       => __( 'Video', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload a video.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'type'   => 'video',
+				'attach' => true,  
+			), 
+		),
+		array( 
+			'type'        => 'media', 
+			'name'        => 'wp_backstage_application_field', 
+			'label'       => __( 'Documents', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload documents.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'multiple' => true, 
+				'type'     => 'application', 
+				'attach'   => true, 
+			), 
 		), 
+		array( 
+			'type'        => 'date', 
+			'name'        => 'wp_backstage_datepicker_field', 
+			'label'       => __( 'Date', 'wp_backstage' ), 
+			'description' => __( 'Please select a date.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+			'args'        => array(
+				'format' => 'yy-mm-dd', 
+			), 
+		),
+		array( 
+			'type'        => 'time', 
+			'name'        => 'wp_backstage_time_field', 
+			'label'       => __( 'Time', 'wp_backstage' ), 
+			'description' => __( 'Please set a time.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'is_sortable' => true, 
+		),
+		array( 
+			'type'        => 'color', 
+			'name'        => 'wp_backstage_color_field', 
+			'label'       => __( 'Color', 'wp_backstage' ), 
+			'description' => __( 'Please select a color.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'palettes' => true, 
+			),
+		),
+		array( 
+			'type'        => 'color', 
+			'name'        => 'wp_backstage_color_palette_field', 
+			'label'       => __( 'Color with Custom Palettes', 'wp_backstage' ), 
+			'description' => __( 'Please select a color.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'palettes' => array( '#ffffff', '#000000', '#67b0ff', '#ff9900' ), 
+			),
+		),
+		array( 
+			'type'        => 'code', 
+			'name'        => 'wp_backstage_html_field', 
+			'label'       => __( 'Code (HTML)', 'wp_backstage' ), 
+			'description' => __( 'Please enter some code.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
+		array( 
+			'type'        => 'code', 
+			'name'        => 'wp_backstage_php_field', 
+			'label'       => __( 'Code (CSS)', 'wp_backstage' ), 
+			'description' => __( 'Please enter some code.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'type' => 'css', 
+			),
+		),
+		array( 
+			'type'        => 'code', 
+			'name'        => 'wp_backstage_js_field', 
+			'label'       => __( 'Code (JavaScript)', 'wp_backstage' ), 
+			'description' => __( 'Please enter some code.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'type' => 'javascript', 
+			),
+		),
+	);
+
+	WP_Backstage_Post_Type::add( 'wp_backstage_page', array(
+		'menu_name'      => __( 'Test Pages', 'wp_backstage' ), 
+		'singular_name'  => __( 'Test Page', 'wp_backstage' ), 
+		'plural_name'    => __( 'Test Pages', 'wp_backstage' ), 
+		'description'    => __( 'Testing all fields.', 'wp_backstage' ), 
+		'singular_base'  => 'test-page', 
+		'archive_base'   => 'test-pages', 
+		'rest_base'      => 'test-pages', 
+		'group_meta_key' => 'wp_backstage_page_meta',
+		'hierarchical'   => true, 
 		'meta_boxes'     => array(
 			array(
-				'id'          => 'wpcpt_test_post_fields', 
-				'title'       => __( 'All Fields', 'wpcpt' ), 
-				'description' => __( 'These extra meta fields control further details about the test post. <a href="#">Example Link</a>', 'wpcpt' ), 
+				'id'          => 'wp_backstage_page_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the test page. <a href="#">Example Link</a>', 'wp_backstage' ), 
 				'context'     => 'normal', 
 				'priority'    => 'high', 
-				'fields'      => array(
-					array( 
-						'type'        => 'text', 
-						'name'        => 'wpcpt_text_field', 
-						'label'       => __( 'Text', 'wpcpt' ), 
-						'description' => __( 'Please enter some text.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-					),
-					array( 
-						'type'        => 'url', 
-						'name'        => 'wpcpt_url_field', 
-						'label'       => __( 'URL', 'wpcpt' ), 
-						'description' => __( 'Please enter a valid URL.', 'wpcpt' ), 
-						'has_column'  => true, 
-					),
-					array( 
-						'type'        => 'email', 
-						'name'        => 'wpcpt_email_field', 
-						'label'       => __( 'Email', 'wpcpt' ), 
-						'description' => __( 'Please enter a valid Email.', 'wpcpt' ), 
-						'has_column'  => true, 
-					),
-					array( 
-						'type'        => 'tel', 
-						'name'        => 'wpcpt_phone_field', 
-						'label'       => __( 'Phone', 'wpcpt' ), 
-						'description' => __( 'Please enter a phone number.', 'wpcpt' ), 
-						'has_column'  => true, 
-					),
-					array( 
-						'type'        => 'number', 
-						'name'        => 'wpcpt_number_field', 
-						'label'       => __( 'Number', 'wpcpt' ), 
-						'description' => __( 'Please enter a number from 0-100.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-						'input_attrs' => array(
-							'min'         => 0,
-							'max'         => 100,
-							'step'        => 1,
-						), 
-					),
-					array( 
-						'type'        => 'checkbox', 
-						'name'        => 'wpcpt_checkbox_field', 
-						'label'       => __( 'Checkbox', 'wpcpt' ), 
-						'description' => __( 'Toggle the checkbox.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-					),
-					array( 
-						'type'        => 'textarea', 
-						'name'        => 'wpcpt_textarea_field', 
-						'label'       => __( 'Textarea', 'wpcpt' ), 
-						'description' => __( 'Please enter no more than 240 characters.', 'wpcpt' ), 
-						'input_attrs' => array(
-							'maxlength' => 240, 
-						), 
-					),
-					array( 
-						'type'        => 'select', 
-						'name'        => 'wpcpt_select_field', 
-						'label'       => __( 'Select', 'wpcpt' ), 
-						'description' => __( 'Please select an option.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-						'options'     => array(
-							array( 
-								'value'     => '', 
-								'label'    => __( '&horbar; Select an Option &horbar;', 'wpcpt' )
-							),
-							array( 
-								'value'     => 'option_1', 
-								'label'    => __( 'Option 1'), 
-							),
-							array( 
-								'value'     => 'option_2', 
-								'label'    => __( 'Option 2'), 
-							),
-							array( 
-								'value'     => 'option_3', 
-								'label'    => __( 'Option 3'), 
-								'disabled' => true, 
-							),
-							array( 
-								'value'     => 'option_4', 
-								'label'    => __( 'Option 4'), 
-							),
-						), 
-					),
-					array( 
-						'type'        => 'radio', 
-						'name'        => 'wpcpt_radio_field', 
-						'label'       => __( 'Radio', 'wpcpt' ), 
-						'description' => __( 'Please select an option.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-						'options'     => array(
-							array( 
-								'value'     => 'option_1', 
-								'label'    => __( 'Option 1'), 
-							),
-							array( 
-								'value'     => 'option_2', 
-								'label'    => __( 'Option 2'), 
-							),
-							array( 
-								'value'     => 'option_3', 
-								'label'    => __( 'Option 3'), 
-								'disabled' => true, 
-							),
-							array( 
-								'value'     => 'option_4', 
-								'label'    => __( 'Option 4'), 
-							),
-						), 
-					),
-					array( 
-						'type'        => 'checkbox_set', 
-						'name'        => 'wpcpt_checkbox_set_field', 
-						'label'       => __( 'Checkbox Set', 'wpcpt' ), 
-						'description' => __( 'Please select all that apply.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'options'     => array(
-							array( 
-								'value'     => 'option_1', 
-								'label'    => __( 'Option 1'), 
-							),
-							array( 
-								'value'     => 'option_2', 
-								'label'    => __( 'Option 2'), 
-							),
-							array( 
-								'value'     => 'option_3', 
-								'label'    => __( 'Option 3'), 
-								'disabled' => true, 
-							),
-							array( 
-								'value'     => 'option_4', 
-								'label'    => __( 'Option 4'), 
-							),
-						), 
-					),
-					array( 
-						'type'        => 'media', 
-						'name'        => 'wpcpt_image_field', 
-						'label'       => __( 'Image', 'wpcpt' ), 
-						'description' => __( 'Please select or upload an image.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'attach' => true, 
-						), 
-					),
-					array( 
-						'type'        => 'media', 
-						'name'        => 'wpcpt_gallery_field', 
-						'label'       => __( 'Gallery', 'wpcpt' ), 
-						'description' => __( 'Please select or upload multiple images.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'multiple' => true, 
-							'attach'   => true, 
-						), 
-					),
-					array( 
-						'type'        => 'media', 
-						'name'        => 'wpcpt_video_field', 
-						'label'       => __( 'Video', 'wpcpt' ), 
-						'description' => __( 'Please select or upload a video.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'type'   => 'video',
-							'attach' => true,  
-						), 
-					),
-					array( 
-						'type'        => 'media', 
-						'name'        => 'wpcpt_application_field', 
-						'label'       => __( 'Documents', 'wpcpt' ), 
-						'description' => __( 'Please select or upload documents.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'multiple' => true, 
-							'type'     => 'application', 
-							'attach'   => true, 
-						), 
-					), 
-					array( 
-						'type'        => 'date', 
-						'name'        => 'wpcpt_datepicker_field', 
-						'label'       => __( 'Date', 'wpcpt' ), 
-						'description' => __( 'Please select a date.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-						'args'        => array(
-							'format' => 'yy-mm-dd', 
-						), 
-					),
-					array( 
-						'type'        => 'time', 
-						'name'        => 'wpcpt_time_field', 
-						'label'       => __( 'Time', 'wpcpt' ), 
-						'description' => __( 'Please set a time.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'is_sortable' => true, 
-					),
-					array( 
-						'type'        => 'color', 
-						'name'        => 'wpcpt_color_field', 
-						'label'       => __( 'Color', 'wpcpt' ), 
-						'description' => __( 'Please select a color.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'palettes' => true, 
-						),
-					),
-					array( 
-						'type'        => 'color', 
-						'name'        => 'wpcpt_color_palette_field', 
-						'label'       => __( 'Color with Custom Palettes', 'wpcpt' ), 
-						'description' => __( 'Please select a color.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'palettes' => array( '#ffffff', '#000000', '#67b0ff', '#ff9900' ), 
-						),
-					),
-					array( 
-						'type'        => 'code', 
-						'name'        => 'wpcpt_html_field', 
-						'label'       => __( 'Code (HTML)', 'wpcpt' ), 
-						'description' => __( 'Please enter some code.', 'wpcpt' ), 
-						'has_column'  => true, 
-					),
-					array( 
-						'type'        => 'code', 
-						'name'        => 'wpcpt_php_field', 
-						'label'       => __( 'Code (CSS)', 'wpcpt' ), 
-						'description' => __( 'Please enter some code.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'type' => 'css', 
-						),
-					),
-					array( 
-						'type'        => 'code', 
-						'name'        => 'wpcpt_js_field', 
-						'label'       => __( 'Code (JavaScript)', 'wpcpt' ), 
-						'description' => __( 'Please enter some code.', 'wpcpt' ), 
-						'has_column'  => true, 
-						'args'        => array(
-							'type' => 'javascript', 
-						),
-					),
-				), 
+				'fields'      => $all_fields, 
 			),
 			array(
-				'id'          => 'wpcpt_test_post_extras', 
-				'title'       => __( 'Extras', 'wpcpt' ), 
-				'description' => __( 'These extra meta fields control further details about the test post. <a href="#">Example Link</a>', 'wpcpt' ), 
+				'id'          => 'wp_backstage_page_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the test page. <a href="#">Example Link</a>', 'wp_backstage' ), 
 				'context'     => 'side', 
 				'priority'    => 'low', 
 				'hidden'      => true, 
-				'fields'      => array(), 
-			),
-		), 
-		'taxonomies' => array(
-			array(
-				'slug'          => 'wpcpt_test_category', 
-				'singular_name' => __( 'Test Category', 'wpcpt' ), 
-				'plural_name'   => __( 'Test Categories', 'wpcpt' ), 
-				'description'   => __( 'This is a test hierarchical taxonomy.', 'wpcpt' ), 
-				'public'        => true, 
-				'hierarchical'  => true, 
-				'with_front'    => false, 
-				'archive_base'  => 'test-category', 
-				'rest_base'     => 'test-tag', 
-			),
-			array(
-				'slug'          => 'wpcpt_test_tag', 
-				'singular_name' => __( 'Test Tag', 'wpcpt' ), 
-				'plural_name'   => __( 'Test Tags', 'wpcpt' ), 
-				'description'   => __( 'This is a test non-hierarchical taxonomy.', 'wpcpt' ), 
-				'public'        => true, 
-				'hierarchical'  => false, 
-				'with_front'    => false, 
-				'archive_base'  => 'test-tag', 
-				'rest_base'     => 'test-tags', 
 			),
 		), 
 	) );
 
+	WP_Backstage_Post_Type::add( 'wp_backstage_post', array(
+		'menu_name'      => __( 'Test Posts', 'wp_backstage' ), 
+		'singular_name'  => __( 'Test Post', 'wp_backstage' ), 
+		'plural_name'    => __( 'Test Posts', 'wp_backstage' ), 
+		'description'    => __( 'Testing all fields.', 'wp_backstage' ), 
+		'singular_base'  => 'test-post', 
+		'archive_base'   => 'test-posts', 
+		'rest_base'      => 'test-posts', 
+		'group_meta_key' => 'wp_backstage_post_meta',
+		'taxonomies'     => array( 'category', 'post_tag' ), 
+		'meta_boxes'     => array(
+			array(
+				'id'          => 'wp_backstage_post_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the test post. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'context'     => 'normal', 
+				'priority'    => 'high', 
+				'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_post_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the test post. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'context'     => 'side', 
+				'priority'    => 'low', 
+				'hidden'      => true, 
+			),
+		), 
+	) );
+
+	WP_Backstage_Taxonomy::add( 'wp_backstage_cat', array( 
+		'singular_name' => __( 'Test Category', 'wp_backstage' ), 
+		'plural_name'   => __( 'Test Categories', 'wp_backstage' ), 
+		'description'   => __( 'This is a test hierarchical taxonomy.', 'wp_backstage' ), 
+		'public'        => true, 
+		'hierarchical'  => true, 
+		'with_front'    => false, 
+		'archive_base'  => 'test-category', 
+		'rest_base'     => 'test-tag', 
+		'post_types'    => array( 'wp_backstage_page', 'wp_backstage_post' ), 
+		'fields'        => $all_fields, 
+	) );
+
+	WP_Backstage_Taxonomy::add( 'wp_backstage_tag', array( 
+		'singular_name' => __( 'Test Tag', 'wp_backstage' ), 
+		'plural_name'   => __( 'Test Tags', 'wp_backstage' ), 
+		'description'   => __( 'This is a test non-hierarchical taxonomy.', 'wp_backstage' ), 
+		'public'        => true, 
+		'hierarchical'  => false, 
+		'with_front'    => false, 
+		'archive_base'  => 'test-tag', 
+		'rest_base'     => 'test-tags', 
+		'post_types'    => array( 'wp_backstage_page', 'wp_backstage_post' ), 
+		'fields'        => $all_fields, 
+	) );
+
 }
 
-add_action( 'after_setup_theme', 'wpcpt_init_default', 10 );
+add_action( 'plugins_loaded', 'wp_backstage_init', 10 );

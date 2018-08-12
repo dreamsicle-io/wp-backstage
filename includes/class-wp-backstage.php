@@ -1,24 +1,12 @@
 <?php
 /**
- * WP CPT
+ * WP Backstage
  * 
- * @version  0.0.1
+ * @version     0.0.1
+ * @package     wp_backstage
+ * @subpackage  includes
  */
-class WP_CPT {
-
-	/**
-	 * Slug
-	 * 
-	 * @since 0.0.1
-	 */
-	public $slug = '';
-
-	/**
-	 * Args
-	 * 
-	 * @since 0.0.1
-	 */
-	public $args = array();
+class WP_Backstage {
 
 	/**
 	 * Errors
@@ -28,101 +16,39 @@ class WP_CPT {
 	public $errors = array();
 
 	/**
-	 * Date Format
+	 * Screen ID
 	 * 
 	 * @since 0.0.1
 	 */
-	public $date_format = '';
+	public $screen_id = '';
 
 	/**
-	 * Notices
+	 * Has Media Uploader
 	 * 
 	 * @since 0.0.1
 	 */
-	public $hidden_meta_boxes = array( 
-		'trackbacksdiv', 
-		'slugdiv', 
-		'authordiv', 
-		'commentstatusdiv', 
-		'postcustom', 
-	);
+	public $has_media = false;
 
 	/**
-	 * Default Args
+	 * Has Date
 	 * 
 	 * @since 0.0.1
 	 */
-	public $default_args = array(
-		'menu_name'       => '', 
-		'singular_name'   => '', 
-		'plural_name'     => '', 
-		'thumbnail_label' => '', 
-		'description'     => '', 
-		'public'          => true, 
-		'hierarchical'    => false, 
-		'with_front'      => false, 
-		'singular_base'       => '', 
-		'archive_base'       => '', 
-		'rest_base'       => '', 
-		'menu_icon'       => 'dashicons-admin-post', 
-		'capability_type' => 'post', 
-		'supports'        => array(
-			'title', 
-			'slug', 
-			'author', 
-			'editor', 
-			'excerpt', 
-			'thumbnail', 
-			'comments', 
-			'trackbacks', 
-			'revisions', 
-			'custom-fields', 
-			'page-attributes', 
-		), 
-		'taxonomies'      => array(), 
-		'meta_boxes'      => array(), 
-	);
+	public $has_date = false;
 
 	/**
-	 * Required Args
+	 * Has Color
 	 * 
 	 * @since 0.0.1
 	 */
-	public $required_args = array(
-		'singular_name', 
-		'plural_name', 
-	);
+	public $has_color = false;
 
 	/**
-	 * Default Taxonomy Args
+	 * Code Editors
 	 * 
 	 * @since 0.0.1
 	 */
-	public $default_taxonomy_args = array(
-		'singular_name'   => '', 
-		'plural_name'     => '', 
-		'description'     => '', 
-		'public'          => true, 
-		'hierarchical'    => true, 
-		'with_front'      => false, 
-		'archive_base'    => '', 
-		'rest_base'       => '', 
-	);
-
-	/**
-	 * Default Meta Box Args
-	 * 
-	 * @since 0.0.1
-	 */
-	public $default_meta_box_args = array( 
-		'id'          => '', 
-		'title'       => '', 
-		'description' => '', 
-		'context'     => '', 
-		'priority'    => '', 
-		'hidden'      => '', 
-		'fields'      => array(), 
-	);
+	public $code_editors = array();
 
 	/**
 	 * Default Field Args
@@ -134,14 +60,20 @@ class WP_CPT {
 		'name'        => '', 
 		'label'       => '', 
 		'title'       => '', 
+		'value'       => null, 
 		'disabled'    => false, 
 		'description' => '', 
-		'has_column'  => '', 
-		'is_sortable' => '', 
 		'options'     => array(),
 		'input_attrs' => array(),
 		'args'        => array(), 
 	);
+
+	/**
+	 * Date Format
+	 * 
+	 * @since 0.0.1
+	 */
+	public $date_format = '';
 
 	/**
 	 * Default Option Args
@@ -261,23 +193,23 @@ class WP_CPT {
 		),
 	);
 
+	/**
+	 * Time Pieces
+	 *
+	 * @since 0.0.1
+	 */
 	public $time_pieces = array();
 
 	/**
-	 * Add
-	 * 
-	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
-	 * @return  void 
+	 * Global Code Settings
+	 *
+	 * @since 0.0.1
 	 */
-	public static function add( $slug = '', $args = array() ) {
-
-		$CPT = new WP_CPT( $slug, $args );
-
-		$CPT->init();
-
-	}
+	public $global_code_settings = array( 
+		'codemirror' => array(
+			'lineWrapping' => false, 
+		), 
+	);
 
 	/**
 	 * Construct
@@ -287,130 +219,23 @@ class WP_CPT {
 	 * @param   array   $args 
 	 * @return  void 
 	 */
-	function __construct( $slug = '', $args = array() ) {
+	function __construct() {
 
 		$this->date_format = get_option( 'date_format' );
 		$this->time_pieces = array(
 			'hour'   => array( 
-				'label'          => __( 'Hour', 'WP_CPT' ),  
+				'label'          => __( 'Hour', 'wp-backstage' ),  
 				'number_options' => 24,  
 			), 
 			'minute' => array( 
-				'label'          => __( 'Minute', 'WP_CPT' ),  
+				'label'          => __( 'Minute', 'wp-backstage' ),  
 				'number_options' => 60,  
 			), 
 			'second' => array( 
-				'label'          => __( 'Second', 'WP_CPT' ),  
+				'label'          => __( 'Second', 'wp-backstage' ),  
 				'number_options' => 60, 
 			), 
 		);
-		$this->set_slug( $slug );
-		$this->set_args( $args );
-		$this->set_errors();
-
-	}
-
-	/**
-	 * Set Slug
-	 * 
-	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has errors or not. 
-	 */
-	public function set_slug( $slug = '' ) {
-
-		$this->slug = sanitize_title_with_dashes( $slug );
-
-	}
-
-	/**
-	 * Set Args
-	 * 
-	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has errors or not. 
-	 */
-	public function set_args( $args = array() ) {
-
-		if ( current_theme_supports( 'post-formats' ) ) {
-
-			$this->default_args['supports'][] = 'post-formats';
-			
-		}
-
-		$this->args = wp_parse_args( $args, $this->default_args );
-
-		if ( empty( $this->args['thumbnail_label'] ) ) {
-
-			$this->args['thumbnail_label'] = __( 'Featured Image', 'WP_CPT' );
-
-		}
-
-		if ( empty( $this->args['singular_base'] ) ) {
-
-			$this->args['singular_base'] = $this->slug;
-
-		}
-
-		if ( empty( $this->args['archive_base'] ) ) {
-
-			$this->args['archive_base'] = $this->slug;
-
-		}
-
-		if ( empty( $this->args['menu_name'] ) ) {
-
-			if ( ! empty( $this->args['plural_name'] ) ) {
-
-				$this->args['menu_name'] = $this->args['plural_name'];
-
-			} elseif ( ! empty( $this->args['singular_name'] ) ) {
-
-				$this->args['menu_name'] = $this->args['singular_name'];
-
-			} else {
-
-				$this->args['menu_name'] = $this->slug;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Set Errors
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function set_errors() {
-
-		if ( empty( $this->slug ) ) {
-			
-			$this->errors[] = new WP_Error( 'required_slug', __( 'A post type slug is required when adding a new post type.', 'WP_CPT' ) );
-		
-		} elseif ( in_array( $this->slug, get_post_types() ) ) {
-
-			$this->errors[] = new WP_Error( 'post_type_exists', __( 'A post type with this slug already exists.', 'WP_CPT' ) );
-
-		}
-
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
-
-			foreach ( $this->required_args as $required_arg ) {
-
-				if ( empty( $this->args[$required_arg] ) ) {
-
-					$this->errors[] = new WP_Error( 'required_arg', sprintf( 
-						/* translators: 1: required arg key. */
-						__( 'The %1$s key is required.', 'WP_CPT' ), 
-						'<code>' . $required_arg . '</code>'
-					) );
-
-				}
-
-			}
-
-		}
 
 	}
 
@@ -441,9 +266,8 @@ class WP_CPT {
 				if ( is_wp_error( $error ) ) {
 
 					$message = sprintf( 
-						/* translators: 1: post type slug, 3: error message. */
-						__( 'Error [%1$s]: %2$s', 'WP_CPT' ), 
-						$this->slug, 
+						/* translators: 1: error message. */
+						__( 'Error: %1$s', 'wp-backstage' ), 
 						$error->get_error_message() 
 					); ?>
 
@@ -466,6 +290,20 @@ class WP_CPT {
 	}
 
 	/**
+	 * Is Screen
+	 * 
+	 * @since   0.0.1
+	 * @return  boolean  If the match was successful or not. 
+	 */
+	public function is_screen( $key = '', $value = '' ) {
+
+		$screen = get_current_screen();
+
+		return ( $value === $screen->$key );
+
+	}
+
+	/**
 	 * Init
 	 * 
 	 * @since   0.0.1
@@ -481,20 +319,11 @@ class WP_CPT {
 
 		}
 
-		add_action( 'init', array( $this, 'register_post_type' ), 0 );
-		add_action( 'init', array( $this, 'register_taxonomies' ), 0 );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
-		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
-		add_filter( 'edit_form_top', array( $this, 'render_edit_nonces' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
-		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
-		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
-		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_datepicker_script' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_colorpicker_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_date_picker_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_color_picker_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_code_editor_script' ), 10 );
 
 	}
 
@@ -506,16 +335,11 @@ class WP_CPT {
 	 */
 	public function enqueue_admin_scripts() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) ) {
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
 			return;
 		}
 
-		$has_media_uploader = ! empty( $this->get_field_by( 'type', 'media' ) );
-		$has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
-		$has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
-		$code_editors = $this->get_fields_by( 'type', 'code' );
-
-		if ( $has_media_uploader || $has_date ) {
+		if ( $this->has_media || $this->has_date ) {
 
 			if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-ui-core' );
@@ -532,7 +356,7 @@ class WP_CPT {
 
 		}
 
-		if ( $has_media_uploader ) {
+		if ( $this->has_media ) {
 			
 			if ( ! wp_script_is( 'media-editor', 'enqueued' ) ) {
 				wp_enqueue_media();
@@ -544,7 +368,7 @@ class WP_CPT {
 
 		}
 
-		if ( $has_date ) {
+		if ( $this->has_date ) {
 
 			if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) ) {
 				wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -552,7 +376,7 @@ class WP_CPT {
 
 		}
 
-		if ( $has_color ) {
+		if ( $this->has_color ) {
 
 			if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 				wp_enqueue_script( 'wp-color-picker' );
@@ -563,19 +387,13 @@ class WP_CPT {
 
 		}
 
-		if ( ! empty( $code_editors ) ) {
+		if ( ! empty( $this->code_editors ) ) {
 
-			$global_settings =  array( 
-				'codemirror' => array(
-					'lineWrapping' => false, 
-				), 
-			);
-
-			foreach ( $code_editors as $code_editor ) {
+			foreach ( $this->code_editors as $code_editor ) {
 
 				$code_editor_args = wp_parse_args( $code_editor['args'], $this->default_code_args );
 
-				$code_editor_settings = wp_enqueue_code_editor( array_merge( $global_settings, array( 
+				$code_editor_settings = wp_enqueue_code_editor( array_merge( $this->global_code_settings, array( 
 					'type' => $code_editor_args['type'], 
 				) ) );
 
@@ -595,228 +413,6 @@ class WP_CPT {
 			}
 
 		}
-
-	}
-
-
-	/**
-	 * Is Screen
-	 * 
-	 * @since   0.0.1
-	 * @return  boolean  If the match was successful or not. 
-	 */
-	public function is_screen( $key = '', $value = '' ) {
-
-		$screen = get_current_screen();
-
-		return ( $value === $screen->$key );
-
-	}
-
-	/**
-	 * Render nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_edit_nonces() {
-
-		wp_nonce_field( 'edit', sprintf( '_%1$s_nonce', $this->slug ) );
-
-	}
-
-	/**
-	 * Get Label
-	 * 
-	 * @since   0.0.1
-	 * @param   string  $template 
-	 * @return  string 
-	 */
-	public function get_label( $template = '' ) {
-
-		return sprintf(
-			/* translators: 1: post type singular name, 2: post type plural name, 3: thumbnail label. */
-			$template,
-			$this->args['singular_name'], 
-			$this->args['plural_name'], 
-			$this->args['thumbnail_label'] 
-		);
-
-	}
-
-	/**
-	 * Get Taxonomy Label
-	 * 
-	 * @since   0.0.1
-	 * @param   string  $template 
-	 * @return  string 
-	 */
-	public function get_taxonomy_label( $template = '', $taxonomy = array() ) {
-
-		return sprintf(
-			/* translators: 1: taxonomy singular name, 2: taxonomy plural name. */
-			$template,
-			$taxonomy['singular_name'], 
-			$taxonomy['plural_name']
-		);
-
-	}
-
-	/**
-	 * Register
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function register_post_type() {
-
-		$labels = array(
-			'name'                  => $this->args['plural_name'],
-			'singular_name'         => $this->args['singular_name'],
-			'menu_name'             => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
-			'name_admin_bar'        => $this->args['singular_name'],
-			'archives'              => $this->get_label( __( '%1$s Archives', 'WP_CPT' ) ),
-			'attributes'            => $this->get_label( __( '%1$s Attributes', 'WP_CPT' ) ),
-			'parent_item_colon'     => $this->get_label( __( 'Parent %1$s:', 'WP_CPT' ) ),
-			'all_items'             => $this->get_label( __( 'All %2$s', 'WP_CPT' ) ),
-			'add_new_item'          => $this->get_label( __( 'Add New %1$s', 'WP_CPT' ) ),
-			'add_new'               => $this->get_label( __( 'Add New', 'WP_CPT' ) ),
-			'new_item'              => $this->get_label( __( 'New %1$s', 'WP_CPT' ) ),
-			'edit_item'             => $this->get_label( __( 'Edit %1$s', 'WP_CPT' ) ),
-			'update_item'           => $this->get_label( __( 'Update %1$s', 'WP_CPT' ) ),
-			'view_item'             => $this->get_label( __( 'View %1$s', 'WP_CPT' ) ),
-			'view_items'            => $this->get_label( __( 'View %2$s', 'WP_CPT' ) ),
-			'search_items'          => $this->get_label( __( 'Search %2$s', 'WP_CPT' ) ),
-			'not_found'             => $this->get_label( __( 'No %2$s found', 'WP_CPT' ) ),
-			'not_found_in_trash'    => $this->get_label( __( 'Not %2$s found in Trash', 'WP_CPT' ) ),
-			'featured_image'        => $this->args['thumbnail_label'],
-			'set_featured_image'    => $this->get_label( __( 'Set %3$s', 'WP_CPT' ) ),
-			'remove_featured_image' => $this->get_label( __( 'Remove %3$s', 'WP_CPT' ) ),
-			'use_featured_image'    => $this->get_label( __( 'Use as %3$s', 'WP_CPT' ) ),
-			'insert_into_item'      => $this->get_label( __( 'Insert into %1$s', 'WP_CPT' ) ),
-			'uploaded_to_this_item' => $this->get_label( __( 'Uploaded to this %1$s', 'WP_CPT' ) ),
-			'items_list'            => $this->get_label( __( '%2$s list', 'WP_CPT' ) ),
-			'items_list_navigation' => $this->get_label( __( '%2$s list navigation', 'WP_CPT' ) ),
-			'filter_items_list'     => $this->get_label( __( 'Filter %2$s list', 'WP_CPT' ) ),
-		);
-
-		$rewrite = array(
-			'slug'       => ! empty( $this->args['singular_base'] ) ? $this->args['singular_base'] : $this->slug,
-			'with_front' => $this->args['with_front'],
-			'pages'      => true,
-			'feeds'      => true,
-		);
-
-		$args = array(
-			'label'               => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
-			'description'         => $this->args['description'], 
-			'labels'              => $labels,
-			'supports'            => $this->args['supports'], 
-			'hierarchical'        => $this->args['hierarchical'],
-			'public'              => $this->args['public'],
-			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'menu_position'       => 5,
-			'menu_icon'           => $this->args['menu_icon'],
-			'show_in_admin_bar'   => true,
-			'show_in_nav_menus'   => $this->args['public'],
-			'can_export'          => true,
-			'has_archive'         => ( $this->args['public'] && ! empty( $this->args['archive_base'] ) ) ? $this->args['archive_base'] : false,
-			'exclude_from_search' => ! $this->args['public'],
-			'publicly_queryable'  => $this->args['public'],
-			'rewrite'             => $this->args['public'] ? $rewrite : false,
-			'capability_type'     => $this->args['capability_type'],
-			'show_in_rest'        => ( $this->args['public'] && ! empty( $this->args['rest_base'] ) ),
-			'rest_base'           => $this->args['rest_base'],
-		);
-
-		register_post_type( $this->slug, $args );
-
-	}
-
-	public function register_taxonomies() {
-
-		if ( is_array( $this->args['taxonomies'] ) && ! empty( $this->args['taxonomies'] ) ) {
-
-			foreach ( $this->args['taxonomies'] as $taxonomy ) {
-
-				$taxonomy = wp_parse_args( $taxonomy, $this->default_taxonomy_args );
-
-				$labels = array(
-					'name'                       => $taxonomy['plural_name'],
-					'singular_name'              => $taxonomy['singular_name'],
-					'menu_name'                  => $taxonomy['plural_name'],
-					'all_items'                  => $this->get_taxonomy_label( __( 'All %2$s', 'WP_CPT' ), $taxonomy ),
-					'parent_item'                => $this->get_taxonomy_label( __( 'Parent %1$s', 'WP_CPT' ), $taxonomy ),
-					'parent_item_colon'          => $this->get_taxonomy_label( __( 'Parent %1$s:', 'WP_CPT' ), $taxonomy ),
-					'new_item_name'              => $this->get_taxonomy_label( __( 'New %1$s Name', 'WP_CPT' ), $taxonomy ),
-					'add_new_item'               => $this->get_taxonomy_label( __( 'Add New %1$s', 'WP_CPT' ), $taxonomy ),
-					'edit_item'                  => $this->get_taxonomy_label( __( 'Edit %1$s', 'WP_CPT' ), $taxonomy ),
-					'update_item'                => $this->get_taxonomy_label( __( 'Update %1$s', 'WP_CPT' ), $taxonomy ),
-					'view_item'                  => $this->get_taxonomy_label( __( 'View %1$s', 'WP_CPT' ), $taxonomy ),
-					'separate_items_with_commas' => $this->get_taxonomy_label( __( 'Separate %2$s with commas', 'WP_CPT' ), $taxonomy ),
-					'add_or_remove_items'        => $this->get_taxonomy_label( __( 'Add or remove %2$s', 'WP_CPT' ), $taxonomy ),
-					'choose_from_most_used'      => $this->get_taxonomy_label( __( 'Choose from the most used %2$s', 'WP_CPT' ), $taxonomy ),
-					'popular_items'              => $this->get_taxonomy_label( __( 'Popular %2$s', 'WP_CPT' ), $taxonomy ),
-					'search_items'               => $this->get_taxonomy_label( __( 'Search %2$s', 'WP_CPT' ), $taxonomy ),
-					'not_found'                  => $this->get_taxonomy_label( __( 'No %2$s Found', 'WP_CPT' ), $taxonomy ),
-					'no_terms'                   => $this->get_taxonomy_label( __( 'No %2$s', 'WP_CPT' ), $taxonomy ),
-					'items_list'                 => $this->get_taxonomy_label( __( '%2$s list', 'WP_CPT' ), $taxonomy ),
-					'items_list_navigation'      => $this->get_taxonomy_label( __( '%2$s list navigation', 'WP_CPT' ), $taxonomy ),
-				);
-
-				$rewrite = array(
-					'slug'                       => $taxonomy['archive_base'],
-					'with_front'                 => $taxonomy['with_front'],
-					'hierarchical'               => $taxonomy['hierarchical'],
-				);
-
-				$args = array(
-					'labels'                     => $labels,
-					'hierarchical'               => $taxonomy['hierarchical'],
-					'public'                     => $taxonomy['public'],
-					'show_ui'                    => true,
-					'show_admin_column'          => true,
-					'show_in_nav_menus'          => $taxonomy['public'],
-					'show_tagcloud'              => $taxonomy['public'],
-					'rewrite'                    => $taxonomy['public'] ? $rewrite : false,
-					'show_in_rest'               => ( $taxonomy['public'] && ! empty( $taxonomy['rest_base'] ) ),
-					'rest_base'                  => $taxonomy['rest_base'],
-				);
-
-				register_taxonomy( $taxonomy['slug'], $this->slug, $args );
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Get Fields
-	 * 
-	 * @since   0.0.1
-	 * @return  array  
-	 */
-	public function get_fields() {
-
-		$fields = array();
-
-		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
-			
-			foreach ( $this->args['meta_boxes'] as $meta_box ) {
-			
-				if ( is_array( $meta_box ) && isset( $meta_box['fields'] ) && ! empty( $meta_box['fields'] ) ) {
-			
-					$fields = array_merge( $fields, $meta_box['fields'] );
-			
-				}
-			
-			}
-		
-		}
-
-		return $fields;
 
 	}
 
@@ -885,341 +481,133 @@ class WP_CPT {
 	}
 
 	/**
-	 * Save
+	 * Get Fields
 	 * 
 	 * @since   0.0.1
-	 * @return  void 
+	 * @return  array  
 	 */
-	public function save( $post_id = 0, $post = null, $update = false ) {
+	public function get_fields() {
 
-		$nonce_key = sprintf( '_%1$s_nonce', $this->slug );
+		return array();
 
-		if ( ! $post_id > 0 ) { return; }
-		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
-		if ( ! $_POST || empty( $_POST ) ) { return; }
-		if ( $_POST['post_type'] !== $this->slug ) { return; }
-		if ( empty( $_POST[$nonce_key] ) ) { return; }
-		if ( ! wp_verify_nonce( $_POST[$nonce_key], 'edit' ) ) { return; }
+	}
+
+	/**
+	 * Get Fields By
+	 * 
+	 * @since   0.0.1
+	 * @return  array  the fields if found, or an empty array.
+	 */
+	public function get_fields_by( $key = '', $value = null, $number = 0 ) {
 
 		$fields = $this->get_fields();
+		$result = array();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-			
-			$values = array();
+		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
+
+			$i = 0;
 
 			foreach ( $fields as $field ) {
 
-				$field = wp_parse_args( $field, $this->default_field_args );
+				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
 
-				if ( isset( $_POST[$field['name']] ) ) {
+					$result[] = $field;
 
-					$value = $this->sanitize_field( $field, $_POST[$field['name']] );
-
-					update_post_meta( $post_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-					if ( $field['type'] === 'media' ) {
-
-						$this->handle_attachments( $post_id, $value, $field );
-
+					if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
+						break;
 					}
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
-
-					update_post_meta( $post_id, $field['name'], false );
-
-				} 
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
-
-			}
-
-		}
-
-	}
-
-	public function handle_attachments( $post_id = 0, $value = 0, $field = array() ) {
-
-		if ( $field['type'] !== 'media') {
-			return;
-		}
-
-		$media_uploader_args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-
-		if ( ! $media_uploader_args['attach'] ) {
-			return;
-		}
-
-		if ( ! empty( $value ) ) {
-			
-			if ( $media_uploader_args['multiple'] ) {
-
-				if ( is_array( $value ) && ! empty( $value ) ) {
-
-					foreach( $value as $attachment_id ) {
-
-						if ( get_post_type( $attachment_id ) === 'attachment' ) {
-
-							$parent_id = wp_get_post_parent_id( $attachment_id );
-							if ( ! $parent_id > 0 ) {
-								wp_update_post( array(
-									'ID'          => $attachment_id, 
-									'post_parent' => $post_id,
-								) );
-							}
-
-						}
-
-					}
+					$i++;
 
 				}
 
-			} else {
-
-				if ( ! empty( $value ) ) {
-				
-					if ( get_post_type( $value ) === 'attachment' ) {
-				
-						$parent_id = wp_get_post_parent_id( $value );
-						if ( ! $parent_id > 0 ) {
-							wp_update_post( array(
-								'ID'          => $value, 
-								'post_parent' => $post_id,
-							) );
-						}
-				
-					}
-				
-				}
-			
 			}
 
 		}
+
+		return $result;
 
 	}
 
 	/**
-	 * Manage Default Hidden Meta Boxes
-	 *
-	 * Note that this will only work if the post type UI has never 
-	 * been modified by the user.
+	 * Get Field By
 	 * 
 	 * @since   0.0.1
-	 * @return  void 
+	 * @return  array  the first field if found, or null.
 	 */
-	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen = null ) {
+	public function get_field_by( $key = '', $value = null ) {
 
-		if ( $screen->post_type === $this->slug ) {
-
-			$hidden = array_merge( $hidden, $this->hidden_meta_boxes );
-
-			if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
-
-				foreach ( $this->args['meta_boxes'] as $meta_box ) {
-
-					$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
-
-					if ( $meta_box['hidden'] ) {
-
-						$hidden[] = $meta_box['id'];
-
-					}
-
-				}
-
-			}
-
-		}
-
-		return $hidden;
-
-	}
-
-	/**
-	 * Add Thumbnail Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered columns.
-	 */
-	public function add_thumbnail_column( $columns = array() ) {
-
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
-
-			// loop the columns so that the new columns can
-			// be inserted where they are wanted
-			foreach ( $columns as $column_key => $column_label ) {
-
-				// unset this column to make room for the new column,
-				// all information needed to reset the column is already here
-				unset( $columns[$column_key] );
-
-				// if the loop is currently at the checkbox column, 
-				// reset the checkbox column followed by the new 
-				// thumbnail column
-				if ( $column_key === 'cb' ) {
-
-					// if the loop is currently at the checkbox column, 
-					// reset the checkbox column followed by the new 
-					// thumbnail column
-					$columns[$column_key] = $column_label;
-					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->args['thumbnail_label'] ) . '</span>';
-
-				} else {
-
-					// else reset the column as is
-					$columns[$column_key] = $column_label;
-
-				}
-
-			}
-		
-		}
-
-		return $columns;
-
-	}
-
-	/**
-	 * Add Field Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered columns. 
-	 */
-	public function add_field_columns( $columns = array() ) {
-
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
-		
-			$fields = $this->get_fields();
-
-			// Add all field columns
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-				// set which columns should be removed to make way 
-				// for new columns (will be added back later as is), 
-				// date is included by default, but sometimes comments
-				// are there, and this should be at the end as well
-				$columns_to_remove = array( 'comments', 'date' );
-				$removed_columns = array();
-
-				// unset removed columns to make space 
-				// also ensure storage of the original
-				// column for resetting later
-				foreach ( $columns_to_remove as $removed ) {
-					$removed_columns[$removed] = $columns[$removed];
-					unset( $columns[$removed] );
-				}
-
-				foreach ( $fields as $field ) {
-
-					$field = wp_parse_args( $field, $this->default_field_args );
-
-					if ( $field['has_column'] ) {
-
-						$columns[$field['name']] = $field['label'];
-
-					}
-
-				}
-
-				// reset stored removed columns
-				foreach ( $columns_to_remove as $removed ) {
-					$columns[$removed] = $removed_columns[$removed];
-				}
-
-			}
-
-		}
-
-		return $columns;
-
-	}
-
-	/**
-	 * Manage Admin Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered columns. 
-	 */
-	public function manage_admin_columns( $columns = array() ) {
-
-		$columns = $this->add_thumbnail_column( $columns );
-		$columns = $this->add_field_columns( $columns );
-
-		return $columns;
-
-	}
-
-	/**
-	 * Manage Sortable Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered sortable columns. 
-	 */
-	public function manage_sortable_columns( $columns = array() ) {
-
-		$fields = $this->get_fields();
+		$fields = $this->get_fields_by( $key, $value, 1 );
+		$result = null;
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
 
-			foreach ( $fields as $field ) {
-
-				$field = wp_parse_args( $field, $this->default_field_args );
-
-				if ( $field['has_column'] && $field['is_sortable'] ) {
-
-					$columns[$field['name']] = $field['name'];
-
-				}
-
-			}
+			$result = $fields[0];
 
 		}
 
-		return $columns;
+		return $result;
 
 	}
 
 	/**
-	 * Render Thumbnail
+	 * Render Field By Type
+	 * 
+	 * @since   0.0.1
+	 * @return  array  the first field if found, or null.
+	 */
+	public function render_field_by_type( $field = array() ) {
+
+		if ( empty( $field ) ) {
+			return;
+		}
+
+		switch ( $field['type'] ) {
+			case 'textarea':
+				$this->render_textarea( $field );
+				break;
+			case 'select':
+				$this->render_select( $field );
+				break;
+			case 'radio':
+				$this->render_radio( $field );
+				break;
+			case 'checkbox':
+				$this->render_checkbox( $field );
+				break;
+			case 'checkbox_set':
+				$this->render_checkbox_set( $field );
+				break;
+			case 'media':
+				$this->render_media_uploader( $field );
+				break;
+			case 'date':
+				$this->render_date( $field );
+				break;
+			case 'time':
+				$this->render_time( $field );
+				break;
+			case 'color':
+				$this->render_color( $field );
+				break;
+			case 'code':
+				$this->render_code( $field );
+				break;
+			default:
+				$this->render_input( $field );
+				break;
+		}
+	}
+
+	/**
+	 * Format Value by Field
 	 * 
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	public function render_thumbnail( $post_id = 0 ) {
+	public function format_field_value( $value = null, $field = array() ) {
 
-		if ( post_type_supports( $this->slug, 'thumbnail' ) ) { ?>
-		
-			<a 
-			title="<?php the_title_attribute( array( '', '', true, $post_id ) ); ?>"
-			href="<?php echo esc_url( get_edit_post_link( $post_id ) ); ?>" 
-			style="display:block; width:40px; height:40px; overflow:hidden; background-color:#e7e7e7;"><?php 
-
-				if ( has_post_thumbnail( $post_id ) ) {
-
-					echo get_the_post_thumbnail( $post_id, 'thumbnail' );
-
-				}
-
-			?></a>
-
-		<?php }
-
-	}
-
-	/**
-	 * Render Column Content
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function render_column_content( $value = null, $field = array() ) {
-
-		$content = '&horbar;';
+		$content = '';
 
 		if ( ! empty( $value ) && ( is_array( $field ) && ! empty( $field ) ) ) {
 
@@ -1242,7 +630,7 @@ class WP_CPT {
 					$content = esc_html( $labels[$value] );
 					break;
 				case 'checkbox':
-					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'WP_CPT' ) . '</span>' : '&horbar;';
+					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>' : '&horbar;';
 					break;
 				case 'textarea':
 					$content = $value ? wpautop( sanitize_textarea_field( $value ) ) : '&horbar;';
@@ -1294,8 +682,121 @@ class WP_CPT {
 
 		}
 
-		echo $content;
+		return $content;
 
+	}
+
+	/**
+	 * Add Field Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered columns. 
+	 */
+	public function add_field_columns( $columns = array() ) {
+
+		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		
+			$fields = $this->get_fields();
+
+			// Add all field columns
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				// set which columns should be removed to make way 
+				// for new columns (will be added back later as is), 
+				// date is included by default, but sometimes comments
+				// are there, and this should be at the end as well
+				if ( $this->is_screen( 'base', 'edit-tags' ) ) {
+					$columns_to_remove = array( 'posts' );
+				} elseif ( $this->is_screen( 'base', 'edit' ) ) {
+					$columns_to_remove = array( 'comments', 'date' );
+				}
+
+				$removed_columns = array();
+
+				// unset removed columns to make space 
+				// also ensure storage of the original
+				// column for resetting later
+				foreach ( $columns_to_remove as $removed ) {
+					$removed_columns[$removed] = $columns[$removed];
+					unset( $columns[$removed] );
+				}
+
+				foreach ( $fields as $field ) {
+
+					if ( $field['has_column'] ) {
+
+						$columns[$field['name']] = $field['label'];
+
+					}
+
+				}
+
+				// reset stored removed columns
+				foreach ( $columns_to_remove as $removed ) {
+					$columns[$removed] = $removed_columns[$removed];
+				}
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Manage Sortable Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered sortable columns. 
+	 */
+	public function manage_sortable_columns( $columns = array() ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				if ( $field['has_column'] && $field['is_sortable'] ) {
+
+					$columns[$field['name']] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Format Attrs
+	 * 
+	 * @since   0.0.1
+	 * @return  string  The imploded, escaped, formatted attributes.
+	 */
+	public function format_attrs( $attrs = array() ) {
+
+		$formatted_attrs = array();
+
+		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
+			
+			foreach ( $attrs as $key => $field['value'] ) {
+				
+				$formatted_attrs[] = sprintf( 
+					'%1$s="%2$s"', 
+					esc_attr( $key ), 
+					esc_attr( $field['value'] ) 
+				);
+
+			}
+			
+		}
+
+		return implode( ' ', $formatted_attrs );
 	}
 
 	/**
@@ -1304,7 +805,7 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	public function get_option_labels( $field, $post_id = 0 ) {
+	public function get_option_labels( $field = array(), $post_id = 0 ) {
 		
 		$option_labels = array();
 		
@@ -1322,305 +823,25 @@ class WP_CPT {
 	}
 
 	/**
-	 * Render Admin Column
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function render_admin_column( $column = '', $post_id = 0 ) {
-
-		if ( $column === 'thumbnail' ) {
-
-			$this->render_thumbnail( $post_id );
-
-		} else {
-
-			$field = $this->get_field_by( 'name', $column );
-
-			if ( ! empty( $field ) ) {
-
-				$value = get_post_meta( $post_id, $column, true );
-
-				if ( ! empty( $value ) ) {
-
-					$this->render_column_content( $value, $field );
-
-				} else {
-
-					echo '&horbar;';
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Get Fields By
-	 * 
-	 * @since   0.0.1
-	 * @return  array  the fields if found, or an empty array.
-	 */
-	public function get_fields_by( $key = '', $value = null ) {
-
-		$fields = $this->get_fields();
-		$result = array();
-
-		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
-
-			foreach ( $fields as $field ) {
-
-				$field = wp_parse_args( $field, $this->default_field_args );
-
-				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
-
-					$result[] = $field;
-
-				}
-
-			}
-
-		}
-
-		return $result;
-
-	}
-
-	/**
-	 * Get Field By
-	 * 
-	 * @since   0.0.1
-	 * @return  array  the field if found, or an empty array.
-	 */
-	public function get_field_by( $key = '', $value = null ) {
-
-		$fields = $this->get_fields();
-		$result = null;
-
-		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
-
-			foreach ( $fields as $field ) {
-
-				$field = wp_parse_args( $field, $this->default_field_args );
-
-				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
-
-					$result = $field;
-
-					// break the foreach once the condition is met.
-					break;
-
-				}
-
-			}
-
-		}
-
-		return $result;
-
-	}
-
-	/**
-	 * Manage Sorting
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function manage_sorting( $query = null ) {
-
-		$query_post_type = $query->get( 'post_type' );
-		$is_post_type = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
-		
-		if ( $is_post_type ) {
-
-			$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
-
-			if ( is_array( $field ) && ! empty( $field ) ) {
-
-				if ( $field['is_sortable'] ) {
-
-					$query->set( 'meta_query', array(
-						'relation' => 'OR',
-						array(
-							'key'     => $field['name'], 
-							'compare' => 'EXISTS'
-						),
-						array(
-							'key'     => $field['name'], 
-							'compare' => 'NOT EXISTS'
-						)
-					) );
-
-					if ( $field['type'] === 'number' ) {
-						
-						$query->set( 'orderby', 'meta_value_num' );
-
-					} else {
-
-						$query->set( 'orderby', 'meta_value' );
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Add Meta Boxes
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function add_meta_boxes() {
-
-		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
-
-			foreach ( $this->args['meta_boxes'] as $meta_box ) {
-
-				$meta_box = wp_parse_args( $meta_box, $this->default_meta_box_args );
-
-				add_meta_box( 
-					$meta_box['id'], 
-					$meta_box['title'], 
-					array( $this, 'render_meta_box' ), 
-					$this->slug, 
-					$meta_box['context'], 
-					$meta_box['priority'], 
-					array( 
-						'description' => $meta_box['description'], 
-						'fields'      => $meta_box['fields'], 
-					)
-				);
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Render Meta Box
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function render_meta_box( $post = null, $meta_box = array() ) {
-
-		$meta_box = wp_parse_args( $meta_box, array(
-			'id'    => '', 
-			'title' => '', 
-			'args'  => array(
-				'descripton' => '',
-				'fields'     => array(), 
-			), 
-		) );
-
-		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
-			
-			foreach ( $meta_box['args']['fields'] as $field ) {
-
-				switch ( $field['type'] ) {
-					case 'textarea':
-						$this->render_textarea( $field, $post );
-						break;
-					case 'select':
-						$this->render_select( $field, $post );
-						break;
-					case 'radio':
-						$this->render_radio( $field, $post );
-						break;
-					case 'checkbox':
-						$this->render_checkbox( $field, $post );
-						break;
-					case 'checkbox_set':
-						$this->render_checkbox_set( $field, $post );
-						break;
-					case 'media':
-						$this->render_media_uploader( $field, $post );
-						break;
-					case 'date':
-						$this->render_date( $field, $post );
-						break;
-					case 'time':
-						$this->render_time( $field, $post );
-						break;
-					case 'color':
-						$this->render_color( $field, $post );
-						break;
-					case 'code':
-						$this->render_code( $field, $post );
-						break;
-					default:
-						$this->render_input( $field, $post );
-						break;
-				}
-
-			}
-
-		}
-
-		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
-
-			<p><?php 
-
-				echo wp_kses( $meta_box['args']['description'], $this->kses_p );
-
-			?></p>
-
-		<?php }
-
-	}
-
-	/**
-	 * Format Attrs
-	 * 
-	 * @since   0.0.1
-	 * @return  string  The imploded, escaped, formatted attributes.
-	 */
-	public function format_attrs( $attrs = array() ) {
-
-		$formatted_attrs = array();
-
-		if ( is_array( $attrs ) && ! empty( $attrs ) ) {
-			
-			foreach ( $attrs as $key => $value ) {
-				
-				$formatted_attrs[] = sprintf( 
-					'%1$s="%2$s"', 
-					esc_attr( $key ), 
-					esc_attr( $value ) 
-				);
-
-			}
-			
-		}
-
-		return implode( ' ', $formatted_attrs );
-	}
-
-	/**
 	 * Render Input
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_input( $field = array(), $post = null ) {
+	public function render_input( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -1633,12 +854,12 @@ class WP_CPT {
 				type="<?php echo esc_attr( $field['type'] ); ?>" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
+				value="<?php echo esc_attr( $field['value'] ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1662,21 +883,23 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_date( $field = array(), $post = null ) {
+	public function render_date( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true );
 		$args = wp_parse_args( $field['args'], $this->default_date_args ); ?>
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		data-datepicker-id="<?php echo esc_attr( $id ); ?>"
-		data-datepicker-format="<?php echo esc_attr( $args['format'] ); ?>">
+		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
+		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -1685,16 +908,17 @@ class WP_CPT {
 				<br/>
 
 				<input 
-				class="widefat"
+				size="10"
 				type="text" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
+				value="<?php echo esc_attr( $field['value'] ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				style="width:auto;"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1741,14 +965,15 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_time( $field = array(), $post = null ) {
+	public function render_time( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true );
-		$value_pieces = ! empty( $value ) ? explode( ':', $value ) : array(); ?>
+		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
-		<fieldset id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<fieldset 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<legend><?php 
 
@@ -1756,7 +981,7 @@ class WP_CPT {
 			
 			?></legend>
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php 
 				$i = 0;
@@ -1767,7 +992,9 @@ class WP_CPT {
 
 					<span style="display:inline-block;vertical-align:top;">
 
-						<label for="<?php echo esc_attr( $select_id ); ?>"><?php 
+						<label 
+						for="<?php echo esc_attr( $select_id ); ?>"
+						style="display:inline-block;"><?php 
 
 							echo wp_kses( $piece['label'], $this->kses_label ); 
 						
@@ -1798,7 +1025,7 @@ class WP_CPT {
 
 				} ?>
 
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1822,11 +1049,10 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_color( $field = array(), $post = null ) {
+	public function render_color( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true );
 		$args = wp_parse_args( $field['args'], $this->default_color_args );
 
 		if ( is_array( $args['palettes'] ) ) {
@@ -1837,13 +1063,16 @@ class WP_CPT {
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		data-colorpicker-id="<?php echo esc_attr( $id ); ?>"
-		data-colorpicker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
-		data-colorpicker-palettes="<?php echo $palettes; ?>">
+		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
+		data-color-picker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
+		data-color-picker-palettes="<?php echo $palettes; ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -1856,12 +1085,12 @@ class WP_CPT {
 				type="text" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
+				value="<?php echo esc_attr( $field['value'] ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1885,15 +1114,16 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_checkbox( $field = array(), $post = null ) {
+	public function render_checkbox( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<input 
 				type="checkbox" 
@@ -1901,17 +1131,20 @@ class WP_CPT {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="1" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				<?php checked( true, $value ); ?>
+				style="margin-top: 0;"
+				<?php checked( true, $field['value'] ); ?>
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
 				?></label>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1935,17 +1168,20 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_textarea( $field = array(), $post = null ) {
+	public function render_textarea( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1958,16 +1194,15 @@ class WP_CPT {
 				type="<?php echo esc_attr( $field['type'] ); ?>" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
-					echo esc_textarea( $value );
+					echo esc_textarea( $field['value'] );
 
 				?></textarea>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1991,17 +1226,21 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_code( $field = array(), $post = null ) {
+	public function render_code( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -2014,16 +1253,15 @@ class WP_CPT {
 				type="<?php echo esc_attr( $field['type'] ); ?>" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
-				value="<?php echo esc_attr( $value ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
-					echo esc_textarea( $value );
+					echo esc_textarea( $field['value'] );
 
 				?></textarea>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -2047,17 +1285,20 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_select( $field = array(), $post = null ) {
+	public function render_select( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -2081,7 +1322,7 @@ class WP_CPT {
 
 							<option 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
-							<?php selected( $option['value'], $value ); ?>
+							<?php selected( $option['value'], $field['value'] ); ?>
 							<?php disabled( true, $option['disabled'] ); ?>><?php 
 
 								echo strip_tags( $option_label );
@@ -2094,7 +1335,7 @@ class WP_CPT {
 
 				?></select>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -2118,13 +1359,14 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_radio( $field = array(), $post = null ) {
+	public function render_radio( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -2145,18 +1387,23 @@ class WP_CPT {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
 
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+						<div 
+						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
+						style="padding:2px 0;">
 
 							<input
 							type="radio" 
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
+							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
-							<?php checked( $option['value'], $value ); ?>
+							<?php checked( $option['value'], $field['value'] ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
 
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+							<label 
+							for="<?php echo esc_attr( $input_id ); ?>"
+							style="display:inline-block;margin:0;"><?php 
 
 								echo esc_html( $option_label );
 							
@@ -2192,13 +1439,15 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_checkbox_set( $field = array(), $post = null ) {
+	public function render_checkbox_set( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true ); ?>
+		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -2219,18 +1468,23 @@ class WP_CPT {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
 
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+						<div 
+						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
+						style="padding:2px 0;">
 
 							<input
 							type="checkbox" 
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
+							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
 							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
 
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+							<label 
+							for="<?php echo esc_attr( $input_id ); ?>"
+							style="display:inline-block;margin:0;"><?php 
 
 								echo esc_html( $option_label );
 							
@@ -2363,7 +1617,7 @@ class WP_CPT {
 
 					<span class="screen-reader-text"><?php 
 
-						echo esc_attr( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
+						echo esc_attr( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
 
 					?></span>
 
@@ -2381,13 +1635,12 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function render_media_uploader( $field = array(), $post = null ) {
+	public function render_media_uploader( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$value = get_post_meta( $post->ID, $field['name'], true );
 		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'WP_CPT' ) : __( 'Set %1$s', 'WP_CPT' ); ?>
+		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'wp-backstage' ) : __( 'Set %1$s', 'wp-backstage' ); ?>
 
 		<fieldset 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
@@ -2395,7 +1648,8 @@ class WP_CPT {
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
 		data-media-uploader-type="<?php echo esc_attr( $args['type'] ); ?>"
 		data-media-uploader-title="<?php echo esc_attr( $field['label'] ); ?>"
-		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>">
+		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>"
+		style="margin:1em 0;">
 				
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
@@ -2407,16 +1661,16 @@ class WP_CPT {
 
 			<div 
 			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
-			style="<?php echo empty( $value ) ? 'display:none;' : 'display:block;'; ?>">
+			style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:block;'; ?>">
 
 				<?php
 				$this->render_media_uploader_thumbnail( '', 'template', $args ); 
 
-				if ( ! empty( $value ) ) {
+				if ( ! empty( $field['value'] ) ) {
 
-					if ( is_array( $value ) ) {
+					if ( is_array( $field['value'] ) ) {
 
-						foreach ( $value as $attachment_id ) {
+						foreach ( $field['value'] as $attachment_id ) {
 
 							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone', $args );
 
@@ -2424,7 +1678,7 @@ class WP_CPT {
 
 					} else {
 
-						$this->render_media_uploader_thumbnail( absint( $value ), 'clone', $args );
+						$this->render_media_uploader_thumbnail( absint( $field['value'] ), 'clone', $args );
 					}
 
 				} ?>
@@ -2433,16 +1687,16 @@ class WP_CPT {
 
 			<div class="clear"></div>
 
-			<p>
+			<div>
 
 				<button 
 				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
 				type="button"
 				class="button"
-				style="<?php echo ! empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, ! empty( $value) ); ?>><?php 
+				style="<?php echo ! empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
+				<?php disabled( true, ! empty( $field['value'] ) ); ?>><?php 
 
-						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'WP_CPT' ), $field ) ); 
+						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'wp-backstage' ), $field ) ); 
 
 				?></button>
 
@@ -2452,10 +1706,10 @@ class WP_CPT {
 					id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
 					type="button"
 					class="button"
-					style="<?php echo empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
-					<?php disabled( true, empty( $value ) ); ?>><?php 
+					style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
+					<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
 
-							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'WP_CPT' ), $field ) ); 
+							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
 
 					?></button>
 
@@ -2465,14 +1719,14 @@ class WP_CPT {
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
 				class="button"
-				style="<?php echo empty( $value ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, empty( $value ) ); ?>><?php 
+				style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
+				<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
 
-						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'WP_CPT' ), $field ) ); 
+						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
 
 				?></button>
 
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -2490,8 +1744,9 @@ class WP_CPT {
 			type="hidden" 
 			id="<?php echo esc_attr( $id ); ?>" 
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
-			value="<?php echo is_array( $value ) ? esc_attr( implode( ',', $value ) ) : esc_attr( $value ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" />
+			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
 		</fieldset>
 
@@ -2505,7 +1760,7 @@ class WP_CPT {
 	 */
 	public function inline_media_uploader_script() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'media' ) ) ) {
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_media ) {
 			return;
 		} ?>
 
@@ -2742,9 +1997,9 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void  
 	 */
-	public function inline_datepicker_script() {
+	public function inline_date_picker_script() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'date' ) ) ) {
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_date ) {
 			return;
 		} ?>
 
@@ -2752,11 +2007,11 @@ class WP_CPT {
 
 			(function($) {
 
-				function init(datepicker = null) {
-					if (datepicker) { 
-						const fieldId = datepicker.getAttribute('data-datepicker-id');
-						const format = datepicker.getAttribute('data-datepicker-format');
-						const input = datepicker.querySelector('#' + fieldId);
+				function init(datePicker = null) {
+					if (datePicker) { 
+						const fieldId = datePicker.getAttribute('data-date-picker-id');
+						const format = datePicker.getAttribute('data-date-picker-format');
+						const input = datePicker.querySelector('#' + fieldId);
 
 						$(input).datepicker({
 							dateFormat: format || 'yy-mm-dd', 
@@ -2765,10 +2020,10 @@ class WP_CPT {
 				}
 
 				function initAll() {
-					const datepickers = document.querySelectorAll('[data-datepicker-id]');
-					if (datepickers && (datepickers.length > 0)) {
-						for (var i = 0; i < datepickers.length; i++) {
-							init(datepickers[i]);
+					const datePickers = document.querySelectorAll('[data-date-picker-id]');
+					if (datePickers && (datePickers.length > 0)) {
+						for (var i = 0; i < datePickers.length; i++) {
+							init(datePickers[i]);
 						}
 					}
 				}
@@ -2787,9 +2042,9 @@ class WP_CPT {
 	 * @since   0.0.1
 	 * @return  void  
 	 */
-	public function inline_colorpicker_script() {
+	public function inline_color_picker_script() {
 
-		if ( ! $this->is_screen( 'id', $this->slug ) || empty( $this->get_field_by( 'type', 'color' ) ) ) {
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_color ) {
 			return;
 		} ?>
 
@@ -2797,11 +2052,11 @@ class WP_CPT {
 
 			(function($) {
 
-				function init(colorpicker = null) {
-					if (colorpicker) { 
-						const fieldId = colorpicker.getAttribute('data-colorpicker-id');
-						const input = colorpicker.querySelector('#' + fieldId);
-						var palettes = colorpicker.getAttribute('data-colorpicker-palettes');
+				function init(colorPicker = null) {
+					if (colorPicker) { 
+						const fieldId = colorPicker.getAttribute('data-color-picker-id');
+						const input = colorPicker.querySelector('#' + fieldId);
+						var palettes = colorPicker.getAttribute('data-color-picker-palettes');
 
 						if ((palettes === 'true') || (palettes === 'false')) {
 							palettes = (palettes === 'true');
@@ -2818,10 +2073,59 @@ class WP_CPT {
 				}
 
 				function initAll() {
-					const colorpickers = document.querySelectorAll('[data-colorpicker-id]');
-					if (colorpickers && (colorpickers.length > 0)) {
-						for (var i = 0; i < colorpickers.length; i++) {
-							init(colorpickers[i]);
+					const colorPickers = document.querySelectorAll('[data-color-picker-id]');
+					if (colorPickers && (colorPickers.length > 0)) {
+						for (var i = 0; i < colorPickers.length; i++) {
+							init(colorPickers[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', initAll);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Code Editor Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_code_editor_script() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || empty( $this->code_editors ) ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init(codeEditor = null) {
+					if (codeEditor) { 
+						const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
+						const CodeMirrorInst = codeMirrorEl.CodeMirror;
+						var timer = null;
+
+						CodeMirrorInst.on('change', function(instance, changes) {
+							clearTimeout(timer);
+							timer = setTimeout(function() {
+								instance.save();
+							}, 750);
+							
+						});
+					}
+				}
+
+				function initAll() {
+					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
+					if (codeEditors && (codeEditors.length > 0)) {
+						for (var i = 0; i < codeEditors.length; i++) {
+							init(codeEditors[i]);
 						}
 					}
 				}

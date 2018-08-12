@@ -269,7 +269,7 @@ function wp_backstage_init() {
 		'menu_name'      => __( 'Test Pages', 'wp_backstage' ), 
 		'singular_name'  => __( 'Test Page', 'wp_backstage' ), 
 		'plural_name'    => __( 'Test Pages', 'wp_backstage' ), 
-		'description'    => __( 'Testing all fields.', 'wp_backstage' ), 
+		'description'    => __( 'This is a test hierarchical post type.', 'wp_backstage' ), 
 		'singular_base'  => 'test-page', 
 		'archive_base'   => 'test-pages', 
 		'rest_base'      => 'test-pages', 
@@ -299,7 +299,7 @@ function wp_backstage_init() {
 		'menu_name'      => __( 'Test Posts', 'wp_backstage' ), 
 		'singular_name'  => __( 'Test Post', 'wp_backstage' ), 
 		'plural_name'    => __( 'Test Posts', 'wp_backstage' ), 
-		'description'    => __( 'Testing all fields.', 'wp_backstage' ), 
+		'description'    => __( 'This is a test non-hierarchical post type.', 'wp_backstage' ), 
 		'singular_base'  => 'test-post', 
 		'archive_base'   => 'test-posts', 
 		'rest_base'      => 'test-posts', 
@@ -326,31 +326,33 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Taxonomy::add( 'wp_backstage_cat', array( 
-		'singular_name' => __( 'Test Category', 'wp_backstage' ), 
-		'plural_name'   => __( 'Test Categories', 'wp_backstage' ), 
-		'description'   => __( 'This is a test hierarchical taxonomy.', 'wp_backstage' ), 
-		'public'        => true, 
-		'hierarchical'  => true, 
-		'with_front'    => false, 
-		'archive_base'  => 'test-category', 
-		'rest_base'     => 'test-tag', 
-		'post_types'    => array( 'wp_backstage_page', 'wp_backstage_post' ), 
-		'fields'        => $all_fields, 
+		'singular_name'  => __( 'Test Category', 'wp_backstage' ), 
+		'plural_name'    => __( 'Test Categories', 'wp_backstage' ), 
+		'description'    => __( 'This is a test hierarchical taxonomy.', 'wp_backstage' ), 
+		'public'         => true, 
+		'hierarchical'   => true, 
+		'with_front'     => false, 
+		'archive_base'   => 'test-category', 
+		'rest_base'      => 'test-tag', 
+		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
+		'fields'         => $all_fields, 
+		'group_meta_key' => 'wp_backstage_cat_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::add( 'wp_backstage_tag', array( 
-		'singular_name' => __( 'Test Tag', 'wp_backstage' ), 
-		'plural_name'   => __( 'Test Tags', 'wp_backstage' ), 
-		'description'   => __( 'This is a test non-hierarchical taxonomy.', 'wp_backstage' ), 
-		'public'        => true, 
-		'hierarchical'  => false, 
-		'with_front'    => false, 
-		'archive_base'  => 'test-tag', 
-		'rest_base'     => 'test-tags', 
-		'post_types'    => array( 'wp_backstage_page', 'wp_backstage_post' ), 
-		'fields'        => $all_fields, 
+		'singular_name'  => __( 'Test Tag', 'wp_backstage' ), 
+		'plural_name'    => __( 'Test Tags', 'wp_backstage' ), 
+		'description'    => __( 'This is a test non-hierarchical taxonomy.', 'wp_backstage' ), 
+		'public'         => true, 
+		'hierarchical'   => false, 
+		'with_front'     => false, 
+		'archive_base'   => 'test-tag', 
+		'rest_base'      => 'test-tags', 
+		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
+		'fields'         => $all_fields, 
+		'group_meta_key' => 'wp_backstage_tag_meta', 
 	) );
 
 }
 
-add_action( 'plugins_loaded', 'wp_backstage_init', 10 );
+add_action( 'after_setup_theme', 'wp_backstage_init', 10 );

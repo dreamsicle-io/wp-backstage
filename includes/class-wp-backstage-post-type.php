@@ -203,7 +203,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		if ( empty( $this->slug ) ) {
 			
-			$this->errors[] = new WP_Error( 'required_slug', sprintf( 
+			$this->errors[] = new WP_Error( 'required_post_type_slug', sprintf( 
 				/* translators: 1: post type slug. */
 				__( '[post type: %1$s] A slug is required when adding a new post type.', 'wp-backstage' ), 
 				$this->slug
@@ -211,15 +211,15 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		
 		} elseif ( strlen( $this->slug ) > 20 ) {
 			
-			$this->errors[] = new WP_Error( 'slug_length', sprintf( 
+			$this->errors[] = new WP_Error( 'post_type_slug_length', sprintf( 
 				/* translators: 1: post type slug. */
 				__( '[post type: %1$s] A post type slug must be between 1 and 20 characters.', 'wp-backstage' ), 
 				$this->slug
 			) );
 		
-		} elseif ( in_array( $this->slug, get_taxonomies() ) ) {
+		} elseif ( in_array( $this->slug, get_post_types() ) ) {
 
-			$this->errors[] = new WP_Error( 'taxonomy_exists', sprintf( 
+			$this->errors[] = new WP_Error( 'post_type_exists', sprintf( 
 				/* translators: 1: post type slug */
 				__( '[post type: %1$s] A post type with this slug already exists.', 'wp-backstage' ), 
 				$this->slug
@@ -233,11 +233,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 				if ( empty( $this->args[$required_arg] ) ) {
 
-					$this->errors[] = new WP_Error( 'required_arg', sprintf( 
+					$this->errors[] = new WP_Error( 'required_post_type_arg', sprintf( 
 						/* translators: 1: post type slug, 2:required arg key. */
 						__( '[post type: %1$s] The %2$s key is required.', 'wp-backstage' ), 
-						'<code>' . $required_arg . '</code>',
-						$this->slug
+						$this->slug,
+						'<code>' . $required_arg . '</code>'
 					) );
 
 				}
@@ -269,7 +269,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonces' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'manage_admin_columns' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
@@ -646,102 +647,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
-	 * Add Field Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered columns. 
-	 */
-	public function add_field_columns( $columns = array() ) {
-
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
-		
-			$fields = $this->get_fields();
-
-			// Add all field columns
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-				// set which columns should be removed to make way 
-				// for new columns (will be added back later as is), 
-				// date is included by default, but sometimes comments
-				// are there, and this should be at the end as well
-				$columns_to_remove = array( 'comments', 'date' );
-				$removed_columns = array();
-
-				// unset removed columns to make space 
-				// also ensure storage of the original
-				// column for resetting later
-				foreach ( $columns_to_remove as $removed ) {
-					$removed_columns[$removed] = $columns[$removed];
-					unset( $columns[$removed] );
-				}
-
-				foreach ( $fields as $field ) {
-
-					if ( $field['has_column'] ) {
-
-						$columns[$field['name']] = $field['label'];
-
-					}
-
-				}
-
-				// reset stored removed columns
-				foreach ( $columns_to_remove as $removed ) {
-					$columns[$removed] = $removed_columns[$removed];
-				}
-
-			}
-
-		}
-
-		return $columns;
-
-	}
-
-	/**
-	 * Manage Admin Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered columns. 
-	 */
-	public function manage_admin_columns( $columns = array() ) {
-
-		$columns = $this->add_thumbnail_column( $columns );
-		$columns = $this->add_field_columns( $columns );
-
-		return $columns;
-
-	}
-
-	/**
-	 * Manage Sortable Columns
-	 * 
-	 * @since   0.0.1
-	 * @return  array  The filtered sortable columns. 
-	 */
-	public function manage_sortable_columns( $columns = array() ) {
-
-		$fields = $this->get_fields();
-
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			foreach ( $fields as $field ) {
-
-				if ( $field['has_column'] && $field['is_sortable'] ) {
-
-					$columns[$field['name']] = $field['name'];
-
-				}
-
-			}
-
-		}
-
-		return $columns;
-
-	}
-
-	/**
 	 * Render Thumbnail
 	 * 
 	 * @since   0.0.1
@@ -769,116 +674,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
-	 * Render Column Content
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function render_column_content( $value = null, $field = array() ) {
-
-		$content = '&horbar;';
-
-		if ( ! empty( $value ) && ( is_array( $field ) && ! empty( $field ) ) ) {
-
-			switch ( $field['type'] ) {
-				case 'url':
-					$content = '<a href="' . esc_attr( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
-					break;
-				case 'email':
-					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>';
-					break;
-				case 'tel':
-					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_html( $value ) . '</a>';
-					break;
-				case 'radio':
-					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
-					break;
-				case 'select':
-					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
-					break;
-				case 'checkbox':
-					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>' : '&horbar;';
-					break;
-				case 'textarea':
-					$content = $value ? wpautop( sanitize_textarea_field( $value ) ) : '&horbar;';
-					break;
-				case 'code':
-					$content = $value ? '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>' : '&horbar;';
-					break;
-				case 'color':
-					$content = $value ? '<i style="display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';" title="' . esc_attr( $value ) . '"></i>' : '&horbar;';
-					break;
-				case 'date':
-					$content = $value ? date( $this->date_format, strtotime( $value ) ) : '&horbar;';
-					break;
-				case 'checkbox_set':
-					if ( is_array( $value ) && ! empty( $value ) ) {
-						$option_labels = $this->get_option_labels( $field );
-						foreach( $value as $key ) {
-							$labels[] = $option_labels[$key];
-						}
-					}
-					$content = esc_html( implode( ', ', $labels ) );
-					break;
-				case 'media':
-					$thumbnail_size = 20;
-					$thumbnail_style = 'height:' . $thumbnail_size . 'px;width:auto;margin:0 4px 4px 0;display:block;float:left;border:1px solid #e1e1e1;';
-					if ( is_array( $value ) ) {
-						$value = array_map( 'absint', $value );
-					} else {
-						$value = array( absint( $value ) );
-					}
-					$attachments = array();
-					foreach( $value as $i => $attachment_id ) {
-						$attachments[] = wp_get_attachment_image( 
-							intval( $attachment_id ), 
-							array($thumbnail_size, $thumbnail_size), 
-							true, 
-							array( 
-								'style' => $thumbnail_style, 
-								'title' => get_the_title( $attachment_id ), 
-							) 
-						);
-					}
-					$content = implode( '', $attachments );
-					break;
-				default:
-					$content = $value;
-					break;
-			}
-
-		}
-
-		echo $content;
-
-	}
-
-	/**
-	 * Get Option Labels
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function get_option_labels( $field, $post_id = 0 ) {
-		
-		$option_labels = array();
-		
-		if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
-			
-			foreach( $field['options'] as $option ) {
-				
-				$option_labels[$option['value']] = $option['label'];
-		
-			}
-		
-		}
-
-		return $option_labels;
-	}
-
-	/**
 	 * Render Admin Column
 	 * 
 	 * @since   0.0.1
@@ -897,10 +692,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			if ( ! empty( $field ) ) {
 
 				$value = get_post_meta( $post_id, $column, true );
+				$formatted_value = $this->format_field_value( $value, $field );
 
-				if ( ! empty( $value ) ) {
+				if ( ! empty( $formatted_value ) ) {
 
-					$this->render_column_content( $value, $field );
+					echo $formatted_value;
 
 				} else {
 

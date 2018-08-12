@@ -149,11 +149,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$this->slug
 			) );
 		
-		} elseif ( strlen( $this->slug ) > 20 ) {
+		} elseif ( strlen( $this->slug ) > 32 ) {
 			
 			$this->errors[] = new WP_Error( 'taxonomy_slug_length', sprintf( 
 				/* translators: 1: taxonomy slug. */
-				__( '[taxonomy: %1$s] A taxonomy slug must be between 1 and 20 characters.', 'wp-backstage' ), 
+				__( '[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters.', 'wp-backstage' ), 
 				$this->slug
 			) );
 		
@@ -176,8 +176,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 					$this->errors[] = new WP_Error( 'required_taxonomy_arg', sprintf( 
 						/* translators: 1: taxonomy slug, 2:required arg key. */
 						__( '[taxonomy: %1$s] The %2$s key is required.', 'wp-backstage' ), 
-						'<code>' . $required_arg . '</code>',
-						$this->slug
+						$this->slug, 
+						'<code>' . $required_arg . '</code>'
 					) );
 
 				}
@@ -205,15 +205,23 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		}
 
 		add_action( 'init', array( $this, 'register' ), 0 );
+		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );
+		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
 		add_action( sprintf( '%1$s_edit_form_fields', $this->slug ), array( $this, 'render_edit_fields' ), 10, 2 );
+		add_action( sprintf( 'edited_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
+		add_action( sprintf( 'created_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
+		add_action( sprintf( 'manage_edit-%1$s_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
+		add_action( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 3 );
+		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
 
 		parent::init();
 
 	}
 
 	/**
-	 * Get Taxonomy Label
+	 * Get Label
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $template 
@@ -227,6 +235,30 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			$this->args['singular_name'], 
 			$this->args['plural_name']
 		);
+
+	}
+
+	/**
+	 * Render Add nonce
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function render_add_nonce() {
+
+		wp_nonce_field( 'add', sprintf( '_%1$s_nonce', $this->slug ) );
+
+	}
+
+	/**
+	 * Render Add nonce
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function render_edit_nonce() {
+
+		wp_nonce_field( 'edit', sprintf( '_%1$s_nonce', $this->slug ) );
 
 	}
 
@@ -253,6 +285,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			'no_terms'                   => $this->get_label( __( 'No %2$s', 'wp-backstage' ) ),
 			'items_list'                 => $this->get_label( __( '%2$s list', 'wp-backstage' ) ),
 			'items_list_navigation'      => $this->get_label( __( '%2$s list navigation', 'wp-backstage' ) ),
+			'back_to_items'              => $this->get_label( __( 'Back to %2$s', 'wp-backstage' ) ),
 		);
 
 		$rewrite = array(
@@ -364,6 +397,130 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 		}
 
+	}
+
+	/**
+	 * Save
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function save( $term_id = 0, $tt_id = 0 ) {
+
+		$nonce_key = sprintf( '_%1$s_nonce', $this->slug );
+
+		if ( ! $term_id > 0 ) { return; }
+		if ( ! current_user_can( 'manage_categories' ) ) { return; }
+		if ( ! $_POST || empty( $_POST ) ) { return; }
+		if ( $_POST['taxonomy'] !== $this->slug ) { return; }
+		if ( empty( $_POST[$nonce_key] ) ) { return; }
+		if ( ! wp_verify_nonce( $_POST[$nonce_key], 'add' ) && ! wp_verify_nonce( $_POST[$nonce_key], 'edit' ) ) { return; }
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			$values = array();
+
+			foreach ( $fields as $field ) {
+
+				if ( isset( $_POST[$field['name']] ) ) {
+
+					$value = $this->sanitize_field( $field, $_POST[$field['name']] );
+
+					update_term_meta( $term_id, $field['name'], $value );
+
+					$values[$field['name']] = $value;
+
+				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
+
+					update_term_meta( $term_id, $field['name'], false );
+
+				} 
+
+			}
+
+			if ( ! empty( $this->args['group_meta_key'] ) ) {
+
+				update_term_meta( $term_id, $this->args['group_meta_key'], $values );
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Render Admin Column
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function render_admin_column( $content = '', $column = '', $term_id = 0 ) {
+
+		$field = $this->get_field_by( 'name', $column );
+
+		if ( ! empty( $field ) ) {
+
+			$value = get_term_meta( $term_id, $column, true );
+			$formatted_value = $this->format_field_value( $value, $field );
+
+			if ( ! empty( $formatted_value ) ) {
+
+				$content = $formatted_value;
+
+			} else {
+
+				$content = '&horbar;';
+
+			}
+
+		}
+
+		return $content;
+
+	}
+
+	/**
+	 * Filter WP_Term_Query meta query
+	 *
+	 * @param   object  $query  WP_Term_Query
+	 * @return  object
+	 */
+	function manage_sorting( $pieces = array(), $taxonomies = array(), $args = array() ) {
+
+		global $wpdb; 
+
+		if ( in_array( $this->slug, $taxonomies ) ) {
+
+			$orderby = isset( $_GET['orderby'] ) ? esc_attr( $_GET['orderby'] ) : ''; 
+
+			if ( ! empty( $orderby ) ) {
+
+				$field = $this->get_field_by( 'name', $orderby );
+
+				if ( is_array( $field ) && ! empty( $field ) ) {
+
+					if ( $field['is_sortable'] ) {
+
+						$pieces['join']    .= ' INNER JOIN ' . $wpdb->termmeta . ' AS tm ON t.term_id = tm.term_id ';
+						$pieces['where']   .= ' AND tm.meta_key = "' . esc_attr( $field['name'] ) . '"'; 
+
+						if ( $field['type'] === 'number' ) {
+							$pieces['orderby']  = ' ORDER BY CAST(tm.meta_value AS SIGNED) '; 
+						} else {
+							$pieces['orderby']  = ' ORDER BY tm.meta_value '; 
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		return $pieces;
 	}
 
 }

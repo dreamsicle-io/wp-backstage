@@ -323,6 +323,7 @@ class WP_Backstage {
 		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_date_picker_script' ), 10 );
 		add_action( 'admin_footer', array( $this, 'inline_color_picker_script' ), 10 );
+		add_action( 'admin_footer', array( $this, 'inline_code_editor_script' ), 10 );
 
 	}
 
@@ -599,6 +600,179 @@ class WP_Backstage {
 	}
 
 	/**
+	 * Format Value by Field
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function format_field_value( $value = null, $field = array() ) {
+
+		$content = '';
+
+		if ( ! empty( $value ) && ( is_array( $field ) && ! empty( $field ) ) ) {
+
+			switch ( $field['type'] ) {
+				case 'url':
+					$content = '<a href="' . esc_attr( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
+					break;
+				case 'email':
+					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>';
+					break;
+				case 'tel':
+					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_html( $value ) . '</a>';
+					break;
+				case 'radio':
+					$labels = $this->get_option_labels( $field );
+					$content = esc_html( $labels[$value] );
+					break;
+				case 'select':
+					$labels = $this->get_option_labels( $field );
+					$content = esc_html( $labels[$value] );
+					break;
+				case 'checkbox':
+					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>' : '&horbar;';
+					break;
+				case 'textarea':
+					$content = $value ? wpautop( sanitize_textarea_field( $value ) ) : '&horbar;';
+					break;
+				case 'code':
+					$content = $value ? '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>' : '&horbar;';
+					break;
+				case 'color':
+					$content = $value ? '<i style="display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';" title="' . esc_attr( $value ) . '"></i>' : '&horbar;';
+					break;
+				case 'date':
+					$content = $value ? date( $this->date_format, strtotime( $value ) ) : '&horbar;';
+					break;
+				case 'checkbox_set':
+					if ( is_array( $value ) && ! empty( $value ) ) {
+						$option_labels = $this->get_option_labels( $field );
+						foreach( $value as $key ) {
+							$labels[] = $option_labels[$key];
+						}
+					}
+					$content = esc_html( implode( ', ', $labels ) );
+					break;
+				case 'media':
+					$thumbnail_size = 20;
+					$thumbnail_style = 'height:' . $thumbnail_size . 'px;width:auto;margin:0 4px 4px 0;display:block;float:left;border:1px solid #e1e1e1;';
+					if ( is_array( $value ) ) {
+						$value = array_map( 'absint', $value );
+					} else {
+						$value = array( absint( $value ) );
+					}
+					$attachments = array();
+					foreach( $value as $i => $attachment_id ) {
+						$attachments[] = wp_get_attachment_image( 
+							intval( $attachment_id ), 
+							array($thumbnail_size, $thumbnail_size), 
+							true, 
+							array( 
+								'style' => $thumbnail_style, 
+								'title' => get_the_title( $attachment_id ), 
+							) 
+						);
+					}
+					$content = implode( '', $attachments );
+					break;
+				default:
+					$content = $value;
+					break;
+			}
+
+		}
+
+		return $content;
+
+	}
+
+	/**
+	 * Add Field Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered columns. 
+	 */
+	public function add_field_columns( $columns = array() ) {
+
+		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		
+			$fields = $this->get_fields();
+
+			// Add all field columns
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				// set which columns should be removed to make way 
+				// for new columns (will be added back later as is), 
+				// date is included by default, but sometimes comments
+				// are there, and this should be at the end as well
+				if ( $this->is_screen( 'base', 'edit-tags' ) ) {
+					$columns_to_remove = array( 'posts' );
+				} elseif ( $this->is_screen( 'base', 'edit' ) ) {
+					$columns_to_remove = array( 'comments', 'date' );
+				}
+
+				$removed_columns = array();
+
+				// unset removed columns to make space 
+				// also ensure storage of the original
+				// column for resetting later
+				foreach ( $columns_to_remove as $removed ) {
+					$removed_columns[$removed] = $columns[$removed];
+					unset( $columns[$removed] );
+				}
+
+				foreach ( $fields as $field ) {
+
+					if ( $field['has_column'] ) {
+
+						$columns[$field['name']] = $field['label'];
+
+					}
+
+				}
+
+				// reset stored removed columns
+				foreach ( $columns_to_remove as $removed ) {
+					$columns[$removed] = $removed_columns[$removed];
+				}
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Manage Sortable Columns
+	 * 
+	 * @since   0.0.1
+	 * @return  array  The filtered sortable columns. 
+	 */
+	public function manage_sortable_columns( $columns = array() ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				if ( $field['has_column'] && $field['is_sortable'] ) {
+
+					$columns[$field['name']] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
 	 * Format Attrs
 	 * 
 	 * @since   0.0.1
@@ -626,6 +800,29 @@ class WP_Backstage {
 	}
 
 	/**
+	 * Get Option Labels
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function get_option_labels( $field = array(), $post_id = 0 ) {
+		
+		$option_labels = array();
+		
+		if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+			
+			foreach( $field['options'] as $option ) {
+				
+				$option_labels[$option['value']] = $option['label'];
+		
+			}
+		
+		}
+
+		return $option_labels;
+	}
+
+	/**
 	 * Render Input
 	 * 
 	 * @since   0.0.1
@@ -636,11 +833,15 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -658,7 +859,7 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -693,9 +894,11 @@ class WP_Backstage {
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -704,16 +907,17 @@ class WP_Backstage {
 				<br/>
 
 				<input 
-				class="widefat"
+				size="10"
 				type="text" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="<?php echo esc_attr( $field['value'] ); ?>" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				style="width:auto;"
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -774,7 +978,7 @@ class WP_Backstage {
 			
 			?></legend>
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php 
 				$i = 0;
@@ -785,7 +989,9 @@ class WP_Backstage {
 
 					<span style="display:inline-block;vertical-align:top;">
 
-						<label for="<?php echo esc_attr( $select_id ); ?>"><?php 
+						<label 
+						for="<?php echo esc_attr( $select_id ); ?>"
+						style="display:inline-block;"><?php 
 
 							echo wp_kses( $piece['label'], $this->kses_label ); 
 						
@@ -816,7 +1022,7 @@ class WP_Backstage {
 
 				} ?>
 
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -858,9 +1064,11 @@ class WP_Backstage {
 		data-color-picker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
 		data-color-picker-palettes="<?php echo $palettes; ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -878,7 +1086,7 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -909,7 +1117,7 @@ class WP_Backstage {
 
 		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<input 
 				type="checkbox" 
@@ -917,17 +1125,20 @@ class WP_Backstage {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="1" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				style="margin-top: 0;"
 				<?php checked( true, $field['value'] ); ?>
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
 				?></label>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -958,9 +1169,11 @@ class WP_Backstage {
 
 		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -981,7 +1194,7 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1010,11 +1223,15 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-code-editor-id="<?php echo esc_attr( $id ); ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1035,7 +1252,7 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1066,9 +1283,11 @@ class WP_Backstage {
 
 		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
-			<p id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
-				<label for="<?php echo esc_attr( $id ); ?>"><?php 
+				<label 
+				for="<?php echo esc_attr( $id ); ?>"
+				style="display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1105,7 +1324,7 @@ class WP_Backstage {
 
 				?></select>
 			
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1155,18 +1374,23 @@ class WP_Backstage {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
 
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+						<div 
+						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
+						style="padding:2px 0;">
 
 							<input
 							type="radio" 
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
+							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
 							<?php checked( $option['value'], $field['value'] ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
 
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+							<label 
+							for="<?php echo esc_attr( $input_id ); ?>"
+							style="display:inline-block;margin:0;"><?php 
 
 								echo esc_html( $option_label );
 							
@@ -1205,7 +1429,8 @@ class WP_Backstage {
 	public function render_checkbox_set( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
 		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
@@ -1228,18 +1453,23 @@ class WP_Backstage {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
 
-						<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+						<div 
+						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
+						style="padding:2px 0;">
 
 							<input
 							type="checkbox" 
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
+							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
-							<?php checked( true, in_array( $option['value'], $field['value'] ) ); ?>/>
+							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
 
-							<label for="<?php echo esc_attr( $input_id ); ?>"><?php 
+							<label 
+							for="<?php echo esc_attr( $input_id ); ?>"
+							style="display:inline-block;margin:0;"><?php 
 
 								echo esc_html( $option_label );
 							
@@ -1441,7 +1671,7 @@ class WP_Backstage {
 
 			<div class="clear"></div>
 
-			<p>
+			<div>
 
 				<button 
 				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
@@ -1480,7 +1710,7 @@ class WP_Backstage {
 
 				?></button>
 
-			</p>
+			</div>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
@@ -1499,7 +1729,8 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>" 
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" />
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
 		</fieldset>
 
@@ -1830,6 +2061,55 @@ class WP_Backstage {
 					if (colorPickers && (colorPickers.length > 0)) {
 						for (var i = 0; i < colorPickers.length; i++) {
 							init(colorPickers[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', initAll);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Code Editor Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_code_editor_script() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || empty( $this->code_editors ) ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init(codeEditor = null) {
+					if (codeEditor) { 
+						const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
+						const CodeMirrorInst = codeMirrorEl.CodeMirror;
+						var timer = null;
+
+						CodeMirrorInst.on('change', function(instance, changes) {
+							clearTimeout(timer);
+							timer = setTimeout(function() {
+								instance.save();
+							}, 750);
+							
+						});
+					}
+				}
+
+				function initAll() {
+					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
+					if (codeEditors && (codeEditors.length > 0)) {
+						for (var i = 0; i < codeEditors.length; i++) {
+							init(codeEditors[i]);
 						}
 					}
 				}

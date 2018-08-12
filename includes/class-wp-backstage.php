@@ -892,7 +892,8 @@ class WP_Backstage {
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
-		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>">
+		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -970,7 +971,9 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] );
 		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
-		<fieldset id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<fieldset 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<legend><?php 
 
@@ -1062,7 +1065,8 @@ class WP_Backstage {
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-color-picker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
-		data-color-picker-palettes="<?php echo $palettes; ?>">
+		data-color-picker-palettes="<?php echo $palettes; ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1115,7 +1119,9 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1167,7 +1173,9 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1225,7 +1233,8 @@ class WP_Backstage {
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		data-code-editor-id="<?php echo esc_attr( $id ); ?>">
+		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1281,7 +1290,9 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1353,7 +1364,9 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -1432,7 +1445,9 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] );
 		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="margin:1em 0;">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -1633,7 +1648,8 @@ class WP_Backstage {
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
 		data-media-uploader-type="<?php echo esc_attr( $args['type'] ); ?>"
 		data-media-uploader-title="<?php echo esc_attr( $field['label'] ); ?>"
-		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>">
+		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>"
+		style="margin:1em 0;">
 				
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"

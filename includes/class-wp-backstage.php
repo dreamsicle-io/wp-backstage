@@ -111,6 +111,7 @@ class WP_Backstage {
 	 * @since 0.0.1
 	 */
 	public $default_color_args = array(
+		'mode'     => '', 
 		'palettes' => true, 
 	);
 
@@ -705,11 +706,7 @@ class WP_Backstage {
 				// for new columns (will be added back later as is), 
 				// date is included by default, but sometimes comments
 				// are there, and this should be at the end as well
-				if ( $this->is_screen( 'base', 'edit-tags' ) ) {
-					$columns_to_remove = array( 'posts' );
-				} elseif ( $this->is_screen( 'base', 'edit' ) ) {
-					$columns_to_remove = array( 'comments', 'date' );
-				}
+				$columns_to_remove = array( 'comments', 'date', 'posts' );
 
 				$removed_columns = array();
 
@@ -717,23 +714,23 @@ class WP_Backstage {
 				// also ensure storage of the original
 				// column for resetting later
 				foreach ( $columns_to_remove as $removed ) {
-					$removed_columns[$removed] = $columns[$removed];
-					unset( $columns[$removed] );
+					if ( isset( $columns[$removed] ) ) {
+						$removed_columns[$removed] = $columns[$removed];
+						unset( $columns[$removed] );
+					}
 				}
 
 				foreach ( $fields as $field ) {
-
 					if ( $field['has_column'] ) {
-
 						$columns[$field['name']] = $field['label'];
-
 					}
-
 				}
 
 				// reset stored removed columns
 				foreach ( $columns_to_remove as $removed ) {
-					$columns[$removed] = $removed_columns[$removed];
+					if ( isset( $removed_columns[$removed] ) ) {
+						$columns[$removed] = $removed_columns[$removed];
+					}
 				}
 
 			}
@@ -975,13 +972,15 @@ class WP_Backstage {
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="margin:1em 0;">
 
-			<legend><?php 
+			<legend style="padding:2px 0;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 			
 			?></legend>
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<div 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="padding:0 0 2px;">
 
 				<?php 
 				$i = 0;
@@ -994,11 +993,15 @@ class WP_Backstage {
 
 						<label 
 						for="<?php echo esc_attr( $select_id ); ?>"
-						style="display:inline-block;"><?php 
+						style="display:inline-block;padding:0 2px;">
 
-							echo wp_kses( $piece['label'], $this->kses_label ); 
-						
-						?></label>
+							<small><?php 
+
+								echo wp_kses( $piece['label'], $this->kses_label ); 
+							
+							?></small>
+
+						</label>
 
 						<br/>
 
@@ -1064,13 +1067,14 @@ class WP_Backstage {
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
-		data-color-picker-hide="<?php echo $args['hide'] ? 'true' : 'false'; ?>"
+		data-color-picker-mode="<?php echo esc_attr( $args['mode'] ); ?>"
 		data-color-picker-palettes="<?php echo $palettes; ?>"
 		style="margin:1em 0;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( esc_attr( '%1$s_label' ), $id ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1131,7 +1135,6 @@ class WP_Backstage {
 				id="<?php echo esc_attr( $id ); ?>" 
 				value="1" 
 				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-				style="margin-top: 0;"
 				<?php checked( true, $field['value'] ); ?>
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
@@ -1239,8 +1242,9 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( esc_attr( '%1$s_label' ), $id ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
-				style="display:inline-block;"><?php 
+				style="display:inline-block;margin-bottom:4px;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1372,7 +1376,7 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
 
-				<legend><?php 
+				<legend style="padding:2px 0;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1381,7 +1385,7 @@ class WP_Backstage {
 				<?php 
 				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
-					foreach ( $field['options'] as $option ) { 
+					foreach ( $field['options'] as $i => $option ) { 
 
 						$option = wp_parse_args( $option, $this->default_option_args );
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
@@ -1396,9 +1400,8 @@ class WP_Backstage {
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
-							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
-							<?php checked( $option['value'], $field['value'] ); ?>
+							<?php echo ( empty( $field['value'] ) && ( $i === 0 ) ) ? checked( true, true, false ) : checked( $option['value'], $field['value'], false ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
 
 							<label 
@@ -1453,7 +1456,7 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
 
-				<legend><?php 
+				<legend style="padding:2px 0;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1477,7 +1480,6 @@ class WP_Backstage {
 							id="<?php echo esc_attr( $input_id ); ?>" 
 							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
-							style="margin-top: 0;"
 							<?php echo $this->format_attrs( $field['input_attrs'] ); ?>
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
 							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
@@ -1653,7 +1655,7 @@ class WP_Backstage {
 				
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
-			style="cursor:pointer;"><?php 
+			style="cursor:pointer;padding:2px 0;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 		
@@ -1687,7 +1689,7 @@ class WP_Backstage {
 
 			<div class="clear"></div>
 
-			<div>
+			<div style="padding:4px 0 2px;">
 
 				<button 
 				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
@@ -1972,6 +1974,12 @@ class WP_Backstage {
 						addButton.addEventListener('click', handleOpen);
 						initSorting();
 					}
+					uploader.mediaUploader = {
+						reset: function() {
+							removeClones();
+							resetField();
+						}, 
+					};
 				}
 
 				function initAll() {
@@ -2056,19 +2064,39 @@ class WP_Backstage {
 					if (colorPicker) { 
 						const fieldId = colorPicker.getAttribute('data-color-picker-id');
 						const input = colorPicker.querySelector('#' + fieldId);
+						const label = colorPicker.querySelector('#' + fieldId + '_label');
+						const mode = colorPicker.getAttribute('data-color-picker-mode');
 						var palettes = colorPicker.getAttribute('data-color-picker-palettes');
 
-						if ((palettes === 'true') || (palettes === 'false')) {
-							palettes = (palettes === 'true');
-						} else {
-							palettes = palettes.split(',');
+						function isArray (value = null) {
+							return value && (typeof value === 'object') && (value.constructor === Array);
+						}
+						function handleLabelClick(e) {
+							e.preventDefault();
+							resultButton = colorPicker.querySelector('.wp-color-result');
+							if (resultButton) {
+								resultButton.focus();
+							}
 						}
 
-						$(input).wpColorPicker({
-							defaultColor: false, // bool
-							hide: true, // bool
+						if (isArray(palettes)) {
+							palettes = palettes.split(',');
+						} else {
+							palettes = (palettes !== 'false');
+						}
+
+						var options = {
+							defaultColor: false, // bool, string
 							palettes: palettes // bool, []
-						});
+						};
+						// Add seperately to ensure default WP setting 
+						// is respected if no mode is set.
+						if (mode) {
+							options.mode = mode; // string (hsl, hsv)
+						}
+
+						$(input).wpColorPicker(options);
+						label.addEventListener('click', handleLabelClick);
 					}
 				}
 
@@ -2107,17 +2135,23 @@ class WP_Backstage {
 
 				function init(codeEditor = null) {
 					if (codeEditor) { 
+						const fieldId = codeEditor.getAttribute('data-code-editor-id');
+						const label = codeEditor.querySelector('#' + fieldId + '_label');
 						const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
 						const CodeMirrorInst = codeMirrorEl.CodeMirror;
 						var timer = null;
+
+						function handleLabelClick(e = null) {
+							CodeMirrorInst.focus();
+						}
 
 						CodeMirrorInst.on('change', function(instance, changes) {
 							clearTimeout(timer);
 							timer = setTimeout(function() {
 								instance.save();
 							}, 750);
-							
 						});
+						label.addEventListener('click', handleLabelClick);
 					}
 				}
 

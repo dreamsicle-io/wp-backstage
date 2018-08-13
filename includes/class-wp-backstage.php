@@ -42,6 +42,12 @@ class WP_Backstage {
 	 * @since 0.0.1
 	 */
 	public $has_color = false;
+	/**
+	 * Has Address
+	 * 
+	 * @since 0.0.1
+	 */
+	public $has_address = false;
 
 	/**
 	 * Code Editors
@@ -49,6 +55,20 @@ class WP_Backstage {
 	 * @since 0.0.1
 	 */
 	public $code_editors = array();
+
+	/**
+	 * Countries
+	 * 
+	 * @since 0.0.1
+	 */
+	public $countries = array();
+
+	/**
+	 * US States
+	 * 
+	 * @since 0.0.1
+	 */
+	public $us_states = array();
 
 	/**
 	 * Default Field Args
@@ -122,6 +142,20 @@ class WP_Backstage {
 	 */
 	public $default_code_args = array(
 		'type' => 'htmlmixed', 
+	);
+
+	/**
+	 * Default Address values
+	 * 
+	 * @since 0.0.1
+	 */
+	public $default_address_values = array(
+		'country'   => 'US', 
+		'address_1' => '', 
+		'address_2' => '', 
+		'city'      => '', 
+		'state'     => '', 
+		'zip'       => '', 
 	);
 
 	/**
@@ -237,6 +271,329 @@ class WP_Backstage {
 				'number_options' => 60, 
 			), 
 		);
+		$this->countries = array(
+			'AF' => __( 'Afghanistan', 'wp_backstage' ), 
+			'AL' => __( 'Albania', 'wp_backstage' ), 
+			'DZ' => __( 'Algeria', 'wp_backstage' ), 
+			'AS' => __( 'American Samoa', 'wp_backstage' ), 
+			'AD' => __( 'Andorra', 'wp_backstage' ), 
+			'AO' => __( 'Angola', 'wp_backstage' ), 
+			'AI' => __( 'Anguilla', 'wp_backstage' ), 
+			'AQ' => __( 'Antarctica', 'wp_backstage' ), 
+			'AG' => __( 'Antigua and Barbuda', 'wp_backstage' ), 
+			'AR' => __( 'Argentina', 'wp_backstage' ), 
+			'AM' => __( 'Armenia', 'wp_backstage' ), 
+			'AW' => __( 'Aruba', 'wp_backstage' ), 
+			'AU' => __( 'Australia', 'wp_backstage' ), 
+			'AT' => __( 'Austria', 'wp_backstage' ), 
+			'AZ' => __( 'Azerbaijan', 'wp_backstage' ), 
+			'BS' => __( 'Bahamas', 'wp_backstage' ), 
+			'BH' => __( 'Bahrain', 'wp_backstage' ), 
+			'BD' => __( 'Bangladesh', 'wp_backstage' ), 
+			'BB' => __( 'Barbados', 'wp_backstage' ), 
+			'BY' => __( 'Belarus', 'wp_backstage' ), 
+			'BE' => __( 'Belgium', 'wp_backstage' ), 
+			'BZ' => __( 'Belize', 'wp_backstage' ), 
+			'BJ' => __( 'Benin', 'wp_backstage' ), 
+			'BM' => __( 'Bermuda', 'wp_backstage' ), 
+			'BT' => __( 'Bhutan', 'wp_backstage' ), 
+			'BO' => __( 'Bolivia', 'wp_backstage' ), 
+			'BA' => __( 'Bosnia and Herzegovina', 'wp_backstage' ), 
+			'BW' => __( 'Botswana', 'wp_backstage' ), 
+			'BV' => __( 'Bouvet Island', 'wp_backstage' ), 
+			'BR' => __( 'Brazil', 'wp_backstage' ), 
+			'BQ' => __( 'British Antarctic Territory', 'wp_backstage' ), 
+			'IO' => __( 'British Indian Ocean Territory', 'wp_backstage' ), 
+			'VG' => __( 'British Virgin Islands', 'wp_backstage' ), 
+			'BN' => __( 'Brunei', 'wp_backstage' ), 
+			'BG' => __( 'Bulgaria', 'wp_backstage' ), 
+			'BF' => __( 'Burkina Faso', 'wp_backstage' ), 
+			'BI' => __( 'Burundi', 'wp_backstage' ), 
+			'KH' => __( 'Cambodia', 'wp_backstage' ), 
+			'CM' => __( 'Cameroon', 'wp_backstage' ), 
+			'CA' => __( 'Canada', 'wp_backstage' ), 
+			'CT' => __( 'Canton and Enderbury Islands', 'wp_backstage' ), 
+			'CV' => __( 'Cape Verde', 'wp_backstage' ), 
+			'KY' => __( 'Cayman Islands', 'wp_backstage' ), 
+			'CF' => __( 'Central African Republic', 'wp_backstage' ), 
+			'TD' => __( 'Chad', 'wp_backstage' ), 
+			'CL' => __( 'Chile', 'wp_backstage' ), 
+			'CN' => __( 'China', 'wp_backstage' ), 
+			'CX' => __( 'Christmas Island', 'wp_backstage' ), 
+			'CC' => __( 'Cocos [Keeling] Islands', 'wp_backstage' ), 
+			'CO' => __( 'Colombia', 'wp_backstage' ), 
+			'KM' => __( 'Comoros', 'wp_backstage' ), 
+			'CG' => __( 'Congo - Brazzaville', 'wp_backstage' ), 
+			'CD' => __( 'Congo - Kinshasa', 'wp_backstage' ), 
+			'CK' => __( 'Cook Islands', 'wp_backstage' ), 
+			'CR' => __( 'Costa Rica', 'wp_backstage' ), 
+			'HR' => __( 'Croatia', 'wp_backstage' ), 
+			'CU' => __( 'Cuba', 'wp_backstage' ), 
+			'CY' => __( 'Cyprus', 'wp_backstage' ), 
+			'CZ' => __( 'Czech Republic', 'wp_backstage' ), 
+			'CI' => __( 'Côte d’Ivoire', 'wp_backstage' ), 
+			'DK' => __( 'Denmark', 'wp_backstage' ), 
+			'DJ' => __( 'Djibouti', 'wp_backstage' ), 
+			'DM' => __( 'Dominica', 'wp_backstage' ), 
+			'DO' => __( 'Dominican Republic', 'wp_backstage' ), 
+			'NQ' => __( 'Dronning Maud Land', 'wp_backstage' ), 
+			'DD' => __( 'East Germany', 'wp_backstage' ), 
+			'EC' => __( 'Ecuador', 'wp_backstage' ), 
+			'EG' => __( 'Egypt', 'wp_backstage' ), 
+			'SV' => __( 'El Salvador', 'wp_backstage' ), 
+			'GQ' => __( 'Equatorial Guinea', 'wp_backstage' ), 
+			'ER' => __( 'Eritrea', 'wp_backstage' ), 
+			'EE' => __( 'Estonia', 'wp_backstage' ), 
+			'ET' => __( 'Ethiopia', 'wp_backstage' ), 
+			'FK' => __( 'Falkland Islands', 'wp_backstage' ), 
+			'FO' => __( 'Faroe Islands', 'wp_backstage' ), 
+			'FJ' => __( 'Fiji', 'wp_backstage' ), 
+			'FI' => __( 'Finland', 'wp_backstage' ), 
+			'FR' => __( 'France', 'wp_backstage' ), 
+			'GF' => __( 'French Guiana', 'wp_backstage' ), 
+			'PF' => __( 'French Polynesia', 'wp_backstage' ), 
+			'TF' => __( 'French Southern Territories', 'wp_backstage' ), 
+			'FQ' => __( 'French Southern and Antarctic Territories', 'wp_backstage' ), 
+			'GA' => __( 'Gabon', 'wp_backstage' ), 
+			'GM' => __( 'Gambia', 'wp_backstage' ), 
+			'GE' => __( 'Georgia', 'wp_backstage' ), 
+			'DE' => __( 'Germany', 'wp_backstage' ), 
+			'GH' => __( 'Ghana', 'wp_backstage' ), 
+			'GI' => __( 'Gibraltar', 'wp_backstage' ), 
+			'GR' => __( 'Greece', 'wp_backstage' ), 
+			'GL' => __( 'Greenland', 'wp_backstage' ), 
+			'GD' => __( 'Grenada', 'wp_backstage' ), 
+			'GP' => __( 'Guadeloupe', 'wp_backstage' ), 
+			'GU' => __( 'Guam', 'wp_backstage' ), 
+			'GT' => __( 'Guatemala', 'wp_backstage' ), 
+			'GG' => __( 'Guernsey', 'wp_backstage' ), 
+			'GN' => __( 'Guinea', 'wp_backstage' ), 
+			'GW' => __( 'Guinea-Bissau', 'wp_backstage' ), 
+			'GY' => __( 'Guyana', 'wp_backstage' ), 
+			'HT' => __( 'Haiti', 'wp_backstage' ), 
+			'HM' => __( 'Heard Island and McDonald Islands', 'wp_backstage' ), 
+			'HN' => __( 'Honduras', 'wp_backstage' ), 
+			'HK' => __( 'Hong Kong SAR China', 'wp_backstage' ), 
+			'HU' => __( 'Hungary', 'wp_backstage' ), 
+			'IS' => __( 'Iceland', 'wp_backstage' ), 
+			'IN' => __( 'India', 'wp_backstage' ), 
+			'ID' => __( 'Indonesia', 'wp_backstage' ), 
+			'IR' => __( 'Iran', 'wp_backstage' ), 
+			'IQ' => __( 'Iraq', 'wp_backstage' ), 
+			'IE' => __( 'Ireland', 'wp_backstage' ), 
+			'IM' => __( 'Isle of Man', 'wp_backstage' ), 
+			'IL' => __( 'Israel', 'wp_backstage' ), 
+			'IT' => __( 'Italy', 'wp_backstage' ), 
+			'JM' => __( 'Jamaica', 'wp_backstage' ), 
+			'JP' => __( 'Japan', 'wp_backstage' ), 
+			'JE' => __( 'Jersey', 'wp_backstage' ), 
+			'JT' => __( 'Johnston Island', 'wp_backstage' ), 
+			'JO' => __( 'Jordan', 'wp_backstage' ), 
+			'KZ' => __( 'Kazakhstan', 'wp_backstage' ), 
+			'KE' => __( 'Kenya', 'wp_backstage' ), 
+			'KI' => __( 'Kiribati', 'wp_backstage' ), 
+			'KW' => __( 'Kuwait', 'wp_backstage' ), 
+			'KG' => __( 'Kyrgyzstan', 'wp_backstage' ), 
+			'LA' => __( 'Laos', 'wp_backstage' ), 
+			'LV' => __( 'Latvia', 'wp_backstage' ), 
+			'LB' => __( 'Lebanon', 'wp_backstage' ), 
+			'LS' => __( 'Lesotho', 'wp_backstage' ), 
+			'LR' => __( 'Liberia', 'wp_backstage' ), 
+			'LY' => __( 'Libya', 'wp_backstage' ), 
+			'LI' => __( 'Liechtenstein', 'wp_backstage' ), 
+			'LT' => __( 'Lithuania', 'wp_backstage' ), 
+			'LU' => __( 'Luxembourg', 'wp_backstage' ), 
+			'MO' => __( 'Macau SAR China', 'wp_backstage' ), 
+			'MK' => __( 'Macedonia', 'wp_backstage' ), 
+			'MG' => __( 'Madagascar', 'wp_backstage' ), 
+			'MW' => __( 'Malawi', 'wp_backstage' ), 
+			'MY' => __( 'Malaysia', 'wp_backstage' ), 
+			'MV' => __( 'Maldives', 'wp_backstage' ), 
+			'ML' => __( 'Mali', 'wp_backstage' ), 
+			'MT' => __( 'Malta', 'wp_backstage' ), 
+			'MH' => __( 'Marshall Islands', 'wp_backstage' ), 
+			'MQ' => __( 'Martinique', 'wp_backstage' ), 
+			'MR' => __( 'Mauritania', 'wp_backstage' ), 
+			'MU' => __( 'Mauritius', 'wp_backstage' ), 
+			'YT' => __( 'Mayotte', 'wp_backstage' ), 
+			'FX' => __( 'Metropolitan France', 'wp_backstage' ), 
+			'MX' => __( 'Mexico', 'wp_backstage' ), 
+			'FM' => __( 'Micronesia', 'wp_backstage' ), 
+			'MI' => __( 'Midway Islands', 'wp_backstage' ), 
+			'MD' => __( 'Moldova', 'wp_backstage' ), 
+			'MC' => __( 'Monaco', 'wp_backstage' ), 
+			'MN' => __( 'Mongolia', 'wp_backstage' ), 
+			'ME' => __( 'Montenegro', 'wp_backstage' ), 
+			'MS' => __( 'Montserrat', 'wp_backstage' ), 
+			'MA' => __( 'Morocco', 'wp_backstage' ), 
+			'MZ' => __( 'Mozambique', 'wp_backstage' ), 
+			'MM' => __( 'Myanmar [Burma]', 'wp_backstage' ), 
+			'NA' => __( 'Namibia', 'wp_backstage' ), 
+			'NR' => __( 'Nauru', 'wp_backstage' ), 
+			'NP' => __( 'Nepal', 'wp_backstage' ), 
+			'NL' => __( 'Netherlands', 'wp_backstage' ), 
+			'AN' => __( 'Netherlands Antilles', 'wp_backstage' ), 
+			'NT' => __( 'Neutral Zone', 'wp_backstage' ), 
+			'NC' => __( 'New Caledonia', 'wp_backstage' ), 
+			'NZ' => __( 'New Zealand', 'wp_backstage' ), 
+			'NI' => __( 'Nicaragua', 'wp_backstage' ), 
+			'NE' => __( 'Niger', 'wp_backstage' ), 
+			'NG' => __( 'Nigeria', 'wp_backstage' ), 
+			'NU' => __( 'Niue', 'wp_backstage' ), 
+			'NF' => __( 'Norfolk Island', 'wp_backstage' ), 
+			'KP' => __( 'North Korea', 'wp_backstage' ), 
+			'VD' => __( 'North Vietnam', 'wp_backstage' ), 
+			'MP' => __( 'Northern Mariana Islands', 'wp_backstage' ), 
+			'NO' => __( 'Norway', 'wp_backstage' ), 
+			'OM' => __( 'Oman', 'wp_backstage' ), 
+			'PC' => __( 'Pacific Islands Trust Territory', 'wp_backstage' ), 
+			'PK' => __( 'Pakistan', 'wp_backstage' ), 
+			'PW' => __( 'Palau', 'wp_backstage' ), 
+			'PS' => __( 'Palestinian Territories', 'wp_backstage' ), 
+			'PA' => __( 'Panama', 'wp_backstage' ), 
+			'PZ' => __( 'Panama Canal Zone', 'wp_backstage' ), 
+			'PG' => __( 'Papua New Guinea', 'wp_backstage' ), 
+			'PY' => __( 'Paraguay', 'wp_backstage' ), 
+			'YD' => __( 'People\'s Democratic Republic of Yemen', 'wp_backstage' ), 
+			'PE' => __( 'Peru', 'wp_backstage' ), 
+			'PH' => __( 'Philippines', 'wp_backstage' ), 
+			'PN' => __( 'Pitcairn Islands', 'wp_backstage' ), 
+			'PL' => __( 'Poland', 'wp_backstage' ), 
+			'PT' => __( 'Portugal', 'wp_backstage' ), 
+			'PR' => __( 'Puerto Rico', 'wp_backstage' ), 
+			'QA' => __( 'Qatar', 'wp_backstage' ), 
+			'RO' => __( 'Romania', 'wp_backstage' ), 
+			'RU' => __( 'Russia', 'wp_backstage' ), 
+			'RW' => __( 'Rwanda', 'wp_backstage' ), 
+			'BL' => __( 'Saint Barthélemy', 'wp_backstage' ), 
+			'SH' => __( 'Saint Helena', 'wp_backstage' ), 
+			'KN' => __( 'Saint Kitts and Nevis', 'wp_backstage' ), 
+			'LC' => __( 'Saint Lucia', 'wp_backstage' ), 
+			'MF' => __( 'Saint Martin', 'wp_backstage' ), 
+			'PM' => __( 'Saint Pierre and Miquelon', 'wp_backstage' ), 
+			'VC' => __( 'Saint Vincent and the Grenadines', 'wp_backstage' ), 
+			'WS' => __( 'Samoa', 'wp_backstage' ), 
+			'SM' => __( 'San Marino', 'wp_backstage' ), 
+			'SA' => __( 'Saudi Arabia', 'wp_backstage' ), 
+			'SN' => __( 'Senegal', 'wp_backstage' ), 
+			'RS' => __( 'Serbia', 'wp_backstage' ), 
+			'CS' => __( 'Serbia and Montenegro', 'wp_backstage' ), 
+			'SC' => __( 'Seychelles', 'wp_backstage' ), 
+			'SL' => __( 'Sierra Leone', 'wp_backstage' ), 
+			'SG' => __( 'Singapore', 'wp_backstage' ), 
+			'SK' => __( 'Slovakia', 'wp_backstage' ), 
+			'SI' => __( 'Slovenia', 'wp_backstage' ), 
+			'SB' => __( 'Solomon Islands', 'wp_backstage' ), 
+			'SO' => __( 'Somalia', 'wp_backstage' ), 
+			'ZA' => __( 'South Africa', 'wp_backstage' ), 
+			'GS' => __( 'South Georgia and the South Sandwich Islands', 'wp_backstage' ), 
+			'KR' => __( 'South Korea', 'wp_backstage' ), 
+			'ES' => __( 'Spain', 'wp_backstage' ), 
+			'LK' => __( 'Sri Lanka', 'wp_backstage' ), 
+			'SD' => __( 'Sudan', 'wp_backstage' ), 
+			'SR' => __( 'Suriname', 'wp_backstage' ), 
+			'SJ' => __( 'Svalbard and Jan Mayen', 'wp_backstage' ), 
+			'SZ' => __( 'Swaziland', 'wp_backstage' ), 
+			'SE' => __( 'Sweden', 'wp_backstage' ), 
+			'CH' => __( 'Switzerland', 'wp_backstage' ), 
+			'SY' => __( 'Syria', 'wp_backstage' ), 
+			'ST' => __( 'São Tomé and Príncipe', 'wp_backstage' ), 
+			'TW' => __( 'Taiwan', 'wp_backstage' ), 
+			'TJ' => __( 'Tajikistan', 'wp_backstage' ), 
+			'TZ' => __( 'Tanzania', 'wp_backstage' ), 
+			'TH' => __( 'Thailand', 'wp_backstage' ), 
+			'TL' => __( 'Timor-Leste', 'wp_backstage' ), 
+			'TG' => __( 'Togo', 'wp_backstage' ), 
+			'TK' => __( 'Tokelau', 'wp_backstage' ), 
+			'TO' => __( 'Tonga', 'wp_backstage' ), 
+			'TT' => __( 'Trinidad and Tobago', 'wp_backstage' ), 
+			'TN' => __( 'Tunisia', 'wp_backstage' ), 
+			'TR' => __( 'Turkey', 'wp_backstage' ), 
+			'TM' => __( 'Turkmenistan', 'wp_backstage' ), 
+			'TC' => __( 'Turks and Caicos Islands', 'wp_backstage' ), 
+			'TV' => __( 'Tuvalu', 'wp_backstage' ), 
+			'UM' => __( 'U.S. Minor Outlying Islands', 'wp_backstage' ), 
+			'PU' => __( 'U.S. Miscellaneous Pacific Islands', 'wp_backstage' ), 
+			'VI' => __( 'U.S. Virgin Islands', 'wp_backstage' ), 
+			'UG' => __( 'Uganda', 'wp_backstage' ), 
+			'UA' => __( 'Ukraine', 'wp_backstage' ), 
+			'SU' => __( 'Union of Soviet Socialist Republics', 'wp_backstage' ), 
+			'AE' => __( 'United Arab Emirates', 'wp_backstage' ), 
+			'GB' => __( 'United Kingdom', 'wp_backstage' ), 
+			'US' => __( 'United States', 'wp_backstage' ), 
+			'ZZ' => __( 'Unknown or Invalid Region', 'wp_backstage' ), 
+			'UY' => __( 'Uruguay', 'wp_backstage' ), 
+			'UZ' => __( 'Uzbekistan', 'wp_backstage' ), 
+			'VU' => __( 'Vanuatu', 'wp_backstage' ), 
+			'VA' => __( 'Vatican City', 'wp_backstage' ), 
+			'VE' => __( 'Venezuela', 'wp_backstage' ), 
+			'VN' => __( 'Vietnam', 'wp_backstage' ), 
+			'WK' => __( 'Wake Island', 'wp_backstage' ), 
+			'WF' => __( 'Wallis and Futuna', 'wp_backstage' ), 
+			'EH' => __( 'Western Sahara', 'wp_backstage' ), 
+			'YE' => __( 'Yemen', 'wp_backstage' ), 
+			'ZM' => __( 'Zambia', 'wp_backstage' ), 
+			'ZW' => __( 'Zimbabwe', 'wp_backstage' ), 
+			'AX' => __( 'Åland Islands', 'wp_backstage' ), 
+		);
+		$this->us_states = array(
+			'AL' => __( 'Alabama', 'wp_backstage' ), 
+			'AK' => __( 'Alaska', 'wp_backstage' ), 
+			'AZ' => __( 'Arizona', 'wp_backstage' ), 
+			'AR' => __( 'Arkansas', 'wp_backstage' ), 
+			'CA' => __( 'California', 'wp_backstage' ), 
+			'CO' => __( 'Colorado', 'wp_backstage' ), 
+			'CT' => __( 'Connecticut', 'wp_backstage' ), 
+			'DE' => __( 'Delaware', 'wp_backstage' ), 
+			'DC' => __( 'District Of Columbia', 'wp_backstage' ), 
+			'FL' => __( 'Florida', 'wp_backstage' ), 
+			'GA' => __( 'Georgia', 'wp_backstage' ), 
+			'HI' => __( 'Hawaii', 'wp_backstage' ), 
+			'ID' => __( 'Idaho', 'wp_backstage' ), 
+			'IL' => __( 'Illinois', 'wp_backstage' ), 
+			'IN' => __( 'Indiana', 'wp_backstage' ), 
+			'IA' => __( 'Iowa', 'wp_backstage' ), 
+			'KS' => __( 'Kansas', 'wp_backstage' ), 
+			'KY' => __( 'Kentucky', 'wp_backstage' ), 
+			'LA' => __( 'Louisiana', 'wp_backstage' ), 
+			'ME' => __( 'Maine', 'wp_backstage' ), 
+			'MD' => __( 'Maryland', 'wp_backstage' ), 
+			'MA' => __( 'Massachusetts', 'wp_backstage' ), 
+			'MI' => __( 'Michigan', 'wp_backstage' ), 
+			'MN' => __( 'Minnesota', 'wp_backstage' ), 
+			'MS' => __( 'Mississippi', 'wp_backstage' ), 
+			'MO' => __( 'Missouri', 'wp_backstage' ), 
+			'MT' => __( 'Montana', 'wp_backstage' ), 
+			'NE' => __( 'Nebraska', 'wp_backstage' ), 
+			'NV' => __( 'Nevada', 'wp_backstage' ), 
+			'NH' => __( 'New Hampshire', 'wp_backstage' ), 
+			'NJ' => __( 'New Jersey', 'wp_backstage' ), 
+			'NM' => __( 'New Mexico', 'wp_backstage' ), 
+			'NY' => __( 'New York', 'wp_backstage' ), 
+			'NC' => __( 'North Carolina', 'wp_backstage' ), 
+			'ND' => __( 'North Dakota', 'wp_backstage' ), 
+			'OH' => __( 'Ohio', 'wp_backstage' ), 
+			'OK' => __( 'Oklahoma', 'wp_backstage' ), 
+			'OR' => __( 'Oregon', 'wp_backstage' ), 
+			'PA' => __( 'Pennsylvania', 'wp_backstage' ), 
+			'RI' => __( 'Rhode Island', 'wp_backstage' ), 
+			'SC' => __( 'South Carolina', 'wp_backstage' ), 
+			'SD' => __( 'South Dakota', 'wp_backstage' ), 
+			'TN' => __( 'Tennessee', 'wp_backstage' ), 
+			'TX' => __( 'Texas', 'wp_backstage' ), 
+			'UT' => __( 'Utah', 'wp_backstage' ), 
+			'VT' => __( 'Vermont', 'wp_backstage' ), 
+			'VA' => __( 'Virginia', 'wp_backstage' ), 
+			'WA' => __( 'Washington', 'wp_backstage' ), 
+			'WV' => __( 'West Virginia', 'wp_backstage' ), 
+			'WI' => __( 'Wisconsin', 'wp_backstage' ), 
+			'WY' => __( 'Wyoming', 'wp_backstage' ), 
+		);
+		$this->has_media = ! empty( $this->get_field_by( 'type', 'media' ) );
+		$this->has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
+		$this->has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
+		$this->has_address = ! empty( $this->get_field_by( 'type', 'address' ) );
+		$this->code_editors = $this->get_fields_by( 'type', 'code' );
 
 	}
 
@@ -321,10 +678,11 @@ class WP_Backstage {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_media_uploader_script' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_date_picker_script' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_color_picker_script' ), 10 );
-		add_action( 'admin_footer', array( $this, 'inline_code_editor_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_date_picker_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_color_picker_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_code_editor_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_address_script' ), 10 );
 
 	}
 
@@ -452,6 +810,8 @@ class WP_Backstage {
 				$value = boolval( $value );
 				break;
 			case 'checkbox_set':
+				$value = array_map( 'esc_attr', $value );
+			case 'address':
 				$value = array_map( 'esc_attr', $value );
 				break;
 			case 'time':
@@ -594,6 +954,9 @@ class WP_Backstage {
 			case 'code':
 				$this->render_code( $field );
 				break;
+			case 'address':
+				$this->render_address( $field );
+				break;
 			default:
 				$this->render_input( $field );
 				break;
@@ -631,19 +994,20 @@ class WP_Backstage {
 					$content = esc_html( $labels[$value] );
 					break;
 				case 'checkbox':
-					$content = $value ? '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>' : '&horbar;';
+					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>';
 					break;
 				case 'textarea':
-					$content = $value ? wpautop( sanitize_textarea_field( $value ) ) : '&horbar;';
+					$content = wpautop( sanitize_textarea_field( $value ) );
 					break;
 				case 'code':
-					$content = $value ? '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>' : '&horbar;';
+					$content = '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>';
 					break;
 				case 'color':
-					$content = $value ? '<i style="display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';" title="' . esc_attr( $value ) . '"></i>' : '&horbar;';
+					$icon_style = 'display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';';
+					$content = '<i style="' . $icon_style . '" title="' . esc_attr( $value ) . '" aria-hidden="true"></i>';
 					break;
 				case 'date':
-					$content = $value ? date( $this->date_format, strtotime( $value ) ) : '&horbar;';
+					$content = date( $this->date_format, strtotime( $value ) );
 					break;
 				case 'checkbox_set':
 					if ( is_array( $value ) && ! empty( $value ) ) {
@@ -653,6 +1017,22 @@ class WP_Backstage {
 						}
 					}
 					$content = esc_html( implode( ', ', $labels ) );
+					break;
+				case 'address':
+					$value = is_array( $value ) ? $value : array();
+					$address = wp_parse_args( $value, $this->default_address_values );
+					$formatted_address = sprintf( 
+						__( '%1$s %2$s<br/>%3$s, %4$s<br/>%5$s, %6$s', 'wp_backstage' ),
+						$address['address_1'], 
+						$address['address_2'], 
+						$address['city'], 
+						$address['state'], 
+						$address['zip'], 
+						$address['country'] 
+					);
+					$icon_style = 'font-size:inherit;height:auto;width:auto;margin-top:-2px;margin-right:2px;vertical-align:middle;';
+					$icon = '<i class="dashicons dashicons-location" aria-hidden="true" style="' . $icon_style . '"></i>';
+					$content = '<address>' . $icon . wp_kses( $formatted_address, $this->kses_p ) . '</address>';
 					break;
 				case 'media':
 					$thumbnail_size = 20;
@@ -831,8 +1211,7 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -889,8 +1268,7 @@ class WP_Backstage {
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
-		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
-		style="margin:1em 0;">
+		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -969,8 +1347,7 @@ class WP_Backstage {
 		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
 		<fieldset 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<legend style="padding:2px 0;"><?php 
 
@@ -1068,8 +1445,7 @@ class WP_Backstage {
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-color-picker-mode="<?php echo esc_attr( $args['mode'] ); ?>"
-		data-color-picker-palettes="<?php echo $palettes; ?>"
-		style="margin:1em 0;">
+		data-color-picker-palettes="<?php echo $palettes; ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1124,8 +1500,7 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1177,8 +1552,7 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1236,8 +1610,7 @@ class WP_Backstage {
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
-		style="margin:1em 0;">
+		data-code-editor-id="<?php echo esc_attr( $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1295,8 +1668,7 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -1369,8 +1741,7 @@ class WP_Backstage {
 		$id = sanitize_title_with_dashes( $field['name'] ); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -1449,8 +1820,7 @@ class WP_Backstage {
 		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
 		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
-		style="margin:1em 0;">
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<fieldset 
 			id="<?php echo esc_attr( $id ); ?>"
@@ -1650,8 +2020,7 @@ class WP_Backstage {
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
 		data-media-uploader-type="<?php echo esc_attr( $args['type'] ); ?>"
 		data-media-uploader-title="<?php echo esc_attr( $field['label'] ); ?>"
-		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>"
-		style="margin:1em 0;">
+		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>">
 				
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
@@ -1753,6 +2122,270 @@ class WP_Backstage {
 		</fieldset>
 
 	<?php } 
+
+	/**
+	 * Render Input
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_address( $field = array() ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$value = is_array( $field['value'] ) ? $field['value'] : array();
+		$values = wp_parse_args( $value, $this->default_address_values ); ?>
+
+		<fieldset 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-address-id="<?php echo esc_attr( $id ); ?>">
+
+			<legend 
+			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
+			style="display:inline-block;"><?php 
+
+				echo wp_kses( $field['label'], $this->kses_label ); 
+			
+			?></legend>
+
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<div id="<?php printf( esc_attr( '%1$s_country_container' ), $id ); ?>">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'Country', 'wp_backstage' ), $this->kses_label );  
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<select
+					class="widefat"
+					id="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[country]' ), $field['name'] ); ?>"><?php 
+
+						foreach ( $this->countries as $country_code => $country_label ) { ?>
+
+							<option 
+							value="<?php echo esc_attr( $country_code ); ?>"
+							<?php selected( $country_code, $values['country'] ); ?>><?php 
+
+								echo esc_html( $country_label ); 
+
+							?></option>
+
+						<?php }
+
+					?></select>
+
+				</div>
+
+				<div id="<?php printf( esc_attr( '%1$s_address_1_container' ), $id ); ?>">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_address_1' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'Address', 'wp_backstage' ), $this->kses_label ); 
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<input 
+					class="widefat"
+					type="text" 
+					id="<?php printf( esc_attr( '%1$s_address_1' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[address_1]' ), $field['name'] ); ?>"
+					value="<?php echo esc_attr( $values['address_1'] ); ?>"
+					aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+					<?php disabled( true, $field['disabled'] ); ?>
+					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				</div>
+
+				<div id="<?php printf( esc_attr( '%1$s_address_2_container' ), $id ); ?>">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_address_2' ), $id ); ?>"
+					style="display:inline-block;">
+						
+						<small><?php 
+
+							echo wp_kses( __( 'Address (Line 2)', 'wp_backstage' ), $this->kses_label ); 
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<input 
+					class="widefat"
+					type="text" 
+					id="<?php printf( esc_attr( '%1$s_address_2' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[address_2]' ), $field['name'] ); ?>"
+					value="<?php echo esc_attr( $values['address_2'] ); ?>"
+					aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+					<?php disabled( true, $field['disabled'] ); ?>
+					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				</div>
+
+				<div id="<?php printf( esc_attr( '%1$s_city_container' ), $id ); ?>"
+				style="width:49%;float:left;margin-right:2%;">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_city' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'City', 'wp_backstage' ), $this->kses_label ); 
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<input 
+					class="widefat"
+					type="text" 
+					id="<?php printf( esc_attr( '%1$s_city' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[city]' ), $field['name'] ); ?>"
+					value="<?php echo esc_attr( $values['city'] ); ?>"
+					aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+					<?php disabled( true, $field['disabled'] ); ?>
+					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				</div>
+
+				<div id="<?php printf( esc_attr( '%1$s_state_container' ), $id ); ?>"
+				style="width:49%;float:left;">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_state' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'State / Province / Region', 'wp_backstage' ), $this->kses_label ); 
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<input 
+					class="widefat"
+					type="text" 
+					id="<?php printf( esc_attr( '%1$s_state' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[state]' ), $field['name'] ); ?>"
+					value="<?php echo esc_attr( $values['state'] ); ?>"
+					aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+					<?php disabled( true, $field['disabled'] ); ?>
+					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+
+				</div>
+
+				<div id="<?php printf( esc_attr( '%1$s_us_state_container' ), $id ); ?>"
+				style="width:49%;float:left;">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'State', 'wp_backstage' ), $this->kses_label ); 
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<select
+					class="widefat"
+					id="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[state]' ), $field['name'] ); ?>"><?php 
+
+						foreach ( $this->us_states as $us_state_code => $us_state_name ) { ?>
+
+							<option 
+							value="<?php echo esc_attr( $us_state_code ); ?>"
+							<?php selected( $us_state_code, $values['state'] ); ?>><?php 
+
+								echo esc_html( $us_state_name ); 
+
+							?></option>
+
+						<?php }
+
+					?></select>
+
+				</div>
+
+				<div class="clear"></div>
+
+				<div id="<?php printf( esc_attr( '%1$s_zip_container' ), $id ); ?>">
+
+					<label 
+					for="<?php printf( esc_attr( '%1$s_zip' ), $id ); ?>"
+					style="display:inline-block;">
+
+						<small><?php 
+
+							echo wp_kses( __( 'Zip Code', 'wp_backstage' ), $this->kses_label );
+						
+						?></small>
+
+					</label>
+
+					<br/>
+
+					<input 
+					class="widefat"
+					type="tel" 
+					id="<?php printf( esc_attr( '%1$s_zip' ), $id ); ?>"
+					name="<?php printf( esc_attr( '%1$s[zip]' ), $field['name'] ); ?>"
+					value="<?php echo esc_attr( $values['zip'] ); ?>"
+					aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+					<?php disabled( true, $field['disabled'] ); ?>
+					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
+				
+				</div>
+
+			</div>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+				
+				?></p>
+
+			<?php } ?>
+
+		</fieldset>
+
+	<?php }
 
 	/**
 	 * Inline Media Uploader Script
@@ -2160,6 +2793,74 @@ class WP_Backstage {
 					if (codeEditors && (codeEditors.length > 0)) {
 						for (var i = 0; i < codeEditors.length; i++) {
 							init(codeEditors[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', initAll);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Address Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_address_script() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_address ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init(address = null) {
+					if (address) { 
+						const fieldId = address.getAttribute('data-address-id');
+						const countrySelect = address.querySelector('#' + fieldId + '_country');
+						const stateContainer = address.querySelector('#' + fieldId + '_state_container');
+						const usStateContainer = address.querySelector('#' + fieldId + '_us_state_container');
+
+						function enableField(field = null) {
+							const control = field.querySelector('input, textarea, select');
+							control.removeAttribute('disabled');
+							field.style.display = 'block';
+						}
+						function disableField(field = null) {
+							const control = field.querySelector('input, textarea, select');
+							control.setAttribute('disabled', true);
+							field.style.display = 'none';
+						}
+						function toggleByCountry(value = '') {
+							if (value === 'US') {
+								enableField(usStateContainer)
+								disableField(stateContainer);
+							} else {
+								enableField(stateContainer)
+								disableField(usStateContainer);
+							}
+						}
+						function handleCountryChange(e = null) {
+							toggleByCountry(e.target.value);
+						}
+						
+						toggleByCountry(countrySelect.value);
+						countrySelect.addEventListener('change', handleCountryChange);
+					}
+				}
+
+				function initAll() {
+					const addresses = document.querySelectorAll('[data-address-id]');
+					if (addresses && (addresses.length > 0)) {
+						for (var i = 0; i < addresses.length; i++) {
+							init(addresses[i]);
 						}
 					}
 				}

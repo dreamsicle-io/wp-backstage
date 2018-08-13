@@ -487,9 +487,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 					}
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
+				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
 
-					update_post_meta( $post_id, $field['name'], false );
+					$null_val = ( $field['type'] === 'radio' ) ? '' : false;
+
+					update_post_meta( $post_id, $field['name'], $null_val );
 
 				} 
 

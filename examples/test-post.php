@@ -283,6 +283,13 @@ function wp_backstage_init() {
 				'type' => 'javascript', 
 			),
 		),
+		array( 
+			'type'        => 'address', 
+			'name'        => 'wp_backstage_address_field', 
+			'label'       => __( 'Address', 'wp_backstage' ), 
+			'description' => __( 'Please enter an address.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
 	);
 
 	WP_Backstage_Post_Type::add( 'wp_backstage_page', array(

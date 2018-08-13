@@ -129,10 +129,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = $this->slug;
-		$this->has_media = ! empty( $this->get_field_by( 'type', 'media' ) );
-		$this->has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
-		$this->has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
-		$this->code_editors = $this->get_fields_by( 'type', 'code' );
 		$this->set_errors();
 
 		parent::__construct();

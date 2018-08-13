@@ -237,6 +237,26 @@ function wp_backstage_init() {
 			),
 		),
 		array( 
+			'type'        => 'color', 
+			'name'        => 'wp_backstage_color_nopalettes_field', 
+			'label'       => __( 'Color with No Palletes', 'wp_backstage' ), 
+			'description' => __( 'Please select a color.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'palettes' => false, 
+			),
+		),
+		array( 
+			'type'        => 'color', 
+			'name'        => 'wp_backstage_color_hsl_field', 
+			'label'       => __( 'Color with HSL mode', 'wp_backstage' ), 
+			'description' => __( 'Please select a color.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'mode' => 'hsl', 
+			),
+		),
+		array( 
 			'type'        => 'code', 
 			'name'        => 'wp_backstage_html_field', 
 			'label'       => __( 'Code (HTML)', 'wp_backstage' ), 

@@ -81,10 +81,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
-		$this->has_media = ! empty( $this->get_field_by( 'type', 'media' ) );
-		$this->has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
-		$this->has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
-		$this->code_editors = $this->get_fields_by( 'type', 'code' );
 		$this->set_errors();
 
 		parent::__construct();
@@ -215,7 +211,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
-		add_action( 'admin_footer', array( $this, 'inline_add_term_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
 
 		parent::init();
 

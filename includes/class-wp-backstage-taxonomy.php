@@ -211,10 +211,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_action( sprintf( '%1$s_edit_form_fields', $this->slug ), array( $this, 'render_edit_fields' ), 10, 2 );
 		add_action( sprintf( 'edited_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
 		add_action( sprintf( 'created_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
-		add_action( sprintf( 'manage_edit-%1$s_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-		add_action( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 3 );
+		add_filter( sprintf( 'manage_edit-%1$s_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
+		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
+		add_action( 'admin_footer', array( $this, 'inline_add_term_script' ), 10 );
 
 		parent::init();
 
@@ -347,11 +348,15 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
 			
-			foreach ( $fields as $field ) {
+			foreach ( $fields as $field ) { ?>
 
-				$this->render_field_by_type( $field );
+				<div class="form-field"><?php 
 
-			}
+					$this->render_field_by_type( $field );
+
+				?></div>
+
+			<?php }
 
 		}
 
@@ -373,7 +378,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				$field['value'] = get_term_meta( $term->term_id, $field['name'], true ); ?>
 
-				<tr class="form-field term-group-wrap">
+				<tr class="form-field">
 					
 					<th scope="row">
 						
@@ -432,9 +437,12 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					$values[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set' ) ) ) {
+				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
 
-					update_term_meta( $term_id, $field['name'], false );
+					$null_val = ( $field['type'] === 'radio' ) ? '' : false;
+
+					update_term_meta( $term_id, $field['name'], $null_val );
+
 
 				} 
 
@@ -456,7 +464,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	public function render_admin_column( $content = '', $column = '', $term_id = 0 ) {
+	public function manage_admin_column_content( $content = '', $column = '', $term_id = 0 ) {
 
 		$field = $this->get_field_by( 'name', $column );
 
@@ -484,7 +492,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Filter WP_Term_Query meta query
 	 *
-	 * @param   object  $query  WP_Term_Query
+	 * TODO: Ensure term sorting does not ignore those terms 
+	 * without the meta value logged in the termmeta table.
+	 * 
+	 * @since   0.0.1
 	 * @return  object
 	 */
 	function manage_sorting( $pieces = array(), $taxonomies = array(), $args = array() ) {
@@ -501,10 +512,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				if ( is_array( $field ) && ! empty( $field ) ) {
 
-					if ( $field['is_sortable'] ) {
+					if ( $field['has_column'] && $field['is_sortable'] ) {
 
 						$pieces['join']    .= ' INNER JOIN ' . $wpdb->termmeta . ' AS tm ON t.term_id = tm.term_id ';
-						$pieces['where']   .= ' AND tm.meta_key = "' . esc_attr( $field['name'] ) . '"'; 
+						$pieces['where']   .= ' AND tm.meta_key = "' . esc_attr( $field['name'] ) . '" '; 
 
 						if ( $field['type'] === 'number' ) {
 							$pieces['orderby']  = ' ORDER BY CAST(tm.meta_value AS SIGNED) '; 
@@ -521,6 +532,97 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		}
 
 		return $pieces;
+		
 	}
+
+	/**
+	 * Inline Add Term Script
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_add_term_script() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->is_screen( 'base', 'edit-tags' ) ) {
+			return;
+		} ?>
+
+		<script type="text/javascript">
+
+			(function($) {
+
+				function init() {
+					const form = document.querySelector('#addtag');
+
+					function parseParams(string = '') {
+						var params = {};
+						const pieces = string.split('&');
+						for (var i = 0; i < pieces.length; i++) {
+							const paramPieces = pieces[i].split('=');
+							if (paramPieces[0]) {
+								params[paramPieces[0]] = paramPieces[1] ? paramPieces[1] : '';
+							}
+						}
+						return params;
+					}
+					function resetColorPickers() {
+						const colorPickers = form.querySelectorAll('.wp-picker-container');
+						if (colorPickers && (colorPickers.length > 0)) {
+							for (var i = 0; i < colorPickers.length; i++) {
+								const resetButton = colorPickers[i].querySelector('.wp-picker-clear, .wp-picker-default');
+								resetButton.click();
+							}
+						}
+					}
+					function resetCodeEditors() {
+						const codeEditors = form.querySelectorAll('.CodeMirror');
+						if (codeEditors && (codeEditors.length > 0)) {
+							for (var i = 0; i < codeEditors.length; i++) {
+								const CodeMirrorInst = codeEditors[i].CodeMirror;
+								if (CodeMirrorInst) {
+									const textarea = CodeMirrorInst.getTextArea();
+									CodeMirrorInst.setValue(textarea.value);
+									CodeMirrorInst.clearHistory();
+								} 
+							}
+						}
+					}
+					function resetMediaUploaders() {
+						const mediaUploaders = form.querySelectorAll('[data-media-uploader-id]');
+						if (mediaUploaders && (mediaUploaders.length > 0)) {
+							for (var i = 0; i < mediaUploaders.length; i++) {
+								const mediaUploaderInst = mediaUploaders[i].mediaUploader;
+								if (mediaUploaderInst) {
+									mediaUploaderInst.reset();
+								}
+							}
+						}
+					}
+					function resetForm() {
+						form.reset();
+						resetColorPickers();
+						resetCodeEditors();
+						resetMediaUploaders();
+					}
+					function handleSuccess(e = null, request = null, settings = null) {
+						if (settings && settings.data) {
+							const params = parseParams(settings.data);
+							const action = params.action;
+							if (action && (action === 'add-tag')) {
+								resetForm();
+							}
+						}
+					}
+
+					$(document).ajaxSuccess(handleSuccess);
+				}
+
+				document.addEventListener('DOMContentLoaded', init);
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
 
 }

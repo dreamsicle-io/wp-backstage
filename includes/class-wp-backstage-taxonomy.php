@@ -36,6 +36,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		'with_front'      => false, 
 		'archive_base'    => '', 
 		'rest_base'       => '', 
+		'fields'          => array(), 
 	);
 
 	/**
@@ -81,6 +82,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
+		$this->nonce_key = sprintf( '_wp_backstage_taxonomy_%1$s_nonce', $this->slug );
 		$this->set_errors();
 
 		parent::__construct();
@@ -243,7 +245,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function render_add_nonce() {
 
-		wp_nonce_field( 'add', sprintf( '_%1$s_nonce', $this->slug ) );
+		wp_nonce_field( 'add', $this->nonce_key );
 
 	}
 
@@ -255,7 +257,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function render_edit_nonce() {
 
-		wp_nonce_field( 'edit', sprintf( '_%1$s_nonce', $this->slug ) );
+		wp_nonce_field( 'edit', $this->nonce_key );
 
 	}
 
@@ -408,14 +410,12 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function save( $term_id = 0, $tt_id = 0 ) {
 
-		$nonce_key = sprintf( '_%1$s_nonce', $this->slug );
-
 		if ( ! $term_id > 0 ) { return; }
 		if ( ! current_user_can( 'manage_categories' ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( $_POST['taxonomy'] !== $this->slug ) { return; }
-		if ( empty( $_POST[$nonce_key] ) ) { return; }
-		if ( ! wp_verify_nonce( $_POST[$nonce_key], 'add' ) && ! wp_verify_nonce( $_POST[$nonce_key], 'edit' ) ) { return; }
+		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
+		if ( ! wp_verify_nonce( $_POST[$this->nonce_key], 'add' ) && ! wp_verify_nonce( $_POST[$this->nonce_key], 'edit' ) ) { return; }
 
 		$fields = $this->get_fields();
 
@@ -439,7 +439,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					update_term_meta( $term_id, $field['name'], $null_val );
 
-
 				} 
 
 			}
@@ -455,7 +454,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	}
 
 	/**
-	 * Render Admin Column
+	 * Manage Admin Column Content
 	 * 
 	 * @since   0.0.1
 	 * @return  void

@@ -270,7 +270,7 @@ function wp_backstage_init() {
 			'description' => __( 'Please enter some code.', 'wp_backstage' ), 
 			'has_column'  => true, 
 			'args'        => array(
-				'type' => 'css', 
+				'mime' => 'text/css', 
 			),
 		),
 		array( 
@@ -280,7 +280,7 @@ function wp_backstage_init() {
 			'description' => __( 'Please enter some code.', 'wp_backstage' ), 
 			'has_column'  => true, 
 			'args'        => array(
-				'type' => 'javascript', 
+				'mime' => 'text/javascript', 
 			),
 		),
 		array( 
@@ -378,6 +378,22 @@ function wp_backstage_init() {
 		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
 		'fields'         => $all_fields, 
 		'group_meta_key' => 'wp_backstage_tag_meta', 
+	) );
+
+	WP_Backstage_User::modify( array( 
+		'field_groups' => array(
+			array(
+				'id'          => 'wp_backstage_user_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the user. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_user_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the user. <a href="#">Example Link</a>', 'wp_backstage' ), 
+			),
+		), 
 	) );
 
 }

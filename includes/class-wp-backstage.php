@@ -141,7 +141,7 @@ class WP_Backstage {
 	 * @since 0.0.1
 	 */
 	public $default_code_args = array(
-		'type' => 'htmlmixed', 
+		'mime' => 'text/html', 
 	);
 
 	/**
@@ -657,7 +657,11 @@ class WP_Backstage {
 
 		$screen = get_current_screen();
 
-		return ( $value === $screen->$key );
+		if ( is_array( $value ) ) {
+			return in_array( $screen->$key, $value );
+		} else {
+			return ( $value === $screen->$key );
+		}
 
 	}
 
@@ -753,7 +757,7 @@ class WP_Backstage {
 				$code_editor_args = wp_parse_args( $code_editor['args'], $this->default_code_args );
 
 				$code_editor_settings = wp_enqueue_code_editor( array_merge( $this->global_code_settings, array( 
-					'type' => $code_editor_args['type'], 
+					'type' => $code_editor_args['mime'], 
 				) ) );
 
 				if ( $code_editor_settings ) {
@@ -1021,18 +1025,33 @@ class WP_Backstage {
 				case 'address':
 					$value = is_array( $value ) ? $value : array();
 					$address = wp_parse_args( $value, $this->default_address_values );
+					$formatted_address_url = sprintf( 
+						esc_url( 'https://www.google.com/maps/place/%1$s%2$s%3$s%4$s%5$s%6$s' ),
+						! empty( $address['address_1'] ) ? urlencode( $address['address_1'] ) : '', 
+						! empty( $address['address_2'] ) ? ',+' . urlencode( $address['address_2'] ) : '', 
+						! empty( $address['city'] ) ? ',+' . urlencode( $address['city'] ) : '', 
+						! empty( $address['state'] ) ? ',+' . urlencode( $address['state'] ) : '', 
+						! empty( $address['zip'] ) ? ',+' . urlencode( $address['zip'] ) : '', 
+						! empty( $address['country'] ) ? ',+' . urlencode( $address['country'] ) : '' 
+					);
+					$line_2 = ! empty( $address['address_2'] ) ? ' ' . $address['address_2'] : '';
 					$formatted_address = sprintf( 
-						__( '%1$s %2$s<br/>%3$s, %4$s<br/>%5$s, %6$s', 'wp_backstage' ),
-						$address['address_1'], 
-						$address['address_2'], 
-						$address['city'], 
-						$address['state'], 
-						$address['zip'], 
-						$address['country'] 
+						'%1$s%2$s%3$s%4$s%5$s%6$s', 
+						! empty( $address['address_1'] ) ? $address['address_1'] : '', 
+						! empty( $address['address_2'] ) ? ' ' . $address['address_2'] : '', 
+						! empty( $address['city'] ) ? '<br/>' . $address['city'] : '', 
+						! empty( $address['state'] ) ? ', ' . $address['state'] : '', 
+						! empty( $address['zip'] ) ? ' ' . $address['zip'] : '', 
+						! empty( $address['country'] ) ? ', ' . $address['country'] : '' 
 					);
 					$icon_style = 'font-size:inherit;height:auto;width:auto;margin-top:-2px;margin-right:2px;vertical-align:middle;';
-					$icon = '<i class="dashicons dashicons-location" aria-hidden="true" style="' . $icon_style . '"></i>';
-					$content = '<address>' . $icon . wp_kses( $formatted_address, $this->kses_p ) . '</address>';
+					$content = sprintf( 
+						'<address><a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s<span>%3$s<span><a></address>', 
+						esc_url( $formatted_address_url ), 
+						'<i class="dashicons dashicons-location" aria-hidden="true" style="' . $icon_style . '"></i>', 
+						wp_kses( $formatted_address, $this->kses_p ) 
+
+					);
 					break;
 				case 'media':
 					$thumbnail_size = 20;

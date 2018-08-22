@@ -129,6 +129,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = $this->slug;
+		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
 		$this->set_errors();
 
 		parent::__construct();
@@ -264,7 +265,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
-		add_filter( 'edit_form_top', array( $this, 'render_edit_nonces' ), 10 );
+		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
@@ -406,17 +407,13 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			
 			foreach ( $meta_boxes as $meta_box ) {
 			
-				$meta_box_fields = array();
-
 				if ( is_array( $meta_box['fields'] ) && ! empty( $meta_box['fields'] ) ) {
 
 					foreach ( $meta_box['fields'] as $field ) {
 
-						$meta_box_fields[] = wp_parse_args( $field, $this->default_field_args );
+						$fields[] = wp_parse_args( $field, $this->default_field_args );
 
 					}
-
-					$fields = array_merge( $fields, $meta_box_fields );
 
 				}
 			
@@ -434,13 +431,13 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @since   0.0.1
 	 * @return  string 
 	 */
-	public function render_edit_nonces() {
+	public function render_edit_nonce() {
 
 		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
 			return;
 		}
 
-		wp_nonce_field( 'edit', sprintf( '_%1$s_nonce', $this->slug ) );
+		wp_nonce_field( 'edit', $this->nonce_key );
 
 	}
 
@@ -452,14 +449,12 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
 
-		$nonce_key = sprintf( '_%1$s_nonce', $this->slug );
-
 		if ( ! $post_id > 0 ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( $_POST['post_type'] !== $this->slug ) { return; }
-		if ( empty( $_POST[$nonce_key] ) ) { return; }
-		if ( ! wp_verify_nonce( $_POST[$nonce_key], 'edit' ) ) { return; }
+		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
+		if ( ! wp_verify_nonce( $_POST[$this->nonce_key], 'edit' ) ) { return; }
 
 		$fields = $this->get_fields();
 
@@ -705,64 +700,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			}
 
 		}
-
-	}
-
-	/**
-	 * Get Fields By
-	 * 
-	 * @since   0.0.1
-	 * @return  array  the fields if found, or an empty array.
-	 */
-	public function get_fields_by( $key = '', $value = null, $number = 0 ) {
-
-		$fields = $this->get_fields();
-		$result = array();
-
-		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
-
-			$i = 0;
-
-			foreach ( $fields as $field ) {
-
-				if ( isset( $field[$key] ) && ( $field[$key] === $value ) ) {
-
-					$result[] = $field;
-
-					if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
-						break;
-					}
-
-					$i++;
-
-				}
-
-			}
-
-		}
-
-		return $result;
-
-	}
-
-	/**
-	 * Get Field By
-	 * 
-	 * @since   0.0.1
-	 * @return  array  the first field if found, or null.
-	 */
-	public function get_field_by( $key = '', $value = null ) {
-
-		$fields = $this->get_fields_by( $key, $value, 1 );
-		$result = null;
-
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			$result = $fields[0];
-
-		}
-
-		return $result;
 
 	}
 

@@ -17,5 +17,6 @@ define( 'WP_BACKSTAGE', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 require WP_BACKSTAGE . '/includes/class-wp-backstage.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-post-type.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
+require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 
-require WP_BACKSTAGE . '/examples/test-post.php';
+require WP_BACKSTAGE . '/examples/tests.php';

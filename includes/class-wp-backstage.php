@@ -1368,7 +1368,7 @@ class WP_Backstage {
 		<fieldset 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
-			<legend style="padding:2px 0;"><?php 
+			<legend style="padding:2px 0;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 			
@@ -1766,7 +1766,7 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
 
-				<legend style="padding:2px 0;"><?php 
+				<legend style="padding:2px 0;font-size:inherit;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1845,7 +1845,7 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
 
-				<legend style="padding:2px 0;"><?php 
+				<legend style="padding:2px 0;font-size:inherit;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -2043,7 +2043,7 @@ class WP_Backstage {
 				
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
-			style="cursor:pointer;padding:2px 0;"><?php 
+			style="cursor:pointer;padding:2px 0;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 		
@@ -2161,7 +2161,7 @@ class WP_Backstage {
 
 			<legend 
 			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
-			style="display:inline-block;"><?php 
+			style="display:inline-block;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 			

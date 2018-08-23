@@ -135,6 +135,10 @@ class WP_Backstage_User extends WP_Backstage {
 		add_action( 'edit_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'personal_options_update', array( $this, 'save' ), 10 );
 		add_action( 'edit_user_profile_update', array( $this, 'save' ), 10 );
+		add_filter( 'manage_users_columns', array( $this, 'add_field_columns' ), 10 );
+		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
+		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
+		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 
 		parent::init();
 
@@ -358,18 +362,18 @@ class WP_Backstage_User extends WP_Backstage {
 	}
 
 	/**
-	 * Render Admin Column
+	 * Manage Admin Column Content
 	 * 
 	 * @since   0.0.1
 	 * @return  void
 	 */
-	/*public function manage_admin_column_content( $content = '', $column = '', $term_id = 0 ) {
+	public function manage_admin_column_content( $content = '', $column = '', $user_id = 0 ) {
 
 		$field = $this->get_field_by( 'name', $column );
 
 		if ( ! empty( $field ) ) {
 
-			$value = get_term_meta( $term_id, $column, true );
+			$value = get_user_meta( $user_id, $column, true );
 			$formatted_value = $this->format_field_value( $value, $field );
 
 			if ( ! empty( $formatted_value ) ) {
@@ -386,6 +390,48 @@ class WP_Backstage_User extends WP_Backstage {
 
 		return $content;
 
-	}*/
+	}
+
+	/**
+	 * Manage Sorting
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function manage_sorting( $query = null ) {
+
+		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
+
+		if ( is_array( $field ) && ! empty( $field ) ) {
+
+			if ( $field['is_sortable'] ) {
+
+				$query->set( 'meta_query', array(
+					'relation' => 'OR',
+					array(
+						'key'     => $field['name'], 
+						'compare' => 'EXISTS'
+					),
+					array(
+						'key'     => $field['name'], 
+						'compare' => 'NOT EXISTS'
+					)
+				) );
+
+				if ( $field['type'] === 'number' ) {
+					
+					$query->set( 'orderby', 'meta_value_num' );
+
+				} else {
+
+					$query->set( 'orderby', 'meta_value' );
+
+				}
+
+			}
+
+		}
+
+	}
 
 }

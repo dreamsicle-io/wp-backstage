@@ -128,7 +128,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		) );
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
-		$this->screen_id = $this->slug;
+		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
 		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
 		$this->set_errors();
 
@@ -271,6 +271,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		$this->hook_inline_styles( $this->slug );
+		$this->hook_inline_scripts( $this->slug );
 
 		parent::init();
 
@@ -426,29 +428,13 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
-	 * Render nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_edit_nonce() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		wp_nonce_field( 'edit', $this->nonce_key );
-
-	}
-
-	/**
 	 * Save
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
-		
+
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
@@ -652,11 +638,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			<a 
 			title="<?php the_title_attribute( array( '', '', true, $post_id ) ); ?>"
 			href="<?php echo esc_url( get_edit_post_link( $post_id ) ); ?>" 
-			style="display:block; width:40px; height:40px; overflow:hidden; background-color:#e7e7e7;"><?php 
+			style="display:block;width:40px;height:40px;overflow:hidden;background-color:#e7e7e7;"><?php 
 
 				if ( has_post_thumbnail( $post_id ) ) {
 
-					echo get_the_post_thumbnail( $post_id, 'thumbnail' );
+					echo get_the_post_thumbnail( $post_id, 'thumbnail', array( 'style' => 'width:40px;height:auto;' ) );
 
 				}
 
@@ -685,6 +671,14 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			if ( ! empty( $field ) ) {
 
 				$value = get_post_meta( $post_id, $column, true );
+
+				// short circuit the column content and allow developer to add their own.
+				$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), '', $field, $value, $post_id );
+				if ( ! empty( $content ) ) {
+					echo $content;
+					return;
+				}
+
 				$formatted_value = $this->format_field_value( $value, $field );
 
 				if ( ! empty( $formatted_value ) ) {
@@ -808,7 +802,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 				$field['value'] = get_post_meta( $post->ID, $field['name'], true );
 
+				do_action( $this->format_field_action( $this->slug, 'before' ), $field, $post );
+
 				$this->render_field_by_type( $field );
+
+				do_action( $this->format_field_action( $this->slug, 'after' ), $field, $post );
 
 			}
 

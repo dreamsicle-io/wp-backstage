@@ -9,6 +9,13 @@
 class WP_Backstage {
 
 	/**
+	 * Slug
+	 * 
+	 * @since 0.0.1
+	 */
+	public $slug = '';
+
+	/**
 	 * Errors
 	 * 
 	 * @since 0.0.1
@@ -245,6 +252,8 @@ class WP_Backstage {
 			'lineWrapping' => false, 
 		), 
 	);
+
+	public $nonce_key = '_wp_backstage_nonce';
 
 	/**
 	 * Construct
@@ -682,11 +691,136 @@ class WP_Backstage {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_date_picker_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_color_picker_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_code_editor_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_address_script' ), 10 );
+		add_action( 'admin_head', array( $this, 'add_admin_head_style_action' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'add_admin_footer_script_action' ), 10 );
+
+	}
+
+	public function add_admin_head_style_action() {
+		
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		do_action( $this->format_head_style_action( $this->slug ) );
+	}
+
+	public function add_admin_footer_script_action() {
+		
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		do_action( $this->format_footer_script_action( $this->slug ) );
+	}
+
+	public function format_head_style_action( $slug = '' ) {
+		$action = '';
+		if ( ! empty( $slug ) ) {
+			$action = sprintf( 
+				'wp_backstage_%1$s_print_head_styles', 
+				esc_attr( $slug ) 
+			);
+		}
+		return $action;
+	}
+
+	public function format_footer_script_action( $slug = '' ) {
+		$action = '';
+		if ( ! empty( $slug ) ) {
+			$action = sprintf( 
+				'wp_backstage_%1$s_print_footer_scripts', 
+				esc_attr( $slug ) 
+			);
+		}
+		return $action;
+	}
+
+	public function format_field_action( $slug = '', $suffix = '' ) {
+		$action = '';
+		if ( ! empty( $slug ) ) {
+			$action = sprintf( 
+				'wp_backstage_%1$s_field%2$s', 
+				$slug, 
+				! empty( $suffix ) ? '_' . esc_attr( $suffix ) : '' 
+			);
+		}
+		return $action;
+	}
+
+	public function format_column_content_filter( $slug ='', $column = '' ) {
+		$filter = '';
+		if ( ! empty( $slug ) && ! empty( $column ) ) {
+			$filter = sprintf( 
+				'wp_backstage_%1$s_%2$s_column_content', 
+				esc_attr( $slug ), 
+				esc_attr( $column ) 
+			);
+		}
+		return $filter;
+	}
+
+	public function hook_inline_styles( $slug = '' ) {
+
+		$actions = array(
+			'inline_thumbnail_column_style', 
+		);
+
+		if ( ! empty( $slug ) && ! empty( $actions ) ) {
+			foreach ( $actions as $action ) {
+				add_action( $this->format_head_style_action( $slug ), array( $this, $action ), 10 );
+			}
+		}
+
+	}
+
+	public function hook_inline_scripts( $slug = '' ) {
+
+		$actions = array(
+			'inline_media_uploader_script', 
+			'inline_date_picker_script', 
+			'inline_color_picker_script', 
+			'inline_code_editor_script', 
+			'inline_address_script', 
+		);
+
+		if ( ! empty( $slug ) && ! empty( $actions ) ) {
+			foreach ( $actions as $action ) {
+				add_action( $this->format_footer_script_action( $slug ), array( $this, $action ), 10 );
+			}
+		}
+
+	}
+
+	/**
+	 * Render nonce
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function render_edit_nonce() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		wp_nonce_field( 'edit', $this->nonce_key );
+
+	}
+
+	/**
+	 * Render nonce
+	 * 
+	 * @since   0.0.1
+	 * @return  string 
+	 */
+	public function render_add_nonce() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		wp_nonce_field( 'add', $this->nonce_key );
 
 	}
 
@@ -765,7 +899,7 @@ class WP_Backstage {
 					wp_add_inline_script(
 						'code-editor',
 						sprintf(
-							'jQuery( function() { wp.codeEditor.initialize( "%1$s", %2$s ); } );',
+							'jQuery( function() { if (document.querySelector("textarea#%1$s")) { wp.codeEditor.initialize( "%1$s", %2$s ); } } );',
 							sanitize_title_with_dashes( $code_editor['name'] ), 
 							wp_json_encode( $code_editor_settings )
 						)
@@ -1235,6 +1369,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1292,6 +1427,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1368,7 +1504,9 @@ class WP_Backstage {
 		<fieldset 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
-			<legend style="padding:2px 0;font-size:inherit;"><?php 
+			<legend 
+			id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
+			style="padding:2px 0;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
 			
@@ -1469,7 +1607,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
-				id="<?php printf( esc_attr( '%1$s_label' ), $id ); ?>"
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1534,6 +1672,7 @@ class WP_Backstage {
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
 				<label 
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1576,6 +1715,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1634,7 +1774,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
-				id="<?php printf( esc_attr( '%1$s_label' ), $id ); ?>"
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;margin-bottom:4px;"><?php 
 
@@ -1692,6 +1832,7 @@ class WP_Backstage {
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<label 
+				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;"><?php 
 
@@ -1795,6 +1936,7 @@ class WP_Backstage {
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
 
 							<label 
+							id="<?php printf( '%1$s_label', esc_attr( $input_id ) ); ?>"
 							for="<?php echo esc_attr( $input_id ); ?>"
 							style="display:inline-block;margin:0;"><?php 
 
@@ -1845,7 +1987,9 @@ class WP_Backstage {
 			id="<?php echo esc_attr( $id ); ?>"
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
 
-				<legend style="padding:2px 0;font-size:inherit;"><?php 
+				<legend 
+				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
+				style="padding:2px 0;font-size:inherit;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label );
 				
@@ -1874,6 +2018,7 @@ class WP_Backstage {
 							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
 
 							<label 
+							id="<?php printf( '%1$s_label', esc_attr( $input_id ) ); ?>"
 							for="<?php echo esc_attr( $input_id ); ?>"
 							style="display:inline-block;margin:0;"><?php 
 
@@ -2042,7 +2187,7 @@ class WP_Backstage {
 		data-media-uploader-button="<?php echo esc_attr( $this->get_media_uploader_label( $modal_button_template, $field ) ); ?>">
 				
 			<legend 
-			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
+			id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 			style="cursor:pointer;padding:2px 0;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
@@ -2160,7 +2305,7 @@ class WP_Backstage {
 		data-address-id="<?php echo esc_attr( $id ); ?>">
 
 			<legend 
-			id="<?php printf( esc_attr( '%1$s_legend' ), $id ); ?>"
+			id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 			style="display:inline-block;font-size:inherit;"><?php 
 
 				echo wp_kses( $field['label'], $this->kses_label ); 
@@ -2407,6 +2552,35 @@ class WP_Backstage {
 	<?php }
 
 	/**
+	 * Inline Thumbnail Column Style
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function inline_thumbnail_column_style() { ?>
+		
+		<style type="text/css">
+
+			table.wp-list-table th.column-thumbnail,
+			table.wp-list-table td.column-thumbnail {
+				text-align: center;
+				width: 40px;
+			}
+
+			@media screen and (max-width: 783px) {
+				table.wp-list-table tr.is-expanded th.column-thumbnail,
+				table.wp-list-table tr.is-expanded td.column-thumbnail,
+				table.wp-list-table th.column-thumbnail,
+				table.wp-list-table td.column-thumbnail {
+					display: none !important;
+				}
+			}
+
+		</style>
+
+	<?php }
+
+	/**
 	 * Inline Media Uploader Script
 	 * 
 	 * @since   0.0.1
@@ -2414,7 +2588,7 @@ class WP_Backstage {
 	 */
 	public function inline_media_uploader_script() {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_media ) {
+		if ( ! $this->has_media ) {
 			return;
 		} ?>
 
@@ -2659,7 +2833,7 @@ class WP_Backstage {
 	 */
 	public function inline_date_picker_script() {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_date ) {
+		if ( ! $this->has_date ) {
 			return;
 		} ?>
 
@@ -2704,7 +2878,7 @@ class WP_Backstage {
 	 */
 	public function inline_color_picker_script() {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_color ) {
+		if ( ! $this->has_color ) {
 			return;
 		} ?>
 
@@ -2777,7 +2951,7 @@ class WP_Backstage {
 	 */
 	public function inline_code_editor_script() {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || empty( $this->code_editors ) ) {
+		if ( empty( $this->code_editors ) ) {
 			return;
 		} ?>
 
@@ -2832,7 +3006,7 @@ class WP_Backstage {
 	 */
 	public function inline_address_script() {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->has_address ) {
+		if ( ! $this->has_address ) {
 			return;
 		} ?>
 

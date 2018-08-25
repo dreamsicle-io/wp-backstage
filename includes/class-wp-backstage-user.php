@@ -139,32 +139,10 @@ class WP_Backstage_User extends WP_Backstage {
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
+		$this->hook_inline_styles( 'user' );
+		$this->hook_inline_scripts( 'user' );
 
 		parent::init();
-
-	}
-
-	/**
-	 * Render Add nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_add_nonce() {
-
-		wp_nonce_field( 'add', $this->nonce_key );
-
-	}
-
-	/**
-	 * Render Add nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_edit_nonce() {
-
-		wp_nonce_field( 'edit', $this->nonce_key );
 
 	}
 
@@ -299,7 +277,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 					<td><?php 
 
+						do_action( $this->format_field_action( 'user', 'before' ), $field, $user );
+
 						$this->render_field_by_type( $field ); 
+
+						do_action( $this->format_field_action( 'user', 'after' ), $field, $user );
 
 					?></td>
 
@@ -318,7 +300,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $user_id = 0 ) {
-		
+
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_user', $user_id ) ) { return; }
@@ -375,6 +357,13 @@ class WP_Backstage_User extends WP_Backstage {
 		if ( ! empty( $field ) ) {
 
 			$value = get_user_meta( $user_id, $column, true );
+
+			// short circuit the column content and allow developer to add their own.
+			$content = apply_filters( $this->format_column_content_filter( 'user', $column ), $content, $field, $value, $user_id );
+			if ( ! empty( $content ) ) {
+				return $content;
+			}
+
 			$formatted_value = $this->format_field_value( $value, $field );
 
 			if ( ! empty( $formatted_value ) ) {
@@ -433,6 +422,24 @@ class WP_Backstage_User extends WP_Backstage {
 
 		}
 
+	}
+
+	public function add_admin_head_style_action() {
+		
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		do_action( $this->format_head_style_action( 'user' ) );
+	}
+
+	public function add_admin_footer_script_action() {
+		
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		}
+
+		do_action( $this->format_footer_script_action( 'user' ) );
 	}
 
 }

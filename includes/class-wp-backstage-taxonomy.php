@@ -204,8 +204,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 		add_action( 'init', array( $this, 'register' ), 0 );
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
-		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );
 		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
+		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );
 		add_action( sprintf( '%1$s_edit_form_fields', $this->slug ), array( $this, 'render_edit_fields' ), 10, 2 );
 		add_action( sprintf( 'edited_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
 		add_action( sprintf( 'created_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
@@ -214,6 +214,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
+		$this->hook_inline_styles( $this->slug );
+		$this->hook_inline_scripts( $this->slug );
 
 		parent::init();
 
@@ -234,30 +236,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			$this->args['singular_name'], 
 			$this->args['plural_name']
 		);
-
-	}
-
-	/**
-	 * Render Add nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_add_nonce() {
-
-		wp_nonce_field( 'add', $this->nonce_key );
-
-	}
-
-	/**
-	 * Render Add nonce
-	 * 
-	 * @since   0.0.1
-	 * @return  string 
-	 */
-	public function render_edit_nonce() {
-
-		wp_nonce_field( 'edit', $this->nonce_key );
 
 	}
 
@@ -350,7 +328,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				<div class="form-field"><?php 
 
+					do_action( $this->format_field_action( $this->slug . '_add', 'before' ), $field );
+
 					$this->render_field_by_type( $field );
+
+					do_action( $this->format_field_action( $this->slug . '_add', 'after' ), $field );
 
 				?></div>
 
@@ -390,7 +372,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					<td><?php 
 
+						do_action( $this->format_field_action( $this->slug . '_edit', 'before' ), $field );
+
 						$this->render_field_by_type( $field ); 
+
+						do_action( $this->format_field_action( $this->slug . '_edit', 'after' ), $field );
 
 					?></td>
 
@@ -409,7 +395,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $term_id = 0, $tt_id = 0 ) {
-		
+
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'manage_categories' ) ) { return; }
@@ -466,6 +452,13 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		if ( ! empty( $field ) ) {
 
 			$value = get_term_meta( $term_id, $column, true );
+
+			// short circuit the column content and allow developer to add their own.
+			$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), $content, $field, $value, $term_id );
+			if ( ! empty( $content ) ) {
+				return $content;
+			}
+
 			$formatted_value = $this->format_field_value( $value, $field );
 
 			if ( ! empty( $formatted_value ) ) {

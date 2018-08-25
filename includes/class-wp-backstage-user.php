@@ -318,8 +318,9 @@ class WP_Backstage_User extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $user_id = 0 ) {
-
-		if ( ! $user_id > 0 ) { return; }
+		
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_user', $user_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( empty( $_POST[$this->nonce_key] ) ) { return; }

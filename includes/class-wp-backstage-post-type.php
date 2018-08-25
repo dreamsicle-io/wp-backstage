@@ -448,11 +448,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
-
-		if ( ! $post_id > 0 ) { return; }
+		
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
-		if ( $_POST['post_type'] !== $this->slug ) { return; }
 		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
 		if ( ! wp_verify_nonce( $_POST[$this->nonce_key], 'edit' ) ) { return; }
 

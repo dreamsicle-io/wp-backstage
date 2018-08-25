@@ -409,11 +409,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $term_id = 0, $tt_id = 0 ) {
-
-		if ( ! $term_id > 0 ) { return; }
+		
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'manage_categories' ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
-		if ( $_POST['taxonomy'] !== $this->slug ) { return; }
 		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
 		if ( ! wp_verify_nonce( $_POST[$this->nonce_key], 'add' ) && ! wp_verify_nonce( $_POST[$this->nonce_key], 'edit' ) ) { return; }
 

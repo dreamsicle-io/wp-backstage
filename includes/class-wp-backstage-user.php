@@ -64,6 +64,12 @@ class WP_Backstage_User extends WP_Backstage {
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
+		$this->default_address_args = array_merge( $this->default_address_args, array(
+			'max_width'  => '50em', 
+		) );
+		$this->default_code_args = array_merge( $this->default_code_args, array(
+			'max_width'  => '50em', 
+		) );
 		$this->set_args( $args );
 		$this->screen_id = array( 'user-edit', 'profile' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
@@ -219,7 +225,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 				<h2><?php 
 
-					echo esc_html( $field_group['title'] ); 
+					echo wp_kses( $field_group['title'], $this->kses_p ); 
 
 				?></h2>
 
@@ -261,17 +267,41 @@ class WP_Backstage_User extends WP_Backstage {
 			
 			foreach ( $field_group['fields'] as $field ) {
 
-				$field['value'] = get_user_meta( $user->ID, $field['name'], true ); ?>
+				$field['value'] = get_user_meta( $user->ID, $field['name'], true );
+				$field['show_label'] = false;
+				$field_id = sanitize_title_with_dashes( $field['name'] );
+				$field_label = wp_kses( $field['label'], $this->kses_label );
+
+				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
+					$field['input_attrs']['class'] = 'regular-text';
+				}
+
+				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$field['input_attrs']['rows'] = 5;
+					$field['input_attrs']['cols'] = 30;
+				} ?>
 
 				<tr>
 					
 					<th>
+
+						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-						<label><?php 
+							<label for="<?php echo esc_attr( $field_id ); ?>"><?php 
 
-							echo wp_kses( $field['label'], $this->kses_label ); 
+								echo $field_label; 
 
-						?></label>
+							?></label>
+
+						<?php } else { ?>
+
+							<span><?php 
+
+								echo $field_label; 
+
+							?></span>
+
+						<?php } ?>
 
 					</th>
 
@@ -301,8 +331,6 @@ class WP_Backstage_User extends WP_Backstage {
 	 */
 	public function save( $user_id = 0 ) {
 
-		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_user', $user_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
@@ -326,9 +354,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
 
-					$null_val = ( $field['type'] === 'radio' ) ? '' : false;
+					$value = ( $field['type'] === 'radio' ) ? '' : false;
 
-					update_user_meta( $user_id, $field['name'], $null_val );
+					update_user_meta( $user_id, $field['name'], $value );
+
+					$values[$field['name']] = $value;
 
 				} 
 

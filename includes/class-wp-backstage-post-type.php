@@ -466,9 +466,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
 
-					$null_val = ( $field['type'] === 'radio' ) ? '' : false;
+					$value = ( $field['type'] === 'radio' ) ? '' : false;
 
-					update_post_meta( $post_id, $field['name'], $null_val );
+					update_post_meta( $post_id, $field['name'], $value );
+
+					$values[$field['name']] = $value;
 
 				} 
 
@@ -801,6 +803,16 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			foreach ( $meta_box['args']['fields'] as $field ) {
 
 				$field['value'] = get_post_meta( $post->ID, $field['name'], true );
+
+				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
+					$field['input_attrs']['class'] = 'widefat';
+				}
+
+				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$field['input_attrs']['class'] = 'large-text';
+					$field['input_attrs']['rows'] = 5;
+					$field['input_attrs']['cols'] = 90;
+				}
 
 				do_action( $this->format_field_action( $this->slug, 'before' ), $field, $post );
 

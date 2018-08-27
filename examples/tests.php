@@ -396,6 +396,26 @@ function wp_backstage_init() {
 		), 
 	) );
 
+	WP_Backstage_Options::add( 'wp_backstage_options', array( 
+		'title'        => __( 'Test Options', 'wp_backstage' ), 
+		'menu_title'   => __( 'Test Options', 'wp_backstage' ), 
+		'description'  => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
+		'show_in_rest' => true, 
+		'sections' => array(
+			array(
+				'id'          => 'wp_backstage_options_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_options_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+			),
+		), 
+	) );
+
 }
 
 add_action( 'after_setup_theme', 'wp_backstage_init', 10 );

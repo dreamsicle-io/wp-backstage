@@ -356,17 +356,38 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			
 			foreach ( $fields as $field ) {
 
-				$field['value'] = get_term_meta( $term->term_id, $field['name'], true ); ?>
+				$field['value'] = get_term_meta( $term->term_id, $field['name'], true );
+				$field['show_label'] = false;
+				$field_id = sanitize_title_with_dashes( $field['name'] );
+				$field_label = wp_kses( $field['label'], $this->kses_label );
+
+				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$field['input_attrs']['class'] = 'large-text';
+					$field['input_attrs']['rows'] = 5;
+					$field['input_attrs']['cols'] = 50;
+				} ?>
 
 				<tr class="form-field">
 					
 					<th scope="row">
 						
-						<label><?php 
+						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
+						
+							<label for="<?php echo esc_attr( $field_id ); ?>"><?php 
 
-							echo wp_kses( $field['label'], $this->kses_label ); 
+								echo $field_label; 
 
-						?></label>
+							?></label>
+
+						<?php } else { ?>
+
+							<span><?php 
+
+								echo $field_label; 
+
+							?></span>
+
+						<?php } ?>
 
 					</th>
 
@@ -396,8 +417,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function save( $term_id = 0, $tt_id = 0 ) {
 
-		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'manage_categories' ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
 		if ( empty( $_POST[$this->nonce_key] ) ) { return; }
@@ -421,9 +440,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
 
-					$null_val = ( $field['type'] === 'radio' ) ? '' : false;
+					$value = ( $field['type'] === 'radio' ) ? '' : false;
 
-					update_term_meta( $term_id, $field['name'], $null_val );
+					update_term_meta( $term_id, $field['name'], $value );
+
+					$values[$field['name']] = $value;
 
 				} 
 

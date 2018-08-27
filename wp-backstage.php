@@ -18,6 +18,7 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-post-type.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
+require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 
 if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
 	require WP_BACKSTAGE . '/examples/tests.php';

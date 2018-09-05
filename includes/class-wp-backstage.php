@@ -799,9 +799,7 @@ class WP_Backstage {
 
 	public function hook_inline_styles( $slug = '' ) {
 
-		$actions = array(
-			'inline_thumbnail_column_style', 
-		);
+		$actions = array();
 
 		if ( ! empty( $slug ) && ! empty( $actions ) ) {
 			foreach ( $actions as $action ) {
@@ -1355,8 +1353,8 @@ class WP_Backstage {
 				
 				$formatted_attrs[] = sprintf( 
 					'%1$s="%2$s"', 
-					esc_attr( $key ), 
-					esc_attr( $field['value'] ) 
+					esc_attr( trim( $key ) ), 
+					esc_attr( trim( $field['value'] ) ) 
 				);
 
 			}
@@ -2633,35 +2631,6 @@ class WP_Backstage {
 			<?php } ?>
 
 		</fieldset>
-
-	<?php }
-
-	/**
-	 * Inline Thumbnail Column Style
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function inline_thumbnail_column_style() { ?>
-		
-		<style type="text/css">
-
-			table.wp-list-table th.column-thumbnail,
-			table.wp-list-table td.column-thumbnail {
-				text-align: center;
-				width: 40px;
-			}
-
-			@media screen and (max-width: 783px) {
-				table.wp-list-table tr.is-expanded th.column-thumbnail,
-				table.wp-list-table tr.is-expanded td.column-thumbnail,
-				table.wp-list-table th.column-thumbnail,
-				table.wp-list-table td.column-thumbnail {
-					display: none !important;
-				}
-			}
-
-		</style>
 
 	<?php }
 

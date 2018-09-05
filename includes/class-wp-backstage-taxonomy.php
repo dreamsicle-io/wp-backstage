@@ -360,11 +360,12 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$field['show_label'] = false;
 				$field_id = sanitize_title_with_dashes( $field['name'] );
 				$field_label = wp_kses( $field['label'], $this->kses_label );
+				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['class'] = 'large-text';
-					$field['input_attrs']['rows'] = 5;
-					$field['input_attrs']['cols'] = 50;
+					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 50;
 				} ?>
 
 				<tr class="form-field">

@@ -416,7 +416,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
-	public function render_page() { var_dump( get_option( $this->args['group_options_key'] ) ); ?>
+	public function render_page() { ?>
 
 		<div class="wrap">
 

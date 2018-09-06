@@ -397,10 +397,11 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Options::add( 'wp_backstage_options', array( 
-		'title'        => __( 'Test Options', 'wp_backstage' ), 
-		'menu_title'   => __( 'Test Options', 'wp_backstage' ), 
-		'description'  => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
-		'show_in_rest' => true, 
+		'title'             => __( 'Test Options', 'wp_backstage' ), 
+		'menu_title'        => __( 'Test Options', 'wp_backstage' ), 
+		'description'       => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
+		'show_in_rest'      => true, 
+		'group_options_key' => 'wp_backstage_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_options_fields', 

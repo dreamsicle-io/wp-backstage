@@ -21,11 +21,12 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * @since 0.0.1
 	 */
 	public $default_args = array(
-		'title'        => '', 
-		'menu_title'   => '', 
-		'description'  => '', 
-		'capability'   => 'manage_options', 
-		'sections' => array(), 
+		'title'             => '', 
+		'menu_title'        => '', 
+		'description'       => '', 
+		'capability'        => 'manage_options', 
+		'group_options_key' => '', 
+		'sections'          => array(), 
 	);
 
 	/**
@@ -107,16 +108,6 @@ class WP_Backstage_Options extends WP_Backstage {
 
 			$this->args['menu_title'] = $this->args['title'];
 
-		}
-
-		if ( ! empty( $this->args['sections'] ) ) {
-			foreach ( $this->args['sections'] as $section_index => $section ) {
-				if ( ! empty( $section['fields'] ) ) {
-					foreach ( $section['fields'] as $field_index => $field ) {
-						$this->args['sections'][$section_index]['fields'][$field_index]['name'] = sprintf( '%1$s[%2$s]', $this->slug, $field['name'] );
-					}
-				}
-			}
 		}
 
 	}
@@ -203,6 +194,41 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
+	public function save() {
+
+		if ( empty( $this->args['group_options_key'] ) ) {
+			return null;
+		}
+		
+		$fields = $this->get_fields();
+		$values = array();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				if ( isset( $_POST[$field['name']] ) ) {
+
+					$value = $this->sanitize_field( $field, $_POST[$field['name']] );
+
+					$values[$field['name']] = $value;
+
+				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+
+					$value = ( $field['type'] === 'radio' ) ? '' : false;
+
+					$values[$field['name']] = $value;
+
+				} 
+
+			}
+
+		}
+
+		return $values;
+
+	} 
+
 	/**
 	 * Add Settings
 	 * 
@@ -212,18 +238,20 @@ class WP_Backstage_Options extends WP_Backstage {
 	public function add_settings() {
 
 		$sections = $this->get_sections();
-		$fields = array();
-		$values = get_option( $this->slug );
 
-		register_setting(
-			$this->slug, 
-			$this->slug, 
-			array(
-				'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
-				'show_in_rest'      => $this->args['show_in_rest'], 
-				'sanitize_callback' => array( $this, 'save' ),  
-			)
-		);
+		if ( ! empty( $this->args['group_options_key'] ) ) {
+
+			register_setting(
+				$this->slug, 
+				$this->args['group_options_key'], 
+				array(
+					'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
+					'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
+					'sanitize_callback' => array( $this, 'save' ), 
+				)
+			);
+
+		}
 
 		if ( is_array( $sections ) && ! empty( $sections ) ) {
 			
@@ -242,8 +270,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 						$field = wp_parse_args( $field, $this->default_field_args );
 						$field_id = sanitize_title_with_dashes( $field['name'] );
-						$field_key = $this->format_field_key( $field['name'] );
-						$field['value'] = isset( $values[$field_key] ) ? $values[$field_key] : null;
+						$field['value'] = get_option( $field['name'] );
 						$field['show_label'] = false;
 						$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
@@ -255,6 +282,16 @@ class WP_Backstage_Options extends WP_Backstage {
 							$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
 							$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
 						}
+
+						register_setting(
+							$this->slug, 
+							$field['name'], 
+							array(
+								'description'       => wp_kses( $field['description'], $this->kses_p ), 
+								'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
+								'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ), 
+							)
+						);
 
 						add_settings_field( 
 							$field['name'],  
@@ -276,58 +313,6 @@ class WP_Backstage_Options extends WP_Backstage {
 			}
 
 		}
-
-	}
-
-	/**
-	 * Save
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function save( $data = array() ) {
-
-		$fields = $this->get_fields();
-
-		$values = array();
-
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			foreach ( $fields as $field ) {
-
-				$field_key = $this->format_field_key( $field['name'] );
-
-				if ( isset( $data[$field_key] ) ) {
-
-					$value = $this->sanitize_field( $field, $data[$field_key] );
-
-					update_option( $field_key, $value );
-
-					$values[$field_key] = $value;
-
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
-
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					update_option( $field_key, $value );
-
-					$values[$field_key] = $value;
-
-				} 
-
-			}
-
-		}
-
-		return $values;
-
-	}
-
-	public function format_field_key( $name = '' ) {
-
-		$pattern = '/^' . $this->slug . '\[|\]$/';
-
-		return preg_replace( $pattern, '', $name );
 
 	}
 
@@ -520,24 +505,6 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		return $fields;
 
-	}
-
-	public function add_admin_head_style_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_head_style_action( $this->slug ) );
-	}
-
-	public function add_admin_footer_script_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_footer_script_action( $this->slug ) );
 	}
 
 }

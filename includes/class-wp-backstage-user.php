@@ -9,6 +9,13 @@
 class WP_Backstage_User extends WP_Backstage {
 
 	/**
+	 * Slug
+	 * 
+	 * @since 0.0.1
+	 */
+	public $slug = 'user';
+
+	/**
 	 * Default Args
 	 * 
 	 * @since 0.0.1
@@ -145,8 +152,8 @@ class WP_Backstage_User extends WP_Backstage {
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
-		$this->hook_inline_styles( 'user' );
-		$this->hook_inline_scripts( 'user' );
+		$this->hook_inline_styles( $this->slug );
+		$this->hook_inline_scripts( $this->slug );
 
 		parent::init();
 
@@ -308,11 +315,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 					<td><?php 
 
-						do_action( $this->format_field_action( 'user', 'before' ), $field, $user );
+						do_action( $this->format_field_action( $this->slug, 'before' ), $field, $user );
 
 						$this->render_field_by_type( $field ); 
 
-						do_action( $this->format_field_action( 'user', 'after' ), $field, $user );
+						do_action( $this->format_field_action( $this->slug, 'after' ), $field, $user );
 
 					?></td>
 
@@ -390,7 +397,7 @@ class WP_Backstage_User extends WP_Backstage {
 			$value = get_user_meta( $user_id, $column, true );
 
 			// short circuit the column content and allow developer to add their own.
-			$content = apply_filters( $this->format_column_content_filter( 'user', $column ), $content, $field, $value, $user_id );
+			$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), $content, $field, $value, $user_id );
 			if ( ! empty( $content ) ) {
 				return $content;
 			}
@@ -453,24 +460,6 @@ class WP_Backstage_User extends WP_Backstage {
 
 		}
 
-	}
-
-	public function add_admin_head_style_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_head_style_action( 'user' ) );
-	}
-
-	public function add_admin_footer_script_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_footer_script_action( 'user' ) );
 	}
 
 }

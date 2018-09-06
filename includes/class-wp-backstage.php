@@ -11,76 +11,88 @@ class WP_Backstage {
 	/**
 	 * Slug
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    string
 	 */
 	public $slug = '';
 
 	/**
 	 * Errors
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $errors = array();
 
 	/**
 	 * Screen ID
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    string
 	 */
 	public $screen_id = '';
 
 	/**
-	 * Has Media Uploader
+	 * Has Media
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    bool
 	 */
 	public $has_media = false;
 
 	/**
 	 * Has Date
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    bool
 	 */
 	public $has_date = false;
 
 	/**
 	 * Has Color
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    bool
 	 */
 	public $has_color = false;
+
 	/**
 	 * Has Address
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    bool
 	 */
 	public $has_address = false;
 
 	/**
 	 * Code Editors
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $code_editors = array();
 
 	/**
 	 * Countries
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $countries = array();
 
 	/**
 	 * US States
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $us_states = array();
 
 	/**
 	 * Default Field Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_field_args = array(
 		'type'        => 'text', 
@@ -99,14 +111,16 @@ class WP_Backstage {
 	/**
 	 * Date Format
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    string
 	 */
 	public $date_format = '';
 
 	/**
 	 * Default Option Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_option_args = array(
 		'value'       => '', 
@@ -117,7 +131,8 @@ class WP_Backstage {
 	/**
 	 * Default Media Uploader Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_media_uploader_args = array(
 		'multiple' => false, 
@@ -127,7 +142,8 @@ class WP_Backstage {
 	/**
 	 * Default Date Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_date_args = array(
 		'format' => 'yy-mm-dd', 
@@ -136,7 +152,8 @@ class WP_Backstage {
 	/**
 	 * Default Color Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_color_args = array(
 		'mode'     => '', 
@@ -146,7 +163,8 @@ class WP_Backstage {
 	/**
 	 * Default Code Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_code_args = array(
 		'mime'      => 'text/html', 
@@ -154,18 +172,20 @@ class WP_Backstage {
 	);
 
 	/**
-	 * Default Color Args
+	 * Default Address Args
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_address_args = array(
 		'max_width' => '100%', 
 	);
 
 	/**
-	 * Default Address values
+	 * Default Address Values
 	 * 
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $default_address_values = array(
 		'country'   => 'US', 
@@ -176,6 +196,12 @@ class WP_Backstage {
 		'zip'       => '', 
 	);
 
+	/**
+	 * Remove Label For Fields
+	 * 
+	 * @since  0.0.1
+	 * @var    array
+	 */
 	public $remove_label_for_fields = array( 
 		'radio', 
 		'checkbox_set', 
@@ -183,6 +209,12 @@ class WP_Backstage {
 		'address', 
 	);
 
+	/**
+	 * Non Regular Text Fields
+	 * 
+	 * @since  0.0.1
+	 * @var    array
+	 */
 	public $non_regular_text_fields = array( 
 		'number', 
 		'textarea', 
@@ -197,6 +229,12 @@ class WP_Backstage {
 		'address' 
 	);
 
+	/**
+	 * Textarea Control Fields
+	 * 
+	 * @since  0.0.1
+	 * @var    array
+	 */
 	public $textarea_control_fields = array( 
 		'textarea', 
 		'code', 
@@ -205,7 +243,8 @@ class WP_Backstage {
 	/**
 	 * KSES for P Tags
 	 *
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $kses_p = array(
 		'a' => array(
@@ -247,7 +286,8 @@ class WP_Backstage {
 	/**
 	 * KSES for Label Tags
 	 *
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $kses_label = array(
 		'em' => array(
@@ -275,14 +315,16 @@ class WP_Backstage {
 	/**
 	 * Time Pieces
 	 *
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $time_pieces = array();
 
 	/**
 	 * Global Code Settings
 	 *
-	 * @since 0.0.1
+	 * @since  0.0.1
+	 * @var    array
 	 */
 	public $global_code_settings = array( 
 		'codemirror' => array(
@@ -290,14 +332,18 @@ class WP_Backstage {
 		), 
 	);
 
+	/**
+	 * nonce Key
+	 * 
+	 * @since  0.0.1
+	 * @var    string
+	 */
 	public $nonce_key = '_wp_backstage_nonce';
 
 	/**
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
 	 * @return  void 
 	 */
 	function __construct() {
@@ -952,7 +998,7 @@ class WP_Backstage {
 	 * Sanitize Text
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a string.
 	 * @return  string  a text field sanitized string. 
 	 */
 	public function sanitize_text( $value = '' ) {
@@ -963,7 +1009,7 @@ class WP_Backstage {
 	 * Sanitize Textarea
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a string.
 	 * @return  string  a textarea sanitized string. 
 	 */
 	public function sanitize_textarea( $value = '' ) {
@@ -974,7 +1020,7 @@ class WP_Backstage {
 	 * Sanitize Code
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a string.
 	 * @return  string  An unsanitized string. 
 	 */
 	public function sanitize_code( $value = '' ) {
@@ -985,7 +1031,7 @@ class WP_Backstage {
 	 * Sanitize Number
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a numeric value.
 	 * @return  float   a float, or null if empty. 
 	 */
 	public function sanitize_number( $value = 0 ) {
@@ -996,7 +1042,7 @@ class WP_Backstage {
 	 * Sanitize URL
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a URL.
 	 * @return  string  A URL. 
 	 */
 	public function sanitize_url( $value = '' ) {
@@ -1007,7 +1053,7 @@ class WP_Backstage {
 	 * Sanitize Email
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects an email address.
 	 * @return  string  An email address. 
 	 */
 	public function sanitize_email( $value = '' ) {
@@ -1018,7 +1064,7 @@ class WP_Backstage {
 	 * Sanitize Checkbox
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a value that can be cast to a boolean.
 	 * @return  bool    A boolean. 
 	 */
 	public function sanitize_checkbox( $value = false ) {
@@ -1029,7 +1075,7 @@ class WP_Backstage {
 	 * Sanitize Checkbox Set
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects an array of values.
 	 * @return  array   An array of values. 
 	 */
 	public function sanitize_checkbox_set( $value = array() ) {
@@ -1040,8 +1086,8 @@ class WP_Backstage {
 	 * Sanitize Address
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
-	 * @return  array   An array of address key, value pairs. 
+	 * @param   $value  The value to sanitize. Expects an array of address key => value pairs.
+	 * @return  array   An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
 		return array_map( 'esc_attr', $value );
@@ -1051,7 +1097,7 @@ class WP_Backstage {
 	 * Sanitize Time
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects an array of 3 2-digit time values.
 	 * @return  string   a string as 00:00:00. 
 	 */
 	public function sanitize_time( $value = array() ) {
@@ -1062,7 +1108,7 @@ class WP_Backstage {
 	 * Sanitize Single Media
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects an attachment ID.
 	 * @return  int     An integer, or null if empty. 
 	 */
 	public function sanitize_single_media( $value = 0 ) {
@@ -1073,10 +1119,10 @@ class WP_Backstage {
 	 * Sanitize Multi Media
 	 * 
 	 * @since   0.0.1
-	 * @param   $value  The value to sanitize.
+	 * @param   $value  The value to sanitize. Expects a CSV of attachment IDs.
 	 * @return  array   An array of integers. 
 	 */
-	public function sanitize_multi_media( $value = array() ) {
+	public function sanitize_multi_media( $value = '' ) {
 		return array_map( 'intval', explode( ',', $value ) );
 	}
 
@@ -1084,7 +1130,9 @@ class WP_Backstage {
 	 * Sanitize Field
 	 * 
 	 * @since   0.0.1
-	 * @return  mixed  The sanitized value according to the field type. 
+	 * @param   $field  The field args.
+	 * @param   $value  The field value.
+	 * @return  mixed   The sanitized value according to the field type. 
 	 */
 	public function sanitize_field( $field = array(), $value = null ) {
 

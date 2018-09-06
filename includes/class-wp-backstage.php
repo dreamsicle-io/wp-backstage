@@ -1137,9 +1137,6 @@ class WP_Backstage {
 	public function sanitize_field( $field = array(), $value = null ) {
 
 		switch ( $field['type'] ) {
-			case 'text':
-				$value = $this->sanitize_text( $value );
-				break;
 			case 'textarea':
 				$value = $this->sanitize_textarea( $value );
 				break;
@@ -1176,11 +1173,65 @@ class WP_Backstage {
 				}
 				break;
 			default:
-				$value = esc_attr( $value );
+				$value = $this->sanitize_text( $value );
 				break;
 		}
 
 		return $value;
+
+	}
+
+	/**
+	 * Get Sanitize Callback
+	 * 
+	 * @since   0.0.1
+	 * @param   $field  The field args.
+	 * @return  string  The sanitize callback function name as a string. 
+	 */
+	public function get_sanitize_callback( $field = array() ) {
+
+		switch ( $field['type'] ) {
+			case 'textarea':
+				$callback = 'sanitize_textarea';
+				break;
+			case 'code':
+				$callback = 'sanitize_code';
+				break;
+			case 'number':
+				$callback = 'sanitize_number';
+				break;
+			case 'url':
+				$callback = 'sanitize_url';
+				break;
+			case 'email':
+				$callback = 'sanitize_email';
+				break;
+			case 'checkbox':
+				$callback = 'sanitize_checkbox';
+				break;
+			case 'checkbox_set':
+				$callback = 'sanitize_checkbox_set';
+				break;
+			case 'address':
+				$callback = 'sanitize_address';
+				break;
+			case 'time':
+				$callback = 'sanitize_time';
+				break;
+			case 'media':
+				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+				if ( $args['multiple'] ) {
+					$callback = 'sanitize_multi_media';
+				} else {
+					$callback = 'sanitize_single_media';
+				}
+				break;
+			default:
+				$callback = 'sanitize_text';
+				break;
+		}
+
+		return $callback;
 
 	}
 
@@ -1692,7 +1743,6 @@ class WP_Backstage {
 
 		for ($i = 0; $i < $number; $i++) {
 			$option = esc_attr( $i );
-			var_dump( count_chars( $option ) );
 			if ( strlen( $option ) === 1 ) {
 				$option = '0' . $option;
 			}

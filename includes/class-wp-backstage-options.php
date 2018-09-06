@@ -110,16 +110,6 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		}
 
-		/*if ( ! empty( $this->args['sections'] ) ) {
-			foreach ( $this->args['sections'] as $section_index => $section ) {
-				if ( ! empty( $section['fields'] ) ) {
-					foreach ( $section['fields'] as $field_index => $field ) {
-						$this->args['sections'][$section_index]['fields'][$field_index]['name'] = sprintf( '%1$s[%2$s]', $this->slug, $field['name'] );
-					}
-				}
-			}
-		}*/
-
 	}
 
 	/**
@@ -232,8 +222,6 @@ class WP_Backstage_Options extends WP_Backstage {
 				} 
 
 			}
-
-			// update_option( $this->args['group_options_key'], $values );
 
 		}
 

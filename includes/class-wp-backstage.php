@@ -948,53 +948,136 @@ class WP_Backstage {
 
 	}
 
+	/**
+	 * Sanitize Text
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string  a text field sanitized string. 
+	 */
 	public function sanitize_text( $value = '' ) {
 		return sanitize_text_field( $value );
 	}
 
+	/**
+	 * Sanitize Textarea
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string  a textarea sanitized string. 
+	 */
 	public function sanitize_textarea( $value = '' ) {
 		return sanitize_textarea_field( $value );
 	}
 
+	/**
+	 * Sanitize Code
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string  An unsanitized string. 
+	 */
 	public function sanitize_code( $value = '' ) {
-		return $value; // unsanitized
+		return is_string( $value ) ? $value : ''; // unsanitized
 	}
 
+	/**
+	 * Sanitize Number
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  float   a float, or null if empty. 
+	 */
 	public function sanitize_number( $value = 0 ) {
 		return ( $value !== '' ) ? floatval( $value ) : null;
 	}
 
+	/**
+	 * Sanitize URL
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string  A URL. 
+	 */
 	public function sanitize_url( $value = '' ) {
 		return esc_url( $value );
 	}
 
+	/**
+	 * Sanitize Email
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string  An email address. 
+	 */
 	public function sanitize_email( $value = '' ) {
-		return esc_url( $value );
+		return sanitize_email( $value );
 	}
 
+	/**
+	 * Sanitize Checkbox
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  bool    A boolean. 
+	 */
 	public function sanitize_checkbox( $value = false ) {
 		return boolval( $value );
 	}
 
+	/**
+	 * Sanitize Checkbox Set
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  array   An array of values. 
+	 */
 	public function sanitize_checkbox_set( $value = array() ) {
 		return array_map( 'esc_attr', $value );
 	}
 
+	/**
+	 * Sanitize Address
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  array   An array of address key, value pairs. 
+	 */
 	public function sanitize_address( $value = array() ) {
 		return array_map( 'esc_attr', $value );
 	}
 
+	/**
+	 * Sanitize Time
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  string   a string as 00:00:00. 
+	 */
 	public function sanitize_time( $value = array() ) {
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 
+	/**
+	 * Sanitize Single Media
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  int     An integer, or null if empty. 
+	 */
 	public function sanitize_single_media( $value = 0 ) {
 		return ( $value !== '' ) ? intval( $value ) : null;
 	}
 
+	/**
+	 * Sanitize Multi Media
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize.
+	 * @return  array   An array of integers. 
+	 */
 	public function sanitize_multi_media( $value = array() ) {
-		$value = is_array( $value ) ? $value : explode( ',', $value );
-		return array_map( 'intval', $value );
+		return array_map( 'intval', explode( ',', $value ) );
 	}
 
 	/**

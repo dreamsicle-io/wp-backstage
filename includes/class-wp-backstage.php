@@ -948,6 +948,55 @@ class WP_Backstage {
 
 	}
 
+	public function sanitize_text( $value = '' ) {
+		return sanitize_text_field( $value );
+	}
+
+	public function sanitize_textarea( $value = '' ) {
+		return sanitize_textarea_field( $value );
+	}
+
+	public function sanitize_code( $value = '' ) {
+		return $value; // unsanitized
+	}
+
+	public function sanitize_number( $value = 0 ) {
+		return ( $value !== '' ) ? floatval( $value ) : null;
+	}
+
+	public function sanitize_url( $value = '' ) {
+		return esc_url( $value );
+	}
+
+	public function sanitize_email( $value = '' ) {
+		return esc_url( $value );
+	}
+
+	public function sanitize_checkbox( $value = false ) {
+		return boolval( $value );
+	}
+
+	public function sanitize_checkbox_set( $value = array() ) {
+		return array_map( 'esc_attr', $value );
+	}
+
+	public function sanitize_address( $value = array() ) {
+		return array_map( 'esc_attr', $value );
+	}
+
+	public function sanitize_time( $value = array() ) {
+		return implode( ':', array_map( 'esc_attr', $value ) );
+	}
+
+	public function sanitize_single_media( $value = 0 ) {
+		return ( $value !== '' ) ? intval( $value ) : null;
+	}
+
+	public function sanitize_multi_media( $value = array() ) {
+		$value = is_array( $value ) ? $value : explode( ',', $value );
+		return array_map( 'intval', $value );
+	}
+
 	/**
 	 * Sanitize Field
 	 * 
@@ -958,51 +1007,41 @@ class WP_Backstage {
 
 		switch ( $field['type'] ) {
 			case 'text':
-				$value = sanitize_text_field( $value );
+				$value = $this->sanitize_text( $value );
 				break;
 			case 'textarea':
-				$value = sanitize_textarea_field( $value );
+				$value = $this->sanitize_textarea( $value );
 				break;
 			case 'code':
-				$value = $value; // unsanitized
+				$value = $this->sanitize_code( $value ); 
 				break;
 			case 'number':
-				if ( $value !== '' ) {
-					$value = floatval( $value );
-				} else {
-					$value = null;
-				}
+				$value = $this->sanitize_number( $value );
 				break;
 			case 'url':
-				$value = esc_url( $value );
+				$value = $this->sanitize_url( $value );
 				break;
 			case 'email':
-				$value = sanitize_email( $value );
+				$value = $this->sanitize_email( $value );
 				break;
 			case 'checkbox':
-				$value = boolval( $value );
+				$value = $this->sanitize_checkbox( $value );
 				break;
 			case 'checkbox_set':
-				$value = array_map( 'esc_attr', $value );
+				$value = $this->sanitize_checkbox_set( $value );
+				break;
 			case 'address':
-				$value = array_map( 'esc_attr', $value );
+				$value = $this->sanitize_address( $value );
 				break;
 			case 'time':
-				$value = implode( ':', array_map( 'esc_attr', $value ) );
+				$value = $this->sanitize_time( $value );
 				break;
 			case 'media':
 				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
 				if ( $args['multiple'] ) {
-					if ( ! empty( $value ) ) {
-						$value = array_map( 'intval', explode( ',', $value ) );
-					} else {
-						$value = array();
-					}
+					$value = $this->sanitize_multi_media( $value );
 				} else {
-					$value = intval( $value );
-					if ( ! $value > 0 ) {
-						$value = null;
-					}
+					$value = $this->sanitize_single_media( $value );
 				}
 				break;
 			default:

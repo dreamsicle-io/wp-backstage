@@ -363,8 +363,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 50;
 				} ?>
 
@@ -618,7 +619,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 						if (settings && settings.data) {
 							const params = parseParams(settings.data);
 							const action = params.action;
-							if (action && (action === 'add-tag')) {
+							if (action === 'add-tag') {
 								resetForm();
 							}
 						}

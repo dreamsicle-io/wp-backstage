@@ -811,9 +811,10 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 				}
 
 				do_action( $this->format_field_action( $this->slug, 'before' ), $field, $post );
@@ -850,7 +851,9 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			return;
 		} ?>
 		
-		<style type="text/css">
+		<style 
+		id="wp_backstage_thumbnail_column_style"
+		type="text/css">
 
 			table.wp-list-table th.column-thumbnail,
 			table.wp-list-table td.column-thumbnail {

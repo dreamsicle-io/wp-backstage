@@ -77,6 +77,9 @@ class WP_Backstage_User extends WP_Backstage {
 		$this->default_code_args = array_merge( $this->default_code_args, array(
 			'max_width'  => '50em', 
 		) );
+		$this->default_editor_args = array_merge( $this->default_editor_args, array(
+			'max_width'  => '50em', 
+		) );
 		$this->set_args( $args );
 		$this->screen_id = array( 'user-edit', 'profile' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
@@ -285,7 +288,8 @@ class WP_Backstage_User extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 30;
 				} ?>
 

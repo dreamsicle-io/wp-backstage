@@ -78,10 +78,12 @@ class WP_Backstage_Options extends WP_Backstage {
 		$this->default_code_args = array_merge( $this->default_code_args, array(
 			'max_width'  => '50em', 
 		) );
+		$this->default_editor_args = array_merge( $this->default_editor_args, array(
+			'max_width'  => '50em', 
+		) );
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'settings_page_%1$s', $this->slug );
-		$this->nonce_key = sprintf( '_wp_backstage_options_%1$s_nonce', $this->slug );
 		$this->set_errors();
 
 		parent::__construct();
@@ -279,7 +281,8 @@ class WP_Backstage_Options extends WP_Backstage {
 						}
 
 						if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-							$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+							$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+							$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 							$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
 						}
 

@@ -81,7 +81,7 @@ class WP_Backstage_User extends WP_Backstage {
 			'max_width'  => '50em', 
 		) );
 		$this->set_args( $args );
-		$this->screen_id = array( 'user-edit', 'profile' );
+		$this->screen_id = array( 'user-edit', 'profile', 'user' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
 		$this->set_errors();
 
@@ -147,10 +147,13 @@ class WP_Backstage_User extends WP_Backstage {
 
 		add_action( 'show_user_profile', array( $this, 'render_edit_nonce' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_edit_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_add_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'show_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'personal_options_update', array( $this, 'save' ), 10 );
 		add_action( 'edit_user_profile_update', array( $this, 'save' ), 10 );
+		add_action( 'user_register', array( $this, 'save' ), 10 );
 		add_filter( 'manage_users_columns', array( $this, 'add_field_columns' ), 10 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );

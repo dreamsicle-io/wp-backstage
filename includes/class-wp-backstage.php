@@ -3181,22 +3181,14 @@ class WP_Backstage {
 					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
 					const mode = colorPicker.getAttribute('data-color-picker-mode');
 					var palettes = colorPicker.getAttribute('data-color-picker-palettes');
+					palettes = palettes.startsWith('#') ? palettes.split(',') : (palettes === 'true');
 
-					function isArray (value = null) {
-						return value && (typeof value === 'object') && (value.constructor === Array);
-					}
 					function handleLabelClick(e) {
 						e.preventDefault();
 						resultButton = colorPicker.querySelector('.wp-color-result');
 						if (resultButton) {
 							resultButton.focus();
 						}
-					}
-
-					if (isArray(palettes)) {
-						palettes = palettes.split(',');
-					} else {
-						palettes = (palettes !== 'false');
 					}
 
 					var options = {

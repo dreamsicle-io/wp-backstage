@@ -277,6 +277,8 @@ class WP_Backstage_User extends WP_Backstage {
 	 */
 	public function render_fields( $field_group = array(), $user = null ) {
 
+		var_dump( get_current_screen() );
+
 		if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
 			
 			foreach ( $field_group['fields'] as $field ) {
@@ -293,8 +295,9 @@ class WP_Backstage_User extends WP_Backstage {
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
 					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$default_cols = $this->is_screen( 'id', 'user' ) ? 60 : 30;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 30;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
 				} ?>
 
 				<tr>

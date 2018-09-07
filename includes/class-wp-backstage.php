@@ -1175,7 +1175,7 @@ class WP_Backstage {
 	 * @return  array   An array of integers. 
 	 */
 	public function sanitize_multi_media( $value = '' ) {
-		return array_map( 'intval', explode( ',', $value ) );
+		return ! empty( $value ) ? array_map( 'intval', explode( ',', $value ) ) : null;
 	}
 
 	/**
@@ -3445,6 +3445,12 @@ class WP_Backstage {
 					}
 				}
 
+				function refresh(codeEditor = null) {
+					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
+					const CodeMirrorInst = codeMirrorEl.CodeMirror;
+					CodeMirrorInst.refresh();
+				}
+
 				function initAll() {
 					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
 					if (codeEditors && (codeEditors.length > 0)) {
@@ -3454,7 +3460,65 @@ class WP_Backstage {
 					}
 				}
 
+				function refreshAll(container = null) {
+					container = container || document;
+					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
+					if (codeEditors && (codeEditors.length > 0)) {
+						for (var i = 0; i < codeEditors.length; i++) {
+							refresh(codeEditors[i]);
+						}
+					}
+				}
+
+				function handleMetaBoxSortStop(e = null, ui = null) {
+					const { item } = ui;
+					refreshAll(item[0]);
+				}
+
+				function handleMetaBoxSortableHandleClick(e = null) {
+					let { parentNode } = e.target;
+					while (! parentNode.classList.contains('postbox')) {
+						parentNode = parentNode.parentNode;
+					}
+					if (! parentNode.classList.contains('closed')) {
+						refreshAll(parentNode);
+					}
+				}
+
+				function initMetaBoxSortable(sortable = null) {
+					if (sortable) {
+						$(sortable).on('sortstop', handleMetaBoxSortStop);
+					}
+				}
+
+				function initMetaBoxSortableHandle(handle = null) {
+					if (handle) {
+						handle.addEventListener('click', handleMetaBoxSortableHandleClick);
+					}
+				}
+
+				function initAllMetaBoxSortables() {
+					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
+					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
+						for (var i = 0; i < metaBoxSortables.length; i++) {
+							initMetaBoxSortable(metaBoxSortables[i]);
+						}
+					}
+				
+				}
+
+				function initAllMetaBoxSortableHandles() {
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
+						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
+							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
+						}
+					}
+				}
+
 				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', initAllMetaBoxSortables);
+				document.addEventListener('DOMContentLoaded', initAllMetaBoxSortableHandles);
 
 			})(jQuery);
 

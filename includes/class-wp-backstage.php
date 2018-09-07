@@ -3012,6 +3012,10 @@ class WP_Backstage {
 				color: inherit;
 			}
 
+			.form-field .wp-editor-area {
+				border-width: 0;
+			}
+
 		</style>
 
 	<?php }
@@ -3570,21 +3574,29 @@ class WP_Backstage {
 					}
 
 					const fieldId = editor.getAttribute('data-editor-id');
+					const textarea = editor.querySelector('#' + fieldId);
 					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
 					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
 					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
+					var timer = null;
 
-					function handleSetup(e = null, editor = null) {
-						const { id } = editor.settings;
+					function handleSetup(e = null, wpEditor = null) {
+						const { id } = wpEditor.settings;
 						if (id === fieldId) {
-							editor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
+							wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
 							if (formatSelect) {
-								editor.settings.toolbar1 = 'formatselect,' + editor.settings.toolbar1;
+								wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
 							}
 							if (kitchenSink) {
-								editor.settings.toolbar1 += ',wp_adv';
-								editor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
+								wpEditor.settings.toolbar1 += ',wp_adv';
+								wpEditor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
 							}
+							wpEditor.on('change', function(e) {
+								clearTimeout(timer);
+								timer = setTimeout(function() {
+									wpEditor.save();
+								}, 750);
+							});
 						} 
 					}
 
@@ -3597,8 +3609,8 @@ class WP_Backstage {
 					});
 
 					$(document).on( 'tinymce-editor-setup', handleSetup);
-				}
 
+				}
 				function destroyAll(container = null) {
 					container = container || document;
 					const editors = container.querySelectorAll('[data-editor-id]');
@@ -3608,7 +3620,6 @@ class WP_Backstage {
 						}
 					}
 				}
-
 				function initAll(container = null) {
 					container = container || document;
 					const editors = container.querySelectorAll('[data-editor-id]');
@@ -3618,18 +3629,15 @@ class WP_Backstage {
 						}
 					}
 				}
-
 				function reInitAll(container = null) {
 					container = container || document;
 					destroyAll(container);
 					initAll(container);
 				}
-
 				function handleMetaBoxSortStop(e = null, ui = null) {
 					const { item } = ui;
 					reInitAll(item[0]);
 				}
-
 				function handleInit(e = null) {
 					initAll();
 				}

@@ -214,6 +214,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
+		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		$this->hook_inline_styles( $this->slug );
 		$this->hook_inline_scripts( $this->slug );
 
@@ -544,6 +545,37 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 		return $pieces;
 		
+	}
+
+	/**
+	 * Manage Default Hidden Columns
+	 *
+	 * Note that this will only work if this post type's columns 
+	 * UI has never been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+
+		if ( $screen->taxonomy === $this->slug ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				foreach ( $fields as $field ) {
+
+					$hidden[] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $hidden;
+
 	}
 
 	/**

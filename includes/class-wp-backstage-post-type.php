@@ -353,7 +353,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			'public'              => $this->args['public'],
 			'show_ui'             => true,
 			'show_in_menu'        => true,
-			'menu_position'       => 5,
+			'menu_position'       => 4,
 			'menu_icon'           => $this->args['menu_icon'],
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => $this->args['public'],

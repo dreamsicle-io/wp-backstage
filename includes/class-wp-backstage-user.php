@@ -277,8 +277,6 @@ class WP_Backstage_User extends WP_Backstage {
 	 */
 	public function render_fields( $field_group = array(), $user = null ) {
 
-		var_dump( get_current_screen() );
-
 		if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
 			
 			foreach ( $field_group['fields'] as $field ) {

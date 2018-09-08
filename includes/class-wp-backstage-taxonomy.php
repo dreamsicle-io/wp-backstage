@@ -214,6 +214,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
+		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		$this->hook_inline_styles( $this->slug );
 		$this->hook_inline_scripts( $this->slug );
 
@@ -363,8 +364,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 50;
 				} ?>
 
@@ -546,6 +548,37 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	}
 
 	/**
+	 * Manage Default Hidden Columns
+	 *
+	 * Note that this will only work if this post type's columns 
+	 * UI has never been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+
+		if ( $screen->taxonomy === $this->slug ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				foreach ( $fields as $field ) {
+
+					$hidden[] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $hidden;
+
+	}
+
+	/**
 	 * Inline Add Term Script
 	 * 
 	 * @since   0.0.1
@@ -618,7 +651,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 						if (settings && settings.data) {
 							const params = parseParams(settings.data);
 							const action = params.action;
-							if (action && (action === 'add-tag')) {
+							if (action === 'add-tag') {
 								resetForm();
 							}
 						}

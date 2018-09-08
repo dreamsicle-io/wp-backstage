@@ -77,8 +77,11 @@ class WP_Backstage_User extends WP_Backstage {
 		$this->default_code_args = array_merge( $this->default_code_args, array(
 			'max_width'  => '50em', 
 		) );
+		$this->default_editor_args = array_merge( $this->default_editor_args, array(
+			'max_width'  => '50em', 
+		) );
 		$this->set_args( $args );
-		$this->screen_id = array( 'user-edit', 'profile' );
+		$this->screen_id = array( 'user-edit', 'profile', 'user' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
 		$this->set_errors();
 
@@ -144,14 +147,18 @@ class WP_Backstage_User extends WP_Backstage {
 
 		add_action( 'show_user_profile', array( $this, 'render_edit_nonce' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_edit_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_add_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'show_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'personal_options_update', array( $this, 'save' ), 10 );
 		add_action( 'edit_user_profile_update', array( $this, 'save' ), 10 );
+		add_action( 'user_register', array( $this, 'save' ), 10 );
 		add_filter( 'manage_users_columns', array( $this, 'add_field_columns' ), 10 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
+		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		$this->hook_inline_styles( $this->slug );
 		$this->hook_inline_scripts( $this->slug );
 
@@ -285,8 +292,10 @@ class WP_Backstage_User extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : 5;
-					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 30;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$default_cols = $this->is_screen( 'id', 'user' ) ? 60 : 30;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
 				} ?>
 
 				<tr>
@@ -459,6 +468,37 @@ class WP_Backstage_User extends WP_Backstage {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Manage Default Hidden Columns
+	 *
+	 * Note that this will only work if this post type's columns 
+	 * UI has never been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+
+		if ( $screen->id === 'users' ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				foreach ( $fields as $field ) {
+
+					$hidden[] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $hidden;
 
 	}
 

@@ -65,6 +65,14 @@ class WP_Backstage {
 	public $has_address = false;
 
 	/**
+	 * Has Editor
+	 * 
+	 * @since  0.0.1
+	 * @var    bool
+	 */
+	public $has_editor = false;
+
+	/**
 	 * Code Editors
 	 * 
 	 * @since  0.0.1
@@ -161,6 +169,19 @@ class WP_Backstage {
 	);
 
 	/**
+	 * Default Editor Args
+	 * 
+	 * @since  0.0.1
+	 * @var    array
+	 */
+	public $default_editor_args = array(
+		'max_width'     => '100%', 
+		'format_select' => false, 
+		'media_buttons' => false, 
+		'kitchen_sink'  => false, 
+	);
+
+	/**
 	 * Default Code Args
 	 * 
 	 * @since  0.0.1
@@ -218,6 +239,7 @@ class WP_Backstage {
 	public $non_regular_text_fields = array( 
 		'number', 
 		'textarea', 
+		'editor', 
 		'select', 
 		'checkbox', 
 		'checkbox_set', 
@@ -236,6 +258,7 @@ class WP_Backstage {
 	 * @var    array
 	 */
 	public $textarea_control_fields = array( 
+		'editor', 
 		'textarea', 
 		'code', 
 	);
@@ -685,6 +708,7 @@ class WP_Backstage {
 		$this->has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
 		$this->has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
 		$this->has_address = ! empty( $this->get_field_by( 'type', 'address' ) );
+		$this->has_editor = ! empty( $this->get_field_by( 'type', 'editor' ) );
 		$this->code_editors = $this->get_fields_by( 'type', 'code' );
 
 	}
@@ -845,7 +869,9 @@ class WP_Backstage {
 
 	public function hook_inline_styles( $slug = '' ) {
 
-		$actions = array();
+		$actions = array(
+			'inline_editor_style', 
+		);
 
 		if ( ! empty( $slug ) && ! empty( $actions ) ) {
 			foreach ( $actions as $action ) {
@@ -863,6 +889,7 @@ class WP_Backstage {
 			'inline_color_picker_script', 
 			'inline_code_editor_script', 
 			'inline_address_script', 
+			'inline_editor_script', 
 		);
 
 		if ( ! empty( $slug ) && ! empty( $actions ) ) {
@@ -917,6 +944,17 @@ class WP_Backstage {
 			return;
 		}
 
+		if ( $this->has_editor ) {
+
+			// `did_action()` returns the amount of times an action has been run,
+			// not a bool. Since this returns an integer and since it will return
+			// `0` if the action has never been run, it is safe to use as a boolean.
+			if ( ! did_action( 'wp_enqueue_editor' ) ) {
+				wp_enqueue_editor();
+			}
+
+		}
+
 		if ( $this->has_media || $this->has_date ) {
 
 			if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
@@ -936,7 +974,10 @@ class WP_Backstage {
 
 		if ( $this->has_media ) {
 			
-			if ( ! wp_script_is( 'media-editor', 'enqueued' ) ) {
+			// `did_action()` returns the amount of times an action has been run,
+			// not a bool. Since this returns an integer and since it will return
+			// `0` if the action has never been run, it is safe to use as a boolean.
+			if ( ! did_action( 'wp_enqueue_media' ) ) {
 				wp_enqueue_media();
 			}
 
@@ -1014,6 +1055,17 @@ class WP_Backstage {
 	 */
 	public function sanitize_textarea( $value = '' ) {
 		return sanitize_textarea_field( $value );
+	}
+
+	/**
+	 * Sanitize Editor
+	 * 
+	 * @since   0.0.1
+	 * @param   $value  The value to sanitize. Expects a string.
+	 * @return  string  the string sanitized as post content. 
+	 */
+	public function sanitize_editor( $value = '' ) {
+		return wp_kses_post( $value );
 	}
 
 	/**
@@ -1123,7 +1175,7 @@ class WP_Backstage {
 	 * @return  array   An array of integers. 
 	 */
 	public function sanitize_multi_media( $value = '' ) {
-		return array_map( 'intval', explode( ',', $value ) );
+		return ! empty( $value ) ? array_map( 'intval', explode( ',', $value ) ) : null;
 	}
 
 	/**
@@ -1139,6 +1191,9 @@ class WP_Backstage {
 		switch ( $field['type'] ) {
 			case 'textarea':
 				$value = $this->sanitize_textarea( $value );
+				break;
+			case 'editor':
+				$value = $this->sanitize_editor( $value ); 
 				break;
 			case 'code':
 				$value = $this->sanitize_code( $value ); 
@@ -1193,6 +1248,9 @@ class WP_Backstage {
 		switch ( $field['type'] ) {
 			case 'textarea':
 				$callback = 'sanitize_textarea';
+				break;
+			case 'editor':
+				$callback = 'sanitize_editor';
 				break;
 			case 'code':
 				$callback = 'sanitize_code';
@@ -1321,6 +1379,9 @@ class WP_Backstage {
 			case 'textarea':
 				$this->render_textarea( $field );
 				break;
+			case 'editor':
+				$this->render_editor( $field );
+				break;
 			case 'select':
 				$this->render_select( $field );
 				break;
@@ -1392,6 +1453,9 @@ class WP_Backstage {
 					break;
 				case 'textarea':
 					$content = wpautop( sanitize_textarea_field( $value ) );
+					break;
+				case 'editor':
+					$content = wpautop( wp_kses_post( $value ) );
 					break;
 				case 'code':
 					$content = '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>';
@@ -1701,7 +1765,7 @@ class WP_Backstage {
 				<?php } ?>
 
 				<input 
-				size="10"
+				size="12"
 				type="text" 
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php echo esc_attr( $id ); ?>" 
@@ -1980,6 +2044,76 @@ class WP_Backstage {
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+
+			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+
+				<?php if ( $field['show_label'] ) { ?>
+
+					<label 
+					id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
+					for="<?php echo esc_attr( $id ); ?>"
+					style="display:inline-block;"><?php 
+
+						echo wp_kses( $field['label'], $this->kses_label );
+					
+					?></label>
+
+					<br/>
+
+				<?php } ?>
+
+				<textarea 
+				type="<?php echo esc_attr( $field['type'] ); ?>" 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
+
+					echo esc_textarea( $field['value'] );
+
+				?></textarea>
+			
+			</div>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<p 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p );
+				
+				?></p>
+
+			<?php } ?>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Render editor
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function render_editor( $field = array() ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id = sanitize_title_with_dashes( $field['name'] );
+		$args = wp_parse_args( $field['args'], $this->default_editor_args );
+		$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+		$field['input_attrs']['class'] = sprintf( 'wp-editor-area %1$s', $input_class ); ?>
+
+
+		<div 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		data-editor-id="<?php echo esc_attr( $id ); ?>"
+		data-media-buttons="<?php echo ( $args['media_buttons'] ) ? 'true' : 'false'; ?>"
+		data-format-select="<?php echo ( $args['format_select'] ) ? 'true' : 'false'; ?>"
+		data-kitchen-sink="<?php echo ( $args['kitchen_sink'] ) ? 'true' : 'false'; ?>"
+		style="max-width:<?php echo $args['max_width']; ?>;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -2855,6 +2989,38 @@ class WP_Backstage {
 	<?php }
 
 	/**
+	 * Inline Editor Style
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_editor_style() {
+
+		if ( ! $this->has_editor ) {
+			return;
+		} ?>
+
+		<style 
+		id="wp_backstage_editor_style"
+		type="text/css">
+
+			.mce-toolbar .mce-btn.mce-active, 
+			.mce-toolbar .mce-btn.mce-active button, 
+			.mce-toolbar .mce-btn.mce-active i, 
+			.mce-toolbar .mce-btn.mce-active:hover button, 
+			.mce-toolbar .mce-btn.mce-active:hover i {
+				color: inherit;
+			}
+
+			.form-field .wp-editor-area {
+				border-width: 0;
+			}
+
+		</style>
+
+	<?php }
+
+	/**
 	 * Inline Media Uploader Script
 	 * 
 	 * @since   0.0.1
@@ -2866,7 +3032,9 @@ class WP_Backstage {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_media_uploader_script"
+		type="text/javascript">
 
 			(function($) {
 
@@ -3098,7 +3266,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3118,7 +3288,9 @@ class WP_Backstage {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_date_picker_script"
+		type="text/javascript">
 
 			(function($) {
 
@@ -3146,7 +3318,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3166,7 +3340,9 @@ class WP_Backstage {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_color_picker_script"
+		type="text/javascript">
 
 			(function($) {
 
@@ -3181,22 +3357,14 @@ class WP_Backstage {
 					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
 					const mode = colorPicker.getAttribute('data-color-picker-mode');
 					var palettes = colorPicker.getAttribute('data-color-picker-palettes');
+					palettes = palettes.startsWith('#') ? palettes.split(',') : (palettes === 'true');
 
-					function isArray (value = null) {
-						return value && (typeof value === 'object') && (value.constructor === Array);
-					}
 					function handleLabelClick(e) {
 						e.preventDefault();
 						resultButton = colorPicker.querySelector('.wp-color-result');
 						if (resultButton) {
 							resultButton.focus();
 						}
-					}
-
-					if (isArray(palettes)) {
-						palettes = palettes.split(',');
-					} else {
-						palettes = (palettes !== 'false');
 					}
 
 					var options = {
@@ -3226,7 +3394,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3246,7 +3416,9 @@ class WP_Backstage {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_code_editor_script"
+		type="text/javascript">
 
 			(function($) {
 
@@ -3278,7 +3450,11 @@ class WP_Backstage {
 						}
 					}
 				}
-
+				function refresh(codeEditor = null) {
+					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
+					const CodeMirrorInst = codeMirrorEl.CodeMirror;
+					CodeMirrorInst.refresh();
+				}
 				function initAll() {
 					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
 					if (codeEditors && (codeEditors.length > 0)) {
@@ -3287,8 +3463,87 @@ class WP_Backstage {
 						}
 					}
 				}
+				function refreshAll(container = null) {
+					container = container || document;
+					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
+					if (codeEditors && (codeEditors.length > 0)) {
+						for (var i = 0; i < codeEditors.length; i++) {
+							refresh(codeEditors[i]);
+						}
+					}
+				}
+				function initScreenOption(checkbox = null) {
 
-				document.addEventListener('DOMContentLoaded', initAll);
+					function handleChange(e = null) {
+						const { value } = e.target;
+						const metaBox = document.querySelector('#' + value);
+						if (metaBox && ! metaBox.classList.contains('closed')) {
+							refreshAll(metaBox);
+						}
+					}
+
+					if (checkbox) {
+						checkbox.addEventListener('change', handleChange);
+					}
+				}
+				function initMetaBoxSortable(sortable = null) {
+
+					function handleSortStop(e = null, ui = null) {
+						const { item } = ui;
+						refreshAll(item[0]);
+					}
+
+					if (sortable) {
+						$(sortable).on('sortstop', handleSortStop);
+					}
+				}
+				function initMetaBoxSortableHandle(handle = null) {
+
+					function handleClick(e = null) {
+						let { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							refreshAll(parentNode);
+						}
+					}
+
+					if (handle) {
+						handle.addEventListener('click', handleClick);
+					}
+				}
+				function initAllMetaBoxSortables() {
+					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
+					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
+						for (var i = 0; i < metaBoxSortables.length; i++) {
+							initMetaBoxSortable(metaBoxSortables[i]);
+						}
+					}
+				}
+				function initAllMetaBoxSortableHandles() {
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
+						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
+							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
+						}
+					}
+				}
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+					initAllMetaBoxSortables();
+					initAllMetaBoxSortableHandles();
+					initAllScreenOptions();
+				});
 
 			})(jQuery);
 
@@ -3308,7 +3563,9 @@ class WP_Backstage {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_address_script"
+		type="text/javascript">
 
 			(function($) {
 
@@ -3359,7 +3616,188 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Editor Script
+	 *
+	 * @link    https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/
+	 * @link    https://codex.wordpress.org/Javascript_Reference/wp.editor
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_editor/
+	 * @link    https://developer.wordpress.org/reference/hooks/wp_enqueue_editor/
+	 * @link    https://www.tiny.cloud/docs/demo/basic-example/
+	 * 
+	 * @since   0.0.1
+	 * @return  void  
+	 */
+	public function inline_editor_script() {
+
+		if ( ! $this->has_editor ) {
+			return;
+		} ?>
+
+		<script 
+		id="wp_backstage_editor_script"
+		type="text/javascript">
+
+			(function($) {
+
+				function destroy(editor = null) {
+					if (! editor) { 
+						return;
+					}
+					const fieldId = editor.getAttribute('data-editor-id');
+					wp.editor.remove(fieldId);
+				}
+
+				function init(editor = null) {
+					
+					if (! editor) { 
+						return;
+					}
+
+					const fieldId = editor.getAttribute('data-editor-id');
+					const textarea = editor.querySelector('#' + fieldId);
+					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
+					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
+					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
+					var timer = null;
+
+					function handleSetup(e = null, wpEditor = null) {
+						const { id } = wpEditor.settings;
+						if (id === fieldId) {
+							wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
+							if (formatSelect) {
+								wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
+							}
+							if (kitchenSink) {
+								wpEditor.settings.toolbar1 += ',wp_adv';
+								wpEditor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
+							}
+							wpEditor.on('change', function(e) {
+								clearTimeout(timer);
+								timer = setTimeout(function() {
+									wpEditor.save();
+								}, 750);
+							});
+						} 
+					}
+
+					wp.editor.initialize(fieldId, {
+						mediaButtons: mediaButtons, 
+						quicktags: true, 
+						tinymce: {
+							wpautop: true, 
+						}, 
+					});
+
+					$(document).on( 'tinymce-editor-setup', handleSetup);
+
+				}
+				function destroyAll(container = null) {
+					container = container || document;
+					const editors = container.querySelectorAll('[data-editor-id]');
+					if (editors && (editors.length > 0)) {
+						for (var i = 0; i < editors.length; i++) {
+							destroy(editors[i]);
+						}
+					}
+				}
+				function initAll(container = null) {
+					container = container || document;
+					const editors = container.querySelectorAll('[data-editor-id]');
+					if (editors && (editors.length > 0)) {
+						for (var i = 0; i < editors.length; i++) {
+							init(editors[i]);
+						}
+					}
+				}
+				function reInitAll(container = null) {
+					container = container || document;
+					destroyAll(container);
+					initAll(container);
+				}
+				function initMetaBoxSortable(sortable = null) {
+					
+					function handleSortStop(e = null, ui = null) {
+						const { item } = ui;
+						reInitAll(item[0]);
+					}
+
+					if (sortable) {
+						$(sortable).on('sortstop', handleSortStop);
+					}
+				}
+				function initMetaBoxSortableHandle(handle = null) {
+					
+					function handleClick(e = null) {
+						let { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							reInitAll(parentNode);
+						}
+					}
+
+					if (handle) {
+						handle.addEventListener('click', handleClick);
+					}
+				}
+				function initScreenOption(checkbox = null) {
+
+					function handleChange(e = null) {
+						const { value } = e.target;
+						const metaBox = document.querySelector('#' + value);
+						if (metaBox && ! metaBox.classList.contains('closed')) {
+							reInitAll(metaBox);
+						}
+					}
+
+					if (checkbox) {
+						checkbox.addEventListener('change', handleChange);
+					}
+				}
+				function initAllMetaBoxSortables() {
+					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
+					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
+						for (var i = 0; i < metaBoxSortables.length; i++) {
+							initMetaBoxSortable(metaBoxSortables[i]);
+						}
+					}
+				
+				}
+				function initAllMetaBoxSortableHandles() {
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
+						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
+							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
+						}
+					}
+				}
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+					initAllMetaBoxSortables();
+					initAllMetaBoxSortableHandles();
+					initAllScreenOptions();
+				});
 
 			})(jQuery);
 

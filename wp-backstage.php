@@ -20,7 +20,7 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 
-if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
+if ( apply_filters( 'wp_backstage_tests_enabled', true ) ) {
 	require WP_BACKSTAGE . '/examples/tests.php';
 }
 

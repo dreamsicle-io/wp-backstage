@@ -9,6 +9,13 @@
 class WP_Backstage_User extends WP_Backstage {
 
 	/**
+	 * Slug
+	 * 
+	 * @since 0.0.1
+	 */
+	public $slug = 'user';
+
+	/**
 	 * Default Args
 	 * 
 	 * @since 0.0.1
@@ -70,8 +77,11 @@ class WP_Backstage_User extends WP_Backstage {
 		$this->default_code_args = array_merge( $this->default_code_args, array(
 			'max_width'  => '50em', 
 		) );
+		$this->default_editor_args = array_merge( $this->default_editor_args, array(
+			'max_width'  => '50em', 
+		) );
 		$this->set_args( $args );
-		$this->screen_id = array( 'user-edit', 'profile' );
+		$this->screen_id = array( 'user-edit', 'profile', 'user' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
 		$this->set_errors();
 
@@ -137,16 +147,20 @@ class WP_Backstage_User extends WP_Backstage {
 
 		add_action( 'show_user_profile', array( $this, 'render_edit_nonce' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_edit_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_add_nonce' ), 10 );
+		add_action( 'user_new_form', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'show_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_field_groups' ), 10 );
 		add_action( 'personal_options_update', array( $this, 'save' ), 10 );
 		add_action( 'edit_user_profile_update', array( $this, 'save' ), 10 );
+		add_action( 'user_register', array( $this, 'save' ), 10 );
 		add_filter( 'manage_users_columns', array( $this, 'add_field_columns' ), 10 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
-		$this->hook_inline_styles( 'user' );
-		$this->hook_inline_scripts( 'user' );
+		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
+		$this->hook_inline_styles( $this->slug );
+		$this->hook_inline_scripts( $this->slug );
 
 		parent::init();
 
@@ -271,14 +285,17 @@ class WP_Backstage_User extends WP_Backstage {
 				$field['show_label'] = false;
 				$field_id = sanitize_title_with_dashes( $field['name'] );
 				$field_label = wp_kses( $field['label'], $this->kses_label );
+				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = 'regular-text';
+					$field['input_attrs']['class'] = sprintf( 'regular-text %1$s', $input_class );
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['rows'] = 5;
-					$field['input_attrs']['cols'] = 30;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$default_cols = $this->is_screen( 'id', 'user' ) ? 60 : 30;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
 				} ?>
 
 				<tr>
@@ -307,11 +324,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 					<td><?php 
 
-						do_action( $this->format_field_action( 'user', 'before' ), $field, $user );
+						do_action( $this->format_field_action( $this->slug, 'before' ), $field, $user );
 
 						$this->render_field_by_type( $field ); 
 
-						do_action( $this->format_field_action( 'user', 'after' ), $field, $user );
+						do_action( $this->format_field_action( $this->slug, 'after' ), $field, $user );
 
 					?></td>
 
@@ -389,7 +406,7 @@ class WP_Backstage_User extends WP_Backstage {
 			$value = get_user_meta( $user_id, $column, true );
 
 			// short circuit the column content and allow developer to add their own.
-			$content = apply_filters( $this->format_column_content_filter( 'user', $column ), $content, $field, $value, $user_id );
+			$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), $content, $field, $value, $user_id );
 			if ( ! empty( $content ) ) {
 				return $content;
 			}
@@ -454,22 +471,35 @@ class WP_Backstage_User extends WP_Backstage {
 
 	}
 
-	public function add_admin_head_style_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
+	/**
+	 * Manage Default Hidden Columns
+	 *
+	 * Note that this will only work if this post type's columns 
+	 * UI has never been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+
+		if ( $screen->id === 'users' ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				foreach ( $fields as $field ) {
+
+					$hidden[] = $field['name'];
+
+				}
+
+			}
+
 		}
 
-		do_action( $this->format_head_style_action( 'user' ) );
-	}
+		return $hidden;
 
-	public function add_admin_footer_script_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_footer_script_action( 'user' ) );
 	}
 
 }

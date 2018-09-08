@@ -284,6 +284,46 @@ function wp_backstage_init() {
 			),
 		),
 		array( 
+			'type'        => 'editor', 
+			'name'        => 'wp_backstage_editor_field', 
+			'label'       => __( 'Editor', 'wp_backstage' ), 
+			'description' => __( 'Please enter some content.', 'wp_backstage' ), 
+			'has_column'  => true, 
+		),
+		array( 
+			'type'        => 'editor', 
+			'name'        => 'wp_backstage_editor_field_format_select', 
+			'label'       => __( 'Editor with Format Select', 'wp_backstage' ), 
+			'description' => __( 'Please enter some content.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'format_select' => true,
+			), 
+		),
+		array( 
+			'type'        => 'editor', 
+			'name'        => 'wp_backstage_editor_field_media', 
+			'label'       => __( 'Editor with Media Buttons', 'wp_backstage' ), 
+			'description' => __( 'Please enter some content.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'media_buttons' => true,
+				'format_select' => true, 
+			), 
+		),
+		array( 
+			'type'        => 'editor', 
+			'name'        => 'wp_backstage_editor_field_kitchen_sink', 
+			'label'       => __( 'Editor with Kitchen Sink', 'wp_backstage' ), 
+			'description' => __( 'Please enter some content.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'media_buttons' => true,
+				'format_select' => true,
+				'kitchen_sink'  => true,
+			), 
+		),
+		array( 
 			'type'        => 'address', 
 			'name'        => 'wp_backstage_address_field', 
 			'label'       => __( 'Address', 'wp_backstage' ), 
@@ -397,10 +437,11 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Options::add( 'wp_backstage_options', array( 
-		'title'        => __( 'Test Options', 'wp_backstage' ), 
-		'menu_title'   => __( 'Test Options', 'wp_backstage' ), 
-		'description'  => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
-		'show_in_rest' => true, 
+		'title'             => __( 'Test Options', 'wp_backstage' ), 
+		'menu_title'        => __( 'Test Options', 'wp_backstage' ), 
+		'description'       => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
+		'show_in_rest'      => true, 
+		'group_options_key' => 'wp_backstage_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_options_fields', 

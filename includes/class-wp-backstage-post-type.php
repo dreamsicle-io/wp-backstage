@@ -49,8 +49,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		'public'          => true, 
 		'hierarchical'    => false, 
 		'with_front'      => false, 
-		'singular_base'       => '', 
-		'archive_base'       => '', 
+		'singular_base'   => '', 
+		'archive_base'    => '', 
 		'rest_base'       => '', 
 		'menu_icon'       => 'dashicons-admin-post', 
 		'capability_type' => 'post', 
@@ -265,12 +265,14 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
+		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		add_action( $this->format_head_style_action( $this->slug ), array( $this, 'inline_thumbnail_column_style' ), 10 );
 		$this->hook_inline_styles( $this->slug );
 		$this->hook_inline_scripts( $this->slug );
 
@@ -351,7 +353,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			'public'              => $this->args['public'],
 			'show_ui'             => true,
 			'show_in_menu'        => true,
-			'menu_position'       => 5,
+			'menu_position'       => 4,
 			'menu_icon'           => $this->args['menu_icon'],
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => $this->args['public'],
@@ -803,15 +805,17 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			foreach ( $meta_box['args']['fields'] as $field ) {
 
 				$field['value'] = get_post_meta( $post->ID, $field['name'], true );
+				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = 'widefat';
+					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$field['input_attrs']['class'] = 'large-text';
-					$field['input_attrs']['rows'] = 5;
-					$field['input_attrs']['cols'] = 90;
+					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
+					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 				}
 
 				do_action( $this->format_field_action( $this->slug, 'before' ), $field, $post );
@@ -835,5 +839,71 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		<?php }
 
 	}
+
+	/**
+	 * Manage Default Hidden Columns
+	 *
+	 * Note that this will only work if this post type's columns 
+	 * UI has never been modified by the user.
+	 * 
+	 * @since   0.0.1
+	 * @return  void 
+	 */
+	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+
+		if ( $screen->post_type === $this->slug ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				foreach ( $fields as $field ) {
+
+					$hidden[] = $field['name'];
+
+				}
+
+			}
+
+		}
+
+		return $hidden;
+
+	}
+
+	/**
+	 * Inline Thumbnail Column Style
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function inline_thumbnail_column_style() {
+
+		if ( ! $this->is_screen( 'base', 'edit' ) || ! post_type_supports( $this->slug, 'thumbnail' ) ) {
+			return;
+		} ?>
+		
+		<style 
+		id="wp_backstage_thumbnail_column_style"
+		type="text/css">
+
+			table.wp-list-table th.column-thumbnail,
+			table.wp-list-table td.column-thumbnail {
+				text-align: center;
+				width: 40px;
+			}
+
+			@media screen and (max-width: 783px) {
+				table.wp-list-table tr.is-expanded th.column-thumbnail,
+				table.wp-list-table tr.is-expanded td.column-thumbnail,
+				table.wp-list-table th.column-thumbnail,
+				table.wp-list-table td.column-thumbnail {
+					display: none !important;
+				}
+			}
+
+		</style>
+
+	<?php }
 
 }

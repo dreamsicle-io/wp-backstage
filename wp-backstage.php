@@ -23,3 +23,29 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
 	require WP_BACKSTAGE . '/examples/tests.php';
 }
+
+/**
+ * WP Backstage Activation
+ * 
+ * @since   0.0.1
+ * @return  void
+ */
+function wp_backstage_activation() {
+	// ensure this runs after post types are initialized
+	add_action( 'wp_loaded', 'flush_rewrite_rules', 10 );
+}
+
+register_activation_hook( __FILE__, 'wp_backstage_activation' );
+
+/**
+ * WP Backstage Deactivation
+ * 
+ * @since   0.0.1
+ * @return  void
+ */
+function wp_backstage_deactivation() {
+	// ensure this runs after post types are initialized
+	add_action( 'wp_loaded', 'flush_rewrite_rules', 10 );
+}
+
+register_deactivation_hook( __FILE__, 'wp_backstage_deactivation' );

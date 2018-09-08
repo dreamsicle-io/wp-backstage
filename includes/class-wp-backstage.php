@@ -3266,7 +3266,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3316,7 +3318,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3390,7 +3394,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3444,13 +3450,11 @@ class WP_Backstage {
 						}
 					}
 				}
-
 				function refresh(codeEditor = null) {
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
 					const CodeMirrorInst = codeMirrorEl.CodeMirror;
 					CodeMirrorInst.refresh();
 				}
-
 				function initAll() {
 					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
 					if (codeEditors && (codeEditors.length > 0)) {
@@ -3459,7 +3463,6 @@ class WP_Backstage {
 						}
 					}
 				}
-
 				function refreshAll(container = null) {
 					container = container || document;
 					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
@@ -3469,34 +3472,47 @@ class WP_Backstage {
 						}
 					}
 				}
+				function initScreenOption(checkbox = null) {
 
-				function handleMetaBoxSortStop(e = null, ui = null) {
-					const { item } = ui;
-					refreshAll(item[0]);
-				}
-
-				function handleMetaBoxSortableHandleClick(e = null) {
-					let { parentNode } = e.target;
-					while (! parentNode.classList.contains('postbox')) {
-						parentNode = parentNode.parentNode;
+					function handleChange(e = null) {
+						const { value } = e.target;
+						const metaBox = document.querySelector('#' + value);
+						if (metaBox && ! metaBox.classList.contains('closed')) {
+							refreshAll(metaBox);
+						}
 					}
-					if (! parentNode.classList.contains('closed')) {
-						refreshAll(parentNode);
+
+					if (checkbox) {
+						checkbox.addEventListener('change', handleChange);
 					}
 				}
-
 				function initMetaBoxSortable(sortable = null) {
+
+					function handleSortStop(e = null, ui = null) {
+						const { item } = ui;
+						refreshAll(item[0]);
+					}
+
 					if (sortable) {
-						$(sortable).on('sortstop', handleMetaBoxSortStop);
+						$(sortable).on('sortstop', handleSortStop);
 					}
 				}
-
 				function initMetaBoxSortableHandle(handle = null) {
+
+					function handleClick(e = null) {
+						let { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							refreshAll(parentNode);
+						}
+					}
+
 					if (handle) {
-						handle.addEventListener('click', handleMetaBoxSortableHandleClick);
+						handle.addEventListener('click', handleClick);
 					}
 				}
-
 				function initAllMetaBoxSortables() {
 					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
 					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
@@ -3504,9 +3520,7 @@ class WP_Backstage {
 							initMetaBoxSortable(metaBoxSortables[i]);
 						}
 					}
-				
 				}
-
 				function initAllMetaBoxSortableHandles() {
 					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
 					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
@@ -3515,10 +3529,21 @@ class WP_Backstage {
 						}
 					}
 				}
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
+				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
-				document.addEventListener('DOMContentLoaded', initAllMetaBoxSortables);
-				document.addEventListener('DOMContentLoaded', initAllMetaBoxSortableHandles);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+					initAllMetaBoxSortables();
+					initAllMetaBoxSortableHandles();
+					initAllScreenOptions();
+				});
 
 			})(jQuery);
 
@@ -3591,7 +3616,9 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', initAll);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+				});
 
 			})(jQuery);
 
@@ -3698,16 +3725,79 @@ class WP_Backstage {
 					destroyAll(container);
 					initAll(container);
 				}
-				function handleMetaBoxSortStop(e = null, ui = null) {
-					const { item } = ui;
-					reInitAll(item[0]);
+				function initMetaBoxSortable(sortable = null) {
+					
+					function handleSortStop(e = null, ui = null) {
+						const { item } = ui;
+						reInitAll(item[0]);
+					}
+
+					if (sortable) {
+						$(sortable).on('sortstop', handleSortStop);
+					}
 				}
-				function handleInit(e = null) {
-					initAll();
+				function initMetaBoxSortableHandle(handle = null) {
+					
+					function handleClick(e = null) {
+						let { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							reInitAll(parentNode);
+						}
+					}
+
+					if (handle) {
+						handle.addEventListener('click', handleClick);
+					}
+				}
+				function initScreenOption(checkbox = null) {
+
+					function handleChange(e = null) {
+						const { value } = e.target;
+						const metaBox = document.querySelector('#' + value);
+						if (metaBox && ! metaBox.classList.contains('closed')) {
+							reInitAll(metaBox);
+						}
+					}
+
+					if (checkbox) {
+						checkbox.addEventListener('change', handleChange);
+					}
+				}
+				function initAllMetaBoxSortables() {
+					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
+					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
+						for (var i = 0; i < metaBoxSortables.length; i++) {
+							initMetaBoxSortable(metaBoxSortables[i]);
+						}
+					}
+				
+				}
+				function initAllMetaBoxSortableHandles() {
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
+						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
+							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
+						}
+					}
+				}
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
 				}
 
-				document.addEventListener('DOMContentLoaded', handleInit);
-				$('.meta-box-sortables').on('sortstop', handleMetaBoxSortStop);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAll();
+					initAllMetaBoxSortables();
+					initAllMetaBoxSortableHandles();
+					initAllScreenOptions();
+				});
 
 			})(jQuery);
 

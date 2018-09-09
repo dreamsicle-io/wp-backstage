@@ -17,7 +17,7 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'field_groups' => array(), 
@@ -26,7 +26,7 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Field Group Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_field_group_args  The default field grou arguments for this instance.
 	 */
 	protected $default_field_group_args = array(
 		'id'          => '', 
@@ -38,22 +38,21 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
-	 * @since   0.0.1
-	 * @param   array   $args 
-	 * @return  void 
+	 * @param   array  $args  An array of arguments for this instance.
+	 * @return  \WP_Backstage_User  The fully constructed instance of `WP_Backstage_User`. 
 	 */
 	public static function modify( $args = array() ) {
 
 		$User = new WP_Backstage_User( $args );
-
 		$User->init();
+		return $User;
 
 	}
 

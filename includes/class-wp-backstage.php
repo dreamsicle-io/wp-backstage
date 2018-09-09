@@ -34,7 +34,7 @@ class WP_Backstage {
 	/**
 	 * Errors
 	 * 
-	 * @var  array  The array of all errors on the instance.
+	 * @var  array  $errors  The array of all errors on the instance.
 	 */
 	protected $errors = array();
 
@@ -43,70 +43,70 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 * 
-	 * @var  string|array  The screen ID or IDs that apply to this instance.
+	 * @var  string|array  $screen_id  The screen ID or IDs that apply to this instance.
 	 */
 	protected $screen_id = '';
 
 	/**
 	 * Has Media
 	 * 
-	 * @var  bool  Whether this instance has media fields or not.
+	 * @var  bool  $has_media  Whether this instance has media fields or not.
 	 */
 	protected $has_media = false;
 
 	/**
 	 * Has Date
 	 * 
-	 * @var  bool  Whether this instance has date fields or not.
+	 * @var  bool  $has_date  Whether this instance has date fields or not.
 	 */
 	protected $has_date = false;
 
 	/**
 	 * Has Color
 	 * 
-	 * @var  bool  Whether this instance has color fields or not.
+	 * @var  bool  $has_color  Whether this instance has color fields or not.
 	 */
 	protected $has_color = false;
 
 	/**
 	 * Has Address
 	 * 
-	 * @var  bool  Whether this instance has address fields or not.
+	 * @var  bool  $has_address  Whether this instance has address fields or not.
 	 */
 	protected $has_address = false;
 
 	/**
 	 * Has Editor
 	 * 
-	 * @var  bool  Whether this instance has editor fields or not.
+	 * @var  bool  $has_editor  Whether this instance has editor fields or not.
 	 */
 	protected $has_editor = false;
 
 	/**
 	 * Code Editors
 	 * 
-	 * @var  array  An array of this instance's code editors.
+	 * @var  array  $code_editors  An array of this instance's code editors.
 	 */
 	protected $code_editors = array();
 
 	/**
 	 * Countries
 	 * 
-	 * @var  array  An array of localized countries.
+	 * @var  array  $countries  An array of localized countries.
 	 */
 	protected $countries = array();
 
 	/**
 	 * US States
 	 * 
-	 * @var  array  An array of localized US states.
+	 * @var  array  $us_states  An array of localized US states.
 	 */
 	protected $us_states = array();
 
 	/**
 	 * Default Field Args
 	 * 
-	 * @var  array  An array of default field args.
+	 * @var  array  $default_field_args  An array of default field args.
 	 */
 	protected $default_field_args = array(
 		'type'        => 'text', 
@@ -125,14 +125,14 @@ class WP_Backstage {
 	/**
 	 * Date Format
 	 * 
-	 * @var  string  The php date format.
+	 * @var  string  $date_format  The php date format.
 	 */
 	protected $date_format = '';
 
 	/**
 	 * Default Option Args
 	 * 
-	 * @var  array  An array of default option arguments.
+	 * @var  array  $default_option_args  An array of default option arguments.
 	 */
 	protected $default_option_args = array(
 		'value'       => '', 
@@ -143,7 +143,7 @@ class WP_Backstage {
 	/**
 	 * Default Media Uploader Args
 	 * 
-	 * @var  array  An array of default media field arguments.
+	 * @var  array  $default_media_uploader_args  An array of default media field arguments.
 	 */
 	protected $default_media_uploader_args = array(
 		'multiple' => false, 
@@ -153,7 +153,7 @@ class WP_Backstage {
 	/**
 	 * Default Date Args
 	 * 
-	 * @var  array  An array of default date field arguments.
+	 * @var  array  $default_date_args  An array of default date field arguments.
 	 */
 	protected $default_date_args = array(
 		'format' => 'yy-mm-dd', 
@@ -162,7 +162,7 @@ class WP_Backstage {
 	/**
 	 * Default Color Args
 	 * 
-	 * @var  array  An array of default color field arguments.
+	 * @var  array  $default_color_args  An array of default color field arguments.
 	 */
 	protected $default_color_args = array(
 		'mode'     => '', 
@@ -172,7 +172,7 @@ class WP_Backstage {
 	/**
 	 * Default Editor Args
 	 * 
-	 * @var  array  An array of default editor field arguments.
+	 * @var  array  $default_editor_args  An array of default editor field arguments.
 	 */
 	protected $default_editor_args = array(
 		'max_width'     => '100%', 
@@ -184,7 +184,7 @@ class WP_Backstage {
 	/**
 	 * Default Code Args
 	 * 
-	 * @var  array  An array of default code editor arguments.
+	 * @var  array  $default_code_args  An array of default code editor arguments.
 	 */
 	protected $default_code_args = array(
 		'mime'      => 'text/html', 
@@ -194,7 +194,7 @@ class WP_Backstage {
 	/**
 	 * Default Address Args
 	 * 
-	 * @var  array  An array of default address arguments.
+	 * @var  array  $default_address_args  An array of default address arguments.
 	 */
 	protected $default_address_args = array(
 		'max_width' => '100%', 
@@ -203,7 +203,7 @@ class WP_Backstage {
 	/**
 	 * Default Address Values
 	 * 
-	 * @var  array  An array of default address field arguments.
+	 * @var  array  $default_address_values  An array of default address field arguments.
 	 */
 	protected $default_address_values = array(
 		'country'   => 'US', 
@@ -217,7 +217,7 @@ class WP_Backstage {
 	/**
 	 * Remove Label For Fields
 	 * 
-	 * @var  array  Field types that should have the `for` attribute removed labels.
+	 * @var  array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
 	 */
 	protected $remove_label_for_fields = array( 
 		'radio', 
@@ -229,7 +229,7 @@ class WP_Backstage {
 	/**
 	 * Non Regular Text Fields
 	 * 
-	 * @var  array  Field types that do not include text-style inputs.
+	 * @var  array  $non_regular_text_fields  Field types that do not include text-style inputs.
 	 */
 	protected $non_regular_text_fields = array( 
 		'number', 
@@ -249,7 +249,7 @@ class WP_Backstage {
 	/**
 	 * Textarea Control Fields
 	 * 
-	 * @var  array  Field types that use a textarea input as a control.
+	 * @var  array  $textarea_control_fields  Field types that use a textarea input as a control.
 	 */
 	protected $textarea_control_fields = array( 
 		'editor', 
@@ -262,7 +262,7 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  KSES configuration for paragraph tags.
+	 * @var  array  $kses_p  KSES configuration for paragraph tags.
 	 */
 	protected $kses_p = array(
 		'a' => array(
@@ -306,7 +306,7 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  KSES configuration for label tags.
+	 * @var  array  $kses_label  KSES configuration for label tags.
 	 */
 	protected $kses_label = array(
 		'em' => array(
@@ -339,7 +339,7 @@ class WP_Backstage {
 	 * localized label and set the number of options that are necessary for each 
 	 * time piece (`hour`, `minute`, `second`) respectively.
 	 * 
-	 * @var  array  The configuration for time fields.
+	 * @var  array  $time_pieces  The configuration for time fields.
 	 */
 	protected $time_pieces = array();
 
@@ -348,7 +348,7 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 *
-	 * @var  array  Global settings for CodeMirror.
+	 * @var  array $global_code_settings  Global settings for CodeMirror.
 	 */
 	protected $global_code_settings = array( 
 		'codemirror' => array(
@@ -362,7 +362,7 @@ class WP_Backstage {
 	 * @link  https://developer.wordpress.org/reference/functions/wp_nonce_field/ wp_nonce_field
 	 * @link  https://codex.wordpress.org/WordPress_Nonces WP nonces
 	 * 
-	 * @var  string
+	 * @var  string  $nonce_key  The key for nonce fields.
 	 */
 	protected $nonce_key = '_wp_backstage_nonce';
 

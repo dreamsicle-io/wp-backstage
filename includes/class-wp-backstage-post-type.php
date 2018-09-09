@@ -667,7 +667,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 				$value = get_post_meta( $post_id, $column, true );
 
 				// short circuit the column content and allow developer to add their own.
-				$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), '', $field, $value, $post_id );
+				$content = apply_filters( $this->format_column_content_filter( $column ), '', $field, $value, $post_id );
 				if ( ! empty( $content ) ) {
 					echo $content;
 					return;
@@ -808,11 +808,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 				}
 
-				do_action( $this->format_field_action( $this->slug, 'before' ), $field, $post );
+				do_action( $this->format_field_action( 'before' ), $field, $post );
 
 				$this->render_field_by_type( $field );
 
-				do_action( $this->format_field_action( $this->slug, 'after' ), $field, $post );
+				do_action( $this->format_field_action( 'after' ), $field, $post );
 
 			}
 

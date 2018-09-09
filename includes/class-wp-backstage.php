@@ -25,8 +25,7 @@ class WP_Backstage {
 	 * `sanitize_title_with_dashes()` function that is used when sanitizing 
 	 * slugs.
 	 *
-	 * @link https://developer.wordpress.org/reference/functions/sanitize_title_with_dashes/
-	 * @link https://codex.wordpress.org/Function_Reference/sanitize_title_with_dashes/
+	 * @link https://developer.wordpress.org/reference/functions/sanitize_title_with_dashes/ sanitize_title_with_dashes()
 	 * 
 	 * @var  string  $slug  the text slug that identifies the instance.
 	 */
@@ -42,8 +41,7 @@ class WP_Backstage {
 	/**
 	 * Screen ID
 	 *
-	 * @link  https://developer.wordpress.org/reference/functions/get_current_screen/
-	 * @link  https://codex.wordpress.org/Function_Reference/get_current_screen/
+	 * @link  https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 * 
 	 * @var  string|array  The screen ID or IDs that apply to this instance.
 	 */
@@ -262,8 +260,7 @@ class WP_Backstage {
 	/**
 	 * KSES P
 	 *
-	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/
-	 * @link  https://codex.wordpress.org/Function_Reference/wp_kses/
+	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
 	 * @var  array  KSES configuration for paragraph tags.
 	 */
@@ -307,8 +304,7 @@ class WP_Backstage {
 	/**
 	 * KSES Label
 	 *
-	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/
-	 * @link  https://codex.wordpress.org/Function_Reference/wp_kses/
+	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
 	 * @var  array  KSES configuration for label tags.
 	 */
@@ -338,7 +334,7 @@ class WP_Backstage {
 	/**
 	 * Time Pieces
 	 *
-	 * This configuration is used In order to create the 3 `<select>` fields 
+	 * This configuration is used in order to create the 3 `<select>` fields 
 	 * needed to create a time string as `00:00:00`. This will register the 
 	 * localized label and set the number of options that are necessary for each 
 	 * time piece (`hour`, `minute`, `second`) respectively.
@@ -350,7 +346,7 @@ class WP_Backstage {
 	/**
 	 * Global Code Settings
 	 *
-	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/
+	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 *
 	 * @var  array  Global settings for CodeMirror.
 	 */
@@ -363,8 +359,8 @@ class WP_Backstage {
 	/**
 	 * nonce Key
 	 *
-	 * @link  https://codex.wordpress.org/Function_Reference/wp_nonce_field
-	 * @link  https://codex.wordpress.org/WordPress_Nonces
+	 * @link  https://developer.wordpress.org/reference/functions/wp_nonce_field/ wp_nonce_field
+	 * @link  https://codex.wordpress.org/WordPress_Nonces WP nonces
 	 * 
 	 * @var  string
 	 */
@@ -729,16 +725,13 @@ class WP_Backstage {
 	 * @return  bool  Whether the instance has errors or not. 
 	 */
 	protected function has_errors() {
-
 		return is_array( $this->errors ) && ! empty( $this->errors );
-
 	}
 
 	/**
 	 * Print Errors
 	 *
-	 * @link     https://developer.wordpress.org/reference/classes/wp_error/
-	 * @link     https://codex.wordpress.org/Class_Reference/WP_Error/
+	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
@@ -780,7 +773,7 @@ class WP_Backstage {
 	 *
 	 * A utility method to easily check values returned by `get_current_screen()`. 
 	 *
-	 * @link     https://developer.wordpress.org/reference/functions/get_current_screen/
+	 * @link     https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 * 
 	 * @since   0.0.1
 	 * @param   string        $key    The key of the `WP_Screen` object to check.
@@ -804,13 +797,13 @@ class WP_Backstage {
 	 *
 	 * Hook all methods to WordPress.
 	 *
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_head/
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts/
-	 * @link    https://developer.wordpress.org/reference/functions/add_action/
-	 * @link    https://developer.wordpress.org/reference/functions/add_filter/
-	 * @link    https://developer.wordpress.org/plugins/hooks/actions/
-	 * @link    https://developer.wordpress.org/plugins/hooks/filters/
+	 * @link    https://developer.wordpress.org/reference/functions/add_action/ add_action()
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/ hook: admin_enqueue_scripts
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_notices/ hook: admin_notices
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_head/ hook: admin_head
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts/ hook: admin_print_footer_scripts
+	 * @link    https://developer.wordpress.org/plugins/hooks/actions/ WP Actions
+	 * @link    https://developer.wordpress.org/plugins/hooks/filters/ WP Filters
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
@@ -837,8 +830,8 @@ class WP_Backstage {
 	 * instance. This provides a better place to hook inline styles. This is 
 	 * attached to the `admin_head` hook.
 	 *
-	 * @link    https://developer.wordpress.org/reference/functions/do_action/
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_head/
+	 * @link    https://developer.wordpress.org/reference/functions/do_action/ do_action()
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_head/ hook: admin_head
 	 *
 	 * @since   0.0.1
 	 * @return  void 
@@ -859,8 +852,8 @@ class WP_Backstage {
 	 * instance. This provides a better place to hook inline scripts. This is 
 	 * attached to the `admin_print_footer_scripts`.
 	 *
-	 * @link    https://developer.wordpress.org/reference/functions/do_action/
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts/
+	 * @link    https://developer.wordpress.org/reference/functions/do_action/ do_action()
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts/ hook: admin_print_footer_scripts
 	 *
 	 * @since   0.0.1
 	 * @return  void 
@@ -1034,16 +1027,14 @@ class WP_Backstage {
 	 * for loading up jQuery UI Core and required jQuery UI widgets like the date 
 	 * picker and sortable. Finally, this will initialize all code editor instances.
 	 *
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
-	 * @link    https://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_style/
-	 * @link    https://developer.wordpress.org/themes/basics/including-css-javascript/
-	 * @link    https://developer.wordpress.org/reference/functions/wp_add_inline_script/
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_editor/
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_media/
-	 * @link    https://developer.wordpress.org/reference/functions/did_action/
-	 * @link    https://codex.wordpress.org/Function_Reference/did_action/
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/ wp_enqueue_script()
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_style/ wp_enqueue_style()
+	 * @link    https://developer.wordpress.org/reference/functions/wp_add_inline_script/ wp_add_inline_script()
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_editor/ wp_enqueue_editor()
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_media/ wp_enqueue_media()
+	 * @link    https://developer.wordpress.org/reference/functions/did_action/ did_action()
+	 * @link    https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/ hook: admin_enqueue_scripts
+	 * @link    https://developer.wordpress.org/themes/basics/including-css-javascript/ Including CSS and Javascript in WP
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
@@ -1145,8 +1136,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Text
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/sanitize_text_field/
+	 * @link    https://developer.wordpress.org/reference/functions/sanitize_text_field/ sanitize_text_field()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a string.
@@ -1159,8 +1150,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Textarea
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/sanitize_textarea_field/
+	 * @link    https://developer.wordpress.org/reference/functions/sanitize_textarea_field/ sanitize_textarea_field()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a string.
@@ -1173,8 +1164,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Editor
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/wp_kses_post/
+	 * @link    https://developer.wordpress.org/reference/functions/wp_kses_post/ wp_kses_post()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a string.
@@ -1187,7 +1178,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Code
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a string.
@@ -1200,7 +1191,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Number
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   int|float  $value  The value to sanitize. Expects a numeric value.
@@ -1213,9 +1204,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize URL
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/esc_url/
-	 * @link    https://codex.wordpress.org/Function_Reference/esc_url
+	 * @link    https://codex.wordpress.org/Function_Reference/esc_url esc_url()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a URL.
@@ -1228,9 +1218,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Email
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/sanitize_email/
-	 * @link    https://codex.wordpress.org/Function_Reference/sanitize_email
+	 * @link    https://developer.wordpress.org/reference/functions/sanitize_email/ sanitize_email()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects an email address.
@@ -1243,7 +1232,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Checkbox
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   bool  $value  The value to sanitize. Expects a value that can be cast to a boolean.
@@ -1256,7 +1245,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Checkbox Set
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   array  $value  The value to sanitize. Expects an array of values.
@@ -1269,8 +1258,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Address
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/esc_attr/
+	 * @link    https://developer.wordpress.org/reference/functions/esc_attr/ esc_attr()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   array  $value  The value to sanitize. Expects an array of address `key => value` pairs.
@@ -1283,8 +1272,8 @@ class WP_Backstage {
 	/**
 	 * Sanitize Time
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/esc_attr/
+	 * @link    https://developer.wordpress.org/reference/functions/esc_attr/ esc_attr()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   array   $value  The value to sanitize. Expects an array of 3 2-digit time values.
@@ -1297,7 +1286,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Single Media
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   int  $value  The value to sanitize. Expects an attachment ID.
@@ -1310,7 +1299,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Multi Media
 	 *
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   string  $value  The value to sanitize. Expects a CSV of attachment IDs.
@@ -1323,7 +1312,7 @@ class WP_Backstage {
 	/**
 	 * Sanitize Field
 	 *
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   array  $field  The field args.
@@ -1388,8 +1377,8 @@ class WP_Backstage {
 	 * function. This method provides a mask of all of this class's 
 	 * `sanitize_field` methods as strings per field type.
 	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
-	 * @link    https://developer.wordpress.org/reference/functions/register_setting/
+	 * @link    https://developer.wordpress.org/reference/functions/register_setting/ register_setting()
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
 	 * @param   array   $field  The field args.
@@ -1524,6 +1513,10 @@ class WP_Backstage {
 
 	/**
 	 * Render Field By Type
+	 *
+	 * This will render a field by type, given an array of field arguments. 
+	 * Depending on the field type, different render field methods will be 
+	 * called in order to render the appropriate field HTML.
 	 * 
 	 * @since   0.0.1
 	 * @param   array  $field  An array of field args.
@@ -1579,9 +1572,15 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Format Value by Field
+	 * Format Field Value
+	 *
+	 * This will format a fields value based on a given array of field args. 
+	 * According to the field type, different formatting will be applied to the 
+	 * value.
 	 * 
 	 * @since   0.0.1
+	 * @param   mixed  $value  The value to format.
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void
 	 */
 	protected function format_field_value( $value = null, $field = array() ) {
@@ -1702,9 +1701,20 @@ class WP_Backstage {
 
 	/**
 	 * Add Field Columns
+	 *
+	 * This will embed the field columns into the columns array. Looping through 
+	 * the already-set column names, if the column name is `comments`, `date`, 
+	 * or `posts`, The new field columns will be placed before the first instance 
+	 * of one of them. This method is hooked by objects screens that have tables, 
+	 * like `WP_Backstage_User`, `WP_Backstage_Post_Type`, and 
+	 * `WP_Backstage_Taxonomy`. Columns will only be placed for the field if the 
+	 * field's `has_column` argument is set to `true`.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/ hook: manage_{$post_type}_posts_columns
 	 * 
 	 * @since   0.0.1
-	 * @return  array  The filtered columns. 
+	 * @param   string  $columns  The columns that are currently set.
+	 * @return  array   The filtered columns with the new columns added. 
 	 */
 	public function add_field_columns( $columns = array() ) {
 
@@ -1726,10 +1736,12 @@ class WP_Backstage {
 				// unset removed columns to make space 
 				// also ensure storage of the original
 				// column for resetting later
-				foreach ( $columns_to_remove as $removed ) {
-					if ( isset( $columns[$removed] ) ) {
-						$removed_columns[$removed] = $columns[$removed];
-						unset( $columns[$removed] );
+				if ( ! empty( $columns_to_remove ) ) {
+					foreach ( $columns_to_remove as $removed ) {
+						if ( isset( $columns[$removed] ) ) {
+							$removed_columns[$removed] = $columns[$removed];
+							unset( $columns[$removed] );
+						}
 					}
 				}
 
@@ -1740,9 +1752,11 @@ class WP_Backstage {
 				}
 
 				// reset stored removed columns
-				foreach ( $columns_to_remove as $removed ) {
-					if ( isset( $removed_columns[$removed] ) ) {
-						$columns[$removed] = $removed_columns[$removed];
+				if ( ! empty( $columns_to_remove ) ) {
+					foreach ( $columns_to_remove as $removed ) {
+						if ( isset( $removed_columns[$removed] ) ) {
+							$columns[$removed] = $removed_columns[$removed];
+						}
 					}
 				}
 
@@ -1756,9 +1770,17 @@ class WP_Backstage {
 
 	/**
 	 * Manage Sortable Columns
+	 *
+	 * This will set which columns are sortable. This method is hooked by object 
+	 * screens that have tables, like `WP_Backstage_User`, 
+	 * `WP_Backstage_Post_Type`, and `WP_Backstage_Taxonomy`. Columns will only 
+	 * be made sortable if the field's `is_sortable` argument is set to `true`.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/manage_this-screen-id_sortable_columns/ hook: manage_{$screen_id}_sortable_columns
 	 * 
 	 * @since   0.0.1
-	 * @return  array  The filtered sortable columns. 
+	 * @param   array  $columns  The sortable columns that are currently set.
+	 * @return  array  The sortable columns with the new sortable columns added. 
 	 */
 	public function manage_sortable_columns( $columns = array() ) {
 
@@ -1784,8 +1806,12 @@ class WP_Backstage {
 
 	/**
 	 * Format Attrs
+	 *
+	 * A utility method for formatting an array of `$key => $value` pairs into a
+	 * string of sanitized HTML element attributes.
 	 * 
 	 * @since   0.0.1
+	 * @param   array   $attrs  An array of attributes as `$key => $value` pairs.
 	 * @return  string  The imploded, escaped, formatted attributes.
 	 */
 	protected function format_attrs( $attrs = array() ) {
@@ -1811,9 +1837,16 @@ class WP_Backstage {
 
 	/**
 	 * Get Option Labels
+	 *
+	 * A utility method to get the localized labels for a given field. This will 
+	 * return a `$value => $label` array that can be used to pluck an option 
+	 * label for a given option value for a field. This is useful when displaying 
+	 * the value of a `radio`, `checkbox`, or `checkbox_set` where the value is 
+	 * not "pretty".
 	 * 
 	 * @since   0.0.1
-	 * @return  void
+	 * @param   array  $field  An array of field arguments.
+	 * @return  array  An array of `$value => $label` pairs.
 	 */
 	protected function get_option_labels( $field = array() ) {
 		
@@ -1834,8 +1867,13 @@ class WP_Backstage {
 
 	/**
 	 * Render Input
+	 *
+	 * Render an input field. This method will handle all HTML `<input>` types 
+	 * except for `radio`, `checkbox`, and those with their own methods like 
+	 * `date`. 
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_input( $field = array() ) {
@@ -1892,8 +1930,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Date
+	 *
+	 * Render a date field using `jQuery UI Datepicker`. This was separated out 
+	 * from this class's `render_input()` method because of the JavaScript 
+	 * integration. This UI method ensures a full-proof way of ensuring date 
+	 * strings are always ISO compliant.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_date( $field = array() ) {
@@ -1955,9 +1999,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Time Options
+	 *
+	 * This is used in order to create all `<option>` elements needed to create 
+	 * a time piece `<select>` as used in this class's `render_time()` method. 
 	 * 
 	 * @since   0.0.1
-	 * @return  void 
+	 * @param   int     $number    The number of options to render.
+	 * @param   string  $selected  The selected option's value.
+	 * @return  void
 	 */
 	protected function render_time_options( $number = 0, $selected = '' ) {
 
@@ -1977,8 +2026,13 @@ class WP_Backstage {
 
 	/**
 	 * Render Time
+	 *
+	 * Render a time field. This will create the 3 `<select>` fields needed to 
+	 * create a time string as `00:00:00`. This UI method ensures a full-proof
+	 * way of ensuring time strings are always ISO compliant.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_time( $field = array() ) {
@@ -2072,8 +2126,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Color
+	 *
+	 * Render a color picker field. This uses the the native `Iris` JavaScript 
+	 * library as included in WordPress Core to render the same robust color 
+	 * pickers found in WordPress. The field is configurable with arguments for 
+	 * `hsl` and `hsv` color modes, as well as custom color palettes.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_color( $field = array() ) {
@@ -2140,8 +2200,12 @@ class WP_Backstage {
 
 	/**
 	 * Render Checkbox
+	 *
+	 * Render a checkbox field. This was separated out from this class's 
+	 * `render_input()` method because the markup is significantly different.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_checkbox( $field = array() ) {
@@ -2193,8 +2257,11 @@ class WP_Backstage {
 
 	/**
 	 * Render Textarea
+	 *
+	 * Render a textarea field.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_textarea( $field = array() ) {
@@ -2253,9 +2320,16 @@ class WP_Backstage {
 	<?php }
 
 	/**
-	 * Render editor
+	 * Render Editor
+	 *
+	 * This will render a WordPress editor complete with `TinyMCE` and 
+	 * `quicktags`. These provide a WYSIWYG environment where content creation 
+	 * can happen in a familiar WordPress flow. All WordPress caveats, like 
+	 * bugs when moving WP Editors around in the DOM in meta boxes, and bugs 
+	 * when displaying a meta box that was hidden on page load, have been handled.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_editor( $field = array() ) {
@@ -2324,8 +2398,17 @@ class WP_Backstage {
 
 	/**
 	 * Render Code
+	 *
+	 * Render a code editor using the native `CodeMirror` integration in 
+	 * WordPress Core. This field supports multiple mime types like 
+	 * `text/javascript`, `text/css`, `text/html`, and `application/pdf`, etc. 
+	 * WordPress's provided configuration will lint, show errors in code, and 
+	 * provide autocompletes. All WordPress caveats, like bugs when moving code 
+	 * editors around in the DOM in meta boxes, and bugs when displaying a meta 
+	 * box that was hidden on page load, have been handled.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_code( $field = array() ) {
@@ -2388,8 +2471,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Select
+	 *
+	 * Render a select that allow for a single value to be set for a 
+	 * field. The options are set as an array of the field's `options` key. 
+	 * These can be dynamically created by looping post types, taxonomies, 
+	 * users, options, etc.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_select( $field = array() ) {
@@ -2466,8 +2555,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Radio
+	 *
+	 * Render a set of radios that allow for a single value to be set for a 
+	 * field. The options are set as an array of the field's `options` key. 
+	 * These can be dynamically created by looping post types, taxonomies, 
+	 * users, options, etc.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_radio( $field = array() ) {
@@ -2549,8 +2644,14 @@ class WP_Backstage {
 
 	/**
 	 * Render Checkbox Set
+	 *
+	 * Render a set of checkboxes that allow for multiple values to be set for a 
+	 * field. The options are set as an array of the field's `options` key. 
+	 * These can be dynamically created by looping post types, taxonomies, 
+	 * users, options, etc.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_checkbox_set( $field = array() ) {
@@ -2633,6 +2734,16 @@ class WP_Backstage {
 
 	<?php }
 
+	/**
+	 * Get Media Uploader Label
+	 *
+	 * A utility method to get a label for various UI elements in the media 
+	 * uploader field's markup. 
+	 * 
+	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the field's label.
+	 * @param  array   $field     An array of field arguments.
+	 * @return strint  The formatted text.
+	 */
 	protected function get_media_uploader_label( $template = '', $field = array() ) {
 
 		if ( ! empty( $template ) ) {
@@ -2655,10 +2766,16 @@ class WP_Backstage {
 	/**
 	 * Render Media Uploader Thumbnail
 	 *
+	 * Render the media uploader thumbnail used for displaying selected images, 
+	 * and for rendering the template that the media field will use in JS to 
+	 * render previews. Note that for `$type`, `clone` is used for actual 
+	 * thumbnails while `template` is used to output a template for the media 
+	 * uploader.
+	 *
 	 * @since   0.0.1 
-	 * @param   string  $attachment_id 
-	 * @param   string  $type           `template` or `clone`.
-	 * @param   string  $args           media uploader field args.
+	 * @param   string  $attachment_id  The attachment ID of the media post to render.
+	 * @param   string  $type           The type of thumbnail as `template` or `clone`. 
+	 * @param   string  $args           An array of media uploader field arguments.
 	 * @return  void
 	 */
 	protected function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone', $args = array() ) {
@@ -2749,9 +2866,17 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Render Checkbox Set
+	 * Render Media Uploader
+	 *
+	 * The media uploader field is capable of selecting media files of all mime 
+	 * types, and supports single and multiple image selection. This field is 
+	 * deeply integrated into the WordPress Media Uploader, and there are 
+	 * arguments for mime type selection. Fields that allow multiple attachments 
+	 * to be selected also support selective removal, addition, and drag-and-drop
+	 * sorting.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_media_uploader( $field = array() ) {
@@ -2875,9 +3000,16 @@ class WP_Backstage {
 	<?php } 
 
 	/**
-	 * Render Input
+	 * Render Address
+	 *
+	 * Render a group of fields that will provide all necessary inputs to create 
+	 * a full address. The value of this field is an array of address pieces as 
+	 * `country`, `address`, `address_2`, `city`, `state`, `zip`. If the US is 
+	 * selected as the country, then a `<select>` of localized US states will 
+	 * replace the "State/Province/Region" input.
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_address( $field = array() ) {
@@ -3150,6 +3282,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Editor Style
+	 *
+	 * Conditionally inlines the editor field style if this instance has any 
+	 * editor fields.
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3182,6 +3317,15 @@ class WP_Backstage {
 
 	/**
 	 * Inline Media Uploader Script
+	 *
+	 * Conditionally inlines the media uploader script if this instance has any 
+	 * media uploaders.
+	 *
+	 * @link    https://codex.wordpress.org/Javascript_Reference/wp.media wp.media
+	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
+	 * @link    https://jqueryui.com/sortable/ jQuery UI Sortable
+	 * @link    https://jqueryui.com/ jQuery UI
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3327,15 +3471,18 @@ class WP_Backstage {
 						$(preview).sortable('refresh');
 					}
 					function handleSortStop(e = null, ui = null) {
-						const clones = getClones();
-						const saveIds = [];
-						if (clones && (clones.length > 0)) {
-							for (var i = 0; i < clones.length; i++) {
-								const attachmentId = parseInt(clones[i].getAttribute('data-media-uploader-clone'), 10);
-								saveIds.push(attachmentId);
+						const { item } = ui;
+						if (item[0].classList.contains('attachment')) {
+							const clones = getClones();
+							const saveIds = [];
+							if (clones && (clones.length > 0)) {
+								for (var i = 0; i < clones.length; i++) {
+									const attachmentId = parseInt(clones[i].getAttribute('data-media-uploader-clone'), 10);
+									saveIds.push(attachmentId);
+								}
 							}
+							input.value = saveIds.join(',');
 						}
-						input.value = saveIds.join(',');
 					}
 					function handleCloneMouseEnter(e = null) {
 						if (e.target.getAttribute('data-media-uploader-clone')) {
@@ -3438,6 +3585,14 @@ class WP_Backstage {
 
 	/**
 	 * Inline Datepicker Script
+	 *
+	 * Conditionally inlines the date picker script if this instance has any 
+	 * date fields.
+	 * 
+	 * @link    https://jqueryui.com/datepicker/ jQuery UI Datepicker
+	 * @link    https://jqueryui.com/ jQuery UI
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
+	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3490,6 +3645,14 @@ class WP_Backstage {
 
 	/**
 	 * Inline Colorpicker Script
+	 *
+	 * Conditionally inlines the color picker script if this instance has any 
+	 * color fields.
+	 * 
+	 * @link    http://automattic.github.io/Iris/ Iris
+	 * @link    https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/ New Color Picker in WP 3.5
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
+	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3566,6 +3729,15 @@ class WP_Backstage {
 
 	/**
 	 * Inline Code Editor Script
+	 *
+	 * Conditionally inlines the code editor script if this instance has any 
+	 * code editor fields.
+	 * 
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
+	 * @link    https://make.wordpress.org/core/tag/codemirror/ CodeMirror in WP
+	 * @link    https://codemirror.net/ CodeMirror
+	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
+	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3650,7 +3822,9 @@ class WP_Backstage {
 
 					function handleSortStop(e = null, ui = null) {
 						const { item } = ui;
-						refreshAll(item[0]);
+						if (item[0].classList.contains('postbox')) {
+							refreshAll(item[0]);
+						}
 					}
 
 					if (sortable) {
@@ -3713,6 +3887,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Address Script
+	 *
+	 * Conditionally inlines the address script if this instance has any 
+	 * address fields.
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3789,11 +3966,14 @@ class WP_Backstage {
 	/**
 	 * Inline Editor Script
 	 *
-	 * @link     https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/
-	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor
-	 * @link     https://developer.wordpress.org/reference/functions/wp_enqueue_editor/
-	 * @link     https://developer.wordpress.org/reference/hooks/wp_enqueue_editor/
-	 * @link     https://www.tiny.cloud/docs/demo/basic-example/
+	 * Conditionally inlines the editor script if this instance has any 
+	 * editor fields.
+	 *
+	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor wp.editor
+	 * @link     https://developer.wordpress.org/reference/functions/wp_enqueue_editor/ wp_enqueue_editor()
+	 * @link     https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/ WP Editor API Changes in 4.8
+	 * @link     https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
+	 * @link     https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
@@ -3889,7 +4069,9 @@ class WP_Backstage {
 					
 					function handleSortStop(e = null, ui = null) {
 						const { item } = ui;
-						reInitAll(item[0]);
+						if (item[0].classList.contains('postbox')) {
+							reInitAll(item[0]);
+						}
 					}
 
 					if (sortable) {

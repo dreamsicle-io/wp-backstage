@@ -319,11 +319,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				<div class="form-field"><?php 
 
-					do_action( $this->format_field_action( $this->slug . '_add', 'before' ), $field );
+					do_action( $this->format_field_action( 'add_before' ), $field );
 
 					$this->render_field_by_type( $field );
 
-					do_action( $this->format_field_action( $this->slug . '_add', 'after' ), $field );
+					do_action( $this->format_field_action( 'add_after' ), $field );
 
 				?></div>
 
@@ -386,11 +386,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					<td><?php 
 
-						do_action( $this->format_field_action( $this->slug . '_edit', 'before' ), $field );
+						do_action( $this->format_field_action( 'edit_before' ), $field );
 
 						$this->render_field_by_type( $field ); 
 
-						do_action( $this->format_field_action( $this->slug . '_edit', 'after' ), $field );
+						do_action( $this->format_field_action( 'edit_after' ), $field );
 
 					?></td>
 
@@ -468,7 +468,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			$value = get_term_meta( $term_id, $column, true );
 
 			// short circuit the column content and allow developer to add their own.
-			$content = apply_filters( $this->format_column_content_filter( $this->slug, $column ), $content, $field, $value, $term_id );
+			$content = apply_filters( $this->format_column_content_filter( $column ), $content, $field, $value, $term_id );
 			if ( ! empty( $content ) ) {
 				return $content;
 			}

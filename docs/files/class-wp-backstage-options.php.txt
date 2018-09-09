@@ -316,7 +316,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
-	protected function render_setting( $args = array() ) {
+	public function render_setting( $args = array() ) {
 
 		$args = wp_parse_args( $args, array(
 			'label_for' => '', 
@@ -324,11 +324,11 @@ class WP_Backstage_Options extends WP_Backstage {
 			'field'     => array(), 
 		) );
 
-		do_action( $this->format_field_action( $this->slug, 'before' ), $args['field'] );
+		do_action( $this->format_field_action( 'before' ), $args['field'] );
 
 		$this->render_field_by_type( $args['field'] );
 
-		do_action( $this->format_field_action( $this->slug, 'after' ), $args['field'] );
+		do_action( $this->format_field_action( 'after' ), $args['field'] );
 
 	}
 
@@ -390,7 +390,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
-	protected function render_section_description( $args = array() ) {
+	public function render_section_description( $args = array() ) {
 
 		$args = wp_parse_args( $args, array(
 			'id'       => '', 
@@ -416,7 +416,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
-	protected function render_page() { ?>
+	public function render_page() { ?>
 
 		<div class="wrap">
 

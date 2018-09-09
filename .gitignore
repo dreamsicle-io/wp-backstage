@@ -1,0 +1,9 @@
+# Vendor Files
+/vendor
+
+# Log Files
+/logs
+*.log
+
+# Misc
+*.DS_Store

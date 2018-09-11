@@ -92,15 +92,15 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Add
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
-	 * @return  void 
+	 * @param   string                  $slug 
+	 * @param   array                   $args 
+	 * @return  WP_Backstage_Post_Type  A fully constructed `WP_Backstage_Post_Type` instance. 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
 		$Post_Type = new WP_Backstage_Post_Type( $slug, $args );
-
 		$Post_Type->init();
+		return $Post_Type;
 
 	}
 

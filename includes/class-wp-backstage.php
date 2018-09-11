@@ -1143,7 +1143,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a string.
 	 * @return  string  a text field sanitized string. 
 	 */
-	protected function sanitize_text( $value = '' ) {
+	public function sanitize_text( $value = '' ) {
 		return sanitize_text_field( $value );
 	}
 
@@ -1157,7 +1157,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a string.
 	 * @return  string  a textarea sanitized string. 
 	 */
-	protected function sanitize_textarea( $value = '' ) {
+	public function sanitize_textarea( $value = '' ) {
 		return sanitize_textarea_field( $value );
 	}
 
@@ -1171,7 +1171,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a string.
 	 * @return  string  the string sanitized as post content. 
 	 */
-	protected function sanitize_editor( $value = '' ) {
+	public function sanitize_editor( $value = '' ) {
 		return wp_kses_post( $value );
 	}
 
@@ -1184,7 +1184,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a string.
 	 * @return  string  An unsanitized string. 
 	 */
-	protected function sanitize_code( $value = '' ) {
+	public function sanitize_code( $value = '' ) {
 		return is_string( $value ) ? $value : ''; // unsanitized
 	}
 
@@ -1197,7 +1197,7 @@ class WP_Backstage {
 	 * @param   int|float  $value  The value to sanitize. Expects a numeric value.
 	 * @return  float      a float, or null if empty. 
 	 */
-	protected function sanitize_number( $value = null ) {
+	public function sanitize_number( $value = null ) {
 		return ( $value !== '' ) ? floatval( $value ) : null;
 	}
 
@@ -1211,7 +1211,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a URL.
 	 * @return  string  A URL. 
 	 */
-	protected function sanitize_url( $value = '' ) {
+	public function sanitize_url( $value = '' ) {
 		return esc_url( $value );
 	}
 
@@ -1225,7 +1225,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects an email address.
 	 * @return  string  An email address. 
 	 */
-	protected function sanitize_email( $value = '' ) {
+	public function sanitize_email( $value = '' ) {
 		return sanitize_email( $value );
 	}
 
@@ -1238,7 +1238,7 @@ class WP_Backstage {
 	 * @param   bool  $value  The value to sanitize. Expects a value that can be cast to a boolean.
 	 * @return  bool  A boolean. 
 	 */
-	protected function sanitize_checkbox( $value = false ) {
+	public function sanitize_checkbox( $value = false ) {
 		return boolval( $value );
 	}
 
@@ -1251,7 +1251,7 @@ class WP_Backstage {
 	 * @param   array  $value  The value to sanitize. Expects an array of values.
 	 * @return  array  An array of values. 
 	 */
-	protected function sanitize_checkbox_set( $value = array() ) {
+	public function sanitize_checkbox_set( $value = array() ) {
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1265,7 +1265,7 @@ class WP_Backstage {
 	 * @param   array  $value  The value to sanitize. Expects an array of address `key => value` pairs.
 	 * @return  array  An array of address key => value pairs. 
 	 */
-	protected function sanitize_address( $value = array() ) {
+	public function sanitize_address( $value = array() ) {
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1279,7 +1279,7 @@ class WP_Backstage {
 	 * @param   array   $value  The value to sanitize. Expects an array of 3 2-digit time values.
 	 * @return  string  a string as `00:00:00`. 
 	 */
-	protected function sanitize_time( $value = array() ) {
+	public function sanitize_time( $value = array() ) {
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 
@@ -1292,7 +1292,7 @@ class WP_Backstage {
 	 * @param   int  $value  The value to sanitize. Expects an attachment ID.
 	 * @return  int  An integer, or null if empty. 
 	 */
-	protected function sanitize_single_media( $value = null ) {
+	public function sanitize_single_media( $value = null ) {
 		return ( $value !== '' ) ? intval( $value ) : null;
 	}
 
@@ -1305,7 +1305,7 @@ class WP_Backstage {
 	 * @param   string  $value  The value to sanitize. Expects a CSV of attachment IDs.
 	 * @return  array   An array of integers. 
 	 */
-	protected function sanitize_multi_media( $value = '' ) {
+	public function sanitize_multi_media( $value = '' ) {
 		return ! empty( $value ) ? array_map( 'intval', explode( ',', $value ) ) : null;
 	}
 
@@ -1319,7 +1319,7 @@ class WP_Backstage {
 	 * @param   mixed  $value  The field value.
 	 * @return  mixed  The sanitized value according to the field type. 
 	 */
-	protected function sanitize_field( $field = array(), $value = null ) {
+	public function sanitize_field( $field = array(), $value = null ) {
 
 		switch ( $field['type'] ) {
 			case 'textarea':
@@ -3834,7 +3834,7 @@ class WP_Backstage {
 				function initMetaBoxSortableHandle(handle = null) {
 
 					function handleClick(e = null) {
-						let { parentNode } = e.target;
+						var { parentNode } = e.target;
 						while (! parentNode.classList.contains('postbox')) {
 							parentNode = parentNode.parentNode;
 						}
@@ -4081,7 +4081,7 @@ class WP_Backstage {
 				function initMetaBoxSortableHandle(handle = null) {
 					
 					function handleClick(e = null) {
-						let { parentNode } = e.target;
+						var { parentNode } = e.target;
 						while (! parentNode.classList.contains('postbox')) {
 							parentNode = parentNode.parentNode;
 						}

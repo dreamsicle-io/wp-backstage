@@ -17,7 +17,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'singular_name'   => '', 
@@ -34,7 +34,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $required_args  The required argument keys for this instance.
 	 */
 	protected $required_args = array(
 		'singular_name', 
@@ -43,17 +43,19 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	/**
 	 * Add
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
-	 * @return  void 
+	 * @param   string                 $slug  The slug for the taxonomy.
+	 * @param   array                  $args  The arguments for this instance.
+	 * @return  WP_Backstage_Taxonomy  An fully constructed instance of `WP_Backstage_User`. 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
 		$Taxonomy = new WP_Backstage_Taxonomy( $slug, $args );
-
 		$Taxonomy->init();
+		return $Taxonomy;
 
 	}
 
@@ -61,8 +63,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
+	 * @param   string  $slug  The developer-provided slug for the taxonomy.
+	 * @param   array   $args  The developer-provided arguments for this instance.
 	 * @return  void 
 	 */
 	protected function __construct( $slug = '', $args = array() ) {
@@ -85,7 +87,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Set Args
 	 * 
 	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has errors or not. 
+	 * @param   array  $args  The developer-provided arguments for this instance.
+	 * @return  void
 	 */
 	protected function set_args( $args = array() ) {
 
@@ -187,11 +190,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	public function init() {
 
 		if ( $this->has_errors() ) {
-			
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			
 			return;
-
 		}
 
 		add_action( 'init', array( $this, 'register' ), 0 );
@@ -214,10 +214,13 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	/**
 	 * Get Label
+	 *
+	 * A utility method to get a localized label for the various taxonomy labels
+	 * needed when registering a taxonomy.
 	 * 
-	 * @since   0.0.1
-	 * @param   string  $template 
-	 * @return  string 
+	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the taxonomy singular name and %2$s is the taxonomy plural name.
+	 * @param  array   $field     An array of field arguments.
+	 * @return strint  The formatted text.
 	 */
 	protected function get_label( $template = '' ) {
 
@@ -230,6 +233,20 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	}
 
+	/**
+	 * Register
+	 *
+	 * This method does the actual registration of the taxonomy. It will set 
+	 * everything needed to extend WordPress to allow for our new taxonomy such 
+	 * as adding all the labels, setting the rewrite rules and REST API base, 
+	 * and configures the WP admin UI.
+	 *
+	 * @link   https://developer.wordpress.org/reference/functions/register_taxonomy/ register_taxonomy()
+	 * @link   https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
+	 * 
+	 * @since  0.0.1
+	 * @return void
+	 */
 	public function register() {
 
 		$labels = array(
@@ -283,7 +300,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Get Fields
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  array  An array of field arguments if there are any, or an empty array.
 	 */
 	protected function get_fields() {
 
@@ -305,11 +322,19 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	/**
 	 * Render Add Fields
+	 *
+	 * This will render all fields on the taxonomy management screen. Note that 
+	 * this passes the taxonomy string, though this is not necessary, as this 
+	 * method is only hooked to `{taxonomy}_add_form_fields`. This means that 
+	 * this will only run on this instance's taxonomy.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/ {taxonomy}_add_form_fields
 	 * 
 	 * @since   0.0.1
+	 * @param   string  $taxonomy  The taxonomy slug as registered.
 	 * @return  void 
 	 */
-	public function render_add_fields( $taxonomy = null ) {
+	public function render_add_fields( $taxonomy = '' ) {
 
 		$fields = $this->get_fields();
 
@@ -335,8 +360,19 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	/**
 	 * Render Edit Fields
+	 *
+	 * This will render all fields on the edit singular term screen. An instance 
+	 * of `WP_Term` is passed as the first argument. Note that this also passes 
+	 * the taxonomy string, though this is not necessary, as this method is only 
+	 * hooked to `{taxonomy}_edit_form_fields`. This means that this will only 
+	 * run on terms for this instance's taxonomy.
+	 * 
+	 * @link    https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/ {taxonomy}_edit_form_fields
+	 * @link    https://developer.wordpress.org/reference/classes/wp_term/ WP_Term
 	 * 
 	 * @since   0.0.1
+	 * @param   WP_Term  $term      An instance of `WP_Term`.
+	 * @param   string   $taxonomy  The taxonomy slug as registered.
 	 * @return  void 
 	 */
 	public function render_edit_fields( $term = null, $taxonomy = null ) {
@@ -404,8 +440,16 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 	/**
 	 * Save
+	 *
+	 * Saves the form data as individual keys. Also saves a full array 
+	 * of `$field['name'] => $value` pairs as a new custom field with the 
+	 * `group_meta_key` argument as the key.
+	 *
+	 * @todo    Document `$tt_id` better.
 	 * 
 	 * @since   0.0.1
+	 * @param   int  $term_id  The ID of the term being saved.
+	 * @param   int  $tt_id    the tt ID of the term being saved.
 	 * @return  void 
 	 */
 	public function save( $term_id = 0, $tt_id = 0 ) {
@@ -457,7 +501,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Manage Admin Column Content
 	 * 
 	 * @since   0.0.1
-	 * @return  void
+	 * @param   string  $content  The already-set content for this column.
+	 * @param   string  $column   The column name.
+	 * @param   int     $term_id  The ID of the term for this row.
+	 * @return  string  The populated column content for this column.
 	 */
 	public function manage_admin_column_content( $content = '', $column = '', $term_id = 0 ) {
 
@@ -494,11 +541,21 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Manage Sorting
 	 *
-	 * @todo    Ensure term sorting does not ignore those terms without the meta 
-	 *          value logged in the termmeta table.
+	 * Adds sorting by parsing the `SQL` statements on the `parse_term_query` 
+	 * hook. 
+	 *
+	 * @todo    Try to normalize this with other queryies by using `meta_query`. 
+	 *          If this is still not possible, Ensure term sorting does not 
+	 *          ignore those terms without the meta value logged in the termmeta 
+	 *          table.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/parse_term_query/ Hook: parse_term_query
 	 * 
 	 * @since   0.0.1
-	 * @return  object
+	 * @param   array  $pieces      An array of query pieces that make up the `SQL` statement.
+	 * @param   array  $taxonomies  An array of taxonomy names that this query is handling.
+	 * @param   array  $args        An array of arguments
+	 * @return  array  The filtered query pieces with new sorting applied.
 	 */
 	public function manage_sorting( $pieces = array(), $taxonomies = array(), $args = array() ) {
 
@@ -540,10 +597,17 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Manage Default Hidden Columns
 	 *
-	 * Note that this will only work if this post type's columns 
-	 * UI has never been modified by the user.
+	 * Adds all generated fields to the hidden columns array by default, so as 
+	 * to not choke up the UI. Note that this will only work if this taxonomy's 
+	 * columns UI has never been modified by the user. Hooked to 
+	 * `default_hidden_columns`.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/default_hidden_columns/ Hook: default_hidden_columns
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * 
 	 * @since   0.0.1
+	 * @param   array      $hidden  An array of hidden columns.
+	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
@@ -640,7 +704,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 					function handleSuccess(e = null, request = null, settings = null) {
 						if (settings && settings.data) {
 							const params = parseParams(settings.data);
-							const action = params.action;
+							const { action } = params;
 							if (action === 'add-tag') {
 								resetForm();
 							}

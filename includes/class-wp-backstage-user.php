@@ -17,7 +17,7 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'field_groups' => array(), 
@@ -26,7 +26,7 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Field Group Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_field_group_args  The default field grou arguments for this instance.
 	 */
 	protected $default_field_group_args = array(
 		'id'          => '', 
@@ -38,22 +38,21 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
-	 * @since   0.0.1
-	 * @param   array   $args 
-	 * @return  void 
+	 * @param   array              $args  An array of arguments for this instance.
+	 * @return  WP_Backstage_User  A fully constructed instance of `WP_Backstage_User`. 
 	 */
 	public static function modify( $args = array() ) {
 
 		$User = new WP_Backstage_User( $args );
-
 		$User->init();
+		return $User;
 
 	}
 
@@ -61,7 +60,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @param   array   $args 
+	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
 	protected function __construct( $args = array() ) {
@@ -93,12 +92,11 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Set Args
 	 * 
 	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has errors or not. 
+	 * @param   array  $args  An array of arguments.
+	 * @return  void
 	 */
 	protected function set_args( $args = array() ) {
-
 		$this->args = wp_parse_args( $args, $this->default_args );
-
 	}
 
 	/**
@@ -138,11 +136,8 @@ class WP_Backstage_User extends WP_Backstage {
 	public function init() {
 
 		if ( $this->has_errors() ) {
-			
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			
 			return;
-
 		}
 
 		add_action( 'show_user_profile', array( $this, 'render_edit_nonce' ), 10 );
@@ -165,10 +160,10 @@ class WP_Backstage_User extends WP_Backstage {
 	}
 
 	/**
-	 * Get Meta Boxes
+	 * Get Field Groups
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  array  An array of field group argument arrays.  
 	 */
 	protected function get_field_groups() {
 
@@ -192,7 +187,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Get Fields
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  array  An array of fielg argument arrays.
 	 */
 	protected function get_fields() {
 
@@ -225,6 +220,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Render Edit Fields
 	 * 
 	 * @since   0.0.1
+	 * @param   WP_User  $user  An instance of `WP_User`.
 	 * @return  void 
 	 */
 	public function render_field_groups( $user = null ) {
@@ -271,6 +267,8 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Render Fields
 	 * 
 	 * @since   0.0.1
+	 * @param   array    $field_group  An array of field group arguments.
+	 * @param   WP_User  $user         An instance of `WP_User`.
 	 * @return  void 
 	 */
 	protected function render_fields( $field_group = array(), $user = null ) {
@@ -342,9 +340,10 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Save
 	 * 
 	 * @since   0.0.1
+	 * @param   int    $user_id  The ID of the user to update.
 	 * @return  void 
 	 */
-	public function save( $user_id = 0 ) {
+	public function save( $user_id = null ) {
 
 		if ( ! current_user_can( 'edit_user', $user_id ) ) { return; }
 		if ( ! $_POST || empty( $_POST ) ) { return; }
@@ -393,9 +392,12 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Manage Admin Column Content
 	 * 
 	 * @since   0.0.1
-	 * @return  void
+	 * @param   string  $content  The original column content.
+	 * @param   string  $column   The column name.
+	 * @param   int     $user_id  The ID of the user to populate the column for.
+	 * @return  string  The new formatted column content.
 	 */
-	public function manage_admin_column_content( $content = '', $column = '', $user_id = 0 ) {
+	public function manage_admin_column_content( $content = '', $column = '', $user_id = null ) {
 
 		$field = $this->get_field_by( 'name', $column );
 
@@ -431,6 +433,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Manage Sorting
 	 * 
 	 * @since   0.0.1
+	 * @param   WP_Query  $query  An instance of WP_Query
 	 * @return  void
 	 */
 	public function manage_sorting( $query = null ) {
@@ -472,10 +475,17 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Manage Default Hidden Columns
 	 *
-	 * Note that this will only work if this post type's columns 
-	 * UI has never been modified by the user.
+	 * Adds all generated fields to the hidden columns array by default, so as 
+	 * to not choke up the UI. Note that this will only work if this post type's 
+	 * columns UI has never been modified by the user. Hooked to 
+	 * `default_hidden_columns`.
+	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/default_hidden_columns/ Hook: default_hidden_columns
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * 
 	 * @since   0.0.1
+	 * @param   array      $hidden  An array of hidden columns.
+	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {

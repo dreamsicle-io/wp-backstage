@@ -51,14 +51,14 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * Add
 	 * 
 	 * @since   0.0.1
-	 * @param   array   $args 
-	 * @return  void 
+	 * @param   array                 $args 
+	 * @return  WP_Backstage_Options  A fully constructed `WP_Backstage_Options` instance.
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
 		$Options = new WP_Backstage_Options( $slug, $args );
-
 		$Options->init();
+		return $Options;
 
 	}
 
@@ -193,7 +193,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 	}
 
-	protected function save() {
+	public function save() {
 
 		if ( empty( $this->args['group_options_key'] ) ) {
 			return null;

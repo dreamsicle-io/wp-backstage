@@ -266,11 +266,39 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
+		add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
 		add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
+		add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
 		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
 
+	}
+
+	/**
+	 * Manage Post Title
+	 * 
+	 * @since   0.0.1
+	 * @param   string  $title  The post title.
+	 * @param   int     $id     The post ID.
+	 * @return  string  The filtered post title.
+	 */
+	public function manage_post_title( $title = '', $id = null ) {
+		// prepend the post type to the post title on the dashboard. This is 
+		// useful for the activity dashboard widget.
+		if ( is_admin() && $this->is_screen( 'id', 'dashboard' ) && $this->args['activity'] ) {
+			$post_type = get_post_type( $id );
+			if ( $post_type === $this->slug ) {
+				$post_type_obj = get_post_type_object( $post_type );
+				$title = esc_html( sprintf( 
+					/* translators: 1: post type, 2: post title. */
+					_x( '%1$s: %2$s', 'dashboard activity post link title', 'wp_backstage' ), 
+					$post_type_obj->labels->singular_name, 
+					$title 
+				) );
+			}
+		}
+		return $title;
 	}
 
 	/**
@@ -902,6 +930,41 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		}
 
 		return $items; 
+	}
+
+	/**
+	 * Manage Dashboard Activity Query Args
+	 *
+	 * @since   0.0.1
+	 * @param   array  $args  The array of alread-set query arguments.
+	 * @return  array  The filtered array of query arguments.
+	 */
+	public function manage_dashboard_activity_query_args( $args = array() ) {
+		
+		if ( $this->args['activity'] ) {
+
+			if ( ! isset( $args['post_type'] ) || empty( $args['post_type'] ) ) {
+
+				$args['post_type'] = array( $this->slug );
+
+			} elseif ( is_array( $args['post_type'] ) ) {
+
+				if ( ! in_array( $this->slug, $args['post_type'] ) ) {
+					$args['post_type'][] = $this->slug;
+				}
+
+			} elseif ( is_string( $args['post_type'] ) ) {
+
+				$args['post_type'] = array( $args['post_type'] );
+				if ( ! in_array( $this->slug, $args['post_type'] ) ) {
+					$args['post_type'][] = $this->slug;
+				}
+
+			}
+
+		}
+
+		return $args; 
 	}
 
 	/**

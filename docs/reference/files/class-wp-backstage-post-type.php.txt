@@ -45,6 +45,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		'archive_base'    => '', 
 		'rest_base'       => '', 
 		'menu_icon'       => 'dashicons-admin-post', 
+		'glance_item'     => false, 
 		'capability_type' => 'post', 
 		'supports'        => array(
 			'title', 
@@ -264,6 +265,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
 		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
@@ -859,6 +861,44 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		return $hidden;
 
+	}
+
+	/**
+	 * Manage Dashboard Glance Items
+	 *
+	 * Note that the output will be wrapped in `<li>` tags.
+	 *
+	 * @since   0.0.1
+	 * @param   array  $items  The array of alread-set glance items.
+	 * @return  array  The filtered glance items array.
+	 */
+	public function manage_dashboard_glance_items( $items = array() ) {
+		
+		if ( $this->args['glance_item'] ) {
+
+			$counts = wp_count_posts( $this->slug );
+
+			if ( $counts ) {
+
+				$published = intval( $counts->publish );
+				$post_type_obj = get_post_type_object( $this->slug );
+				$label_template = _nx( 
+					'%s ' . $post_type_obj->labels->singular_name, // singular
+					'%s ' . $post_type_obj->labels->name, // plural
+					$published, // number to compare
+					'dashboard glance item label', // context
+					'photo-walk' // textdomain
+				);
+				$label = sprintf( $label_template, number_format_i18n( $published ) );
+				$url = add_query_arg( array( 'post_type' => $this->slug ), admin_url( '/edit.php' ) );
+
+				$items[] = '<a href="' . esc_url( $url ) . '">' . $label . '</a>';
+
+			}
+
+		}
+
+		return $items; 
 	}
 
 	/**

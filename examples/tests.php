@@ -342,6 +342,7 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-pages', 
 		'group_meta_key' => 'wp_backstage_page_meta',
 		'hierarchical'   => true, 
+		'glance_item'    => true, 
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_page_fields', 
@@ -372,6 +373,7 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-posts', 
 		'group_meta_key' => 'wp_backstage_post_meta',
 		'taxonomies'     => array( 'category', 'post_tag' ), 
+		'glance_item'    => true, 
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_post_fields', 

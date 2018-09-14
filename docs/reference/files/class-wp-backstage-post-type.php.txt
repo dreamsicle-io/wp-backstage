@@ -266,6 +266,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
+		add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
 		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
@@ -891,8 +892,10 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 				);
 				$label = sprintf( $label_template, number_format_i18n( $published ) );
 				$url = add_query_arg( array( 'post_type' => $this->slug ), admin_url( '/edit.php' ) );
+				$class = sprintf( '%1$s-count', $this->slug );
+				$icon = '<i class="' . sprintf( 'dashicons %1$s', $post_type_obj->menu_icon ) . '"></i>';
 
-				$items[] = '<a href="' . esc_url( $url ) . '">' . $label . '</a>';
+				$items[] = '<a class="' . esc_attr( $class ) . '" href="' . esc_url( $url ) . '">' . $icon . '<span>' . esc_html( $label ) . '</span></a>';
 
 			}
 
@@ -900,6 +903,25 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		return $items; 
 	}
+
+	/**
+	 * Inline Dashboard Glance Item Style
+	 * 
+	 * @since   0.0.1
+	 * @return  void
+	 */
+	public function inline_dashboard_glance_item_style() { ?>
+		
+		<style 
+		id="<?php printf( 'wp_backstage_%1$s_dashboard_glance_item_style', $this->slug ); ?>"
+		type="text/css"><?php 
+
+			printf( '#dashboard_right_now ul li > .%1$s-count::before { content: unset; }', $this->slug ); 
+			printf( '#dashboard_right_now ul li > .%1$s-count > .dashicons { color: #82878c; speak: none; padding: 0 5px 0 0; position: relative; }', $this->slug ); 
+
+		?></style>
+
+	<?php }
 
 	/**
 	 * Inline Thumbnail Column Style

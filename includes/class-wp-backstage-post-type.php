@@ -97,7 +97,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @since   0.0.1
 	 * @param   string                 $slug  The slug for the post type.
 	 * @param   array                  $args  The arguments for this instance.
-	 * @return  WP_Backstage_Taxonomy  An fully constructed instance of `WP_Backstage_Post_Type`. 
+	 * @return  WP_Backstage_Taxonomy  A fully constructed instance of `WP_Backstage_Post_Type`. 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 

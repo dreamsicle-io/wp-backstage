@@ -15,9 +15,9 @@
 class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
-	 * Notices
+	 * Hidden Meta Boxes
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $hidden_meta_boxes  An array of hidden meta box IDs.
 	 */
 	protected $hidden_meta_boxes = array( 
 		'trackbacksdiv', 
@@ -30,7 +30,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'menu_name'       => '', 
@@ -67,7 +67,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $required_args  The required argument keys for this instance.
 	 */
 	protected $required_args = array(
 		'singular_name', 
@@ -77,7 +77,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Default Meta Box Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_meta_box_args  The default meta box arguments for this instance.
 	 */
 	protected $default_meta_box_args = array( 
 		'id'          => '', 
@@ -91,11 +91,13 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
 	 * Add
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_post/ WP_Post
 	 * 
 	 * @since   0.0.1
-	 * @param   string                  $slug 
-	 * @param   array                   $args 
-	 * @return  WP_Backstage_Post_Type  A fully constructed `WP_Backstage_Post_Type` instance. 
+	 * @param   string                 $slug  The slug for the post type.
+	 * @param   array                  $args  The arguments for this instance.
+	 * @return  WP_Backstage_Taxonomy  An fully constructed instance of `WP_Backstage_Post_Type`. 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
@@ -109,8 +111,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $slug 
-	 * @param   array   $args 
+	 * @param   string  $slug  The developer-provided slug for the post type.
+	 * @param   array   $args  The developer-provided arguments for this instance.
 	 * @return  void 
 	 */
 	protected function __construct( $slug = '', $args = array() ) {
@@ -133,7 +135,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Set Args
 	 * 
 	 * @since   0.0.1
-	 * @return  boolean  Whether the instance has errors or not. 
+	 * @param   array  $args  An array of arguments.
+	 * @return  void
 	 */
 	protected function set_args( $args = array() ) {
 
@@ -303,10 +306,15 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
 	 * Get Label
+	 *
+	 * A utility method to get a localized label for the various post type 
+	 * labels needed when registering a post type.
 	 * 
-	 * @since   0.0.1
-	 * @param   string  $template 
-	 * @return  string 
+	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the post type 
+	 *                            singular name, `%2$s` is the post type plural name, and `%3$s` is 
+	 *                            the thumbnail label.
+	 * @param  array   $field     An array of field arguments.
+	 * @return strint  The formatted text.
 	 */
 	protected function get_label( $template = '' ) {
 
@@ -322,9 +330,17 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
 	 * Register
+	 *
+	 * This method does the actual registration of the post type. It will set 
+	 * everything needed to extend WordPress to allow for the new post type such 
+	 * as adding all the labels, setting the rewrite rules and REST API base, 
+	 * and configures the WP admin UI.
+	 *
+	 * @link   https://developer.wordpress.org/reference/functions/register_post_type/ register_post_type()
+	 * @link   https://developer.wordpress.org/reference/classes/wp_post_type/ WP_Post_Type
 	 * 
-	 * @since   0.0.1
-	 * @return  void 
+	 * @since  0.0.1
+	 * @return void
 	 */
 	public function register() {
 
@@ -397,7 +413,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Get Meta Boxes
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  array  An array of meta box argument arrays.  
 	 */
 	protected function get_meta_boxes() {
 
@@ -421,7 +437,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Get Fields
 	 * 
 	 * @since   0.0.1
-	 * @return  array  
+	 * @return  array  an array of field arg arrays. 
 	 */
 	protected function get_fields() {
 
@@ -452,8 +468,15 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
 	 * Save
-	 * 
+	 *
+	 * Saves the form data as individual keys. Also saves a full array of 
+	 * `$field['name'] => $value` pairs as a new custom field with the 
+	 * `group_meta_key` argument as the key.
+	 *
 	 * @since   0.0.1
+	 * @param   int      $post_id  The ID of the post being saved.
+	 * @param   WP_Post  $post     The full `WP_Post` object for the post being saved.
+	 * @param   bool     $update   Whether the post is being updated or not.
 	 * @return  void 
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
@@ -509,6 +532,16 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	}
 
+	/**
+	 * Handle Attachments
+	 *
+	 * Attaches all media used in media uploader fields to the post being saved. 
+	 * 
+	 * @param   int        $post_id  The ID of the post being saved.
+	 * @param   int|array  $value    The attachment ID or array of attachment IDs to attach.
+	 * @param   array      $field    An array of field arguments.
+	 * @return  void
+	 */
 	protected function handle_attachments( $post_id = null, $value = null, $field = array() ) {
 
 		if ( $field['type'] !== 'media') {
@@ -532,6 +565,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 						if ( get_post_type( $attachment_id ) === 'attachment' ) {
 
 							$parent_id = wp_get_post_parent_id( $attachment_id );
+
 							if ( ! $parent_id > 0 ) {
 								wp_update_post( array(
 									'ID'          => $attachment_id, 
@@ -552,6 +586,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 					if ( get_post_type( $value ) === 'attachment' ) {
 				
 						$parent_id = wp_get_post_parent_id( $value );
+
 						if ( ! $parent_id > 0 ) {
 							wp_update_post( array(
 								'ID'          => $value, 
@@ -576,6 +611,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * been modified by the user.
 	 * 
 	 * @since   0.0.1
+	 * @param   array      $hidden  An array of already-set hidden meta box IDs.
+	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 
 	 */
 	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen = null ) {
@@ -610,6 +647,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Add Thumbnail Columns
 	 * 
 	 * @since   0.0.1
+	 * @param   array  $columns  An array of already-set columns.
 	 * @return  array  The filtered columns.
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
@@ -654,9 +692,10 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Render Thumbnail
 	 * 
 	 * @since   0.0.1
+	 * @param   int    $post_id  The post ID of the post to render the thumbnail for.
 	 * @return  void
 	 */
-	protected function render_thumbnail( $post_id = 0 ) {
+	protected function render_thumbnail( $post_id = null ) {
 
 		if ( post_type_supports( $this->slug, 'thumbnail' ) ) { ?>
 		
@@ -681,9 +720,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Render Admin Column
 	 * 
 	 * @since   0.0.1
+	 * @param   string  $column   The column name.
+	 * @param   int     $post_id  The post ID for this row.
 	 * @return  void
 	 */
-	public function render_admin_column( $column = '', $post_id = 0 ) {
+	public function render_admin_column( $column = '', $post_id = null ) {
 
 		if ( $column === 'thumbnail' ) {
 
@@ -726,6 +767,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Manage Sorting
 	 * 
 	 * @since   0.0.1
+	 * @param   WP_Query  $query  An instance of `WP_Query`.
 	 * @return  void
 	 */
 	public function manage_sorting( $query = null ) {
@@ -808,6 +850,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Render Meta Box
 	 * 
 	 * @since   0.0.1
+	 * @param   WP_Post  $post      An instance of `WP_Post`.
+	 * @param   array    $meta_box  An array of WP meta box args passed from the `add_meta_box()` function.
 	 * @return  void 
 	 */
 	public function render_meta_box( $post = null, $meta_box = array() ) {
@@ -868,6 +912,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * UI has never been modified by the user.
 	 * 
 	 * @since   0.0.1
+	 * @param   array      $hidden  An array of already-set hidden column names.
+	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
@@ -936,7 +982,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Manage Dashboard Activity Query Args
 	 *
 	 * @since   0.0.1
-	 * @param   array  $args  The array of alread-set query arguments.
+	 * @param   array  $args  The array of already-set query arguments.
 	 * @return  array  The filtered array of query arguments.
 	 */
 	public function manage_dashboard_activity_query_args( $args = array() ) {

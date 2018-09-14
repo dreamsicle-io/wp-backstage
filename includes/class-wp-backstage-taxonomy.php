@@ -218,7 +218,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * A utility method to get a localized label for the various taxonomy labels
 	 * needed when registering a taxonomy.
 	 * 
-	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the taxonomy singular name and %2$s is the taxonomy plural name.
+	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the taxonomy 
+	 *                            singular name and `%2$s` is the taxonomy plural name.
 	 * @param  array   $field     An array of field arguments.
 	 * @return strint  The formatted text.
 	 */

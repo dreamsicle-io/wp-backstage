@@ -26,7 +26,7 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Field Group Args
 	 * 
-	 * @var  array  $default_field_group_args  The default field grou arguments for this instance.
+	 * @var  array  $default_field_group_args  The default field group arguments for this instance.
 	 */
 	protected $default_field_group_args = array(
 		'id'          => '', 
@@ -187,7 +187,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Get Fields
 	 * 
 	 * @since   0.0.1
-	 * @return  array  An array of fielg argument arrays.
+	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
 
@@ -433,7 +433,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * Manage Sorting
 	 * 
 	 * @since   0.0.1
-	 * @param   WP_Query  $query  An instance of WP_Query
+	 * @param   WP_User_Query  $query  An instance of `WP_User_Query`.
 	 * @return  void
 	 */
 	public function manage_sorting( $query = null ) {

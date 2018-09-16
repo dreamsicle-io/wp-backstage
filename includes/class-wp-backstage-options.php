@@ -228,8 +228,48 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
+		add_action( 'tool_box', array( $this, 'add_tool_card' ), 10 );
 
 		parent::init();
+
+	}
+
+	public function add_tool_card() {
+
+		if ( $this->args['type'] === 'tools' ) {
+
+			$link_url = add_query_arg( array( 'page' => $this->slug ), admin_url( '/tools.php' ) );
+			$link_text = __( 'Go to tool', 'wp-backstage' ); ?>
+
+			<div class="card">
+
+				<?php if ( ! empty( $this->args['title'] ) ) { ?>
+
+					<h2 class="title">
+
+						<a href="<?php echo esc_url( $link_url ); ?>"><?php 
+
+							echo wp_kses( $this->args['title'], $this->kses_p );
+
+						?></a>
+
+					</h2>
+
+				<?php } ?>
+
+				<?php if ( ! empty( $this->args['description'] ) ) { ?>
+
+					<p><?php 
+
+						echo wp_kses( $this->args['description'], $this->kses_p );
+
+					?></p>
+
+				<?php } ?>
+			
+			</div>
+
+		<?php }
 
 	}
 

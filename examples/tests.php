@@ -471,7 +471,7 @@ function wp_backstage_init() {
 				'id'          => 'wp_backstage_theme_options_fields', 
 				'title'       => __( 'All Fields', 'wp_backstage' ), 
 				'description' => __( 'These extra meta fields control further theme options. <a href="#">Example Link</a>', 'wp_backstage' ), 
-				'fields'      => $all_fields, 
+				// 'fields'      => $all_fields, 
 			),
 			array(
 				'id'          => 'wp_backstage_theme_options_extras', 
@@ -493,7 +493,7 @@ function wp_backstage_init() {
 				'id'          => 'wp_backstage_tool_options_fields', 
 				'title'       => __( 'All Fields', 'wp_backstage' ), 
 				'description' => __( 'These extra meta fields control further tool options. <a href="#">Example Link</a>', 'wp_backstage' ), 
-				'fields'      => $all_fields, 
+				// 'fields'      => $all_fields, 
 			),
 			array(
 				'id'          => 'wp_backstage_tool_options_extras', 

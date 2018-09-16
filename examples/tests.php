@@ -459,6 +459,50 @@ function wp_backstage_init() {
 		), 
 	) );
 
+	WP_Backstage_Options::add( 'wp_backstage_theme_options', array( 
+		'type'              => 'theme', 
+		'title'             => __( 'Test Theme Options', 'wp_backstage' ), 
+		'menu_title'        => __( 'Test Theme Options', 'wp_backstage' ), 
+		'description'       => __( 'A test custom theme options page containing all field types.', 'wp_backstage' ), 
+		'show_in_rest'      => true, 
+		'group_options_key' => 'wp_backstage_theme_options', 
+		'sections' => array(
+			array(
+				'id'          => 'wp_backstage_theme_options_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further theme options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				// 'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_theme_options_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further theme options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+			),
+		), 
+	) );
+
+	WP_Backstage_Options::add( 'wp_backstage_tool', array( 
+		'type'              => 'tools', 
+		'title'             => __( 'Test Tool', 'wp_backstage' ), 
+		'menu_title'        => __( 'Test Tool', 'wp_backstage' ), 
+		'description'       => __( 'A test custom tool options page containing all field types.', 'wp_backstage' ), 
+		'show_in_rest'      => true, 
+		'group_options_key' => 'wp_backstage_tool', 
+		'sections' => array(
+			array(
+				'id'          => 'wp_backstage_tool_options_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further tool options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				// 'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_tool_options_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further tool options. <a href="#">Example Link</a>', 'wp_backstage' ), 
+			),
+		), 
+	) );
+
 }
 
 add_action( 'after_setup_theme', 'wp_backstage_init', 10 );

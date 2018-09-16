@@ -17,9 +17,10 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_args  An array of default arguments for this instance.
 	 */
 	protected $default_args = array(
+		'type'              => 'settings', // settings, theme, tools
 		'title'             => '', 
 		'menu_title'        => '', 
 		'description'       => '', 
@@ -31,7 +32,7 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Default Section Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $default_section_args  An array of default section arguments.
 	 */
 	protected $default_section_args = array(
 		'id'          => '', 
@@ -43,9 +44,18 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @since 0.0.1
+	 * @var  array  $required_args  An array of required argument keys.
 	 */
-	protected $required_args = array();
+	protected $required_args = array(
+		'type', 
+	);
+
+	/**
+	 * Registered
+	 * 
+	 * @var  array  $registered  An array of already-registered option keys.
+	 */
+	protected static $registered = array();
 
 	/**
 	 * Add
@@ -82,7 +92,11 @@ class WP_Backstage_Options extends WP_Backstage {
 		) );
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
-		$this->screen_id = sprintf( 'settings_page_%1$s', $this->slug );
+		$this->screen_id = array( 
+			sprintf( 'settings_page_%1$s', $this->slug ), 
+			sprintf( 'appearance_page_%1$s', $this->slug ), 
+			sprintf( 'tools_page_%1$s', $this->slug ) 
+		);
 		$this->set_errors();
 
 		parent::__construct();
@@ -138,7 +152,7 @@ class WP_Backstage_Options extends WP_Backstage {
 				if ( empty( $this->args[$required_arg] ) ) {
 
 					$this->errors[] = new WP_Error( 'required_options_arg', sprintf( 
-						/* translators: 1: options slug, 2:required arg key. */
+						/* translators: 1: options page slug, 2:required arg key. */
 						__( '[options: %1$s] The %2$s key is required.', 'wp-backstage' ), 
 						$this->slug,
 						'<code>' . $required_arg . '</code>'
@@ -148,6 +162,50 @@ class WP_Backstage_Options extends WP_Backstage {
 
 			}
 
+		}
+
+		if ( ! empty( $this->args['group_options_key'] ) ) {
+
+			if ( in_array( $this->args['group_options_key'], self::$registered ) ) {
+
+				$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
+					/* translators: 1: options page slug, 2: option key. */
+					__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
+					$this->slug,
+					'<code>' . $this->args['group_options_key'] . '</code>'
+				) );
+
+			} else {
+
+				self::$registered[] = $this->args['group_options_key'];
+
+			}
+
+		}
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				if ( in_array( $field['name'], self::$registered ) ) {
+
+					$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
+						/* translators: 1: options page slug, 2: option key. */
+						__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
+						$this->slug,
+						'<code>' . $field['name'] . '</code>'
+					) );
+
+				} else {
+
+					self::$registered[] = $field['name'];
+
+				}
+
+			}
+		
 		}
 
 	}
@@ -168,7 +226,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		}
 
-		add_action( 'admin_menu', array( $this, 'add_options_page' ), 10 );
+		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
 
 		parent::init();
@@ -176,21 +234,51 @@ class WP_Backstage_Options extends WP_Backstage {
 	}
 
 	/**
-	 * Add Options Page
+	 * Add Page
+	 *
+	 * Adds the page according to the `type` argument. If `type` is set to 
+	 * `theme`, `add_theme_page()` will be used. If `type` is set to `tools`, 
+	 * `add_management_page()` will be used. If `type` is set to `settings` 
+	 * (default), `add_options_page()` will be used.
+	 *
+	 * @link    https://codex.wordpress.org/Function_Reference/add_theme_page add_theme_page()
+	 * @link    https://codex.wordpress.org/Function_Reference/add_management_page add_management_page()
+	 * @link    https://codex.wordpress.org/Function_Reference/add_options_page add_options_page()
 	 * 
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function add_options_page() {
+	public function add_page() {
 
-		add_options_page( 
-			$this->args['title'], 
-			$this->args['menu_title'], 
-			$this->args['capability'], 
-			$this->slug, 
-			array( $this, 'render_page' ) 
-		);
-
+		switch ( $this->args['type'] ) {
+			case 'theme':
+				add_theme_page( 
+					$this->args['title'], 
+					$this->args['menu_title'], 
+					$this->args['capability'], 
+					$this->slug, 
+					array( $this, 'render_page' ) 
+				);
+				break;
+			case 'tools':
+				add_management_page( 
+					$this->args['title'], 
+					$this->args['menu_title'], 
+					$this->args['capability'], 
+					$this->slug, 
+					array( $this, 'render_page' ) 
+				);
+				break;
+			default:
+				add_options_page( 
+					$this->args['title'], 
+					$this->args['menu_title'], 
+					$this->args['capability'], 
+					$this->slug, 
+					array( $this, 'render_page' ) 
+				);
+				break;
+		}
 	}
 
 	public function save() {

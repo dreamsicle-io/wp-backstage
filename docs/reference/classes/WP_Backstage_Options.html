@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1514706589"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-324615899"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1514706589" class="accordion-body collapse in">
+            <div id="namespace-324615899" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -217,7 +217,7 @@
                                                                     <a href="../classes/WP_Backstage.html#method_inline_address_script" class="">inline_address_script()</a><br />
                                                                     <a href="../classes/WP_Backstage.html#method_inline_editor_script" class="">inline_editor_script()</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#method_add" class="">add()</a><br />
-                                                                    <a href="../classes/WP_Backstage_Options.html#method_add_options_page" class="">add_options_page()</a><br />
+                                                                    <a href="../classes/WP_Backstage_Options.html#method_add_page" class="">add_page()</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#method_save" class="">save()</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#method_add_settings" class="">add_settings()</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#method_render_setting" class="">render_setting()</a><br />
@@ -305,6 +305,7 @@
                                                                     <a href="../classes/WP_Backstage_Options.html#property_default_args" class="">$default_args</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#property_default_section_args" class="">$default_section_args</a><br />
                                                                     <a href="../classes/WP_Backstage_Options.html#property_required_args" class="">$required_args</a><br />
+                                                                    <a href="../classes/WP_Backstage_Options.html#property_registered" class="">$registered</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -1140,13 +1141,13 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
             <a id="property_default_args" name="property_default_args" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$default_args</h3>
-                <pre class="signature">$default_args : </pre>
+                <pre class="signature">$default_args : array</pre>
                 <p><em>Default Args</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array
+                &mdash; An array of default arguments for this instance.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1154,14 +1155,7 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            since
-                        </th>
-                        <td>
-                                                            
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -1171,13 +1165,13 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
             <a id="property_default_section_args" name="property_default_section_args" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$default_section_args</h3>
-                <pre class="signature">$default_section_args : </pre>
+                <pre class="signature">$default_section_args : array</pre>
                 <p><em>Default Section Args</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array
+                &mdash; An array of default section arguments.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1185,14 +1179,7 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            since
-                        </th>
-                        <td>
-                                                            
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -1202,13 +1189,13 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
             <a id="property_required_args" name="property_required_args" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$required_args</h3>
-                <pre class="signature">$required_args : </pre>
+                <pre class="signature">$required_args : array</pre>
                 <p><em>Required Args</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array
+                &mdash; An array of required argument keys.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1216,14 +1203,31 @@ time piece (<code>hour</code>, <code>minute</code>, <code>second</code>) respect
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            since
-                        </th>
-                        <td>
-                                                            
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_registered" name="property_registered" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$registered</h3>
+                <pre class="signature">$registered : array</pre>
+                <p><em>Registered</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; An array of already-registered option keys.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -2631,13 +2635,16 @@ editor fields.</p>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="method_add_options_page" name="method_add_options_page" class="anchor"></a>
+            <a id="method_add_page" name="method_add_page" class="anchor"></a>
             <article class="method">
-                <h3 class="public ">add_options_page()</h3>
+                <h3 class="public ">add_page()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">add_options_page() : void</pre>
-                <p><em>Add Options Page</em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">add_page() : void</pre>
+                <p><em>Add Page</em></p>
+                <p>Adds the page according to the <code>type</code> argument. If <code>type</code> is set to
+<code>theme</code>, <code>add_theme_page()</code> will be used. If <code>type</code> is set to <code>tools</code>,
+<code>add_management_page()</code> will be used. If <code>type</code> is set to <code>settings</code>
+(default), <code>add_options_page()</code> will be used.</p>
 
                 
                 
@@ -2647,7 +2654,11 @@ editor fields.</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="https://codex.wordpress.org/Function_Reference/add_theme_page"><span class="namespace-wrapper">add_theme_page()</span></a></dd>
+                                            <dd><a href="https://codex.wordpress.org/Function_Reference/add_management_page"><span class="namespace-wrapper">add_management_page()</span></a></dd>
+                                            <dd><a href="https://codex.wordpress.org/Function_Reference/add_options_page"><span class="namespace-wrapper">add_options_page()</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -4594,7 +4605,7 @@ replace the &quot;State/Province/Region&quot; input.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 14th, 2018 at 22:01.
+                    on September 16th, 2018 at 04:52.
                 </section>
             </section>
         </section>

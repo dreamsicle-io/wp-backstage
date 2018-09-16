@@ -3969,6 +3969,8 @@ class WP_Backstage {
 	 * Conditionally inlines the editor script if this instance has any 
 	 * editor fields.
 	 *
+	 * @todo     Find out why gallery shortcodes are not being rendered visually.
+	 *
 	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor wp.editor
 	 * @link     https://developer.wordpress.org/reference/functions/wp_enqueue_editor/ wp_enqueue_editor()
 	 * @link     https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/ WP Editor API Changes in 4.8
@@ -4014,6 +4016,7 @@ class WP_Backstage {
 					function handleSetup(e = null, wpEditor = null) {
 						const { id } = wpEditor.settings;
 						if (id === fieldId) {
+							wpEditor.settings.plugins = 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview';
 							wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
 							if (formatSelect) {
 								wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
@@ -4028,7 +4031,11 @@ class WP_Backstage {
 									wpEditor.save();
 								}, 750);
 							});
-						} 
+							console.log('added', wpEditor.settings.plugins);
+						} else {
+							console.log('exists', wpEditor.settings.plugins);
+						}
+						
 					}
 
 					wp.editor.initialize(fieldId, {

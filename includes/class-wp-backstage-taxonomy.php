@@ -341,7 +341,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
 			
-			foreach ( $fields as $field ) { ?>
+			foreach ( $fields as $field ) { 
+
+				$field = apply_filters( $this->format_field_action( 'add_args' ), $field ); ?>
 
 				<div class="form-field"><?php 
 
@@ -386,16 +388,16 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 				$field['value'] = get_term_meta( $term->term_id, $field['name'], true );
 				$field['show_label'] = false;
-				$field_id = sanitize_title_with_dashes( $field['name'] );
-				$field_label = wp_kses( $field['label'], $this->kses_label );
-				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 					$default_rows = ( $field['type'] === 'editor' ) ? 15 : 5;
 					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 50;
-				} ?>
+				}
+
+				$field = apply_filters( $this->format_field_action( 'edit_args' ), $field, $term ); ?>
 
 				<tr class="form-field">
 					
@@ -403,9 +405,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 						
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo esc_attr( $field_id ); ?>"><?php 
+							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
 
-								echo $field_label; 
+								echo wp_kses( $field['label'], $this->kses_label ); 
 
 							?></label>
 
@@ -413,7 +415,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 							<span><?php 
 
-								echo $field_label; 
+								echo wp_kses( $field['label'], $this->kses_label ); 
 
 							?></span>
 
@@ -423,11 +425,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					<td><?php 
 
-						do_action( $this->format_field_action( 'edit_before' ), $field );
+						do_action( $this->format_field_action( 'edit_before' ), $field, $term );
 
-						$this->render_field_by_type( $field ); 
+						$this->render_field_by_type( $field, $term ); 
 
-						do_action( $this->format_field_action( 'edit_after' ), $field );
+						do_action( $this->format_field_action( 'edit_after' ), $field, $term );
 
 					?></td>
 

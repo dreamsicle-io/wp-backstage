@@ -14,38 +14,38 @@
 <path fill="none" stroke="#c0c0c0" d="M20,-8C20,-8 340.4365,-8 340.4365,-8 346.4365,-8 352.4365,-14 352.4365,-20 352.4365,-20 352.4365,-229 352.4365,-229 352.4365,-235 346.4365,-241 340.4365,-241 340.4365,-241 20,-241 20,-241 14,-241 8,-235 8,-229 8,-229 8,-20 8,-20 8,-14 14,-8 20,-8"/>
 <text text-anchor="middle" x="180.2183" y="-228.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">Global</text>
 </g>
-<!-- \\WP_Backstage_User -->
+<!-- \\WP_Backstage_Taxonomy -->
 <g id="node1" class="node">
-<title>\\WP_Backstage_User</title>
-<polygon fill="none" stroke="#000000" points="328.0432,-214 199.6063,-214 199.6063,-178 328.0432,-178 328.0432,-214"/>
-<text text-anchor="middle" x="263.8247" y="-192.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_User</text>
+<title>\\WP_Backstage_Taxonomy</title>
+<polygon fill="none" stroke="#000000" points="340.9477,-214 186.7017,-214 186.7017,-178 340.9477,-178 340.9477,-214"/>
+<text text-anchor="middle" x="263.8247" y="-192.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_Taxonomy</text>
 </g>
 <!-- \\WP_Backstage -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>\\WP_Backstage</title>
 <polygon fill="none" stroke="#000000" points="111.3196,-133 15.8933,-133 15.8933,-97 111.3196,-97 111.3196,-133"/>
 <text text-anchor="middle" x="63.6064" y="-111.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage</text>
 </g>
-<!-- \\WP_Backstage_User&#45;&gt;\\WP_Backstage -->
+<!-- \\WP_Backstage_Taxonomy&#45;&gt;\\WP_Backstage -->
 <g id="edge1" class="edge">
-<title>\\WP_Backstage_User&#45;&gt;\\WP_Backstage</title>
+<title>\\WP_Backstage_Taxonomy&#45;&gt;\\WP_Backstage</title>
 <path fill="none" stroke="#000000" d="M207.6208,-177.9861C199.3861,-175.1126 191.0452,-172.0707 183.2129,-169 158.7138,-159.395 131.9747,-147.465 110.0038,-137.2631"/>
 <polygon fill="none" stroke="#000000" points="111.4414,-134.0716 100.9,-133.0084 108.4776,-140.4132 111.4414,-134.0716"/>
 </g>
-<!-- \\WP_Backstage_Options -->
+<!-- \\WP_Backstage_User -->
 <g id="node2" class="node">
-<title>\\WP_Backstage_Options</title>
-<polygon fill="none" stroke="#000000" points="337.8462,-160 189.8032,-160 189.8032,-124 337.8462,-124 337.8462,-160"/>
-<text text-anchor="middle" x="263.8247" y="-138.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_Options</text>
+<title>\\WP_Backstage_User</title>
+<polygon fill="none" stroke="#000000" points="328.0432,-160 199.6063,-160 199.6063,-124 328.0432,-124 328.0432,-160"/>
+<text text-anchor="middle" x="263.8247" y="-138.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_User</text>
 </g>
-<!-- \\WP_Backstage_Options&#45;&gt;\\WP_Backstage -->
+<!-- \\WP_Backstage_User&#45;&gt;\\WP_Backstage -->
 <g id="edge2" class="edge">
-<title>\\WP_Backstage_Options&#45;&gt;\\WP_Backstage</title>
-<path fill="none" stroke="#000000" d="M189.5553,-131.9846C167.0801,-128.9537 142.7397,-125.6713 121.5022,-122.8074"/>
-<polygon fill="none" stroke="#000000" points="121.7256,-119.3059 111.3476,-121.438 120.7901,-126.2431 121.7256,-119.3059"/>
+<title>\\WP_Backstage_User&#45;&gt;\\WP_Backstage</title>
+<path fill="none" stroke="#000000" d="M199.6482,-133.3456C174.5273,-129.958 145.9259,-126.101 121.4522,-122.8007"/>
+<polygon fill="none" stroke="#000000" points="121.6164,-119.2912 111.2384,-121.4233 120.6809,-126.2284 121.6164,-119.2912"/>
 </g>
 <!-- \\WP_Backstage_Post_Type -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>\\WP_Backstage_Post_Type</title>
 <polygon fill="none" stroke="#000000" points="344.5485,-106 183.1009,-106 183.1009,-70 344.5485,-70 344.5485,-106"/>
 <text text-anchor="middle" x="263.8247" y="-84.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_Post_Type</text>
@@ -56,15 +56,15 @@
 <path fill="none" stroke="#000000" d="M182.9654,-98.9041C162.358,-101.6831 140.6198,-104.6145 121.4235,-107.2032"/>
 <polygon fill="none" stroke="#000000" points="120.7836,-103.7577 111.3411,-108.5628 121.7192,-110.6949 120.7836,-103.7577"/>
 </g>
-<!-- \\WP_Backstage_Taxonomy -->
+<!-- \\WP_Backstage_Options -->
 <g id="node5" class="node">
-<title>\\WP_Backstage_Taxonomy</title>
-<polygon fill="none" stroke="#000000" points="340.9477,-52 186.7017,-52 186.7017,-16 340.9477,-16 340.9477,-52"/>
-<text text-anchor="middle" x="263.8247" y="-30.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_Taxonomy</text>
+<title>\\WP_Backstage_Options</title>
+<polygon fill="none" stroke="#000000" points="337.8462,-52 189.8032,-52 189.8032,-16 337.8462,-16 337.8462,-52"/>
+<text text-anchor="middle" x="263.8247" y="-30.7" font-family="Courier,monospace" font-size="11.00" fill="#000000">WP_Backstage_Options</text>
 </g>
-<!-- \\WP_Backstage_Taxonomy&#45;&gt;\\WP_Backstage -->
+<!-- \\WP_Backstage_Options&#45;&gt;\\WP_Backstage -->
 <g id="edge4" class="edge">
-<title>\\WP_Backstage_Taxonomy&#45;&gt;\\WP_Backstage</title>
+<title>\\WP_Backstage_Options&#45;&gt;\\WP_Backstage</title>
 <path fill="none" stroke="#000000" d="M207.6208,-52.0139C199.3861,-54.8874 191.0452,-57.9293 183.2129,-61 158.7138,-70.605 131.9747,-82.535 110.0038,-92.7369"/>
 <polygon fill="none" stroke="#000000" points="108.4776,-89.5868 100.9,-96.9916 111.4414,-95.9284 108.4776,-89.5868"/>
 </g>

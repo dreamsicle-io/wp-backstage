@@ -247,9 +247,11 @@ class WP_Backstage_Options extends WP_Backstage {
 
 					<h2 class="title">
 
-						<a href="<?php echo esc_url( $link_url ); ?>"><?php 
+						<a 
+						href="<?php echo esc_url( $link_url ); ?>"
+						style="text-decoration:none;"><?php 
 
-							echo wp_kses( $this->args['title'], $this->kses_p );
+							echo esc_html( $this->args['title'] );
 
 						?></a>
 
@@ -452,11 +454,13 @@ class WP_Backstage_Options extends WP_Backstage {
 			'field'     => array(), 
 		) );
 
-		do_action( $this->format_field_action( 'before' ), $args['field'] );
+		$field = apply_filters( $this->format_field_action( 'args' ), $args['field'] );
 
-		$this->render_field_by_type( $args['field'] );
+		do_action( $this->format_field_action( 'before' ), $field );
 
-		do_action( $this->format_field_action( 'after' ), $args['field'] );
+		$this->render_field_by_type( $field );
+
+		do_action( $this->format_field_action( 'after' ), $field );
 
 	}
 

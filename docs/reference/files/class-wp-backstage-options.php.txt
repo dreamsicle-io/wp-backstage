@@ -247,9 +247,11 @@ class WP_Backstage_Options extends WP_Backstage {
 
 					<h2 class="title">
 
-						<a href="<?php echo esc_url( $link_url ); ?>"><?php 
+						<a 
+						href="<?php echo esc_url( $link_url ); ?>"
+						style="text-decoration:none;"><?php 
 
-							echo wp_kses( $this->args['title'], $this->kses_p );
+							echo esc_html( $this->args['title'] );
 
 						?></a>
 

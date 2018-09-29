@@ -4,7 +4,7 @@
     },
     "scripts": {
         "build:docs": [
-        	"./vendor/bin/phpdoc -d ./includes -t ./docs/reference"
+        	"./vendor/bin/phpdoc -d \"./includes\" -t \"./docs/reference\" --template=\"clean\""
         ]
     }
 }

@@ -4031,10 +4031,7 @@ class WP_Backstage {
 									wpEditor.save();
 								}, 750);
 							});
-							console.log('added', wpEditor.settings.plugins);
-						} else {
-							console.log('exists', wpEditor.settings.plugins);
-						}
+						} 
 						
 					}
 

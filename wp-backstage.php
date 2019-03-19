@@ -3,7 +3,7 @@
 Plugin Name:  WP Backstage
 Plugin URI:   https://github.com/dreamsicle-io/wp-backstage
 Description:  Under development
-Version:      0.0.1
+Version:      0.0.2
 Author:       Dreamsicle
 Author URI:   https://www.dreamsicle.io
 License:      GPLv2

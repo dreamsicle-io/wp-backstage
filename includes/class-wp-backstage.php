@@ -2065,7 +2065,8 @@ class WP_Backstage {
 				foreach( $this->time_pieces as $piece_key => $piece ) {
 
 					$select_name = sprintf( '%1$s[%2$s]', $field['name'], $piece_key );
-					$select_id = sprintf( '%1$s_%2$s', $id, $piece_key ); ?>
+					$select_id = sprintf( '%1$s_%2$s', $id, $piece_key );
+					$selected = ( isset( $value_pieces[$i] ) && ! empty( $value_pieces[$i] ) ) ? $value_pieces[$i] : ''; ?>
 
 					<span style="display:inline-block;vertical-align:top;">
 
@@ -2090,7 +2091,7 @@ class WP_Backstage {
 						<?php disabled( true, $field['disabled'] ); ?>
 						<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php
 
-							$this->render_time_options( $piece['number_options'], $value_pieces[$i] );
+							$this->render_time_options( $piece['number_options'], $selected );
 
 						?></select>
 

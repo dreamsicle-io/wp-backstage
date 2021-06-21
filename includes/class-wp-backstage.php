@@ -3741,7 +3741,8 @@ class WP_Backstage {
 	 * Inline Code Editor Script
 	 *
 	 * Conditionally inlines the code editor script if this instance has any 
-	 * code editor fields.
+	 * code editor fields. All of the initializer functions fire at window load,
+	 * to ensure that all CodeMirror instances have finished initializing first.
 	 * 
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 * @link    https://make.wordpress.org/core/tag/codemirror/ CodeMirror in WP
@@ -3882,7 +3883,7 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', function(e) {
+				window.addEventListener('load', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();

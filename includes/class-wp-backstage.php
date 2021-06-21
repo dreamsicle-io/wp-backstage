@@ -1252,6 +1252,9 @@ class WP_Backstage {
 	 * @return  array  An array of values. 
 	 */
 	public function sanitize_checkbox_set( $value = array() ) {
+		if ( ! is_array( $value ) ) {
+			$value = array();
+		}
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1266,6 +1269,9 @@ class WP_Backstage {
 	 * @return  array  An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
+		if ( ! is_array( $value ) ) {
+			$value = array();
+		}
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1280,6 +1286,9 @@ class WP_Backstage {
 	 * @return  string  a string as `00:00:00`. 
 	 */
 	public function sanitize_time( $value = array() ) {
+		if ( ! is_array( $value ) || empty( $value ) ) {
+			$value = array( '00', '00', '00' );
+		}
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 

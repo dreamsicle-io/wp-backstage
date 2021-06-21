@@ -288,18 +288,20 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @return  string  The filtered post title.
 	 */
 	public function manage_post_title( $title = '', $id = null ) {
-		// prepend the post type to the post title on the dashboard. This is 
-		// useful for the activity dashboard widget.
-		if ( is_admin() && $this->is_screen( 'id', 'dashboard' ) && $this->args['activity'] ) {
-			$post_type = get_post_type( $id );
-			if ( $post_type === $this->slug ) {
-				$post_type_obj = get_post_type_object( $post_type );
-				$title = esc_html( sprintf( 
-					/* translators: 1: post type, 2: post title. */
-					_x( '%1$s: %2$s', 'dashboard activity post link title', 'wp_backstage' ), 
-					$post_type_obj->labels->singular_name, 
-					$title 
-				) );
+		if ( is_admin() && ! is_customize_preview() ) {
+			// prepend the post type to the post title on the dashboard. This is 
+			// useful for the activity dashboard widget.
+			if ( $this->is_screen( 'id', 'dashboard' ) && $this->args['activity'] ) {
+				$post_type = get_post_type( $id );
+				if ( $post_type === $this->slug ) {
+					$post_type_obj = get_post_type_object( $post_type );
+					$title = esc_html( sprintf( 
+						/* translators: 1: post type, 2: post title. */
+						_x( '%1$s: %2$s', 'dashboard activity post link title', 'wp_backstage' ), 
+						$post_type_obj->labels->singular_name, 
+						$title 
+					) );
+				}
 			}
 		}
 		return $title;
@@ -883,6 +885,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 				}
+				
+				$field = apply_filters( $this->format_field_action( 'args' ), $field, $post );
 
 				do_action( $this->format_field_action( 'before' ), $field, $post );
 

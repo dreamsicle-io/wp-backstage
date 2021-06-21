@@ -279,8 +279,6 @@ class WP_Backstage_User extends WP_Backstage {
 
 				$field['value'] = get_user_meta( $user->ID, $field['name'], true );
 				$field['show_label'] = false;
-				$field_id = sanitize_title_with_dashes( $field['name'] );
-				$field_label = wp_kses( $field['label'], $this->kses_label );
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -292,7 +290,9 @@ class WP_Backstage_User extends WP_Backstage {
 					$default_cols = $this->is_screen( 'id', 'user' ) ? 60 : 30;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-				} ?>
+				}
+
+				$field = apply_filters( $this->format_field_action( 'args' ), $field, $user ); ?>
 
 				<tr>
 					
@@ -300,9 +300,9 @@ class WP_Backstage_User extends WP_Backstage {
 
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo esc_attr( $field_id ); ?>"><?php 
+							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
 
-								echo $field_label; 
+								echo wp_kses( $field['label'], $this->kses_label ); 
 
 							?></label>
 
@@ -310,7 +310,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 							<span><?php 
 
-								echo $field_label; 
+								echo wp_kses( $field['label'], $this->kses_label ); 
 
 							?></span>
 

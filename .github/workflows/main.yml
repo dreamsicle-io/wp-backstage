@@ -1,5 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
+# Main release workflow
 name: Main
 
 # Controls when the action will run. 
@@ -21,22 +20,26 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repo
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
+      # Zips the plugin in WordPress uploadable format sans fluff
       - name: Zip Plugin
         run: zip -r wp-backstage.zip . -x ".gitignore" "composer.json" "composer.lock" "phpDocumentor.phar" ".git/*" ".github/*" ".phpdoc/*" "examples/*" "docs/*"
+      
+      # Creates a release draft
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          target: master
-          tag_name: 0.0.2
-          release_name: Release
+          tag_name: 0.0.0
+          release_name: Release Draft
           draft: true
           prerelease: false
+      
+      # Uploads the plugin to the draft release
       - name: Upload Plugin
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1

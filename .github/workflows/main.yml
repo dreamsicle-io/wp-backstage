@@ -21,6 +21,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repo
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
@@ -32,9 +33,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          target: master
-          tag_name: 0.0.2
-          release_name: Release
+          tag_name: 0.0.0
+          release_name: Release Draft
           draft: true
           prerelease: false
       - name: Upload Plugin

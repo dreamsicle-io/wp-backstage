@@ -1,6 +1,3 @@
-# Vendor Files
-vendor/**
-
 # Doc files
 .phpdoc/**
 

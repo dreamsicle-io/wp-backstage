@@ -25,7 +25,7 @@ jobs:
 
       # Zips the plugin in WordPress uploadable format sans fluff
       - name: Zip Plugin
-        run: zip -r wp-backstage.zip . -x ".gitignore" "composer.json" "composer.lock" "phpDocumentor.phar" ".git/*" ".github/*" ".phpdoc/*" "examples/*" "docs/*"
+        run: zip -r wp-backstage.zip . -x ".gitignore" "composer.json" "composer.lock" "phpDocumentor.phar" ".git/*" ".github/*" ".phpdoc/*" "docs/*"
       
       # Creates a release draft
       - name: Create Release

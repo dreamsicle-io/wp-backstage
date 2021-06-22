@@ -1,8 +1,7 @@
 # Doc files
-.phpdoc/**
+.phpdoc/
 
 # Log Files
-logs/**
 *.log
 
 # Misc

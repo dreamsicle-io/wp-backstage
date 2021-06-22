@@ -25,4 +25,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Zip Plugin
-        run: zip -r wp-backstage.zip .
+        run: zip -r wp-backstage.zip . -x ".gitignore" "composer.json" "componser.lock" "phpDocumentor.phar" ".git/*" ".github/*" ".phpdoc/*" "examples/*" "docs/*"

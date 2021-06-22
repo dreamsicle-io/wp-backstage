@@ -1,10 +1,9 @@
-# Vendor Files
-/vendor
+# Doc files
+.phpdoc/**
 
 # Log Files
-/logs
+logs/**
 *.log
 
 # Misc
 *.DS_Store
-*.sublime-workspace

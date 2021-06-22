@@ -1,13 +1,12 @@
 # Vendor Files
-vendor/
+vendor/**
 
 # Doc files
-.phpdoc/
+.phpdoc/**
 
 # Log Files
-logs/
+logs/**
 *.log
 
 # Misc
 *.DS_Store
-*.sublime-workspace

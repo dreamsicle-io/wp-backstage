@@ -1,10 +1,7 @@
 {
-    "require": {
-        "phpdocumentor/phpdocumentor": "2.9.0"
-    },
     "scripts": {
         "build:docs": [
-        	"./vendor/bin/phpdoc -d \"./includes\" -t \"./docs/reference\" --template=\"clean\""
+        	"php ./phpdocumentor.phar -d \"./includes\" -t \"./docs/reference\""
         ]
     }
 }

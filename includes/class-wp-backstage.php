@@ -1252,6 +1252,9 @@ class WP_Backstage {
 	 * @return  array  An array of values. 
 	 */
 	public function sanitize_checkbox_set( $value = array() ) {
+		if ( ! is_array( $value ) ) {
+			$value = array();
+		}
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1266,6 +1269,9 @@ class WP_Backstage {
 	 * @return  array  An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
+		if ( ! is_array( $value ) ) {
+			$value = array();
+		}
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1280,6 +1286,9 @@ class WP_Backstage {
 	 * @return  string  a string as `00:00:00`. 
 	 */
 	public function sanitize_time( $value = array() ) {
+		if ( ! is_array( $value ) || empty( $value ) ) {
+			$value = array( '00', '00', '00' );
+		}
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 
@@ -3732,7 +3741,8 @@ class WP_Backstage {
 	 * Inline Code Editor Script
 	 *
 	 * Conditionally inlines the code editor script if this instance has any 
-	 * code editor fields.
+	 * code editor fields. All of the initializer functions fire at window load,
+	 * to ensure that all CodeMirror instances have finished initializing first.
 	 * 
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 * @link    https://make.wordpress.org/core/tag/codemirror/ CodeMirror in WP
@@ -3873,7 +3883,7 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', function(e) {
+				window.addEventListener('load', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();

@@ -1,11 +1,11 @@
 # Vendor Files
-/vendor
+vendor/
 
 # Doc files
-/.phpdoc
+.phpdoc/
 
 # Log Files
-/logs
+logs/
 *.log
 
 # Misc

@@ -3,7 +3,7 @@
 Plugin Name:  WP Backstage
 Plugin URI:   https://github.com/dreamsicle-io/wp-backstage
 Description:  Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, and custom user, option, and theme setting fields.
-Version:      1.0.1
+Version:      1.0.0
 Author:       Dreamsicle
 Author URI:   https://www.dreamsicle.io
 License:      GPLv2

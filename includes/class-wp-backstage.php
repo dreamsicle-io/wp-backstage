@@ -3867,7 +3867,7 @@ class WP_Backstage {
 					}
 				}
 				function initAllMetaBoxSortableHandles() {
-					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox .ui-sortable-handle, .meta-box-sortables .postbox .handlediv');
 					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
 						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
 							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
@@ -4133,7 +4133,7 @@ class WP_Backstage {
 				
 				}
 				function initAllMetaBoxSortableHandles() {
-					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox > .ui-sortable-handle, .meta-box-sortables .postbox > .handlediv');
+					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox .ui-sortable-handle, .meta-box-sortables .postbox .handlediv');
 					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
 						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
 							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);

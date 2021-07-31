@@ -3792,6 +3792,7 @@ class WP_Backstage {
 							labels[i].addEventListener('click', handleLabelClick);
 						}
 					}
+					refresh(codeEditor);
 				}
 				function refresh(codeEditor = null) {
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
@@ -3858,6 +3859,22 @@ class WP_Backstage {
 						handle.addEventListener('click', handleClick);
 					}
 				}
+				function initMetaBoxOrderHandle(handle = null) {
+
+					function handleClick(e = null) {
+						var { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							refreshAll(parentNode);
+						}
+					}
+
+					if (handle) {
+						handle.addEventListener('click', handleClick);
+					}
+				}
 				function initAllMetaBoxSortables() {
 					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
 					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
@@ -3874,6 +3891,14 @@ class WP_Backstage {
 						}
 					}
 				}
+				function initAllMetaBoxOrderHandles() {
+					const metaBoxOrderHandles = document.querySelectorAll('.meta-box-sortables .postbox .handle-order-higher, .meta-box-sortables .postbox .handle-order-lower');
+					if (metaBoxOrderHandles && (metaBoxOrderHandles.length > 0)) {
+						for (var i = 0; i < metaBoxOrderHandles.length; i++) {
+							initMetaBoxOrderHandle(metaBoxOrderHandles[i]);
+						}
+					}
+				}
 				function initAllScreenOptions() {
 					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
 					if (checkboxes && (checkboxes.length > 0)) {
@@ -3887,6 +3912,7 @@ class WP_Backstage {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();
+					initAllMetaBoxOrderHandles();
 					initAllScreenOptions();
 				});
 
@@ -4109,6 +4135,22 @@ class WP_Backstage {
 						handle.addEventListener('click', handleClick);
 					}
 				}
+				function initMetaBoxOrderHandle(handle = null) {
+					
+					function handleClick(e = null) {
+						var { parentNode } = e.target;
+						while (! parentNode.classList.contains('postbox')) {
+							parentNode = parentNode.parentNode;
+						}
+						if (! parentNode.classList.contains('closed')) {
+							reInitAll(parentNode);
+						}
+					}
+
+					if (handle) {
+						handle.addEventListener('click', handleClick);
+					}
+				}
 				function initScreenOption(checkbox = null) {
 
 					function handleChange(e = null) {
@@ -4140,6 +4182,14 @@ class WP_Backstage {
 						}
 					}
 				}
+				function initAllMetaBoxOrderHandles() {
+					const metaBoxOrderHandles = document.querySelectorAll('.meta-box-sortables .postbox .handle-order-higher, .meta-box-sortables .postbox .handle-order-lower');
+					if (metaBoxOrderHandles && (metaBoxOrderHandles.length > 0)) {
+						for (var i = 0; i < metaBoxOrderHandles.length; i++) {
+							initMetaBoxOrderHandle(metaBoxOrderHandles[i]);
+						}
+					}
+				}
 				function initAllScreenOptions() {
 					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
 					if (checkboxes && (checkboxes.length > 0)) {
@@ -4149,10 +4199,11 @@ class WP_Backstage {
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', function(e) {
+				window.addEventListener('load', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();
+					initAllMetaBoxOrderHandles();
 					initAllScreenOptions();
 				});
 

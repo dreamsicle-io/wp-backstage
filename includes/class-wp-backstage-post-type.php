@@ -263,7 +263,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
+		// add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
@@ -483,7 +483,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
-
+		
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
@@ -839,7 +839,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 					$meta_box['priority'], 
 					array( 
 						'description' => $meta_box['description'], 
-						'fields'      => $meta_box['fields'], 
+						'fields'      => $meta_box['fields'],
 					)
 				);
 
@@ -869,6 +869,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		) );
 
 		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
+			
+			$this->render_edit_nonce();
 			
 			foreach ( $meta_box['args']['fields'] as $field ) {
 

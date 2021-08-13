@@ -399,14 +399,15 @@ class WP_Backstage_User extends WP_Backstage {
 	 */
 	public function manage_admin_column_content( $content = '', $column = '', $user_id = null ) {
 
-		$field = $this->get_field_by( 'name', $column );
+		$field_name = $this->get_field_from_column( $column );
+		$field = $this->get_field_by( 'name', $field_name );
 
 		if ( ! empty( $field ) ) {
 
-			$value = get_user_meta( $user_id, $column, true );
+			$value = get_user_meta( $user_id, $field_name, true );
 
 			// short circuit the column content and allow developer to add their own.
-			$content = apply_filters( $this->format_column_content_filter( $column ), $content, $field, $value, $user_id );
+			$content = apply_filters( $this->format_column_content_filter( $field_name ), $content, $field, $value, $user_id );
 			if ( ! empty( $content ) ) {
 				return $content;
 			}
@@ -498,7 +499,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 				foreach ( $fields as $field ) {
 
-					$hidden[] = $field['name'];
+					$hidden[] = $this->format_column_name( $field['name'] );
 
 				}
 

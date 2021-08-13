@@ -247,6 +247,18 @@ class WP_Backstage {
 	);
 
 	/**
+	 * Non Quick Edit Fields
+	 * 
+	 * @var    array  $non_quick_edit_fields  Field types that do not appear in quick edit.
+	 * @since  1.1.0
+	 */
+	protected $non_quick_edit_fields = array( 
+		'editor', 
+		'media', 
+		'code', 
+	);
+
+	/**
 	 * Textarea Control Fields
 	 * 
 	 * @var  array  $textarea_control_fields  Field types that use a textarea input as a control.
@@ -912,6 +924,40 @@ class WP_Backstage {
 	}
 
 	/**
+	 * Format Column Name
+	 *
+	 * A utility method to get a formatted column name for a field. 
+	 * The resulting column name is the ID of the column for that field. 
+	 * This is done so that duplicate IDs don't show in the DOM.
+	 *
+	 * @since   0.0.1 
+	 * @param   string  $field_name  The field name.
+	 * @return  string  the formatted column name.
+	 */
+	protected function format_column_name( $field_name = '' ) {
+		return sprintf( 
+			'%1$s_column', 
+			esc_attr( $field_name ) 
+		);
+	}
+
+	/**
+	 * Get Field From Column
+	 *
+	 * A utility method to get a field name from a column name. The "_column" suffix is
+	 * added in the formatted column name. This method will remove it from the end of 
+	 * the string and return the original field name. The suffix "_column" is 7 characters 
+	 * long, so the last 7 characters are stripped from the column name.
+	 *
+	 * @since   0.0.1 
+	 * @param   string  $field_name  The field name.
+	 * @return  string  The field name.
+	 */
+	protected function get_field_from_column( $column = '' ) {
+		return substr_replace( $column, '', -7 );
+	}
+
+	/**
 	 * Format Column Content Filter
 	 *
 	 * A utility method to get a formatted filter name for the column content. 
@@ -919,14 +965,14 @@ class WP_Backstage {
 	 * column content and allows developers to add their own.
 	 *
 	 * @since   0.0.1 
-	 * @param   string  $column  The column name.
+	 * @param   string  $column  The field name.
 	 * @return  string  the formatted action name.
 	 */
-	protected function format_column_content_filter( $column = '' ) {
+	protected function format_column_content_filter( $field_name = '' ) {
 		return sprintf( 
 			'wp_backstage_%1$s_%2$s_column_content', 
 			esc_attr( $this->slug ), 
-			esc_attr( $column ) 
+			esc_attr( $field_name ) 
 		);
 	}
 
@@ -1756,7 +1802,7 @@ class WP_Backstage {
 
 				foreach ( $fields as $field ) {
 					if ( $field['has_column'] ) {
-						$columns[$field['name']] = $field['label'];
+						$columns[$this->format_column_name($field['name'])] = $field['label'];
 					}
 				}
 
@@ -1801,7 +1847,9 @@ class WP_Backstage {
 
 				if ( $field['has_column'] && $field['is_sortable'] ) {
 
-					$columns[$field['name']] = $field['name'];
+					$column_name = $this->format_column_name($field['name']);
+
+					$columns[$column_name] = $field['name'];
 
 				}
 
@@ -3774,19 +3822,23 @@ class WP_Backstage {
 					const fieldId = codeEditor.getAttribute('data-code-editor-id');
 					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
-					const CodeMirrorInst = codeMirrorEl.CodeMirror;
+					const CodeMirrorInst = codeMirrorEl ? codeMirrorEl.CodeMirror : undefined;
 					var timer = null;
 
 					function handleLabelClick(e = null) {
-						CodeMirrorInst.focus();
+						if (CodeMirrorInst) {
+							CodeMirrorInst.focus();
+						}
 					}
 
-					CodeMirrorInst.on('change', function(instance, changes) {
-						clearTimeout(timer);
-						timer = setTimeout(function() {
-							instance.save();
-						}, 750);
-					});
+					if (CodeMirrorInst) {
+						CodeMirrorInst.on('change', function(instance, changes) {
+							clearTimeout(timer);
+							timer = setTimeout(function() {
+								instance.save();
+							}, 750);
+						});
+					}
 					if (labels && (labels.length > 0)) {
 						for (var i = 0; i < labels.length; i++) {
 							labels[i].addEventListener('click', handleLabelClick);
@@ -3796,8 +3848,10 @@ class WP_Backstage {
 				}
 				function refresh(codeEditor = null) {
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
-					const CodeMirrorInst = codeMirrorEl.CodeMirror;
-					CodeMirrorInst.refresh();
+					const CodeMirrorInst = codeMirrorEl ? codeMirrorEl.CodeMirror : undefined;
+					if (CodeMirrorInst) {
+						CodeMirrorInst.refresh();
+					}
 				}
 				function initAll() {
 					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
@@ -3908,7 +3962,7 @@ class WP_Backstage {
 					}
 				}
 
-				window.addEventListener('load', function(e) {
+				window.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();
@@ -4199,7 +4253,7 @@ class WP_Backstage {
 					}
 				}
 
-				window.addEventListener('load', function(e) {
+				window.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();

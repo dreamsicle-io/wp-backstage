@@ -260,6 +260,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		add_action( 'init', array( $this, 'register' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
+		add_action( 'quick_edit_custom_box', array( $this, 'add_quick_edit_box' ), 10, 3 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
@@ -648,42 +649,48 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Add Thumbnail Columns
 	 * 
+	 * Adds thumbnail column if the post type supports featured images.
+	 * 
 	 * @since   0.0.1
 	 * @param   array  $columns  An array of already-set columns.
 	 * @return  array  The filtered columns.
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
 
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		if ( post_type_supports( $this->slug, 'thumbnail' ) ) {
 
-			// loop the columns so that the new columns can
-			// be inserted where they are wanted
-			foreach ( $columns as $column_key => $column_label ) {
+			if ( is_array( $columns ) && ! empty( $columns ) ) {
 
-				// unset this column to make room for the new column,
-				// all information needed to reset the column is already here
-				unset( $columns[$column_key] );
+				// loop the columns so that the new columns can
+				// be inserted where they are wanted
+				foreach ( $columns as $column_key => $column_label ) {
 
-				// if the loop is currently at the checkbox column, 
-				// reset the checkbox column followed by the new 
-				// thumbnail column
-				if ( $column_key === 'cb' ) {
+					// unset this column to make room for the new column,
+					// all information needed to reset the column is already here
+					unset( $columns[$column_key] );
 
 					// if the loop is currently at the checkbox column, 
 					// reset the checkbox column followed by the new 
 					// thumbnail column
-					$columns[$column_key] = $column_label;
-					$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->args['thumbnail_label'] ) . '</span>';
+					if ( $column_key === 'cb' ) {
 
-				} else {
+						// if the loop is currently at the checkbox column, 
+						// reset the checkbox column followed by the new 
+						// thumbnail column
+						$columns[$column_key] = $column_label;
+						$columns['thumbnail']  = '<i class="dashicons dashicons-format-image" style="color:#444444;"></i><span class="screen-reader-text">' . esc_html( $this->args['thumbnail_label'] ) . '</span>';
 
-					// else reset the column as is
-					$columns[$column_key] = $column_label;
+					} else {
+
+						// else reset the column as is
+						$columns[$column_key] = $column_label;
+
+					}
 
 				}
-
+			
 			}
-		
+
 		}
 
 		return $columns;
@@ -692,6 +699,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 	/**
 	 * Render Thumbnail
+	 * 
+	 * Render the thumbnail if the post type supports featured images.
 	 * 
 	 * @since   0.0.1
 	 * @param   int    $post_id  The post ID of the post to render the thumbnail for.
@@ -719,6 +728,76 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
+	 * Add Quick Edit Box
+	 * 
+	 * These fields must be wrapped in a fieldset with one of the three following classes: 
+	 * `inline-edit-col-left`, `inline-edit-col-center` and `inline-edit-col-right` (or none for full width).
+	 * 
+	 * @link    https://developer.wordpress.org/reference/hooks/quick_edit_custom_box/ WP Hook: quick_edit_custom_box
+	 * 
+	 * @since   1.1.0
+	 * @param   string  $column     The column name.
+	 * @param   string  $post_type  The post type. If a taxonomy is being viewed, this is the screen instead.
+	 * @param   string  $taxonomy   The taxonomy, if a taxonomy is being viewed.
+	 * @return  void
+	 */
+	public function add_quick_edit_box( $column = '', $post_type = '', $taxonomy = '' ) {
+
+		if ( $post_type === $this->slug ) {
+
+			$field_name = $this->get_field_from_column( $column );
+			$field = $this->get_field_by( 'name', $field_name );
+
+			if ( ! empty( $field ) && ! in_array( $field['type'], $this->non_quick_edit_fields ) ) {
+				
+				$field = wp_parse_args( $field, $this->default_field_args );
+				// $field_id = sanitize_title_with_dashes( $field['name'] );
+				// $field['value'] = get_option( $field['name'] );
+				$field['show_label'] = false; ?>
+
+				<fieldset>
+					
+					<div class="inline-edit-col">
+
+						<div style="margin: 0.2em 0; line-height: 2.5;">
+
+							<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
+						
+								<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"  class="title" style="display: block; float: left; width: 6em; line-height: 2.5;"><?php 
+
+									echo wp_kses( $field['label'], $this->kses_label ); 
+
+								?></label>
+
+							<?php } else { ?>
+
+								<span class="title" style="display: block; float: left; width: 6em; line-height: 2.5;"><?php 
+
+									echo wp_kses( $field['label'], $this->kses_label ); 
+
+								?></span>
+
+							<?php } ?>
+							
+							<span class="input-text-wrap" style="display: block; margin-left: 6em;"><?php 
+
+								$this->render_field_by_type( $field );
+
+							?></span>
+							
+						</div>
+
+					</div>
+
+				</fieldset>
+
+			<?php }
+
+		}
+
+	}
+
+	/**
 	 * Render Admin Column
 	 * 
 	 * @since   0.0.1
@@ -734,14 +813,15 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		} else {
 
-			$field = $this->get_field_by( 'name', $column );
+			$field_name = $this->get_field_from_column( $column );
+			$field = $this->get_field_by( 'name', $field_name );
 
 			if ( ! empty( $field ) ) {
 
-				$value = get_post_meta( $post_id, $column, true );
+				$value = get_post_meta( $post_id, $field_name, true );
 
 				// short circuit the column content and allow developer to add their own.
-				$content = apply_filters( $this->format_column_content_filter( $column ), '', $field, $value, $post_id );
+				$content = apply_filters( $this->format_column_content_filter( $field_name ), '', $field, $value, $post_id );
 				if ( ! empty( $content ) ) {
 					echo $content;
 					return;

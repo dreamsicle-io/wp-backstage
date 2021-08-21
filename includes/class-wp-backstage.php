@@ -4048,6 +4048,7 @@ class WP_Backstage {
 					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
 					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
 					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
+					
 					var timer = null;
 
 					function handleSetup(e = null, wpEditor = null) {
@@ -4199,7 +4200,7 @@ class WP_Backstage {
 					}
 				}
 
-				window.addEventListener('load', function(e) {
+				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();

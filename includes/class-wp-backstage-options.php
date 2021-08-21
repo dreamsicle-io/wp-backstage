@@ -219,11 +219,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	public function init() {
 
 		if ( $this->has_errors() ) {
-			
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			
 			return;
-
 		}
 
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );

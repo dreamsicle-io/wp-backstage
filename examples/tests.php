@@ -466,6 +466,16 @@ function wp_backstage_init() {
 		'group_meta_key' => 'wp_backstage_tag_meta', 
 	) );
 
+	WP_Backstage_Taxonomy::modify( 'category', array( 
+		'fields'         => $all_fields, 
+		'group_meta_key' => 'wp_backstage_default_cat_meta', 
+	) );
+
+	WP_Backstage_Taxonomy::modify( 'post_tag', array( 
+		'fields'         => $all_fields, 
+		'group_meta_key' => 'wp_backstage_default_tag_meta', 
+	) );
+
 	WP_Backstage_User::modify( array( 
 		'field_groups' => array(
 			array(

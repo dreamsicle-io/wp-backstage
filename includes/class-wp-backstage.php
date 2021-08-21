@@ -3068,7 +3068,7 @@ class WP_Backstage {
 					<select
 					id="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
 					name="<?php printf( esc_attr( '%1$s[country]' ), $field['name'] ); ?>"
-					style="width:100%; box-sizing:border-box;"
+					style="width:100%; max-width: 100%; box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
@@ -3222,7 +3222,7 @@ class WP_Backstage {
 					<select
 					id="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
 					name="<?php printf( esc_attr( '%1$s[state]' ), $field['name'] ); ?>"
-					style="width:100%; box-sizing:border-box;"
+					style="width:100%; max-width: 100%; box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 

@@ -129,7 +129,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	public static function modify( $slug = '', $args = array() ) {
 
 		$Post_Type = new WP_Backstage_Post_Type( $slug, $args, false );
-		$Post_Type->init_modify();
+		$Post_Type->init();
 		return $Post_Type;
 
 	}
@@ -138,6 +138,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the post type.
 	 * @param   array   $args  The developer-provided arguments for this instance.
 	 * @param   bool    $new   Whether this instance constructs a new post type or modifies an existing one.
@@ -243,7 +244,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		} elseif ( $this->new && in_array( $this->slug, get_post_types() ) ) {
 
 			$this->errors[] = new WP_Error( 'post_type_exists', sprintf( 
-				/* translators: 1: post type slug */
+				/* translators: 1: post type slug, 2: method suggestion */
 				__( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'wp-backstage' ), 
 				$this->slug,
 				'<code>WP_Backstage_Post_type::modify()</code>'
@@ -252,7 +253,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		} elseif ( ! $this->new && ! in_array( $this->slug, get_post_types() ) ) {
 
 			$this->errors[] = new WP_Error( 'post_type_not_exists', sprintf( 
-				/* translators: 1: post type slug */
+				/* translators: 1: post type slug, 2: method suggestion */
 				__( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'wp-backstage' ), 
 				$this->slug,
 				'<code>WP_Backstage_Post_type::add()</code>'
@@ -260,43 +261,20 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		}
 
-		if ( ! $this->new ) {
+		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
 
-			if ( is_array( $this->required_args_modify ) && ! empty( $this->required_args_modify ) ) {
+		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
 
-				foreach ( $this->required_args_modify as $required_arg ) {
+			foreach ( $required_args as $required_arg ) {
 
-					if ( empty( $this->args[$required_arg] ) ) {
+				if ( empty( $this->args[$required_arg] ) ) {
 
-						$this->errors[] = new WP_Error( 'required_post_type_arg', sprintf( 
-							/* translators: 1: post type slug, 2:required arg key. */
-							__( '[post type: %1$s] The %2$s key is required.', 'wp-backstage' ), 
-							$this->slug,
-							'<code>' . $required_arg . '</code>'
-						) );
-
-					}
-
-				}
-
-			}
-
-		} else {
-
-			if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
-
-				foreach ( $this->required_args as $required_arg ) {
-
-					if ( empty( $this->args[$required_arg] ) ) {
-
-						$this->errors[] = new WP_Error( 'required_post_type_arg', sprintf( 
-							/* translators: 1: post type slug, 2:required arg key. */
-							__( '[post type: %1$s] The %2$s key is required.', 'wp-backstage' ), 
-							$this->slug,
-							'<code>' . $required_arg . '</code>'
-						) );
-
-					}
+					$this->errors[] = new WP_Error( 'required_post_type_arg', sprintf( 
+						/* translators: 1: post type slug, 2:required arg key. */
+						__( '[post type: %1$s] The %2$s key is required.', 'wp-backstage' ), 
+						$this->slug,
+						'<code>' . $required_arg . '</code>'
+					) );
 
 				}
 
@@ -319,40 +297,13 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			return;
 		}
 
-		add_action( 'init', array( $this, 'register' ), 0 );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
-		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
-		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
-		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
-		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
-		add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
-		add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
-		add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
-		add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
-		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
-
-		parent::init();
-
-	}
-
-	/**
-	 * Init
-	 * 
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function init_modify() {
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
+		if ( $this->new ) {
+			add_action( 'init', array( $this, 'register' ), 0 );
+			add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
+			add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
+			add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
+			add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
 		}
-
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );

@@ -42,6 +42,14 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	);
 
 	/**
+	 * Required Args - Modify
+	 * 
+	 * @since 1.1.0
+	 * @var   array  $required_args  The required argument keys for this instance if modifying.
+	 */
+	protected $required_args_modify = array();
+
+	/**
 	 * Add
 	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
@@ -60,19 +68,40 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	}
 
 	/**
+	 * Modify
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
+	 * 
+	 * @since   1.1.0
+	 * @param   string                 $slug  The slug for the taxonomy.
+	 * @param   array                  $args  The arguments for this instance.
+	 * @return  WP_Backstage_Taxonomy  A fully constructed instance of `WP_Backstage_User`. 
+	 */
+	public static function modify( $slug = '', $args = array() ) {
+
+		$Taxonomy = new WP_Backstage_Taxonomy( $slug, $args, false );
+		$Taxonomy->init();
+		return $Taxonomy;
+
+	}
+
+	/**
 	 * Construct
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the taxonomy.
 	 * @param   array   $args  The developer-provided arguments for this instance.
+	 * @param   bool    $new   Whether this instance constructs a new taxonomy or modifies an existing one.
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array() ) {
+	protected function __construct( $slug = '', $args = array(), $new = true ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
+		$this->new = boolval( $new );
 		$this->slug = sanitize_title_with_dashes( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
@@ -150,19 +179,31 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$this->slug
 			) );
 		
-		} elseif ( in_array( $this->slug, get_taxonomies() ) ) {
+		} elseif ( $this->new && in_array( $this->slug, get_taxonomies() ) ) {
 
 			$this->errors[] = new WP_Error( 'taxonomy_exists', sprintf( 
-				/* translators: 1: taxonomy slug */
-				__( '[taxonomy: %1$s] A taxonomy with this slug already exists.', 'wp-backstage' ), 
-				$this->slug
+				/* translators: 1: taxonomy slug, 2: method suggestion */
+				__( '[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Taxonomy::modify()</code>'
+			) );
+
+		} elseif ( ! $this->new && ! in_array( $this->slug, get_taxonomies() ) ) {
+
+			$this->errors[] = new WP_Error( 'taxonomy_not_exists', sprintf( 
+				/* translators: 1: taxonomy slug, 2: method suggestion */
+				__( '[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Taxonomy::add()</code>'
 			) );
 
 		}
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
 
-			foreach ( $this->required_args as $required_arg ) {
+		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
+
+			foreach ( $required_args as $required_arg ) {
 
 				if ( empty( $this->args[$required_arg] ) ) {
 
@@ -185,6 +226,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Init
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Ensures a new taxonomy is only registered if adding a new one.
 	 * @return  void 
 	 */
 	public function init() {
@@ -194,7 +236,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 			return;
 		}
 
-		add_action( 'init', array( $this, 'register' ), 0 );
+		if ( $this->new ) {
+			add_action( 'init', array( $this, 'register' ), 0 );
+		}
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
 		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );

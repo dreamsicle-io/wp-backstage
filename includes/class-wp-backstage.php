@@ -3068,7 +3068,7 @@ class WP_Backstage {
 					<select
 					id="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
 					name="<?php printf( esc_attr( '%1$s[country]' ), $field['name'] ); ?>"
-					style="width:100%; box-sizing:border-box;"
+					style="width:100%;max-width:100%;box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
@@ -3222,7 +3222,7 @@ class WP_Backstage {
 					<select
 					id="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
 					name="<?php printf( esc_attr( '%1$s[state]' ), $field['name'] ); ?>"
-					style="width:100%; box-sizing:border-box;"
+					style="width:100%;max-width:100%;box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>><?php 
 
@@ -3389,6 +3389,18 @@ class WP_Backstage {
 						removeClones();
 						resetField();
 					}
+					function handleModalOpen() {
+						// TO-DO: Set selection when opened.
+						/* const ids = input.value ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
+						const selection = modal.state().get('selection');
+						if (! isMultiple) {
+							selection.add(wp.media.attachment(ids[0]));
+						} else {
+							for (var i = 0; i < ids.length; i++) {
+								selection.add(wp.media.attachment(ids[i]));
+							}
+						} */
+					}
 					function handleSelect() {
 						const selection = modal.state().get('selection').toJSON();
 						if (selection && (selection.length > 0)) {
@@ -3547,6 +3559,7 @@ class WP_Backstage {
 					}
 
 					modal.on('select', handleSelect);
+					modal.on('open', handleModalOpen);
 					setButton.addEventListener('click', handleOpen);
 					removeButton.addEventListener('click', handleRemove);
 					if (legend) {
@@ -4048,6 +4061,7 @@ class WP_Backstage {
 					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
 					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
 					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
+					
 					var timer = null;
 
 					function handleSetup(e = null, wpEditor = null) {
@@ -4199,7 +4213,7 @@ class WP_Backstage {
 					}
 				}
 
-				window.addEventListener('load', function(e) {
+				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
 					initAllMetaBoxSortables();
 					initAllMetaBoxSortableHandles();

@@ -3,7 +3,7 @@
 Contributors: noahmason
 Tags: post-types, taxonomies, options, settings, meta-boxes, custom-fields
 Tested up to: 5.7.2
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: LICENSE
  

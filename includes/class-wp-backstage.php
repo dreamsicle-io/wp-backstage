@@ -3389,6 +3389,18 @@ class WP_Backstage {
 						removeClones();
 						resetField();
 					}
+					function handleModalOpen() {
+						// TO-DO: Set selection when opened.
+						/* const ids = input.value ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
+						const selection = modal.state().get('selection');
+						if (! isMultiple) {
+							selection.add(wp.media.attachment(ids[0]));
+						} else {
+							for (var i = 0; i < ids.length; i++) {
+								selection.add(wp.media.attachment(ids[i]));
+							}
+						} */
+					}
 					function handleSelect() {
 						const selection = modal.state().get('selection').toJSON();
 						if (selection && (selection.length > 0)) {
@@ -3547,6 +3559,7 @@ class WP_Backstage {
 					}
 
 					modal.on('select', handleSelect);
+					modal.on('open', handleModalOpen);
 					setButton.addEventListener('click', handleOpen);
 					removeButton.addEventListener('click', handleRemove);
 					if (legend) {

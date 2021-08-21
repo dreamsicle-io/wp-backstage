@@ -305,7 +305,11 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
 		}
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+		if ( $this->slug === 'attachment' ) {
+			add_action( 'edit_attachment', array( $this, 'save' ), 10 );
+		} else {
+			add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+		}
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
@@ -516,6 +520,9 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Saves the form data as individual keys. Also saves a full array of 
 	 * `$field['name'] => $value` pairs as a new custom field with the 
 	 * `group_meta_key` argument as the key.
+	 * 
+	 * Note that on attachments, the `edit_attachment` hook only sends 
+	 * the first parameter ($post_id).
 	 *
 	 * @since   0.0.1
 	 * @param   int      $post_id  The ID of the post being saved.

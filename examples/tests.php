@@ -438,6 +438,28 @@ function wp_backstage_init() {
 		), 
 	) );
 
+	WP_Backstage_Post_Type::modify( 'attachment', array(
+		'group_meta_key' => 'wp_backstage_default_attachment_meta',
+		'meta_boxes'     => array(
+			array(
+				'id'          => 'wp_backstage_default_attachment_fields', 
+				'title'       => __( 'All Fields', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the default attachment. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'context'     => 'normal', 
+				'priority'    => 'high', 
+				'fields'      => $all_fields, 
+			),
+			array(
+				'id'          => 'wp_backstage_default_attachment_extras', 
+				'title'       => __( 'Extras', 'wp_backstage' ), 
+				'description' => __( 'These extra meta fields control further details about the default attachment. <a href="#">Example Link</a>', 'wp_backstage' ), 
+				'context'     => 'side', 
+				'priority'    => 'low', 
+				'hidden'      => true, 
+			),
+		), 
+	) );
+
 	WP_Backstage_Taxonomy::add( 'wp_backstage_cat', array( 
 		'singular_name'  => __( 'Test Category', 'wp_backstage' ), 
 		'plural_name'    => __( 'Test Categories', 'wp_backstage' ), 

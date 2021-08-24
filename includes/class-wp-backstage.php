@@ -1019,6 +1019,21 @@ class WP_Backstage {
 
 	}
 
+	public function enqueue_global_script() { ?>
+		<script id="wp-backstage-global-script">
+			window.wpBackstage = {
+				colorPicker: {},
+				datePicker: {},
+				address: {},
+				mediaUploader: {},
+				editor: {},
+				codeEditor: {
+					settings: {},
+				},
+			};
+		</script>
+	<?php }
+
 	/**
 	 * Enqueue Admin Scripts
 	 *
@@ -1044,6 +1059,8 @@ class WP_Backstage {
 		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
 			return;
 		}
+
+		$this->enqueue_global_script();
 
 		if ( $this->has_editor ) {
 
@@ -1119,7 +1136,7 @@ class WP_Backstage {
 					wp_add_inline_script(
 						'code-editor',
 						sprintf(
-							'jQuery( function() { if (document.querySelector("textarea#%1$s")) { wp.codeEditor.initialize( "%1$s", %2$s ); } } );',
+							'window.wpBackstage.codeEditor.settings.%1$s = %2$s;',
 							sanitize_title_with_dashes( $code_editor['name'] ), 
 							wp_json_encode( $code_editor_settings )
 						)
@@ -2425,11 +2442,13 @@ class WP_Backstage {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = sanitize_title_with_dashes( $field['name'] );
-		$args = wp_parse_args( $field['args'], $this->default_code_args ); ?>
+		$args = wp_parse_args( $field['args'], $this->default_code_args );
+		$settings_key = $field['settings_key'] ? $field['settings_key'] : $id; ?>
 
 		<div 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
+		data-code-editor-settings="<?php echo esc_attr( $settings_key ); ?>"
 		style="max-width:<?php echo $args['max_width']; ?>;">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
@@ -3587,14 +3606,34 @@ class WP_Backstage {
 					};
 				}
 
-				function initAll() {
-					const uploaders = document.querySelectorAll('[data-media-uploader-id]');
+				function initAll(container = null) {
+					container = container || document;
+					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
 					if (uploaders && (uploaders.length > 0)) {
 						for (var i = 0; i < uploaders.length; i++) {
 							init(uploaders[i]);
 						}
 					}
 				}
+				function reset(uploader = null) {
+					uploader.mediaUploader.reset();
+				}
+				function resetAll(container = null) {
+					container = container || document;
+					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
+					if (uploaders && (uploaders.length > 0)) {
+						for (var i = 0; i < uploaders.length; i++) {
+							reset(uploaders[i]);
+						}
+					}
+				}
+
+				window.wpBackstage.mediaUploader = Object.assign(window.wpBackstage.mediaUploader, {
+					initAll: initAll,
+					init: init,
+					resetAll: resetAll,
+					reset: reset,
+				});
 
 				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
@@ -3647,14 +3686,20 @@ class WP_Backstage {
 					});
 				}
 
-				function initAll() {
-					const datePickers = document.querySelectorAll('[data-date-picker-id]');
+				function initAll(container = null) {
+					container = container || document;
+					const datePickers = container.querySelectorAll('[data-date-picker-id]');
 					if (datePickers && (datePickers.length > 0)) {
 						for (var i = 0; i < datePickers.length; i++) {
 							init(datePickers[i]);
 						}
 					}
 				}
+
+				window.wpBackstage.datePicker = Object.assign(window.wpBackstage.datePicker, {
+					initAll: initAll,
+					init: init,
+				});
 
 				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
@@ -3731,14 +3776,35 @@ class WP_Backstage {
 					}
 				}
 
-				function initAll() {
-					const colorPickers = document.querySelectorAll('[data-color-picker-id]');
+				function initAll(container = null) {
+					container = container || document;
+					const colorPickers = container.querySelectorAll('[data-color-picker-id]');
 					if (colorPickers && (colorPickers.length > 0)) {
 						for (var i = 0; i < colorPickers.length; i++) {
 							init(colorPickers[i]);
 						}
 					}
 				}
+				function reset(colorPicker = null) {
+					const resetButton = colorPicker.querySelector('.wp-picker-clear, .wp-picker-default');
+					resetButton.click();
+				}
+				function resetAll(container = null) {
+					container = container || document;
+					const colorPickers = container.querySelectorAll('[data-color-picker-id]');
+					if (colorPickers && (colorPickers.length > 0)) {
+						for (var i = 0; i < colorPickers.length; i++) {
+							reset(colorPickers[i]);
+						}
+					}
+				}
+
+				window.wpBackstage.colorPicker = Object.assign(window.wpBackstage.colorPicker, {
+					initAll: initAll,
+					init: init,
+					resetAll: resetAll,
+					reset: reset,
+				});
 
 				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
@@ -3779,15 +3845,14 @@ class WP_Backstage {
 			(function($) {
 
 				function init(codeEditor = null) {
-					
-					if (! codeEditor) { 
-						return;
-					}
-
 					const fieldId = codeEditor.getAttribute('data-code-editor-id');
+					const settingsKey = codeEditor.getAttribute('data-code-editor-settings');
 					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
+					const settings = window.wpBackstage.codeEditor.settings[settingsKey];
+					wp.codeEditor.initialize(fieldId, settings);
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
 					const CodeMirrorInst = codeMirrorEl.CodeMirror;
+					
 					var timer = null;
 
 					function handleLabelClick(e = null) {
@@ -3805,21 +3870,24 @@ class WP_Backstage {
 							labels[i].addEventListener('click', handleLabelClick);
 						}
 					}
-					refresh(codeEditor);
 				}
+
 				function refresh(codeEditor = null) {
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
 					const CodeMirrorInst = codeMirrorEl.CodeMirror;
 					CodeMirrorInst.refresh();
 				}
-				function initAll() {
-					const codeEditors = document.querySelectorAll('[data-code-editor-id]');
+
+				function initAll(container = null) {
+					container = container || document;
+					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
 					if (codeEditors && (codeEditors.length > 0)) {
 						for (var i = 0; i < codeEditors.length; i++) {
 							init(codeEditors[i]);
 						}
 					}
 				}
+
 				function refreshAll(container = null) {
 					container = container || document;
 					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
@@ -3829,104 +3897,36 @@ class WP_Backstage {
 						}
 					}
 				}
-				function initScreenOption(checkbox = null) {
 
-					function handleChange(e = null) {
-						const { value } = e.target;
-						const metaBox = document.querySelector('#' + value);
-						if (metaBox && ! metaBox.classList.contains('closed')) {
-							refreshAll(metaBox);
-						}
-					}
-
-					if (checkbox) {
-						checkbox.addEventListener('change', handleChange);
-					}
+				function reset(codeEditor = null) {
+					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
+					const CodeMirrorInst = codeMirrorEl.CodeMirror;
+					const textarea = CodeMirrorInst.getTextArea();
+					CodeMirrorInst.setValue(textarea.value);
+					CodeMirrorInst.clearHistory();
 				}
-				function initMetaBoxSortable(sortable = null) {
 
-					function handleSortStop(e = null, ui = null) {
-						const { item } = ui;
-						if (item[0].classList.contains('postbox')) {
-							refreshAll(item[0]);
-						}
-					}
-
-					if (sortable) {
-						$(sortable).on('sortstop', handleSortStop);
-					}
-				}
-				function initMetaBoxSortableHandle(handle = null) {
-
-					function handleClick(e = null) {
-						var { parentNode } = e.target;
-						while (! parentNode.classList.contains('postbox')) {
-							parentNode = parentNode.parentNode;
-						}
-						if (! parentNode.classList.contains('closed')) {
-							refreshAll(parentNode);
-						}
-					}
-
-					if (handle) {
-						handle.addEventListener('click', handleClick);
-					}
-				}
-				function initMetaBoxOrderHandle(handle = null) {
-
-					function handleClick(e = null) {
-						var { parentNode } = e.target;
-						while (! parentNode.classList.contains('postbox')) {
-							parentNode = parentNode.parentNode;
-						}
-						if (! parentNode.classList.contains('closed')) {
-							refreshAll(parentNode);
-						}
-					}
-
-					if (handle) {
-						handle.addEventListener('click', handleClick);
-					}
-				}
-				function initAllMetaBoxSortables() {
-					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
-					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
-						for (var i = 0; i < metaBoxSortables.length; i++) {
-							initMetaBoxSortable(metaBoxSortables[i]);
+				function resetAll(container = null) {
+					container = container || document;
+					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
+					if (codeEditors && (codeEditors.length > 0)) {
+						for (var i = 0; i < codeEditors.length; i++) {
+							reset(codeEditors[i]);
 						}
 					}
 				}
-				function initAllMetaBoxSortableHandles() {
-					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox .ui-sortable-handle, .meta-box-sortables .postbox .handlediv');
-					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
-						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
-							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
-						}
-					}
-				}
-				function initAllMetaBoxOrderHandles() {
-					const metaBoxOrderHandles = document.querySelectorAll('.meta-box-sortables .postbox .handle-order-higher, .meta-box-sortables .postbox .handle-order-lower');
-					if (metaBoxOrderHandles && (metaBoxOrderHandles.length > 0)) {
-						for (var i = 0; i < metaBoxOrderHandles.length; i++) {
-							initMetaBoxOrderHandle(metaBoxOrderHandles[i]);
-						}
-					}
-				}
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
-				}
+
+				window.wpBackstage.codeEditor = Object.assign(window.wpBackstage.codeEditor, {
+					initAll: initAll,
+					init: init,
+					refreshAll: refreshAll,
+					refresh: refresh,
+					resetAll: resetAll,
+					reset: reset,
+				});
 
 				window.addEventListener('load', function(e) {
 					initAll();
-					initAllMetaBoxSortables();
-					initAllMetaBoxSortableHandles();
-					initAllMetaBoxOrderHandles();
-					initAllScreenOptions();
 				});
 
 			})(jQuery);
@@ -3994,14 +3994,20 @@ class WP_Backstage {
 					countrySelect.addEventListener('change', handleCountryChange);
 				}
 
-				function initAll() {
-					const addresses = document.querySelectorAll('[data-address-id]');
+				function initAll(container = null) {
+					container = container || document;
+					const addresses = container.querySelectorAll('[data-address-id]');
 					if (addresses && (addresses.length > 0)) {
 						for (var i = 0; i < addresses.length; i++) {
 							init(addresses[i]);
 						}
 					}
 				}
+
+				window.wpBackstage.address = Object.assign(window.wpBackstage.address, {
+					initAll: initAll,
+					init: init,
+				});
 
 				document.addEventListener('DOMContentLoaded', function(e) {
 					initAll();
@@ -4042,49 +4048,39 @@ class WP_Backstage {
 
 			(function($) {
 
+				var saveTimer = null;
+
 				function destroy(editor = null) {
-					if (! editor) { 
-						return;
-					}
 					const fieldId = editor.getAttribute('data-editor-id');
 					wp.editor.remove(fieldId);
 				}
 
+				function handleSetup(e = null, wpEditor = null) {
+					const editor = document.querySelector('[data-editor-id="' + wpEditor.id + '"]');
+					if (editor) {
+						const formatSelect = (editor.getAttribute('data-format-select') === 'true');
+						const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
+						wpEditor.settings.plugins = 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview';
+						wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
+						if (formatSelect) {
+							wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
+						}
+						if (kitchenSink) {
+							wpEditor.settings.toolbar1 += ',wp_adv';
+							wpEditor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
+						}
+						wpEditor.on('change', function(e) {
+							clearTimeout(saveTimer);
+							saveTimer = setTimeout(function() {
+								wpEditor.save();
+							}, 750);
+						});
+					} 
+				}
+
 				function init(editor = null) {
-					
-					if (! editor) { 
-						return;
-					}
-
 					const fieldId = editor.getAttribute('data-editor-id');
-					const textarea = editor.querySelector('#' + fieldId);
 					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
-					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
-					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
-					
-					var timer = null;
-
-					function handleSetup(e = null, wpEditor = null) {
-						const { id } = wpEditor.settings;
-						if (id === fieldId) {
-							wpEditor.settings.plugins = 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview';
-							wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
-							if (formatSelect) {
-								wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
-							}
-							if (kitchenSink) {
-								wpEditor.settings.toolbar1 += ',wp_adv';
-								wpEditor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
-							}
-							wpEditor.on('change', function(e) {
-								clearTimeout(timer);
-								timer = setTimeout(function() {
-									wpEditor.save();
-								}, 750);
-							});
-						} 
-						
-					}
 
 					wp.editor.initialize(fieldId, {
 						mediaButtons: mediaButtons, 
@@ -4093,9 +4089,6 @@ class WP_Backstage {
 							wpautop: true, 
 						}, 
 					});
-
-					$(document).on( 'tinymce-editor-setup', handleSetup);
-
 				}
 				function destroyAll(container = null) {
 					container = container || document;
@@ -4115,110 +4108,43 @@ class WP_Backstage {
 						}
 					}
 				}
-				function reInitAll(container = null) {
+				function refresh(editor = null) {
+					destroy(editor);
+					init(editor);
+				}
+				function refreshAll(container = null) {
 					container = container || document;
 					destroyAll(container);
 					initAll(container);
 				}
-				function initMetaBoxSortable(sortable = null) {
-					
-					function handleSortStop(e = null, ui = null) {
-						const { item } = ui;
-						if (item[0].classList.contains('postbox')) {
-							reInitAll(item[0]);
-						}
-					}
-
-					if (sortable) {
-						$(sortable).on('sortstop', handleSortStop);
-					}
-				}
-				function initMetaBoxSortableHandle(handle = null) {
-					
-					function handleClick(e = null) {
-						var { parentNode } = e.target;
-						while (! parentNode.classList.contains('postbox')) {
-							parentNode = parentNode.parentNode;
-						}
-						if (! parentNode.classList.contains('closed')) {
-							reInitAll(parentNode);
-						}
-					}
-
-					if (handle) {
-						handle.addEventListener('click', handleClick);
-					}
-				}
-				function initMetaBoxOrderHandle(handle = null) {
-					
-					function handleClick(e = null) {
-						var { parentNode } = e.target;
-						while (! parentNode.classList.contains('postbox')) {
-							parentNode = parentNode.parentNode;
-						}
-						if (! parentNode.classList.contains('closed')) {
-							reInitAll(parentNode);
-						}
-					}
-
-					if (handle) {
-						handle.addEventListener('click', handleClick);
-					}
-				}
-				function initScreenOption(checkbox = null) {
-
-					function handleChange(e = null) {
-						const { value } = e.target;
-						const metaBox = document.querySelector('#' + value);
-						if (metaBox && ! metaBox.classList.contains('closed')) {
-							reInitAll(metaBox);
-						}
-					}
-
-					if (checkbox) {
-						checkbox.addEventListener('change', handleChange);
-					}
-				}
-				function initAllMetaBoxSortables() {
-					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
-					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
-						for (var i = 0; i < metaBoxSortables.length; i++) {
-							initMetaBoxSortable(metaBoxSortables[i]);
-						}
-					}
 				
+				function reset(editor = null) {
+					const fieldId = editor.getAttribute('data-editor-id');
+					const textarea = editor.querySelector('#' + fieldId);
+					textarea.value== textarea.defaultValue;
 				}
-				function initAllMetaBoxSortableHandles() {
-					const metaBoxSortableHandles = document.querySelectorAll('.meta-box-sortables .postbox .ui-sortable-handle, .meta-box-sortables .postbox .handlediv');
-					if (metaBoxSortableHandles && (metaBoxSortableHandles.length > 0)) {
-						for (var i = 0; i < metaBoxSortableHandles.length; i++) {
-							initMetaBoxSortableHandle(metaBoxSortableHandles[i]);
-						}
-					}
-				}
-				function initAllMetaBoxOrderHandles() {
-					const metaBoxOrderHandles = document.querySelectorAll('.meta-box-sortables .postbox .handle-order-higher, .meta-box-sortables .postbox .handle-order-lower');
-					if (metaBoxOrderHandles && (metaBoxOrderHandles.length > 0)) {
-						for (var i = 0; i < metaBoxOrderHandles.length; i++) {
-							initMetaBoxOrderHandle(metaBoxOrderHandles[i]);
-						}
-					}
-				}
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
+				function resetAll(container = null) {
+					container = container || document;
+					const editors = container.querySelectorAll('[data-editor-id]');
+					if (editors && (editors.length > 0)) {
+						for (var i = 0; i < editors.length; i++) {
+							reset(editors[i]);
 						}
 					}
 				}
 
-				document.addEventListener('DOMContentLoaded', function(e) {
+				window.wpBackstage.editor = Object.assign(window.wpBackstage.editor, {
+					initAll: initAll,
+					init: init,
+					refreshAll: refreshAll,
+					refresh: refresh,
+					resetAll: resetAll,
+					reset: reset,
+				});
+
+				window.addEventListener('load', function(e) {
+					$(document).on( 'tinymce-editor-setup', handleSetup);
 					initAll();
-					initAllMetaBoxSortables();
-					initAllMetaBoxSortableHandles();
-					initAllMetaBoxOrderHandles();
-					initAllScreenOptions();
 				});
 
 			})(jQuery);

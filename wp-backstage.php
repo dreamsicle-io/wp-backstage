@@ -26,7 +26,17 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 // }
 
 
-
+/**
+ * WP Backstage Render Help Tab
+ * 
+ * Renders the WP Backstage help tab on all screens.
+ * See `wp_backstage_add_help_tab`.
+ * 
+ * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+ * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+ * @since   1.1.0
+ * @return  void
+ */
 function wp_backstage_render_help_tab() {
 	$screen = get_current_screen(); ?>
 	<h3><?php esc_html_e( 'Debug', 'wp_backstage' ); ?></h3>
@@ -40,7 +50,19 @@ function wp_backstage_render_help_tab() {
 	</ul>
 <?php }
 
-function wp_backstage_add_help_tab( $screen ) {
+/**
+ * WP Backstage Add Help Tab
+ * 
+ * Registers the WP Backstage help tab.
+ * See `wp_backstage_render_help_tab`.
+ * 
+ * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+ * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+ * @since   1.1.0
+ * @param   WP_Screen  $screen  an instance of `WP_Screen`.
+ * @return  void
+ */
+function wp_backstage_add_help_tab( $screen = null ) {
     $screen->add_help_tab( array(
         'id'       => 'wp_backstage',
         'title'    => __( 'WP Backstage', 'wp_backstage' ),

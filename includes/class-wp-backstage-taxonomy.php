@@ -249,7 +249,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_taxonomy_script' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
 		parent::init();
@@ -680,88 +680,48 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	}
 
 	/**
-	 * Inline Add Term Script
+	 * Inline Taxonomy Script
 	 * 
 	 * @since   0.0.1
 	 * @return  void  
 	 */
-	public function inline_add_term_script() {
+	public function inline_taxonomy_script() {
 
 		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->is_screen( 'base', 'edit-tags' ) ) {
 			return;
 		} ?>
 
-		<script type="text/javascript">
+		<script 
+		id="wp_backstage_taxonomy_script"
+		type="text/javascript">
 
 			(function($) {
 
-				function init() {
+				function resetForm() {
 					const form = document.querySelector('#addtag');
+					form.reset();
+					window.wpBackstage.colorPicker.resetAll(form);
+					window.wpBackstage.codeEditor.resetAll(form);
+					window.wpBackstage.mediaUploader.resetAll(form);
+				}
 
-					function parseParams(string = '') {
-						var params = {};
-						const pieces = string.split('&');
-						for (var i = 0; i < pieces.length; i++) {
-							const paramPieces = pieces[i].split('=');
-							if (paramPieces[0]) {
-								params[paramPieces[0]] = paramPieces[1] ? paramPieces[1] : '';
-							}
-						}
-						return params;
-					}
-					function resetColorPickers() {
-						const colorPickers = form.querySelectorAll('.wp-picker-container');
-						if (colorPickers && (colorPickers.length > 0)) {
-							for (var i = 0; i < colorPickers.length; i++) {
-								const resetButton = colorPickers[i].querySelector('.wp-picker-clear, .wp-picker-default');
-								resetButton.click();
-							}
+				function handleSuccess(e = null, request = null, settings = null) {
+					if (settings && settings.data) {
+						const params = new URLSearchParams(settings.data);
+						const action = params.get('action');
+						if (action === 'add-tag') {
+							resetForm();
 						}
 					}
-					function resetCodeEditors() {
-						const codeEditors = form.querySelectorAll('.CodeMirror');
-						if (codeEditors && (codeEditors.length > 0)) {
-							for (var i = 0; i < codeEditors.length; i++) {
-								const CodeMirrorInst = codeEditors[i].CodeMirror;
-								if (CodeMirrorInst) {
-									const textarea = CodeMirrorInst.getTextArea();
-									CodeMirrorInst.setValue(textarea.value);
-									CodeMirrorInst.clearHistory();
-								} 
-							}
-						}
-					}
-					function resetMediaUploaders() {
-						const mediaUploaders = form.querySelectorAll('[data-media-uploader-id]');
-						if (mediaUploaders && (mediaUploaders.length > 0)) {
-							for (var i = 0; i < mediaUploaders.length; i++) {
-								const mediaUploaderInst = mediaUploaders[i].mediaUploader;
-								if (mediaUploaderInst) {
-									mediaUploaderInst.reset();
-								}
-							}
-						}
-					}
-					function resetForm() {
-						form.reset();
-						resetColorPickers();
-						resetCodeEditors();
-						resetMediaUploaders();
-					}
-					function handleSuccess(e = null, request = null, settings = null) {
-						if (settings && settings.data) {
-							const params = parseParams(settings.data);
-							const { action } = params;
-							if (action === 'add-tag') {
-								resetForm();
-							}
-						}
-					}
+				}
 
+				function init() {
 					$(document).ajaxSuccess(handleSuccess);
 				}
 
-				document.addEventListener('DOMContentLoaded', init);
+				document.addEventListener('DOMContentLoaded', function(e) {
+					init();
+				});
 
 			})(jQuery);
 

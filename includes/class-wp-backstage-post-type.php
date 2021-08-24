@@ -318,6 +318,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
@@ -1065,6 +1066,104 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 		return $args; 
 	}
+
+	/**
+	 * Inline Post Type Script
+	 * 
+	 * @since   1.1.0
+	 * @return  void  
+	 */
+	public function inline_post_type_script() {
+
+		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
+			return;
+		} ?>
+
+		<script 
+		id="wp_backstage_post_type_script"
+		type="text/javascript">
+
+			(function($) {
+
+				function handleMetaBoxHandleClick(e = null) {
+					var { parentNode } = e.target;
+					while (! parentNode.classList.contains('postbox')) {
+						parentNode = parentNode.parentNode;
+					}
+					if (! parentNode.classList.contains('closed')) {
+						window.wpBackstage.editor.refreshAll(parentNode);
+						window.wpBackstage.codeEditor.refreshAll(parentNode);
+					}
+				}
+
+				function handleMetaBoxSortStop(e = null, ui = null) {
+					const item = ui.item[0];
+					if (item.classList.contains('postbox')) {
+						window.wpBackstage.editor.refreshAll(item);
+						window.wpBackstage.codeEditor.refreshAll(item);
+					}
+				}
+
+				function handleScreenOptionChange(e = null) {
+					const metaBox = document.getElementById(e.target.value);
+					if (metaBox && ! metaBox.classList.contains('closed')) {
+						window.wpBackstage.editor.refreshAll(metaBox);
+						window.wpBackstage.codeEditor.refreshAll(metaBox);
+					}
+				}
+
+				function initMetaBoxSortable(sortable = null) {
+					$(sortable).on('sortstop', handleMetaBoxSortStop);
+				}
+
+				function initMetaBox(metaBox = null) {
+					const handle = metaBox.querySelector('.postbox-header');
+					handle.addEventListener('click', handleMetaBoxHandleClick);
+					
+				}
+
+				function initScreenOption(checkbox = null) {
+					checkbox.addEventListener('change', handleScreenOptionChange);
+				}
+
+				function initAllMetaBoxSortables() {
+					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
+					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
+						for (var i = 0; i < metaBoxSortables.length; i++) {
+							initMetaBoxSortable(metaBoxSortables[i]);
+						}
+					}
+				}
+
+				function initAllMetaBoxes() {
+					const metaBoxes = document.querySelectorAll('.postbox');
+					if (metaBoxes && (metaBoxes.length > 0)) {
+						for (var i = 0; i < metaBoxes.length; i++) {
+							initMetaBox(metaBoxes[i]);
+						}
+					}
+				}
+
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					initAllMetaBoxes();
+					initAllMetaBoxSortables();
+					initAllScreenOptions();
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
 
 	/**
 	 * Inline Dashboard Glance Item Style

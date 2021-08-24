@@ -17,12 +17,61 @@ define( 'WP_BACKSTAGE', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 require WP_BACKSTAGE . '/includes/class-wp-backstage.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-post-type.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
+require WP_BACKSTAGE . '/includes/class-wp-backstage-nav-menu-item.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 
 // if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
 	require WP_BACKSTAGE . '/examples/tests.php';
 // }
+
+
+/**
+ * WP Backstage Render Help Tab
+ * 
+ * Renders the WP Backstage help tab on all screens.
+ * See `wp_backstage_add_help_tab`.
+ * 
+ * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+ * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+ * @since   1.1.0
+ * @return  void
+ */
+function wp_backstage_render_help_tab() {
+	$screen = get_current_screen(); ?>
+	<h3><?php esc_html_e( 'Debug', 'wp_backstage' ); ?></h3>
+	<p><?php esc_html_e( 'The following is useful debug information for WP Backstage development.', 'wp_backstage' ); ?></p>
+	<ul>
+		<li>
+			<strong><?php esc_html_e( 'Current Screen ID:', 'wp_backstage' ); ?></strong>
+			&nbsp;
+			<code><?php echo esc_html( $screen->id ); ?></code>
+		</li>
+	</ul>
+<?php }
+
+/**
+ * WP Backstage Add Help Tab
+ * 
+ * Registers the WP Backstage help tab.
+ * See `wp_backstage_render_help_tab`.
+ * 
+ * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+ * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+ * @since   1.1.0
+ * @param   WP_Screen  $screen  an instance of `WP_Screen`.
+ * @return  void
+ */
+function wp_backstage_add_help_tab( $screen = null ) {
+    $screen->add_help_tab( array(
+        'id'       => 'wp_backstage',
+        'title'    => __( 'WP Backstage', 'wp_backstage' ),
+        'callback' => 'wp_backstage_render_help_tab',
+		'priority' => 50,
+    ) );
+}
+
+add_action( 'current_screen', 'wp_backstage_add_help_tab', 10 );
 
 /**
  * WP Backstage Activation

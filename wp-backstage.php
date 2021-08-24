@@ -63,12 +63,12 @@ function wp_backstage_render_help_tab() {
  * @return  void
  */
 function wp_backstage_add_help_tab( $screen = null ) {
-    $screen->add_help_tab( array(
-        'id'       => 'wp_backstage',
-        'title'    => __( 'WP Backstage', 'wp_backstage' ),
-        'callback' => 'wp_backstage_render_help_tab',
+	$screen->add_help_tab( array(
+		'id'       => 'wp_backstage',
+		'title'    => __( 'WP Backstage', 'wp_backstage' ),
+		'callback' => 'wp_backstage_render_help_tab',
 		'priority' => 50,
-    ) );
+	) );
 }
 
 add_action( 'current_screen', 'wp_backstage_add_help_tab', 10 );

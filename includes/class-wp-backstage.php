@@ -1019,21 +1019,6 @@ class WP_Backstage {
 
 	}
 
-	public function enqueue_global_script() { ?>
-		<script id="wp-backstage-global-script">
-			window.wpBackstage = {
-				colorPicker: {},
-				datePicker: {},
-				address: {},
-				mediaUploader: {},
-				editor: {},
-				codeEditor: {
-					settings: {},
-				},
-			};
-		</script>
-	<?php }
-
 	/**
 	 * Enqueue Admin Scripts
 	 *
@@ -1059,8 +1044,6 @@ class WP_Backstage {
 		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
 			return;
 		}
-
-		$this->enqueue_global_script();
 
 		if ( $this->has_editor ) {
 
@@ -3349,6 +3332,8 @@ class WP_Backstage {
 	 *
 	 * Conditionally inlines the media uploader script if this instance has any 
 	 * media uploaders.
+	 * 
+	 * @todo    Set selection when the uploader modal is opened.
 	 *
 	 * @link    https://codex.wordpress.org/Javascript_Reference/wp.media wp.media
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
@@ -3357,6 +3342,7 @@ class WP_Backstage {
 	 * @link    https://jqueryui.com/ jQuery UI
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_media_uploader_script() {
@@ -3657,6 +3643,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_date_picker_script() {
@@ -3723,6 +3710,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_color_picker_script() {
@@ -3830,6 +3818,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_code_editor_script() {
@@ -3942,6 +3931,7 @@ class WP_Backstage {
 	 * address fields.
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_address_script() {
@@ -4034,6 +4024,7 @@ class WP_Backstage {
 	 * @link     https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_editor_script() {

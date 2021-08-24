@@ -20,11 +20,32 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-nav-menu-item.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
+require WP_BACKSTAGE . '/examples/tests.php';
 
-// if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
-	require WP_BACKSTAGE . '/examples/tests.php';
-// }
+/**
+ * Inline Global Script
+ *
+ * Inlines the script that initializes the global `wpBackstage` JavaScript object.
+ * 
+ * @since   1.1.0
+ * @return  void
+ */
+function wp_backstage_add_global_script() { ?>
+	<script id="wp_backstage_global_script">
+		window.wpBackstage = {
+			colorPicker: {},
+			datePicker: {},
+			address: {},
+			mediaUploader: {},
+			editor: {},
+			codeEditor: {
+				settings: {},
+			},
+		};
+	</script>
+<?php }
 
+add_action( 'admin_enqueue_scripts', 'wp_backstage_add_global_script', 0 );
 
 /**
  * WP Backstage Render Help Tab

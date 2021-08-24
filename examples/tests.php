@@ -3,11 +3,21 @@
 /**
  * WP Backstage Init
  *
- * Initialize all custom post types in this
- * function, which is then called by the 
- * `after_setup_theme` hook. 
+ * Initialize tests for all objects and field types. This also serves
+ * as a working example. This function is run at the `after_setup_theme` hook. 
+ * 
+ * @link  https://developer.wordpress.org/reference/functions/add_theme_support/ add_theme_support()
+ * @link  https://developer.wordpress.org/reference/functions/get_theme_support/ get_theme_support()
+ * 
+ * @since   0.0.1
+ * @since   1.1.0  Added ability to turn tests on and off using `theme_support`.
+ * @return  void
  */
 function wp_backstage_init() {
+
+	if ( ! get_theme_support( 'wp-backstage', 'tests-enabled' ) ) {
+		return;
+	}
 
 	$all_fields = array(
 		array( 

@@ -490,7 +490,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->id === 'users' ) {
+		if ( $this->is_screen( 'id', $this->screen_id ) ) {
 
 			$fields = $this->get_fields();
 

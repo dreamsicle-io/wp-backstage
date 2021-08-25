@@ -704,7 +704,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
 
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		if ( is_array( $columns ) ) {
 
 			// loop the columns so that the new columns can
 			// be inserted where they are wanted
@@ -972,7 +972,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->post_type === $this->slug ) {
+		if ( $this->is_screen( 'post_type', $this->slug ) ) {
 
 			$fields = $this->get_fields();
 

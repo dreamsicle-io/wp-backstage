@@ -1727,7 +1727,7 @@ class WP_Backstage {
 	 */
 	public function add_field_columns( $columns = array() ) {
 
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		if ( is_array( $columns ) ) {
 		
 			$fields = $this->get_fields();
 

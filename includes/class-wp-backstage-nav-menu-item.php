@@ -142,14 +142,19 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 			return;
 		}
 
-		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 2 );
-		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_field_groups' ), 10, 2 );
+		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
+		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_field_groups' ), 10, 5 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
+		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_nav_menu_item_script' ), 10 );
 
 		parent::init();
 
+	}
+
+	public function add_screen_options() {
+		// echo 'HELLO!!!!';
 	}
 
 	/**
@@ -210,13 +215,17 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	}
 
 	/**
-	 * Render Edit Fields
+	 * Render Field Groups
 	 * 
 	 * @since   1.1.0
-	 * @param   WP_User  $user  An instance of `WP_User`.
+	 * @param   int      $item_id  The nav menu item ID.
+	 * @param   WP_Post  $item     The nav menu item post object.
+	 * @param   int      $depth    The depth of menu item.
+	 * @param   object   $args     An object of menu item arguments.
+	 * @param   int      $id       The ID of the nav menu that this item is related to.
 	 * @return  void 
 	 */
-	public function render_field_groups( $item_id = 0, $item = null ) {
+	public function render_field_groups( $item_id = 0, $item = null, $depth = 0, $args = null, $id = 0 ) {
 
 		$field_groups = $this->get_field_groups();
 
@@ -285,7 +294,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
 
-				<div class="description-wide"><?php 
+				<div 
+				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description-wide"
+				data-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
 
 					do_action( $this->format_field_action( 'before' ), $field, $item );
 
@@ -373,7 +384,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->id === 'users' ) {
+		if ( $this->is_screen( 'id', $this->screen_id ) ) {
 
 			$fields = $this->get_fields();
 
@@ -470,6 +481,17 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 					}, 750);
 				}
 
+				function handleScreenOptionChange(e = null) {
+					const fieldContainers = document.querySelectorAll('[data-field-name="' + e.target.value + '"]');
+					for (var i = 0; i < fieldContainers.length; i++) {
+						const fieldContainer = fieldContainers[i];
+						if (fieldContainer && ! fieldContainer.classList.contains('hidden-field')) {
+							window.wpBackstage.editor.refreshAll(fieldContainer);
+							window.wpBackstage.codeEditor.refreshAll(fieldContainer);
+						}
+					}
+				}
+
 				function initNavMenuItemHandle(handle = null) {
 					handle.addEventListener('click', handleNavMenuItemHandleClick);
 				}
@@ -482,6 +504,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 							initNavMenuItemHandle(navMenuItemHandles[i]);
 						}
 					}
+				}
+
+				function initScreenOption(checkbox = null) {
+					checkbox.addEventListener('change', handleScreenOptionChange);
 				}
 
 				function handleNavMenuSortStop(e = null, ui = null) {
@@ -497,10 +523,20 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 					$(sortable).on('sortstop', handleNavMenuSortStop);
 				}
 
+				function initAllScreenOptions() {
+					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					if (checkboxes && (checkboxes.length > 0)) {
+						for (var i = 0; i < checkboxes.length; i++) {
+							initScreenOption(checkboxes[i]);
+						}
+					}
+				}
+
 				document.addEventListener('DOMContentLoaded', function(e) {
 					init();
 					initAllNavMenuItemHandles();
 					initNavMenuSortable();
+					initAllScreenOptions();
 				});
 
 			})(jQuery);

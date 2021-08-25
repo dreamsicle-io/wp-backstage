@@ -75,6 +75,7 @@ function wp_backstage_init() {
 			'name'        => 'wp_backstage_textarea_field', 
 			'label'       => __( 'Textarea', 'wp_backstage' ), 
 			'description' => __( 'Please enter no more than 240 characters.', 'wp_backstage' ), 
+			'has_column'  => true, 
 			'input_attrs' => array(
 				'maxlength' => 240, 
 			), 

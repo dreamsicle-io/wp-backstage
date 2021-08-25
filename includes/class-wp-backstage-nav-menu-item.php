@@ -153,10 +153,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 	}
 
-	public function add_screen_options() {
-		// echo 'HELLO!!!!';
-	}
-
 	/**
 	 * Get Field Groups
 	 * 

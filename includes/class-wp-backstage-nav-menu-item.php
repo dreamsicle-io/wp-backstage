@@ -111,7 +111,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function init() {
-
+		
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
 			return;
@@ -120,7 +120,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
-		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
+		if ( ! is_customize_preview() ) {
+			add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
+		}
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_nav_menu_item_script' ), 10 );
 

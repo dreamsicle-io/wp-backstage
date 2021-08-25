@@ -22,19 +22,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @var  array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
-		'field_groups' => array(), 
-	);
-
-	/**
-	 * Default Field Group Args
-	 * 
-	 * @var  array  $default_field_group_args  The default field group arguments for this instance.
-	 */
-	protected $default_field_group_args = array(
-		'id'          => '', 
-		'title'       => '', 
-		'description' => '', 
-		'fields'      => array(), 
+		'fields' => array(), 
 	);
 
 	/**
@@ -67,19 +55,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 */
 	protected function __construct( $args = array() ) {
 
-		/* $this->default_field_args = array_merge( $this->default_field_args, array(
-			'has_column'  => false, 
-			'is_sortable' => false, 
-		) );
-		$this->default_address_args = array_merge( $this->default_address_args, array(
-			'max_width'  => '50em', 
-		) );
-		$this->default_code_args = array_merge( $this->default_code_args, array(
-			'max_width'  => '50em', 
-		) );
-		$this->default_editor_args = array_merge( $this->default_editor_args, array(
-			'max_width'  => '50em', 
-		) ); */
 		$this->slug = 'nav_menu_item';
 		$this->set_args( $args );
 		$this->screen_id = array( 'nav-menus' );
@@ -143,37 +118,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		}
 
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
-		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_field_groups' ), 10, 5 );
+		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
 		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_nav_menu_item_script' ), 10 );
 
 		parent::init();
-
-	}
-
-	/**
-	 * Get Field Groups
-	 * 
-	 * @since   1.1.0
-	 * @return  array  An array of field group argument arrays.  
-	 */
-	protected function get_field_groups() {
-
-		$field_groups = array();
-
-		if ( is_array( $this->args['field_groups'] ) && ! empty( $this->args['field_groups'] ) ) {
-			
-			foreach ( $this->args['field_groups'] as $field_group ) {
-			
-				$field_groups[] = wp_parse_args( $field_group, $this->default_field_group_args );
-			
-			}
-		
-		}
-
-		return $field_groups;
 
 	}
 
@@ -185,22 +136,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 */
 	protected function get_fields() {
 
-		$field_groups = $this->get_field_groups();
 		$fields = array();
 
-		if ( is_array( $field_groups ) && ! empty( $field_groups ) ) {
+		if ( is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ) {
 			
-			foreach ( $field_groups as $field_group ) {
+			foreach ( $this->args['fields'] as $field ) {
 			
-				if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
-
-					foreach ( $field_group['fields'] as $field ) {
-
-						$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-					}
-
-				}
+				$fields[] = wp_parse_args( $field, $this->default_field_args );
 			
 			}
 		
@@ -211,7 +153,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	}
 
 	/**
-	 * Render Field Groups
+	 * Render Fields
 	 * 
 	 * @since   1.1.0
 	 * @param   int      $item_id  The nav menu item ID.
@@ -221,51 +163,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @param   int      $id       The ID of the nav menu that this item is related to.
 	 * @return  void 
 	 */
-	public function render_field_groups( $item_id = 0, $item = null, $depth = 0, $args = null, $id = 0 ) {
+	public function render_fields( $item_id = 0, $item = null, $depth = 0, $args = null, $id = 0 ) {
 
-		$field_groups = $this->get_field_groups();
+		$fields = $this->get_fields();
 
-		if ( is_array( $field_groups ) && ! empty( $field_groups ) ) { 
-
-			foreach ( $field_groups as $field_group ) { ?>
-
-				<h2><?php 
-
-					echo wp_kses( $field_group['title'], $this->kses_p ); 
-
-				?></h2>
-
-				<?php if ( ! empty( $field_group['description'] ) ) { ?>
-
-					<p class="description"><?php 
-
-						echo wp_kses( $field_group['description'], $this->kses_p );
-
-					?></p>
-
-				<?php } ?>
-
-				<?php $this->render_fields( $field_group, $item ); ?>
-
-			<?php }
-
-		}
-
-	}
-
-	/**
-	 * Render Fields
-	 * 
-	 * @since   1.1.0
-	 * @param   array    $field_group  An array of field group arguments.
-	 * @param   WP_User  $user         An instance of `WP_User`.
-	 * @return  void 
-	 */
-	protected function render_fields( $field_group = array(), $item = null ) {
-
-		if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
 			
-			foreach ( $field_group['fields'] as $field ) {
+			foreach ( $fields as $field ) {
 				
 				$field_name = $field['name'];
 				$field['value'] = get_post_meta( $item->ID, $field_name, true );
@@ -474,7 +378,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 							window.wpBackstage.editor.refreshAll(parentNode);
 							window.wpBackstage.codeEditor.refreshAll(parentNode);
 						}
-					}, 750);
+					}, 500);
 				}
 
 				function handleScreenOptionChange(e = null) {

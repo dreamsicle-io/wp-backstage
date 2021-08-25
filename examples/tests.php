@@ -510,19 +510,8 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Nav_Menu_Item::modify( array( 
-		'field_groups' => array(
-			array(
-				'id'          => 'wp_backstage_default_nav_menu_item_fields', 
-				'title'       => __( 'All Fields', 'wp_backstage' ), 
-				'description' => __( 'These extra meta fields control further details about the default nav menu item. <a href="#">Example Link</a>', 'wp_backstage' ), 
-				'fields'      => $all_fields, 
-			),
-			array(
-				'id'          => 'wp_backstage_default_nav_menu_item_extras', 
-				'title'       => __( 'Extras', 'wp_backstage' ), 
-				'description' => __( 'These extra meta fields control further details about the default nav menu item. <a href="#">Example Link</a>', 'wp_backstage' ), 
-			),
-		), 
+		'fields' => $all_fields, 
+		'group_meta_key' => 'wp_backstage_default_nav_menu_item_meta', 
 	) );
 
 	WP_Backstage_User::modify( array( 

@@ -659,7 +659,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->taxonomy === $this->slug ) {
+		if ( $this->is_screen( 'taxonomy', $this->slug ) ) {
 
 			$fields = $this->get_fields();
 

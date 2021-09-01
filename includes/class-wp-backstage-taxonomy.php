@@ -95,14 +95,14 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * @param   bool    $new   Whether this instance constructs a new taxonomy or modifies an existing one.
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array(), $new = true ) {
+	public function __construct( $slug = '', $args = array(), $new = true ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
 		$this->new = boolval( $new );
-		$this->slug = sanitize_title_with_dashes( $slug );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
 		$this->nonce_key = sprintf( '_wp_backstage_taxonomy_%1$s_nonce', $this->slug );
@@ -249,7 +249,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_taxonomy_script' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
 		parent::init();
@@ -449,7 +448,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 						
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
+							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php 
 
 								echo wp_kses( $field['label'], $this->kses_label ); 
 
@@ -678,55 +677,5 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		return $hidden;
 
 	}
-
-	/**
-	 * Inline Taxonomy Script
-	 * 
-	 * @since   0.0.1
-	 * @return  void  
-	 */
-	public function inline_taxonomy_script() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->is_screen( 'base', 'edit-tags' ) ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_taxonomy_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function resetForm() {
-					const form = document.querySelector('#addtag');
-					form.reset();
-					window.wpBackstage.colorPicker.resetAll(form);
-					window.wpBackstage.codeEditor.resetAll(form);
-					window.wpBackstage.mediaUploader.resetAll(form);
-				}
-
-				function handleSuccess(e = null, request = null, settings = null) {
-					if (settings && settings.data) {
-						const params = new URLSearchParams(settings.data);
-						const action = params.get('action');
-						if (action === 'add-tag') {
-							resetForm();
-						}
-					}
-				}
-
-				function init() {
-					$(document).ajaxSuccess(handleSuccess);
-				}
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					init();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
 
 }

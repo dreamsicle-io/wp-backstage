@@ -53,7 +53,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
-	protected function __construct( $args = array() ) {
+	public function __construct( $args = array() ) {
 
 		$this->slug = 'nav_menu_item';
 		$this->set_args( $args );
@@ -119,12 +119,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );
+		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'render_customizer_fields' ), 10 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
-		if ( ! is_customize_preview() ) {
+		add_action( 'wp_setup_nav_menu_item', array( $this, 'setup_nav_menu_item' ), 10 );
+		// if ( ! is_customize_preview() ) {
 			add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
-		}
+		// }
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_nav_menu_item_script' ), 10 );
 
 		parent::init();
 
@@ -151,6 +152,33 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		}
 
 		return $fields;
+
+	}
+	
+	/**
+	 * Setup Nav Menu Item
+	 * 
+	 * Adds all values to the Nav Menu Item object.
+	 * 
+	 * @since   1.1.0
+	 * @return  object  The nav menu item object.
+	 */
+	public function setup_nav_menu_item( $item = null ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			foreach ( $fields as $field ) {
+
+				$field_name = $field['name'];
+				$item->$field_name = get_post_meta( $item->ID, $field_name, true );
+			
+			}
+		
+		}
+
+		return $item;
 
 	}
 
@@ -198,13 +226,56 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				<div 
 				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description-wide"
-				data-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
+				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
 
 					do_action( $this->format_field_action( 'before' ), $field, $item );
 
 					$this->render_field_by_type( $field ); 
 
 					do_action( $this->format_field_action( 'after' ), $field, $item );
+
+				?></div>
+
+			<?php }
+
+		}
+
+	}
+
+	/**
+	 * Render Customizer Fields
+	 * 
+	 * @since   1.1.0
+	 * @return  void 
+	 */
+	public function render_customizer_fields() {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			foreach ( $fields as $field ) {
+				
+				$field_name = $field['name'];
+				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
+				$field['name'] = sprintf( 'menu-item-%1$s', $field_name );
+				$field['id'] = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+
+				if ( $field['type'] === 'code' ) {
+					$field['settings_key'] = $field_name;
+				}
+
+				$field = apply_filters( $this->format_field_action( 'args' ), $field ); ?>
+
+				<div 
+				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
+				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
+
+					do_action( $this->format_field_action( 'before' ), $field );
+
+					$this->render_field_by_type( $field ); 
+
+					do_action( $this->format_field_action( 'after' ), $field );
 
 				?></div>
 
@@ -305,146 +376,5 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		return $hidden;
 
 	}
-
-	/**
-	 * Inline Nav Menu Item Script
-	 * 
-	 * @since   1.1.0
-	 * @return  void  
-	 */
-	public function inline_nav_menu_item_script() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_nav_menu_item_script"
-		type="text/javascript">
-
-			(function($) {
-
-				var navMenuItemHandleTimer = null;
-
-				function getInitialItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items);
-				}
-
-				function getNewItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items).filter(item => ! item.hasAttribute('data-wp-backstage-initialized'));
-				}
-
-				function handleSuccess(e = null, request = null, settings = null) {
-					if (settings && settings.data) {
-						const params = new URLSearchParams(settings.data);
-						const action = params.get('action');
-						if (action === 'add-menu-item') {
-							const newItems = getNewItems();
-							for (var i = 0; i < newItems.length; i++) {
-								const newItem = newItems[i];
-								window.wpBackstage.colorPicker.initAll(newItem);
-								window.wpBackstage.datePicker.initAll(newItem);
-								window.wpBackstage.address.initAll(newItem);
-								window.wpBackstage.mediaUploader.initAll(newItem);
-								window.wpBackstage.editor.initAll(newItem);
-								window.wpBackstage.codeEditor.initAll(newItem);
-								initAllNavMenuItemHandles(newItem);
-								newItem.setAttribute('data-wp-backstage-initialized', true);
-							}
-						}
-					}
-				}
-
-				function init() {
-					const initialItems = getInitialItems();
-					for (var i = 0; i < initialItems.length; i++) {
-						initialItems[i].setAttribute('data-wp-backstage-initialized', true);
-					}
-					$(document).ajaxSuccess(handleSuccess);
-				}
-
-				function handleNavMenuItemHandleClick(e = null) {
-					var { parentNode } = e.target;
-					if (navMenuItemHandleTimer) {
-						clearTimeout(navMenuItemHandleTimer);
-					}
-					while (! parentNode.classList.contains('menu-item')) {
-						parentNode = parentNode.parentNode;
-					}
-					navMenuItemHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(parentNode);
-							window.wpBackstage.codeEditor.refreshAll(parentNode);
-						}
-					}, 500);
-				}
-
-				function handleScreenOptionChange(e = null) {
-					const fieldContainers = document.querySelectorAll('[data-field-name="' + e.target.value + '"]');
-					for (var i = 0; i < fieldContainers.length; i++) {
-						const fieldContainer = fieldContainers[i];
-						if (fieldContainer && ! fieldContainer.classList.contains('hidden-field')) {
-							window.wpBackstage.editor.refreshAll(fieldContainer);
-							window.wpBackstage.codeEditor.refreshAll(fieldContainer);
-						}
-					}
-				}
-
-				function initNavMenuItemHandle(handle = null) {
-					handle.addEventListener('click', handleNavMenuItemHandleClick);
-				}
-				
-				function initAllNavMenuItemHandles(container = null) {
-					container = container || document.getElementById('menu-to-edit');
-					const navMenuItemHandles = container.querySelectorAll('.menu-item-handle .item-edit');
-					if (navMenuItemHandles && (navMenuItemHandles.length > 0)) {
-						for (var i = 0; i < navMenuItemHandles.length; i++) {
-							initNavMenuItemHandle(navMenuItemHandles[i]);
-						}
-					}
-				}
-
-				function initScreenOption(checkbox = null) {
-					checkbox.addEventListener('change', handleScreenOptionChange);
-				}
-
-				function handleNavMenuSortStop(e = null, ui = null) {
-					const item = ui.item[0];
-					if (item.classList.contains('menu-item')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
-					}
-				}
-
-				function initNavMenuSortable() {
-					const sortable = document.getElementById('menu-to-edit');
-					$(sortable).on('sortstop', handleNavMenuSortStop);
-				}
-
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
-				}
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					init();
-					initAllNavMenuItemHandles();
-					initNavMenuSortable();
-					initAllScreenOptions();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
 
 }

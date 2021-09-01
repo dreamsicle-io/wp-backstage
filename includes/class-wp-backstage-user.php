@@ -63,7 +63,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
-	protected function __construct( $args = array() ) {
+	public function __construct( $args = array() ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
@@ -300,7 +300,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
+							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php 
 
 								echo wp_kses( $field['label'], $this->kses_label ); 
 

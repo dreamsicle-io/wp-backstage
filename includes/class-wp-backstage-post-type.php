@@ -144,14 +144,14 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @param   bool    $new   Whether this instance constructs a new post type or modifies an existing one.
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array(), $new = true ) {
+	public function __construct( $slug = '', $args = array(), $new = true ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
 		$this->new = boolval($new);
-		$this->slug = sanitize_title_with_dashes( $slug );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
 		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
@@ -318,8 +318,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_post_type_script' ), 10 );
-		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
 
@@ -1068,104 +1066,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
-	 * Inline Post Type Script
-	 * 
-	 * @since   1.1.0
-	 * @return  void  
-	 */
-	public function inline_post_type_script() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_post_type_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function handleMetaBoxHandleClick(e = null) {
-					var { parentNode } = e.target;
-					while (! parentNode.classList.contains('postbox')) {
-						parentNode = parentNode.parentNode;
-					}
-					if (! parentNode.classList.contains('closed')) {
-						window.wpBackstage.editor.refreshAll(parentNode);
-						window.wpBackstage.codeEditor.refreshAll(parentNode);
-					}
-				}
-
-				function handleMetaBoxSortStop(e = null, ui = null) {
-					const item = ui.item[0];
-					if (item.classList.contains('postbox')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
-					}
-				}
-
-				function handleScreenOptionChange(e = null) {
-					const metaBox = document.getElementById(e.target.value);
-					if (metaBox && ! metaBox.classList.contains('closed')) {
-						window.wpBackstage.editor.refreshAll(metaBox);
-						window.wpBackstage.codeEditor.refreshAll(metaBox);
-					}
-				}
-
-				function initMetaBoxSortable(sortable = null) {
-					$(sortable).on('sortstop', handleMetaBoxSortStop);
-				}
-
-				function initMetaBox(metaBox = null) {
-					const handle = metaBox.querySelector('.postbox-header');
-					handle.addEventListener('click', handleMetaBoxHandleClick);
-					
-				}
-
-				function initScreenOption(checkbox = null) {
-					checkbox.addEventListener('change', handleScreenOptionChange);
-				}
-
-				function initAllMetaBoxSortables() {
-					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
-					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
-						for (var i = 0; i < metaBoxSortables.length; i++) {
-							initMetaBoxSortable(metaBoxSortables[i]);
-						}
-					}
-				}
-
-				function initAllMetaBoxes() {
-					const metaBoxes = document.querySelectorAll('.postbox');
-					if (metaBoxes && (metaBoxes.length > 0)) {
-						for (var i = 0; i < metaBoxes.length; i++) {
-							initMetaBox(metaBoxes[i]);
-						}
-					}
-				}
-
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
-				}
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					initAllMetaBoxes();
-					initAllMetaBoxSortables();
-					initAllScreenOptions();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
 	 * Inline Dashboard Glance Item Style
 	 * 
 	 * @since   0.0.1
@@ -1181,41 +1081,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			printf( '#dashboard_right_now ul li > .%1$s-count > .dashicons { color: #82878c; speak: none; padding: 0 5px 0 0; position: relative; }', $this->slug ); 
 
 		?></style>
-
-	<?php }
-
-	/**
-	 * Inline Thumbnail Column Style
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function inline_thumbnail_column_style() {
-
-		if ( ! $this->is_screen( 'base', 'edit' ) || ! post_type_supports( $this->slug, 'thumbnail' ) ) {
-			return;
-		} ?>
-		
-		<style 
-		id="wp_backstage_thumbnail_column_style"
-		type="text/css">
-
-			table.wp-list-table th.column-thumbnail,
-			table.wp-list-table td.column-thumbnail {
-				text-align: center;
-				width: 40px;
-			}
-
-			@media screen and (max-width: 783px) {
-				table.wp-list-table tr.is-expanded th.column-thumbnail,
-				table.wp-list-table tr.is-expanded td.column-thumbnail,
-				table.wp-list-table th.column-thumbnail,
-				table.wp-list-table td.column-thumbnail {
-					display: none !important;
-				}
-			}
-
-		</style>
 
 	<?php }
 

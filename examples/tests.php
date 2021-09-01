@@ -595,6 +595,12 @@ function wp_backstage_init() {
 		), 
 	) );
 
+	WP_Backstage_Widget::add( 'wp_backstage_widget', array( 
+		'title'       => __( 'Test Widget', 'wp_backstage' ), 
+		'description' => __( 'A test custom widget containing all field types.', 'wp_backstage' ), 
+		'fields'      => $all_fields, 
+	) );
+
 }
 
 add_action( 'after_setup_theme', 'wp_backstage_init', 10 );

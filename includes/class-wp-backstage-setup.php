@@ -1285,6 +1285,8 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Nav Menu Item Customizer Script
 	 * 
+	 * @link  https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * 
 	 * @since   1.1.0
 	 * @return  void  
 	 */
@@ -1296,28 +1298,67 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
-				function setControlElementValue(control = null, fieldName = '') {
-					const values = control.setting();
-					const value = values[fieldName];
-					const controlElement = control.elements[fieldName];
+				function setControlElementValue(controlElement = null, value = undefined) {
+					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
 					switch (fieldType) {
-						default: 
+						case 'checkbox': {
 							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
-							input.val(values[fieldName]);
+							input.attr('checked', Boolean(value));
 							break;
+						}
+						case 'select': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.val(value);
+							break;
+						}
+						case 'radio': {
+							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							radios.each(function() {
+								const radio = $(this);
+								if (radio.val() === value) {
+									radio.attr('checked', true);
+								}
+							});
+							break;
+						}
+						case 'checkbox_set': {
+							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
+							checkboxes.each(function() {
+								const checkbox = $(this);
+								if ([value].includes(checkbox.val())) {
+									checkbox.attr('checked', true);
+								}
+							});
+							break;
+						}
+						default: {
+							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							input.val(value);
+							break;
+						}
 					}
+				}
+
+				function setControlValues(control = null) {
+					const values = control.setting();
+					console.log(values);
+					const fields = control.container.find('[data-wp-backstage-field-name]');
+					fields.each(function() {
+						const field = $(this);
+						const fieldName = field.attr('data-wp-backstage-field-name');
+						setControlElementValue(control.elements[fieldName], values[fieldName]);
+					});
 				}
 
 				function extendControl(control = null) {
 					const fields = control.container.find('[data-wp-backstage-field-name]');
-					for (var i = 0; i < fields.length; i++) {
-						const field = fields[i];
-						const fieldName = field.getAttribute('data-wp-backstage-field-name');
+					fields.each(function() {
+						const field = $(this);
+						const fieldName = field.attr('data-wp-backstage-field-name');
 						const fieldFound = control.container.find('[data-wp-backstage-field-name="' + fieldName + '"]');
 						control.elements[fieldName] = new wp.customize.Element(fieldFound);
-						setControlElementValue(control, fieldName);
-					}
+					});
 				}
 
 				function init() {
@@ -1325,6 +1366,7 @@ class WP_Backstage_Setup {
 						if (control.extended(wp.customize.Menus.MenuItemControl)) {
 							control.deferred.embedded.done(function() {
 								extendControl(control);
+								setControlValues(control);
 							});
 						}
 					});

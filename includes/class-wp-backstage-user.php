@@ -366,15 +366,13 @@ class WP_Backstage_User extends WP_Backstage {
 
 					$values[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
+					delete_user_meta( $user_id, $field['name'] );
+					
+					unset( $values[$field['name']] );
 
-					update_user_meta( $user_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
+				}
 
 			}
 

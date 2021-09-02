@@ -360,12 +360,10 @@ class WP_Backstage_Options extends WP_Backstage {
 
 					$values[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					$values[$field['name']] = $value;
-
+					unset( $values[$field['name']] );
+					
 				} 
 
 			}

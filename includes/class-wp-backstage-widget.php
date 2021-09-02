@@ -265,10 +265,9 @@ class WP_Backstage_Widget extends WP_Backstage {
 					$value = $this->sanitize_field( $field, $new_instance[$field['name']] );
 					$new_instance[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-					$new_instance[$field['name']] = $value;
+					unset( $new_instance[$field['name']] );
 
 				} 
 

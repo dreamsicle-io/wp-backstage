@@ -269,7 +269,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				<div 
 				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
-				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
+				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
+				data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php 
 
 					do_action( $this->format_field_action( 'before' ), $field );
 
@@ -317,15 +318,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 					$values[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
+					delete_post_meta( $item_id, $field['name'] );
+					
+					unset( $values[$field['name']] );
 
-					update_post_meta( $item_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
+				}
 
 			}
 

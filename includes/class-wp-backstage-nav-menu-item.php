@@ -204,6 +204,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				$field_name = $field['name'];
 				$field['value'] = get_post_meta( $item->ID, $field_name, true );
 				$field['name'] = sprintf( '%1$s[%2$d]', $field_name, $item->ID );
+				$field['id'] = sprintf( '%1$s_%2$d', $field_name, $item->ID );
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -313,7 +314,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				if ( isset( $_POST[$field['name']][$item_id] ) ) {
 
 					$value = $this->sanitize_field( $field, $_POST[$field['name']][$item_id] );
-
+					
 					update_post_meta( $item_id, $field['name'], $value );
 
 					$values[$field['name']] = $value;

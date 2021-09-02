@@ -1316,9 +1316,7 @@ class WP_Backstage_Setup {
 							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							radios.each(function() {
 								const radio = $(this);
-								if (radio.val() === value) {
-									radio.attr('checked', true);
-								}
+								radio.attr('checked', (radio.val() === value));
 							});
 							break;
 						}
@@ -1326,10 +1324,35 @@ class WP_Backstage_Setup {
 							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
 							checkboxes.each(function() {
 								const checkbox = $(this);
-								if ([value].includes(checkbox.val())) {
-									checkbox.attr('checked', true);
-								}
+								checkbox.attr('checked', value.includes(checkbox.val()));
 							});
+							break;
+						}
+						case 'time': {
+							const timePieces = value.split(':');
+							const hourSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[hour]"]');
+							const minuteSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[minute]"]');
+							const secondSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[second]"]');
+							hourSelect.val(timePieces[0]);
+							minuteSelect.val(timePieces[1]);
+							secondSelect.val(timePieces[2]);
+							break;
+						}
+						case 'address': {
+							const countrySelect = controlElement.element.find('[name="menu-item-' + fieldName + '[country]"]');
+							const address1Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_1]"]');
+							const address2Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_2]"]');
+							const cityInput = controlElement.element.find('[name="menu-item-' + fieldName + '[city]"]');
+							const stateSelect = controlElement.element.find('select[name="menu-item-' + fieldName + '[state]"]');
+							const stateInput = controlElement.element.find('input[name="menu-item-' + fieldName + '[state]"]');
+							const zipInput = controlElement.element.find('[name="menu-item-' + fieldName + '[zip]"]');
+							countrySelect.val(value.country);
+							address1Input.val(value.address_1);
+							address2Input.val(value.address_2);
+							cityInput.val(value.city);
+							stateSelect.val(value.state);
+							stateInput.val(value.state);
+							zipInput.val(value.zip);
 							break;
 						}
 						default: {

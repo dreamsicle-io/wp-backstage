@@ -1060,14 +1060,20 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   array  $value  The value to sanitize. Expects an array of values.
+	 * @since   1.1.0  Sanitizes more strictly to support strange behavior on menu items.
+	 * @param   array  $values  The values to sanitize. Expects an array of strings.
 	 * @return  array  An array of values. 
 	 */
-	public function sanitize_checkbox_set( $value = array() ) {
-		if ( ! is_array( $value ) ) {
-			$value = array();
+	public function sanitize_checkbox_set( $values = array() ) {
+		$new_values = array();
+		if ( is_array( $values ) && ! empty( $values ) ) {
+			foreach( $values as $key => $value ) {
+				if ( is_numeric( $key ) ) {
+					$new_values[] = esc_attr( $value );
+				}
+			}
 		}
-		return array_map( 'esc_attr', $value );
+		return $new_values;
 	}
 
 	/**

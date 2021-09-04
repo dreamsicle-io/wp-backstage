@@ -2044,8 +2044,7 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
 
 			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
@@ -2601,109 +2600,6 @@ class WP_Backstage {
 
 	}
 
-	
-	/**
-	 * Render Media Uploader Thumbnail
-	 *
-	 * Render the media uploader thumbnail used for displaying selected images, 
-	 * and for rendering the template that the media field will use in JS to 
-	 * render previews. Note that for `$type`, `clone` is used for actual 
-	 * thumbnails while `template` is used to output a template for the media 
-	 * uploader.
-	 *
-	 * @since   0.0.1 
-	 * @param   string  $attachment_id  The attachment ID of the media post to render.
-	 * @param   string  $type           The type of thumbnail as `template` or `clone`. 
-	 * @param   string  $args           An array of media uploader field arguments.
-	 * @return  void
-	 */
-	protected function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone', $args = array() ) {
-
-		$orientation_class = 'portrait';
-		$src = '';
-		$cursor_style = ( $args['multiple'] ) ? 'cursor:move;' : 'cursor:normal;';
-		$display_style = ( $type === 'template' ) ? 'display:none;' : 'display:block;';
-
-		if ( ( $attachment_id > 0 ) && ( $type === 'clone' ) ) {
-			
-			$image_attrs = wp_get_attachment_image_src( absint( $attachment_id ), 'medium', true );
-			$src = $image_attrs[0];
-			
-			if ( $image_attrs[1] > $image_attrs[2] ) {
-				$orientation_class = 'landscape';
-			}
-
-		}
-
-		if ( ( $attachment_id > 0 ) || ( $type === 'template' ) ) {
-
-			$thumbnail_type_attr = sprintf( 
-				'data-media-uploader-%1$s="%2$s"', 
-				esc_attr( $type ), 
-				( $type === 'clone' ) ? absint( $attachment_id ) : 'true' 
-			);
-
-			$mime_type = ( $type !== 'template' ) ? get_post_mime_type( $attachment_id ) : ''; ?>
-
-			<figure 
-			tabindex="0" 
-			class="attachment" 
-			style="<?php echo esc_attr( $cursor_style . $display_style ); ?>"
-			<?php echo $thumbnail_type_attr; ?>>
-
-				<div 
-				class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>"
-				style="<?php echo esc_attr( $cursor_style ); ?>">
-
-					<div class="thumbnail">
-
-						<div class="centered">
-
-							<img src="<?php echo esc_url( $src ); ?>">
-
-						</div>
-
-						<div class="filename" style="<?php echo ( strpos( $mime_type, 'image' ) === false ) ? 'display:block;' : 'display:none;'; ?>">
-
-							<div class="filename-inside-div"><?php 
-
-								if ($type !== 'template') {
-
-									echo esc_html( basename( get_attached_file( $attachment_id ) ) );
-
-								}
-
-							?></div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-				<button 
-				type="button" 
-				class="check" 
-				tabindex="0">
-					
-					<i 
-					class="media-modal-icon"
-					style="background-position:-60px 0;"></i>
-
-					<span class="screen-reader-text"><?php 
-
-						echo esc_attr( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
-
-					?></span>
-
-				</button>
-
-			</figure>
-
-		<?php }
-
-	}
-
 	/**
 	 * Render Media Uploader
 	 *
@@ -2715,6 +2611,7 @@ class WP_Backstage {
 	 * sorting.
 	 * 
 	 * @since   0.0.1
+	 * @since   1.1.0  Full rewrite of the media uploader markup.
 	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
@@ -2739,78 +2636,69 @@ class WP_Backstage {
 				<legend 
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 				style="cursor:pointer;padding:2px 0;font-size:inherit;"><?php 
-
 					echo wp_kses( $field['label'], $this->kses_label ); 
-			
 				?></legend>
 
 			<?php } ?>
 
-			<div 
-			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
-			style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:block;'; ?>">
+			<input 
+			type="hidden" 
+			id="<?php echo esc_attr( $id ); ?>" 
+			name="<?php echo esc_attr( $field['name'] ); ?>" 
+			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
-				<?php
-				$this->render_media_uploader_thumbnail( '', 'template', $args ); 
-
-				if ( ! empty( $field['value'] ) ) {
-
-					if ( is_array( $field['value'] ) ) {
-
-						foreach ( $field['value'] as $attachment_id ) {
-
-							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone', $args );
-
-						}
-
-					} else {
-
-						$this->render_media_uploader_thumbnail( absint( $field['value'] ), 'clone', $args );
-					}
-
-				} ?>
-
+			<div id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>">
+				<li data-attachment-id="0">
+					<figure>
+						<img src="" alt="" title="" />
+						<figcaption class="screen-reader-text"></figcaption>
+					</figure>
+				</li>
+				<ul id="<?php printf( esc_attr( '%1$s_preview_list' ), $id ); ?>">
+					
+				</ul>
 			</div>
 
-			<div class="clear"></div>
-
-			<div style="padding:4px 0 2px;">
+			<div id="<?php printf( esc_attr( '%1$s_buttons' ), $id ); ?>">
 
 				<button 
-				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
+				id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
 				type="button"
 				class="button"
-				style="<?php echo ! empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, ! empty( $field['value'] ) ); ?>><?php 
-
-						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'wp-backstage' ), $field ) ); 
-
+				style="margin:0 8px 0 0;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Add %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
-				<?php if ( $args['multiple'] ) { ?>
+				<button 
+				id="<?php printf( esc_attr( '%1$s_button_add_to' ), $id ); ?>"
+				type="button"
+				class="button"
+				style="margin:0 8px 0 0;"
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
 
-					<button 
-					id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
-					type="button"
-					class="button"
-					style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-					<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
-
-							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
-
-					?></button>
-
-				<?php } ?>
+				<button 
+				id="<?php printf( esc_attr( '%1$s_button_replace' ), $id ); ?>"
+				type="button"
+				class="button"
+				style="margin:0 8px 0 0;"
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Replace %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
 
 				<button 
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
 				class="button"
-				style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
-
-						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
-
+				style="margin:0 8px 0 0;"
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
 			</div>
@@ -2826,14 +2714,6 @@ class WP_Backstage {
 				?></p>
 
 			<?php } ?>
-
-			<input 
-			type="hidden" 
-			id="<?php echo esc_attr( $id ); ?>" 
-			name="<?php echo esc_attr( $field['name'] ); ?>" 
-			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
-			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
 		</fieldset>
 

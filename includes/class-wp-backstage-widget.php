@@ -172,10 +172,10 @@ class WP_Backstage_Widget extends WP_Backstage {
 	 * @link https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/  WP_Widget::get_field_name()
 	 * 
 	 * @since   1.1.0
-	 * @param   array   $instance  The current widget instance values.
-	 * @param   string  $id_base   The current widget instance id base.
-	 * @param   string  $number    The current widget instance number.
-	 * @return  void 
+	 * @param   array   $field_name  The field name.
+	 * @param   string  $id_base     The current widget instance id base.
+	 * @param   string  $number      The current widget instance number.
+	 * @return  string 
 	 */
 	public function get_field_name( $field_name = '', $id_base = '', $number = 0 ) {
 		$pos = strpos( $field_name, '[' );
@@ -187,6 +187,25 @@ class WP_Backstage_Widget extends WP_Backstage {
 		}
 		return 'widget-' . $id_base . '[' . $number . ']' . $field_name;
 	}
+
+	/**
+     * Get Field ID
+     *
+     * Copied from `WP_Widget::get_field_id()` inorder to make `$id_base` and
+	 * `$number` pluggable.
+     *
+     * @since   1.1.0
+     * @param   array   $field_name  The field name.
+	 * @param   string  $id_base     The current widget instance id base.
+	 * @param   string  $number      The current widget instance number.
+	 * @return  string 
+     */
+    public function get_field_id( $field_name = '', $id_base = '', $number =0 ) {
+        $field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
+        $field_name = trim( $field_name, '-' );
+ 
+        return 'widget-' . $id_base . '-' . $number . '-' . $field_name;
+    }
 
 	/**
 	 * Render Fields
@@ -207,6 +226,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 				
 				$field_name = $field['name'];
 				$field['name'] = $this->get_field_name( $field_name, $id_base, $number );
+				$field['id'] = $this->get_field_id( $field_name, $id_base, $number );
 				$field['value'] = $instance[$field_name];
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 

@@ -34,6 +34,7 @@ class WP_Backstage_Setup {
 	public function init() {
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
+		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
@@ -57,6 +58,71 @@ class WP_Backstage_Setup {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 	}
+
+	/**
+	 * Inline Media Uplaoder Style
+	 *
+	 * Inlines the editor field style.
+	 * 
+	 * @since   1.1.0
+	 * @return  void  
+	 */
+	public function inline_media_uploader_style() { ?>
+
+		<style 
+		id="wp_backstage_media_uploader_style"
+		type="text/css">
+
+			[data-media-uploader-id] ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			[data-media-uploader-id] ul::after,
+			[data-media-uploader-id] ul::before {
+				content: '';
+				display: table;
+				clear: both;
+			}
+
+			[data-media-uploader-id] ul li {
+				display: block;
+				position: relative;
+				padding: 0;
+				max-width: 100%;
+				margin: 0 12px 12px 0;
+				float: left;
+			}
+			
+			[data-media-uploader-id] li[data-attachment-id="0"] {
+				display: none !important;
+			}
+
+			[data-media-uploader-id] ul li figure {
+				display: block;
+				margin: 0;
+				padding: 0;
+				background-color: #ffffff;
+				position: relative;
+			}
+			
+			[data-media-uploader-id] ul li img {
+				display: block;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				background-image:
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7),
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7);
+				background-position: 0 0, 10px 10px;
+				box-shadow: inset 0 0 0 1px #dcdcde;
+				background-size: 20px 20px;
+			}
+
+		</style>
+
+	<?php }
 
 	/**
 	 * Inline Editor Style
@@ -252,8 +318,6 @@ class WP_Backstage_Setup {
 	 * Inline Media Uploader Script
 	 *
 	 * Inlines the media uploader script.
-	 * 
-	 * @todo    Set selection when the uploader modal is opened.
 	 *
 	 * @link    https://codex.wordpress.org/Javascript_Reference/wp.media wp.media
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
@@ -262,7 +326,7 @@ class WP_Backstage_Setup {
 	 * @link    https://jqueryui.com/ jQuery UI
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
+	 * @since   1.1.0  Full rewrite of the media uploader script.
 	 * @return  void  
 	 */
 	public function inline_media_uploader_script() { ?>
@@ -273,27 +337,232 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
-				function init(uploader = null) {
-					
-					if (! uploader) { 
-						return; 
+				function findParentUploader(element = null) {
+					var parentNode = element.parentNode;
+					while (! parentNode.hasAttribute('data-media-uploader-id')) {
+						parentNode = parentNode.parentNode;
 					}
-						
+					return parentNode;
+				}
+
+				function handleCloneClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					uploader.wpBackstage.modal.open();
+				}
+
+				function handleLegendClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					uploader.wpBackstage.modal.open();
+				}
+
+				function handleAddButtonClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					uploader.wpBackstage.modal.open();
+				}
+
+				function handleAddToButtonClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					uploader.wpBackstage.modal.open();
+				}
+
+				function handleReplaceButtonClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					uploader.wpBackstage.modal.open();
+				}
+
+				function handleRemoveButtonClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					reset(uploader);
+				}
+
+				function enableButton(button = null) {
+					button.removeAttribute('disabled');
+					button.style.display = 'inline-block';
+				}
+
+				function disableButton(button = null) {
+					button.setAttribute('disabled', true);
+					button.style.display = 'none';
+				}
+
+				function handleSortStop(e = null, ui = null) {
+					const previewList = e.target;
+					const uploader = findParentUploader(previewList);
+					const cloneIDs = getCloneIDs(uploader);
+					setInputValue(uploader, cloneIDs);
+				}
+
+				function refreshSortable(uploader = null) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					$(previewList).sortable('refresh');
+				}
+
+				function initSortable(uploader = null) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					$(previewList).sortable({
+						items: '[data-attachment-id]', 
+						stop: handleSortStop,
+					});
+				}
+
+				function getCloneIDs(uploader = null) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					const clones = previewList.querySelectorAll('[data-attachment-id]') || [];
+					return Array.from(clones).map(function(clone) {
+						return parseInt(clone.getAttribute('data-attachment-id'), 10);
+					})
+				}
+
+				function appendClones(uploader = null, newAttachments = [], replace = false) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					const template = uploader.wpBackstage.ui.template;
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					const cloneIDs = getCloneIDs(uploader);
+					const size = isMultiple ? 'thumbnail' : 'medium';
+					const attachments = newAttachments.filter(function(attachment) {
+						return ! cloneIDs.includes(attachment.id);
+					});
+					if (replace) {
+						removeClones(uploader);
+					}
+					for (var i = 0; i < attachments.length; i++) {
+						const clone = template.cloneNode(true);
+						const image = clone.querySelector('img');
+						const caption = clone.querySelector('figcaption');
+						const url = attachments[i].mime.includes('image') ? attachments[i].sizes[size].url : attachments[i].icon;
+						clone.setAttribute('data-attachment-id', attachments[i].id);
+						clone.style.cursor = isMultiple ? 'move' : 'pointer';
+						image.setAttribute('src', url);
+						image.setAttribute('alt', attachments[i].alt);
+						image.setAttribute('title', attachments[i].title);
+						caption.setAttribute('title', attachments[i].caption);
+						clone.addEventListener('click', handleCloneClick);
+						previewList.appendChild(clone);
+					}
+				}
+
+				function removeClones(uploader = null) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					const clones = previewList.querySelectorAll('[data-attachment-id]');
+					for (var i = 0; i < clones.length; i++) {
+						previewList.removeChild(clones[i]);
+					}
+				}
+
+				function setInputValue(uploader = null, attachmentIDs = []) {
+					const input = uploader.wpBackstage.ui.input;
+					input.value = attachmentIDs.join(',');
+					$(input).trigger('change');
+				}
+
+				function getInputValue(uploader = null) {
+					const input = uploader.wpBackstage.ui.input;
+					return ! input.value ? [] : input.value.split(',').map(function(value) { 
+						return parseInt(value, 10); 
+					})
+				}
+
+				function concatAttachmentIDs(uploader = null, attachmentIDs = []) {
+					const currentAttachmentIDs = getInputValue(uploader); 
+					const newAttachmentIDs = attachmentIDs.filter(function(attachmentID) {
+						return ! currentAttachmentIDs.includes(attachmentID);
+					});
+					return currentAttachmentIDs.concat(newAttachmentIDs);
+				}
+
+				function handleModalSelect(uploader = null) {
+					const addButton = uploader.wpBackstage.ui.addButton;
+					const addToButton = uploader.wpBackstage.ui.addToButton;
+					const replaceButton = uploader.wpBackstage.ui.replaceButton;
+					const removeButton = uploader.wpBackstage.ui.removeButton;
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					const attachments = uploader.wpBackstage.modal.state().get('selection').toJSON();
+					const newAttachmentIDs = attachments.map(function(attachment) {
+						return attachment.id;
+					});
+					const attachmentIDs = isMultiple ? concatAttachmentIDs(uploader, newAttachmentIDs) : newAttachmentIDs;
+					setInputValue(uploader, attachmentIDs);
+					appendClones(uploader, attachments, ! isMultiple);
+					disableButton(addButton);
+					enableButton(removeButton);
+					if (isMultiple) {
+						enableButton(addToButton);
+						disableButton(replaceButton);
+						refreshSortable(uploader);
+					} else {
+						disableButton(addToButton);
+						enableButton(replaceButton);
+					}
+				}
+
+				function destroy(uploader = null) {
+					const addButton = uploader.wpBackstage.ui.addButton;
+					const addToButton = uploader.wpBackstage.ui.addToButton;
+					const replaceButton = uploader.wpBackstage.ui.replaceButton;
+					const removeButton = uploader.wpBackstage.ui.removeButton;
+					const legend = uploader.wpBackstage.ui.legend;
+					addButton.removeEventListener('click', handleAddButtonClick);
+					addToButton.removeEventListener('click', handleAddToButtonClick);
+					replaceButton.removeEventListener('click', handleReplaceButtonClick);
+					removeButton.removeEventListener('click', handleRemoveButtonClick);
+					removeClones(uploader);
+					if (legend) {
+						legend.removeEventListener('click', handleLegendClick);
+					}
+					delete uploader.wpBackstage;
+				}
+				
+				function destroyAll(container = null) {
+					container = container || document;
+					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
+					if (uploaders && (uploaders.length > 0)) {
+						for (var i = 0; i < uploaders.length; i++) {
+							destroy(uploaders[i]);
+						}
+					}
+				}
+
+				function initPreview(uploader = null) {
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					const attachmentIDs = getInputValue(uploader);
+					if (attachmentIDs.length > 0) {
+						const query = wp.media.query({
+							order: 'ASC',
+							orderby: 'post__in',
+							perPage: -1,
+							post__in: attachmentIDs,
+							query: true,
+						});
+						query.more().done(function() {
+							const attachments = this.models.map(function(model) {
+								return model.attributes;
+							});
+							appendClones(uploader, attachments);
+							if (isMultiple) {
+								refreshSortable(uploader);
+							}
+						});
+					}
+					if (isMultiple) {
+						initSortable(uploader);
+					}
+				}
+
+				function init(uploader = null) {
 					const fieldId = uploader.getAttribute('data-media-uploader-id');
 					const input = uploader.querySelector('#' + fieldId);
 					const legend = uploader.querySelector('#' + fieldId + '_legend');
-					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
-					const setButton = uploader.querySelector('#' + fieldId + '_button_set');
 					const addButton = uploader.querySelector('#' + fieldId + '_button_add');
+					const addToButton = uploader.querySelector('#' + fieldId + '_button_add_to');
+					const replaceButton = uploader.querySelector('#' + fieldId + '_button_replace');
 					const removeButton = uploader.querySelector('#' + fieldId + '_button_remove');
 					const preview = uploader.querySelector('#' + fieldId + '_preview');
-					const previewTemplate = uploader.querySelector('[data-media-uploader-template]');
-					const initialClones = uploader.querySelectorAll('[data-media-uploader-clone]');
+					const previewList = preview.querySelector('#' + fieldId + '_preview_list');
+					const template = preview.querySelector('[data-attachment-id="0"]');
 					const title = uploader.getAttribute('data-media-uploader-title');
 					const buttonText = uploader.getAttribute('data-media-uploader-button');
 					const type = uploader.getAttribute('data-media-uploader-type');
 					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
-					
 					const modal = wp.media({
 						title: title,
 						multiple: isMultiple, 
@@ -301,214 +570,47 @@ class WP_Backstage_Setup {
 						button: { text: buttonText },
 						frame: 'select', 
 					});
-
-					function handleOpen(e = null) {
-						modal.open();
+					modal.on('select', function() {
+						handleModalSelect(uploader);
+					});
+					addButton.addEventListener('click', handleAddButtonClick);
+					addToButton.addEventListener('click', handleAddToButtonClick);
+					replaceButton.addEventListener('click', handleReplaceButtonClick);
+					removeButton.addEventListener('click', handleRemoveButtonClick);
+					if (legend) {
+						legend.addEventListener('click', handleLegendClick);
 					}
-					function handleRemove(e = null) {
-						e.preventDefault();
-						removeClones();
-						resetField();
-					}
-					function handleModalOpen() {
-						// TO-DO: Set selection when opened.
-						/* const ids = input.value ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
-						const selection = modal.state().get('selection');
-						if (! isMultiple) {
-							selection.add(wp.media.attachment(ids[0]));
-						} else {
-							for (var i = 0; i < ids.length; i++) {
-								selection.add(wp.media.attachment(ids[i]));
-							}
-						} */
-					}
-					function handleSelect() {
-						const selection = modal.state().get('selection').toJSON();
-						if (selection && (selection.length > 0)) {
-							var saveIds = (input.value && isMultiple) ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
-							if (! isMultiple) {
-								removeClones();
-							}
-							for (var i = 0; i < selection.length; i++) {
-								const attachment = selection[i];
-								const attachmentId = parseInt(attachment.id, 10);
-								saveIds.push(attachmentId);
-								preview.appendChild(getClone(attachment));
-							}
-							setField(saveIds.join(','));
-							if (isMultiple) {
-								refreshSorting();
-							}
-						}
-					}
-					function getClone(attachment = null) {
-						const clone = previewTemplate.cloneNode(true);
-						const cloneImg = clone.querySelector('img');
-						const orientationContainer = clone.querySelector('.attachment-preview');
-						const filename = clone.querySelector('.filename > div');
-
-						clone.removeAttribute('data-media-uploader-template');
-						clone.setAttribute('data-media-uploader-clone', parseInt(attachment.id, 10));
-						cloneImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
-						clone.style.display = 'block';
-
-						if (attachment.width > attachment.height) {
-							orientationContainer.classList.remove('portrait');
-							orientationContainer.classList.add('landscape');
-						} else {
-							orientationContainer.classList.add('portrait');
-							orientationContainer.classList.remove('landscape');
-						}
-						filename.innerHTML = attachment.filename;
-						filename.style.display = (attachment.mime.indexOf('image') === -1) ? 'block' : 'none';
-
-						initClone(clone);
-
-						return clone;
-					}
-					function removeClones() {
-						const clones = getClones();
-						if (clones && (clones.length > 0)) {
-							for (var i = 0; i < clones.length; i++) {
-								preview.removeChild(clones[i]);
-							}
-						}
-					}
-					function enableButton(button = null) {
-						if (button) {
-							button.removeAttribute('disabled', true);
-							button.style.display = 'inline-block';
-						}
-					}
-					function disableButton(button = null) {
-						if (button) {
-							button.setAttribute('disabled', true);
-							button.style.display = 'none';
-						}
-					}
-					function setField(value = null) {
-						input.value = value;
-						preview.style.display = 'block';
-						disableButton(setButton);
+					uploader.wpBackstage = {
+						modal: modal,
+						ui: {
+							input: input,
+							legend, legend,
+							addButton: addButton,
+							addToButton: addToButton,
+							replaceButton: replaceButton,
+							removeButton: removeButton,
+							preview: preview,
+							previewList: previewList,
+							template: template,
+						},
+					};
+					initPreview(uploader);
+					if (input.value) {
+						disableButton(addButton);
 						enableButton(removeButton);
 						if (isMultiple) {
-							enableButton(addButton);
+							enableButton(addToButton);
+							disableButton(replaceButton);
+						} else {
+							disableButton(addToButton);
+							enableButton(replaceButton);
 						}
-						$(input).trigger('change');
-					}
-					function resetField() {
-						input.value = '';
-						preview.style.display = 'none';
-						enableButton(setButton);
+					} else {
+						enableButton(addButton);
+						disableButton(addToButton);
+						disableButton(replaceButton);
 						disableButton(removeButton);
-						if (isMultiple) {
-							disableButton(addButton);
-						}
-						$(input).trigger('change');
 					}
-					function initSorting() {
-						$(preview).sortable({
-							items: '[data-media-uploader-clone]', 
-							stop: handleSortStop,  
-						});
-					}
-					function refreshSorting() {
-						$(preview).sortable('refresh');
-					}
-					function handleSortStop(e = null, ui = null) {
-						const { item } = ui;
-						if (item[0].classList.contains('attachment')) {
-							const clones = getClones();
-							const saveIds = [];
-							if (clones && (clones.length > 0)) {
-								for (var i = 0; i < clones.length; i++) {
-									const attachmentId = parseInt(clones[i].getAttribute('data-media-uploader-clone'), 10);
-									saveIds.push(attachmentId);
-								}
-							}
-							setField(saveIds.join(','));
-						}
-					}
-					function handleCloneMouseEnter(e = null) {
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.classList.add('selected');
-							e.target.classList.add('details');
-						}
-					}
-					function handleCloneMouseLeave(e = null) {
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.classList.remove('selected');
-							e.target.classList.remove('details');
-						}
-					}
-					function handleCloneClick(e = null) {
-						e.preventDefault();
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.focus();
-						} else {
-							getParentClone(e.target).focus();
-						}
-					}
-					function handleCheckClick(e = null) {
-						e.preventDefault();
-						const clone = getParentClone(e.target);
-						const attachmentId = parseInt(clone.getAttribute('data-media-uploader-clone'), 10);
-						var values = input.value ? input.value.split(',').map(function(id) { return parseInt(id, 10); }) : [];
-						const valuesIndex = values.indexOf(attachmentId);
-						if (valuesIndex !== -1) {
-							const removed = values.splice(valuesIndex, 1);
-						}
-						preview.removeChild(clone);
-						if (values.length > 0) {
-							setField(values.join(','));
-						} else {
-							resetField();
-						}
-					}
-					function initClone(clone = null) {
-						if (clone) {
-							const check = clone.querySelector('.check');
-							clone.addEventListener('mouseenter', handleCloneMouseEnter);
-							clone.addEventListener('mouseleave', handleCloneMouseLeave);
-							clone.addEventListener('click', handleCloneClick);
-							check.addEventListener('click', handleCheckClick);
-						}
-					}
-					function getClones() {
-						return preview.querySelectorAll('[data-media-uploader-clone]');
-					}
-					function getParentClone(el = null) {
-						while ((el = el.parentElement) && ! el.getAttribute('data-media-uploader-clone'));
-						return el;
-					}
-
-					modal.on('select', handleSelect);
-					modal.on('open', handleModalOpen);
-					setButton.addEventListener('click', handleOpen);
-					removeButton.addEventListener('click', handleRemove);
-					if (legend) {
-						legend.addEventListener('click', handleOpen);
-					}
-					if (labels && (labels.length > 0)) {
-						for (var i = 0; i < labels.length; i++) {
-							labels[i].addEventListener('click', handleOpen);
-						}
-					}
-					if (initialClones && (initialClones.length > 0)) {
-						for (var i = 0; i < initialClones.length; i++) {
-							initClone(initialClones[i]);
-						}
-					}
-					if (isMultiple) {
-						addButton.addEventListener('click', handleOpen);
-						initSorting();
-					}
-					uploader.mediaUploader = {
-						reset: function() {
-							removeClones();
-							resetField();
-						}, 
-					};
 				}
 
 				function initAll(container = null) {
@@ -521,7 +623,19 @@ class WP_Backstage_Setup {
 					}
 				}
 				function reset(uploader = null) {
-					uploader.mediaUploader.reset();
+					const addButton = uploader.wpBackstage.ui.addButton;
+					const addToButton = uploader.wpBackstage.ui.addToButton;
+					const replaceButton = uploader.wpBackstage.ui.replaceButton;
+					const removeButton = uploader.wpBackstage.ui.removeButton;
+					enableButton(addButton);
+					disableButton(addToButton);
+					disableButton(replaceButton);
+					disableButton(removeButton);
+					setInputValue(uploader, []);
+					removeClones(uploader);
+					if (uploader.wpBackstage.modal.state()) {
+						uploader.wpBackstage.modal.state().reset();
+					}
 				}
 				function resetAll(container = null) {
 					container = container || document;
@@ -536,6 +650,8 @@ class WP_Backstage_Setup {
 				window.wpBackstage.mediaUploader = Object.assign(window.wpBackstage.mediaUploader, {
 					initAll: initAll,
 					init: init,
+					destroy: destroy,
+					destroyAll: destroyAll,
 					resetAll: resetAll,
 					reset: reset,
 				});
@@ -1298,6 +1414,8 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
+				var navMenuItemHandleTimer = null;
+
 				function setControlElementValue(controlElement = null, value = undefined) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
@@ -1365,7 +1483,6 @@ class WP_Backstage_Setup {
 
 				function setControlValues(control = null) {
 					const values = control.setting();
-					console.log(values);
 					const fields = control.container.find('[data-wp-backstage-field-name]');
 					fields.each(function() {
 						const field = $(this);
@@ -1384,12 +1501,54 @@ class WP_Backstage_Setup {
 					});
 				}
 
+				function handleNavMenuItemHandleClick(e = null) {
+					var { parentNode } = e.target;
+					if (navMenuItemHandleTimer) {
+						clearTimeout(navMenuItemHandleTimer);
+					}
+					while (! parentNode.classList.contains('menu-item')) {
+						parentNode = parentNode.parentNode;
+					}
+					navMenuItemHandleTimer = setTimeout(function() {
+						if (parentNode.classList.contains('menu-item-edit-active')) {
+							window.wpBackstage.editor.refreshAll(parentNode);
+							window.wpBackstage.codeEditor.refreshAll(parentNode);
+						}
+					}, 500);
+				}
+
+				function initNavMenuItemHandle(control = null) {
+					const handle = control.container[0].querySelector('.menu-item-bar');
+					handle.addEventListener('click', handleNavMenuItemHandleClick);
+				}
+
+				function initFields(control = null) {
+					window.wpBackstage.colorPicker.initAll(control.container[0]);
+					window.wpBackstage.datePicker.initAll(control.container[0]);
+					window.wpBackstage.address.initAll(control.container[0]);
+					window.wpBackstage.mediaUploader.initAll(control.container[0]);
+					window.wpBackstage.codeEditor.initAll(control.container[0]);
+					window.wpBackstage.editor.initAll(control.container[0]);
+				}
+
+				function handleControlExpanded(control =  null) {
+					window.wpBackstage.editor.refreshAll(control.container[0]);
+					window.wpBackstage.codeEditor.refreshAll(control.container[0]);
+				}
+
 				function init() {
 					wp.customize.control.bind('add', function(control) {
 						if (control.extended(wp.customize.Menus.MenuItemControl)) {
 							control.deferred.embedded.done(function() {
 								extendControl(control);
 								setControlValues(control);
+								initFields(control);
+								initNavMenuItemHandle(control);
+								control.expanded.bind(function(isExpanded) {
+									if (isExpanded) {
+										handleControlExpanded(control);
+									}
+								});
 							});
 						}
 					});
@@ -1624,7 +1783,6 @@ class WP_Backstage_Setup {
 				var sectionExpandTimer = null;
 
 				function handleWidgetHandleClick(e = null) {
-					console.log(e);
 					var { parentNode } = e.target;
 					if (widgetHandleTimer) {
 						clearTimeout(widgetHandleTimer);

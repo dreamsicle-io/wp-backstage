@@ -198,6 +198,17 @@ function wp_backstage_init() {
 		),
 		array( 
 			'type'        => 'media', 
+			'name'        => 'wp_backstage_audio_field', 
+			'label'       => __( 'Audio', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload audio.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'type'   => 'audio',
+				'attach' => true,  
+			), 
+		),
+		array( 
+			'type'        => 'media', 
 			'name'        => 'wp_backstage_application_field', 
 			'label'       => __( 'Documents', 'wp_backstage' ), 
 			'description' => __( 'Please select or upload documents.', 'wp_backstage' ), 

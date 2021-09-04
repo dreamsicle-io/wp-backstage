@@ -246,6 +246,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Render Customizer Fields
 	 * 
+	 * Render the customizer template for new menu items. Note that the templating is different
+	 * in the customizer for menu items, therefore the `before` and `after` field actions
+	 * are different in this case and are passed different values.
+	 * 
 	 * @since   1.1.0
 	 * @return  void 
 	 */
@@ -273,11 +277,11 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
 				data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php 
 
-					do_action( $this->format_field_action( 'before' ), $field );
+					do_action( $this->format_field_action( 'customizer_before' ), $field, $field_name );
 
 					$this->render_field_by_type( $field ); 
 
-					do_action( $this->format_field_action( 'after' ), $field );
+					do_action( $this->format_field_action( 'customizer_after' ), $field, $field_name );
 
 				?></div>
 

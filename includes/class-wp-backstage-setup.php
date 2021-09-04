@@ -1501,27 +1501,6 @@ class WP_Backstage_Setup {
 					});
 				}
 
-				function handleNavMenuItemHandleClick(e = null) {
-					var { parentNode } = e.target;
-					if (navMenuItemHandleTimer) {
-						clearTimeout(navMenuItemHandleTimer);
-					}
-					while (! parentNode.classList.contains('menu-item')) {
-						parentNode = parentNode.parentNode;
-					}
-					navMenuItemHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(parentNode);
-							window.wpBackstage.codeEditor.refreshAll(parentNode);
-						}
-					}, 500);
-				}
-
-				function initNavMenuItemHandle(control = null) {
-					const handle = control.container[0].querySelector('.menu-item-bar');
-					handle.addEventListener('click', handleNavMenuItemHandleClick);
-				}
-
 				function initFields(control = null) {
 					window.wpBackstage.colorPicker.initAll(control.container[0]);
 					window.wpBackstage.datePicker.initAll(control.container[0]);
@@ -1543,7 +1522,6 @@ class WP_Backstage_Setup {
 								extendControl(control);
 								setControlValues(control);
 								initFields(control);
-								initNavMenuItemHandle(control);
 								control.expanded.bind(function(isExpanded) {
 									if (isExpanded) {
 										handleControlExpanded(control);

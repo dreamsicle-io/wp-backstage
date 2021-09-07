@@ -2,15 +2,19 @@
 /**
  * WP Backstage Nav Menu Item
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Nav Menu Item
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -19,7 +23,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'fields' => array(), 
@@ -28,13 +33,15 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
+	 * @since   0.0.1
 	 * @param   array              $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Nav_Menu_Item  A fully constructed instance of `WP_Backstage_Nav_Menu_Item`. 
 	 */
@@ -49,11 +56,11 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Construct
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
-	protected function __construct( $args = array() ) {
+	public function __construct( $args = array() ) {
 
 		$this->slug = 'nav_menu_item';
 		$this->set_args( $args );
@@ -68,7 +75,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Set Args
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $args  An array of arguments.
 	 * @return  void
 	 */
@@ -79,7 +86,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Set Errors
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	protected function set_errors() {
@@ -107,10 +114,16 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Init
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 		
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
@@ -119,12 +132,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );
+		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'render_customizer_fields' ), 10 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
-		if ( ! is_customize_preview() ) {
-			add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
-		}
+		add_action( 'customize_save_after', array( $this, 'save_customizer' ), 10 );
+		add_action( 'wp_setup_nav_menu_item', array( $this, 'setup_nav_menu_item' ), 10 );
+		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_nav_menu_item_script' ), 10 );
+		add_action( 'customize_register', array( $this, 'manage_customizer_meta_preview' ), 10 );
 
 		parent::init();
 
@@ -133,7 +147,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Get Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
@@ -153,11 +167,38 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		return $fields;
 
 	}
+	
+	/**
+	 * Setup Nav Menu Item
+	 * 
+	 * Adds all values to the Nav Menu Item object.
+	 * 
+	 * @since   2.0.0
+	 * @return  object  The nav menu item object.
+	 */
+	public function setup_nav_menu_item( $item = null ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			foreach ( $fields as $field ) {
+
+				$field_name = $field['name'];
+				$item->$field_name = get_post_meta( $item->ID, $field_name, true );
+			
+			}
+		
+		}
+
+		return $item;
+
+	}
 
 	/**
 	 * Render Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   int      $item_id  The nav menu item ID.
 	 * @param   WP_Post  $item     The nav menu item post object.
 	 * @param   int      $depth    The depth of menu item.
@@ -176,6 +217,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				$field_name = $field['name'];
 				$field['value'] = get_post_meta( $item->ID, $field_name, true );
 				$field['name'] = sprintf( '%1$s[%2$d]', $field_name, $item->ID );
+				$field['id'] = sprintf( '%1$s_%2$d', $field_name, $item->ID );
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -183,7 +225,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows = 3;
+					$default_rows = ($field['type'] === 'textarea') ? 3 : 10;
 					$default_cols = 20;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
@@ -196,9 +238,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
 
-				<div 
-				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description-wide"
-				data-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
+				<p 
+				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
+				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
 
 					do_action( $this->format_field_action( 'before' ), $field, $item );
 
@@ -206,7 +248,68 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 					do_action( $this->format_field_action( 'after' ), $field, $item );
 
-				?></div>
+				?></p>
+
+			<?php }
+
+		}
+
+	}
+
+	/**
+	 * Render Customizer Fields
+	 * 
+	 * Render the customizer template for new menu items. Note that the templating is different
+	 * in the customizer for menu items, therefore the `before` and `after` field actions
+	 * are different in this case and are passed different values.
+	 * 
+	 * @since   2.0.0
+	 * @return  void 
+	 */
+	public function render_customizer_fields() {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			
+			foreach ( $fields as $field ) {
+				
+				$field_name = $field['name'];
+				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
+				$field['name'] = sprintf( 'menu-item-%1$s', $field_name );
+				$field['id'] = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+
+				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
+					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
+				}
+
+				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$default_rows = ($field['type'] === 'textarea') ? 3 : 10;
+					$default_cols = 20;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
+					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
+				}
+
+				if ( $field['type'] === 'code' ) {
+					$field['settings_key'] = $field_name;
+				}
+
+				$field = apply_filters( $this->format_field_action( 'args' ), $field ); ?>
+
+				<p 
+				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
+				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
+				data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php 
+
+					do_action( $this->format_field_action( 'customizer_before' ), $field, $field_name );
+
+					$this->render_field_by_type( $field ); 
+
+					do_action( $this->format_field_action( 'customizer_after' ), $field, $field_name );
+
+				?></p>
 
 			<?php }
 
@@ -217,7 +320,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Save
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   int    $menu_id  The ID of the menu that the item is in.
 	 * @param   int    $item_id  The ID of the menu item.
 	 * @param   array  $menu_item_data  The menu item data.
@@ -241,26 +344,67 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				if ( isset( $_POST[$field['name']][$item_id] ) ) {
 
 					$value = $this->sanitize_field( $field, $_POST[$field['name']][$item_id] );
-
+					
 					update_post_meta( $item_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
+				} else {
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+					delete_post_meta( $item_id, $field['name'] );
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					update_post_meta( $item_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
+				}
 
 			}
 
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
+		}
 
-				update_post_meta( $item_id, $this->args['group_meta_key'], $values );
+	}
+	
+	/**
+	 * Save Customizer
+	 * 
+	 * Save the Nav Menu Item settings after the customizer has finished saving.
+	 * 
+	 * @todo    Though it's probably not needed, try to check nonce here.
+	 * 
+	 * @since   2.0.0
+	 * @param   WP_Customize_Manager  $wp_customize The current WP Customize instance.
+	 * @return  void
+	 */
+	public function save_customizer( $wp_customize = null ) {
+
+		foreach ( $wp_customize->settings() as $setting ) {
+			
+			if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting && $setting->check_capabilities() ) {
+
+				$item_id = $setting->post_id;
+				$posted_values = $setting->manager->unsanitized_post_values()[$setting->id];
+
+				if ( ! current_user_can( 'edit_post', $item_id ) ) { return; }
+				if ( ! $posted_values || empty( $posted_values ) ) { return; }
+
+				$fields = $this->get_fields();
+
+				if ( is_array( $fields ) && ! empty( $fields ) ) {
+					
+					$values = array();
+
+					foreach ( $fields as $field ) {
+
+						if ( isset( $posted_values[$field['name']] ) ) {
+
+							$value = $this->sanitize_field( $field, $posted_values[$field['name']] );
+							
+							update_post_meta( $item_id, $field['name'], $value );
+
+						} else {
+
+							delete_post_meta( $item_id, $field['name'] );
+
+						}
+
+					}
+
+				}
 
 			}
 
@@ -279,7 +423,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @link    https://developer.wordpress.org/reference/hooks/default_hidden_columns/ Hook: default_hidden_columns
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array      $hidden  An array of hidden columns.
 	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 
@@ -307,144 +451,47 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	}
 
 	/**
-	 * Inline Nav Menu Item Script
+	 * Manage Customizer Meta Preview
 	 * 
-	 * @since   1.1.0
-	 * @return  void  
+	 * Preview changes to the nav menu item roles. Note the unimplemented 
+	 * to-do in the doc block for the setting's preview method. This will only
+	 * work for existing menu items. New menu items have a dynamically generated ID
+	 * and do not exist in the database yet.
+	 *
+	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
+	 *
+	 * @param   WP_Customize_Manager  $wp_customize  The WP Customize instance.
+	 * @return  void
 	 */
-	public function inline_nav_menu_item_script() {
+	public function manage_customizer_meta_preview( $wp_customize = null ) {
 
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		} ?>
+		if ( $wp_customize->settings_previewed() ) {
 
-		<script 
-		id="wp_backstage_nav_menu_item_script"
-		type="text/javascript">
+			foreach ( $wp_customize->settings() as $setting ) {
 
-			(function($) {
+				if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting ) {
+					
+					add_filter( 'get_post_metadata', function( $value, $object_id, $meta_key, $single ) use ( $setting ) {
+						
+						if ( $object_id === $setting->post_id ) {
 
-				var navMenuItemHandleTimer = null;
+							$field = $this->get_field_by( 'name', $meta_key );
+							$posted_values = $setting->manager->unsanitized_post_values()[$setting->id];
+							$value = $this->sanitize_field( $field, $posted_values[$field['name']] );
 
-				function getInitialItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items);
-				}
-
-				function getNewItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items).filter(item => ! item.hasAttribute('data-wp-backstage-initialized'));
-				}
-
-				function handleSuccess(e = null, request = null, settings = null) {
-					if (settings && settings.data) {
-						const params = new URLSearchParams(settings.data);
-						const action = params.get('action');
-						if (action === 'add-menu-item') {
-							const newItems = getNewItems();
-							for (var i = 0; i < newItems.length; i++) {
-								const newItem = newItems[i];
-								window.wpBackstage.colorPicker.initAll(newItem);
-								window.wpBackstage.datePicker.initAll(newItem);
-								window.wpBackstage.address.initAll(newItem);
-								window.wpBackstage.mediaUploader.initAll(newItem);
-								window.wpBackstage.editor.initAll(newItem);
-								window.wpBackstage.codeEditor.initAll(newItem);
-								initAllNavMenuItemHandles(newItem);
-								newItem.setAttribute('data-wp-backstage-initialized', true);
-							}
 						}
-					}
+
+						return $value;
+
+					}, 10, 4 );
+
 				}
 
-				function init() {
-					const initialItems = getInitialItems();
-					for (var i = 0; i < initialItems.length; i++) {
-						initialItems[i].setAttribute('data-wp-backstage-initialized', true);
-					}
-					$(document).ajaxSuccess(handleSuccess);
-				}
+			}
 
-				function handleNavMenuItemHandleClick(e = null) {
-					var { parentNode } = e.target;
-					if (navMenuItemHandleTimer) {
-						clearTimeout(navMenuItemHandleTimer);
-					}
-					while (! parentNode.classList.contains('menu-item')) {
-						parentNode = parentNode.parentNode;
-					}
-					navMenuItemHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(parentNode);
-							window.wpBackstage.codeEditor.refreshAll(parentNode);
-						}
-					}, 500);
-				}
+		}
 
-				function handleScreenOptionChange(e = null) {
-					const fieldContainers = document.querySelectorAll('[data-field-name="' + e.target.value + '"]');
-					for (var i = 0; i < fieldContainers.length; i++) {
-						const fieldContainer = fieldContainers[i];
-						if (fieldContainer && ! fieldContainer.classList.contains('hidden-field')) {
-							window.wpBackstage.editor.refreshAll(fieldContainer);
-							window.wpBackstage.codeEditor.refreshAll(fieldContainer);
-						}
-					}
-				}
-
-				function initNavMenuItemHandle(handle = null) {
-					handle.addEventListener('click', handleNavMenuItemHandleClick);
-				}
-				
-				function initAllNavMenuItemHandles(container = null) {
-					container = container || document.getElementById('menu-to-edit');
-					const navMenuItemHandles = container.querySelectorAll('.menu-item-handle .item-edit');
-					if (navMenuItemHandles && (navMenuItemHandles.length > 0)) {
-						for (var i = 0; i < navMenuItemHandles.length; i++) {
-							initNavMenuItemHandle(navMenuItemHandles[i]);
-						}
-					}
-				}
-
-				function initScreenOption(checkbox = null) {
-					checkbox.addEventListener('change', handleScreenOptionChange);
-				}
-
-				function handleNavMenuSortStop(e = null, ui = null) {
-					const item = ui.item[0];
-					if (item.classList.contains('menu-item')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
-					}
-				}
-
-				function initNavMenuSortable() {
-					const sortable = document.getElementById('menu-to-edit');
-					$(sortable).on('sortstop', handleNavMenuSortStop);
-				}
-
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
-				}
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					init();
-					initAllNavMenuItemHandles();
-					initNavMenuSortable();
-					initAllScreenOptions();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
+	}
 
 }

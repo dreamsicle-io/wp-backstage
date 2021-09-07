@@ -2,13 +2,19 @@
 /**
  * WP Backstage Options
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Options
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  An array of default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  An array of default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'type'              => 'settings', // settings, theme, tools
@@ -25,14 +32,14 @@ class WP_Backstage_Options extends WP_Backstage {
 		'menu_title'        => '', 
 		'description'       => '', 
 		'capability'        => 'manage_options', 
-		'group_options_key' => '', 
 		'sections'          => array(), 
 	);
 
 	/**
 	 * Default Section Args
 	 * 
-	 * @var  array  $default_section_args  An array of default section arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_section_args  An array of default section arguments.
 	 */
 	protected $default_section_args = array(
 		'id'          => '', 
@@ -44,7 +51,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  An array of required argument keys.
+	 * @since  0.0.1
+	 * @var    array  $required_args  An array of required argument keys.
 	 */
 	protected $required_args = array(
 		'type', 
@@ -53,7 +61,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Registered
 	 * 
-	 * @var  array  $registered  An array of already-registered option keys.
+	 * @since  0.0.1
+	 * @var    array  $registered  An array of already-registered option keys.
 	 */
 	protected static $registered = array();
 
@@ -79,7 +88,7 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * @param   array   $args 
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array() ) {
+	public function __construct( $slug = '', $args = array() ) {
 
 		$this->default_address_args = array_merge( $this->default_address_args, array(
 			'max_width'  => '50em', 
@@ -90,7 +99,7 @@ class WP_Backstage_Options extends WP_Backstage {
 		$this->default_editor_args = array_merge( $this->default_editor_args, array(
 			'max_width'  => '50em', 
 		) );
-		$this->slug = sanitize_title_with_dashes( $slug );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array( 
 			sprintf( 'settings_page_%1$s', $this->slug ), 
@@ -164,22 +173,18 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		}
 
-		if ( ! empty( $this->args['group_options_key'] ) ) {
+		if ( in_array( $this->slug, self::$registered ) ) {
 
-			if ( in_array( $this->args['group_options_key'], self::$registered ) ) {
+			$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
+				/* translators: 1: options page slug, 2: option key. */
+				__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>' . $this->slug . '</code>'
+			) );
 
-				$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
-					/* translators: 1: options page slug, 2: option key. */
-					__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
-					$this->slug,
-					'<code>' . $this->args['group_options_key'] . '</code>'
-				) );
+		} else {
 
-			} else {
-
-				self::$registered[] = $this->args['group_options_key'];
-
-			}
+			self::$registered[] = $this->slug;
 
 		}
 
@@ -211,12 +216,36 @@ class WP_Backstage_Options extends WP_Backstage {
 	}
 
 	/**
+	 * Hook Script Action
+	 * 
+	 * There is no general options page action for printing footer scripts. 
+	 * This hook allows WP Backstage to know if this is a settings page added 
+	 * by the plugin and gives a simple place to hook the options script from
+	 * `WP_Backstage_Setup`.
+	 * 
+	 * @since  2.0.0
+	 * @return void
+	 */
+	public function hook_script_action() {
+		if ( ! did_action( 'wp_backstage_options_print_footer_scripts' ) ) {
+			do_action( 'wp_backstage_options_print_footer_scripts', $this->slug );
+		}
+	}
+
+	/**
 	 * Init
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Added `hook_script_action` actions to all types of options pages.
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
@@ -226,6 +255,9 @@ class WP_Backstage_Options extends WP_Backstage {
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
 		add_action( 'tool_box', array( $this, 'add_tool_card' ), 10 );
+		add_action( sprintf( 'admin_print_footer_scripts-settings_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
+		add_action( sprintf( 'admin_print_footer_scripts-appearance_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
+		add_action( sprintf( 'admin_print_footer_scripts-tools_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
 
 		parent::init();
 
@@ -321,10 +353,6 @@ class WP_Backstage_Options extends WP_Backstage {
 	}
 
 	public function save() {
-
-		if ( empty( $this->args['group_options_key'] ) ) {
-			return null;
-		}
 		
 		$fields = $this->get_fields();
 		$values = array();
@@ -339,12 +367,10 @@ class WP_Backstage_Options extends WP_Backstage {
 
 					$values[$field['name']] = $value;
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					$values[$field['name']] = $value;
-
+					unset( $values[$field['name']] );
+					
 				} 
 
 			}
@@ -364,20 +390,16 @@ class WP_Backstage_Options extends WP_Backstage {
 	public function add_settings() {
 
 		$sections = $this->get_sections();
-
-		if ( ! empty( $this->args['group_options_key'] ) ) {
-
-			register_setting(
-				$this->slug, 
-				$this->args['group_options_key'], 
-				array(
-					'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
-					'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
-					'sanitize_callback' => array( $this, 'save' ), 
-				)
-			);
-
-		}
+		
+		register_setting(
+			$this->slug, 
+			$this->slug, 
+			array(
+				'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
+				'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
+				'sanitize_callback' => array( $this, 'save' ), 
+			)
+		);
 
 		if ( is_array( $sections ) && ! empty( $sections ) ) {
 			
@@ -395,7 +417,7 @@ class WP_Backstage_Options extends WP_Backstage {
 					foreach ( $section['fields'] as $field ) {
 
 						$field = wp_parse_args( $field, $this->default_field_args );
-						$field_id = sanitize_title_with_dashes( $field['name'] );
+						$field_id = sanitize_key( $field['name'] );
 						$field['value'] = get_option( $field['name'] );
 						$field['show_label'] = false;
 						$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';

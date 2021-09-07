@@ -2,13 +2,19 @@
 /**
  * WP Backstage User
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage User
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'field_groups' => array(), 
@@ -26,7 +33,8 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Field Group Args
 	 * 
-	 * @var  array  $default_field_group_args  The default field group arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_field_group_args  The default field group arguments for this instance.
 	 */
 	protected $default_field_group_args = array(
 		'id'          => '', 
@@ -38,13 +46,15 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
+	 * @since   0.0.1
 	 * @param   array              $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_User  A fully constructed instance of `WP_Backstage_User`. 
 	 */
@@ -63,7 +73,7 @@ class WP_Backstage_User extends WP_Backstage {
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
-	protected function __construct( $args = array() ) {
+	public function __construct( $args = array() ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
@@ -134,6 +144,12 @@ class WP_Backstage_User extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
@@ -300,7 +316,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
+							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php 
 
 								echo wp_kses( $field['label'], $this->kses_label ); 
 
@@ -364,23 +380,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 					update_user_meta( $user_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
+				} else {
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+					delete_user_meta( $user_id, $field['name'] );
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					update_user_meta( $user_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_user_meta( $user_id, $this->args['group_meta_key'], $values );
+				}
 
 			}
 

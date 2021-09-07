@@ -2,13 +2,19 @@
 /**
  * WP Backstage
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -22,19 +28,21 @@ class WP_Backstage {
 	 * when building nonces, creating dynamic hooks, and registering post types, 
 	 * taxonomies, and options pages. Note that on instances of `WP_Backstage_User`, 
 	 * the slug is set to `user`. The slug is sanitized using WordPress's 
-	 * `sanitize_title_with_dashes()` function that is used when sanitizing 
+	 * `sanitize_key()` function that is used when sanitizing 
 	 * slugs.
 	 *
-	 * @link https://developer.wordpress.org/reference/functions/sanitize_title_with_dashes/ sanitize_title_with_dashes()
+	 * @link https://developer.wordpress.org/reference/functions/sanitize_key/ sanitize_key()
 	 * 
-	 * @var  string  $slug  the text slug that identifies the instance.
+	 * @since  0.0.1
+	 * @var    string  $slug  the text slug that identifies the instance.
 	 */
 	protected $slug = '';
 
 	/**
 	 * Errors
 	 * 
-	 * @var  array  $errors  The array of all errors on the instance.
+	 * @since  0.0.1
+	 * @var    array  $errors  The array of all errors on the instance.
 	 */
 	protected $errors = array();
 
@@ -43,70 +51,80 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 * 
-	 * @var  string|array  $screen_id  The screen ID or IDs that apply to this instance.
+	 * @since  0.0.1
+	 * @var    string|array  $screen_id  The screen ID or IDs that apply to this instance.
 	 */
 	protected $screen_id = '';
 
 	/**
 	 * Has Media
 	 * 
-	 * @var  bool  $has_media  Whether this instance has media fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_media  Whether this instance has media fields or not.
 	 */
 	protected $has_media = false;
 
 	/**
 	 * Has Date
 	 * 
-	 * @var  bool  $has_date  Whether this instance has date fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_date  Whether this instance has date fields or not.
 	 */
 	protected $has_date = false;
 
 	/**
 	 * Has Color
 	 * 
-	 * @var  bool  $has_color  Whether this instance has color fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_color  Whether this instance has color fields or not.
 	 */
 	protected $has_color = false;
 
 	/**
 	 * Has Address
 	 * 
-	 * @var  bool  $has_address  Whether this instance has address fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_address  Whether this instance has address fields or not.
 	 */
 	protected $has_address = false;
 
 	/**
 	 * Has Editor
 	 * 
-	 * @var  bool  $has_editor  Whether this instance has editor fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_editor  Whether this instance has editor fields or not.
 	 */
 	protected $has_editor = false;
 
 	/**
 	 * Code Editors
 	 * 
-	 * @var  array  $code_editors  An array of this instance's code editors.
+	 * @since  0.0.1
+	 * @var    array  $code_editors  An array of this instance's code editors.
 	 */
 	protected $code_editors = array();
 
 	/**
 	 * Countries
 	 * 
-	 * @var  array  $countries  An array of localized countries.
+	 * @since  0.0.1
+	 * @var    array  $countries  An array of localized countries.
 	 */
 	protected $countries = array();
 
 	/**
 	 * US States
 	 * 
-	 * @var  array  $us_states  An array of localized US states.
+	 * @since  0.0.1
+	 * @var    array  $us_states  An array of localized US states.
 	 */
 	protected $us_states = array();
 
 	/**
 	 * Default Field Args
 	 * 
-	 * @var  array  $default_field_args  An array of default field args.
+	 * @since  0.0.1
+	 * @var    array  $default_field_args  An array of default field args.
 	 */
 	protected $default_field_args = array(
 		'type'        => 'text', 
@@ -125,14 +143,16 @@ class WP_Backstage {
 	/**
 	 * Date Format
 	 * 
-	 * @var  string  $date_format  The php date format.
+	 * @since  0.0.1
+	 * @var    string  $date_format  The php date format.
 	 */
 	protected $date_format = '';
 
 	/**
 	 * Default Option Args
 	 * 
-	 * @var  array  $default_option_args  An array of default option arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_option_args  An array of default option arguments.
 	 */
 	protected $default_option_args = array(
 		'value'       => '', 
@@ -143,7 +163,8 @@ class WP_Backstage {
 	/**
 	 * Default Media Uploader Args
 	 * 
-	 * @var  array  $default_media_uploader_args  An array of default media field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_media_uploader_args  An array of default media field arguments.
 	 */
 	protected $default_media_uploader_args = array(
 		'multiple' => false, 
@@ -153,7 +174,8 @@ class WP_Backstage {
 	/**
 	 * Default Date Args
 	 * 
-	 * @var  array  $default_date_args  An array of default date field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_date_args  An array of default date field arguments.
 	 */
 	protected $default_date_args = array(
 		'format' => 'yy-mm-dd', 
@@ -162,7 +184,8 @@ class WP_Backstage {
 	/**
 	 * Default Color Args
 	 * 
-	 * @var  array  $default_color_args  An array of default color field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_color_args  An array of default color field arguments.
 	 */
 	protected $default_color_args = array(
 		'mode'     => '', 
@@ -172,7 +195,8 @@ class WP_Backstage {
 	/**
 	 * Default Editor Args
 	 * 
-	 * @var  array  $default_editor_args  An array of default editor field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_editor_args  An array of default editor field arguments.
 	 */
 	protected $default_editor_args = array(
 		'max_width'     => '100%', 
@@ -184,7 +208,8 @@ class WP_Backstage {
 	/**
 	 * Default Code Args
 	 * 
-	 * @var  array  $default_code_args  An array of default code editor arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_code_args  An array of default code editor arguments.
 	 */
 	protected $default_code_args = array(
 		'mime'      => 'text/html', 
@@ -194,7 +219,8 @@ class WP_Backstage {
 	/**
 	 * Default Address Args
 	 * 
-	 * @var  array  $default_address_args  An array of default address arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_address_args  An array of default address arguments.
 	 */
 	protected $default_address_args = array(
 		'max_width' => '100%', 
@@ -203,21 +229,23 @@ class WP_Backstage {
 	/**
 	 * Default Address Values
 	 * 
-	 * @var  array  $default_address_values  An array of default address field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_address_values  An array of default address field arguments.
 	 */
 	protected $default_address_values = array(
 		'country'   => 'US', 
 		'address_1' => '', 
 		'address_2' => '', 
 		'city'      => '', 
-		'state'     => '', 
+		'state'     => 'AL', 
 		'zip'       => '', 
 	);
 
 	/**
 	 * Remove Label For Fields
 	 * 
-	 * @var  array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
+	 * @since  0.0.1
+	 * @var    array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
 	 */
 	protected $remove_label_for_fields = array( 
 		'radio', 
@@ -229,7 +257,8 @@ class WP_Backstage {
 	/**
 	 * Non Regular Text Fields
 	 * 
-	 * @var  array  $non_regular_text_fields  Field types that do not include text-style inputs.
+	 * @since  0.0.1
+	 * @var    array  $non_regular_text_fields  Field types that do not include text-style inputs.
 	 */
 	protected $non_regular_text_fields = array( 
 		'number', 
@@ -249,7 +278,8 @@ class WP_Backstage {
 	/**
 	 * Textarea Control Fields
 	 * 
-	 * @var  array  $textarea_control_fields  Field types that use a textarea input as a control.
+	 * @since  0.0.1
+	 * @var    array  $textarea_control_fields  Field types that use a textarea input as a control.
 	 */
 	protected $textarea_control_fields = array( 
 		'editor', 
@@ -262,7 +292,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  0.0.1
+	 * @var    array  $kses_p  KSES configuration for paragraph tags.
 	 */
 	protected $kses_p = array(
 		'a' => array(
@@ -306,7 +337,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  $kses_label  KSES configuration for label tags.
+	 * @since  0.0.1
+	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
 	protected $kses_label = array(
 		'em' => array(
@@ -339,7 +371,8 @@ class WP_Backstage {
 	 * localized label and set the number of options that are necessary for each 
 	 * time piece (`hour`, `minute`, `second`) respectively.
 	 * 
-	 * @var  array  $time_pieces  The configuration for time fields.
+	 * @since  0.0.1
+	 * @var    array  $time_pieces  The configuration for time fields.
 	 */
 	protected $time_pieces = array();
 
@@ -348,7 +381,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 *
-	 * @var  array $global_code_settings  Global settings for CodeMirror.
+	 * @since  0.0.1
+	 * @var    array $global_code_settings  Global settings for CodeMirror.
 	 */
 	protected $global_code_settings = array( 
 		'codemirror' => array(
@@ -362,7 +396,8 @@ class WP_Backstage {
 	 * @link  https://developer.wordpress.org/reference/functions/wp_nonce_field/ wp_nonce_field
 	 * @link  https://codex.wordpress.org/WordPress_Nonces WP nonces
 	 * 
-	 * @var  string  $nonce_key  The key for nonce fields.
+	 * @since  0.0.1
+	 * @var    string  $nonce_key  The key for nonce fields.
 	 */
 	protected $nonce_key = '_wp_backstage_nonce';
 
@@ -724,7 +759,7 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @return  bool  Whether the instance has errors or not. 
 	 */
-	protected function has_errors() {
+	public function has_errors() {
 		return is_array( $this->errors ) && ! empty( $this->errors );
 	}
 
@@ -810,87 +845,19 @@ class WP_Backstage {
 	 */
 	public function init() {
 
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
+
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
 			return;
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
-		add_action( 'admin_head', array( $this, 'add_admin_head_style_action' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'add_admin_footer_script_action' ), 10 );
-		$this->hook_inline_styles();
-		$this->hook_inline_scripts();
+		add_action( 'admin_print_scripts', array( $this, 'inline_code_editor_script' ), 0 );
 
-	}
-
-	/**
-	 * Add Admin Head Style Action
-	 *
-	 * Dynamically hook the formatted head style action that is unique to this
-	 * instance. This provides a better place to hook inline styles. This is 
-	 * attached to the `admin_head` hook.
-	 *
-	 * @link    https://developer.wordpress.org/reference/functions/do_action/ do_action()
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_head/ hook: admin_head
-	 *
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function add_admin_head_style_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_head_style_action() );
-	}
-
-	/**
-	 * Add Admin Footer Script Action
-	 *
-	 * Dynamically hook the formatted footer script action that is unique to this
-	 * instance. This provides a better place to hook inline scripts. This is 
-	 * attached to the `admin_print_footer_scripts`.
-	 *
-	 * @link    https://developer.wordpress.org/reference/functions/do_action/ do_action()
-	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts/ hook: admin_print_footer_scripts
-	 *
-	 * @since   0.0.1
-	 * @return  void 
-	 */
-	public function add_admin_footer_script_action() {
-		
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		do_action( $this->format_footer_script_action() );
-	}
-
-	/**
-	 * Format Head Style Action
-	 * 
-	 * @since   0.0.1 
-	 * @return  string  the formatted action name.
-	 */
-	protected function format_head_style_action() {
-		return sprintf( 
-			'wp_backstage_%1$s_print_head_styles', 
-			esc_attr( $this->slug ) 
-		);
-	}
-
-	/**
-	 * Format Footer Script Action
-	 * 
-	 * @since   0.0.1 
-	 * @return  string  the formatted action name.
-	 */
-	protected function format_footer_script_action() {
-		return sprintf( 
-			'wp_backstage_%1$s_print_footer_scripts', 
-			esc_attr( $this->slug ) 
-		);;
 	}
 
 	/**
@@ -928,57 +895,6 @@ class WP_Backstage {
 			esc_attr( $this->slug ), 
 			esc_attr( $column ) 
 		);
-	}
-
-	/**
-	 * Hook Inline Styles
-	 *
-	 * This hooks all inline style methods to this instance's formatted head 
-	 * style action.
-	 *
-	 * @since   0.0.1 
-	 * @return  void
-	 */
-	protected function hook_inline_styles() {
-
-		$actions = array(
-			'inline_editor_style', 
-		);
-
-		if ( ! empty( $actions ) ) {
-			foreach ( $actions as $action ) {
-				add_action( $this->format_head_style_action(), array( $this, $action ), 10 );
-			}
-		}
-
-	}
-
-	/**
-	 * Hook Inline Scripts
-	 *
-	 * This hooks all inline script methods to this instance's formatted footer 
-	 * script action.
-	 *
-	 * @since   0.0.1 
-	 * @return  void
-	 */
-	protected function hook_inline_scripts() {
-
-		$actions = array(
-			'inline_media_uploader_script', 
-			'inline_date_picker_script', 
-			'inline_color_picker_script', 
-			'inline_code_editor_script', 
-			'inline_address_script', 
-			'inline_editor_script', 
-		);
-
-		if ( ! empty( $actions ) ) {
-			foreach ( $actions as $action ) {
-				add_action( $this->format_footer_script_action(), array( $this, $action ), 10 );
-			}
-		}
-
 	}
 
 	/**
@@ -1020,7 +936,7 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Enqueue Admin Scripts
+	 * Inline Code Editor Script
 	 *
 	 * Conditionally enqueue required scripts and styles. This handles enqueues
 	 * for the media uploader, WP editor, and color picker. This is also responsible 
@@ -1039,70 +955,7 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @return  void 
 	 */
-	public function enqueue_admin_scripts() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) ) {
-			return;
-		}
-
-		if ( $this->has_editor ) {
-
-			// `did_action()` returns the amount of times an action has been run,
-			// not a bool. Since this returns an integer and since it will return
-			// `0` if the action has never been run, it is safe to use as a boolean.
-			if ( ! did_action( 'wp_enqueue_editor' ) ) {
-				wp_enqueue_editor();
-			}
-
-		}
-
-		if ( $this->has_media || $this->has_date ) {
-
-			if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
-				wp_enqueue_script( 'jquery-ui-core' );
-			}
-
-			if ( ! wp_script_is( 'jquery-ui-theme-default', 'enqueued' ) ) {
-				wp_enqueue_style( 
-					'jquery-ui-theme-default', 
-					'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', 
-					array(), 
-					'1.12.1' 
-				);
-			}
-
-		}
-
-		if ( $this->has_media ) {
-
-			if ( ! did_action( 'wp_enqueue_media' ) ) {
-				wp_enqueue_media();
-			}
-
-			if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
-				wp_enqueue_script( 'jquery-ui-sortable' );
-			}
-
-		}
-
-		if ( $this->has_date ) {
-
-			if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) ) {
-				wp_enqueue_script( 'jquery-ui-datepicker' );
-			}
-
-		}
-
-		if ( $this->has_color ) {
-
-			if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
-				wp_enqueue_script( 'wp-color-picker' );
-			}
-			if ( ! wp_style_is( 'wp-color-picker', 'enqueued' ) ) {
-				wp_enqueue_style( 'wp-color-picker' );
-			}
-
-		}
+	public function inline_code_editor_script() {
 
 		if ( ! empty( $this->code_editors ) ) {
 
@@ -1120,7 +973,7 @@ class WP_Backstage {
 						'code-editor',
 						sprintf(
 							'window.wpBackstage.codeEditor.settings.%1$s = %2$s;',
-							sanitize_title_with_dashes( $code_editor['name'] ), 
+							sanitize_key( $code_editor['name'] ), 
 							wp_json_encode( $code_editor_settings )
 						)
 					);
@@ -1248,14 +1101,20 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   array  $value  The value to sanitize. Expects an array of values.
+	 * @since   2.0.0  Sanitizes more strictly to support strange behavior on menu items.
+	 * @param   array  $values  The values to sanitize. Expects an array of strings.
 	 * @return  array  An array of values. 
 	 */
-	public function sanitize_checkbox_set( $value = array() ) {
-		if ( ! is_array( $value ) ) {
-			$value = array();
+	public function sanitize_checkbox_set( $values = array() ) {
+		$new_values = array();
+		if ( is_array( $values ) && ! empty( $values ) ) {
+			foreach( $values as $key => $value ) {
+				if ( is_numeric( $key ) ) {
+					$new_values[] = esc_attr( $value );
+				}
+			}
 		}
-		return array_map( 'esc_attr', $value );
+		return $new_values;
 	}
 
 	/**
@@ -1265,13 +1124,12 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Parses against default address values.
 	 * @param   array  $value  The value to sanitize. Expects an array of address `key => value` pairs.
 	 * @return  array  An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
-		if ( ! is_array( $value ) ) {
-			$value = array();
-		}
+		$value = wp_parse_args( $value, $this->default_address_values );
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1282,40 +1140,37 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   array   $value  The value to sanitize. Expects an array of 3 2-digit time values.
-	 * @return  string  a string as `00:00:00`. 
+	 * @since   2.0.0   Parses more strictly to support customizer changes.
+	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values or a time string as hh:mm:ss.
+	 * @return  string  a string as `hh:mm:ss`. 
 	 */
-	public function sanitize_time( $value = array() ) {
-		if ( ! is_array( $value ) || empty( $value ) ) {
-			$value = array( '00', '00', '00' );
+	public function sanitize_time( $value = null ) {
+		if ( ! is_array( $value ) && ! empty( $value ) ) {
+			$value = explode( ':', $value );
 		}
+		$value = array(
+			0 => ! empty( $value[0] ) ? $value[0] : '00',
+			1 => ! empty( $value[1] ) ? $value[1] : '00',
+			2 => ! empty( $value[2] ) ? $value[2] : '00',
+		);
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 
 	/**
-	 * Sanitize Single Media
-	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
-	 * 
-	 * @since   0.0.1
-	 * @param   int  $value  The value to sanitize. Expects an attachment ID.
-	 * @return  int  An integer, or null if empty. 
-	 */
-	public function sanitize_single_media( $value = null ) {
-		return ( $value !== '' ) ? intval( $value ) : null;
-	}
-
-	/**
-	 * Sanitize Multi Media
+	 * Sanitize Media
 	 *
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $value  The value to sanitize. Expects a CSV of attachment IDs.
+	 * @since   2.0.0  Removed check for single vs. multiple and treats both as array.
+	 * @param   mixed  $value  The value to sanitize. Expects a CSV string or array of attachment IDs.
 	 * @return  array   An array of integers. 
 	 */
-	public function sanitize_multi_media( $value = '' ) {
-		return ! empty( $value ) ? array_map( 'intval', explode( ',', $value ) ) : null;
+	public function sanitize_media( $value = null ) {
+		if ( ! is_array( $value ) && ! empty( $value ) ) {
+			$value = explode( ',', $value );
+		}
+		return ! empty( $value ) ? array_map( 'intval', $value ) : array();
 	}
 
 	/**
@@ -1324,6 +1179,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Removed check for single media vs. multiple media.
 	 * @param   array  $field  The field args.
 	 * @param   mixed  $value  The field value.
 	 * @return  mixed  The sanitized value according to the field type. 
@@ -1362,12 +1218,7 @@ class WP_Backstage {
 				$value = $this->sanitize_time( $value );
 				break;
 			case 'media':
-				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-				if ( $args['multiple'] ) {
-					$value = $this->sanitize_multi_media( $value );
-				} else {
-					$value = $this->sanitize_single_media( $value );
-				}
+				$value = $this->sanitize_media( $value );
 				break;
 			default:
 				$value = $this->sanitize_text( $value );
@@ -1390,6 +1241,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0   Removed check for single media vs. multiple media.
 	 * @param   array   $field  The field args.
 	 * @return  string  The sanitize callback function name as a string. 
 	 */
@@ -1427,12 +1279,7 @@ class WP_Backstage {
 				$callback = 'sanitize_time';
 				break;
 			case 'media':
-				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-				if ( $args['multiple'] ) {
-					$callback = 'sanitize_multi_media';
-				} else {
-					$callback = 'sanitize_single_media';
-				}
+				$callback = 'sanitize_media';
 				break;
 			default:
 				$callback = 'sanitize_text';
@@ -1888,12 +1735,15 @@ class WP_Backstage {
 	protected function render_input( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -1919,21 +1769,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -1952,15 +1803,17 @@ class WP_Backstage {
 	protected function render_date( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_date_args ); ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
-		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>">
+		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -1988,21 +1841,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2028,7 +1882,11 @@ class WP_Backstage {
 			if ( strlen( $option ) === 1 ) {
 				$option = '0' . $option;
 			}
-			printf( '<option value="%1$s" %2$s>%1$s</option>', esc_attr( $option ), selected( $option, $selected ) );
+			printf( 
+				'<option value="%1$s" %2$s>%1$s</option>', 
+				esc_attr( $option ), 
+				selected( $option, $selected ) 
+			);
 		}
 
 	}
@@ -2047,17 +1905,19 @@ class WP_Backstage {
 	protected function render_time( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
-		<fieldset 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
 			<?php if ( $field['show_label'] ) { ?>
 
 				<legend 
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-				style="padding:2px 0;font-size:inherit;"><?php 
+				style="padding:2px 0;font-size:inherit;display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -2065,9 +1925,9 @@ class WP_Backstage {
 
 			<?php } ?>
 
-			<div 
+			<span 
 			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
-			style="padding:0 0 2px;">
+			style="display:block;padding:0 0 2px;">
 
 				<?php 
 				$i = 0;
@@ -2104,10 +1964,9 @@ class WP_Backstage {
 
 						?></select>
 
-						<?php 
-						if ( ($i + 1) < count( $this->time_pieces ) ) {
-							echo '<span class="sep">:</span>';
-						} ?>
+						<?php if ( ($i + 1) < count( $this->time_pieces ) ) { ?>
+							<span class="sep" style="display:inline-block">:</span>
+						<?php } ?>
 
 					</span>
 
@@ -2116,21 +1975,22 @@ class WP_Backstage {
 
 				} ?>
 
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</fieldset>
+		</span>
 
 	<?php }
 
@@ -2149,7 +2009,8 @@ class WP_Backstage {
 	protected function render_color( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_color_args );
 
 		if ( is_array( $args['palettes'] ) ) {
@@ -2158,13 +2019,14 @@ class WP_Backstage {
 			$palettes = $args['palettes'] ? 'true' : 'false';
 		} ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-color-picker-mode="<?php echo esc_attr( $args['mode'] ); ?>"
-		data-color-picker-palettes="<?php echo $palettes; ?>">
+		data-color-picker-palettes="<?php echo $palettes; ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2190,21 +2052,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2221,12 +2084,16 @@ class WP_Backstage {
 	protected function render_checkbox( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<input 
 				type="checkbox" 
@@ -2247,21 +2114,22 @@ class WP_Backstage {
 				
 				?></label>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2277,12 +2145,16 @@ class WP_Backstage {
 	protected function render_textarea( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2311,21 +2183,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2345,21 +2218,22 @@ class WP_Backstage {
 	protected function render_editor( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_editor_args );
 		$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 		$field['input_attrs']['class'] = sprintf( 'wp-editor-area %1$s', $input_class ); ?>
 
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-media-buttons="<?php echo ( $args['media_buttons'] ) ? 'true' : 'false'; ?>"
 		data-format-select="<?php echo ( $args['format_select'] ) ? 'true' : 'false'; ?>"
 		data-kitchen-sink="<?php echo ( $args['kitchen_sink'] ) ? 'true' : 'false'; ?>"
-		style="max-width:<?php echo $args['max_width']; ?>;">
+		style="display:block;max-width:<?php echo $args['max_width']; ?>;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2388,21 +2262,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2424,17 +2299,18 @@ class WP_Backstage {
 	protected function render_code( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_code_args );
 		$settings_key = $field['settings_key'] ? $field['settings_key'] : $id; ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-code-editor-settings="<?php echo esc_attr( $settings_key ); ?>"
-		style="max-width:<?php echo $args['max_width']; ?>;">
+		style="display:block;max-width:<?php echo $args['max_width']; ?>;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2463,21 +2339,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2496,12 +2373,14 @@ class WP_Backstage {
 	protected function render_select( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2547,21 +2426,22 @@ class WP_Backstage {
 
 				?></select>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2580,18 +2460,21 @@ class WP_Backstage {
 	protected function render_radio( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] ); ?>
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<fieldset 
+			<span 
 			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
-					<legend style="padding:2px 0;font-size:inherit;"><?php 
+					<legend style="display:inline-block;padding:2px 0;font-size:inherit;"><?php 
 
 						echo wp_kses( $field['label'], $this->kses_label );
 					
@@ -2606,11 +2489,11 @@ class WP_Backstage {
 
 						$option = wp_parse_args( $option, $this->default_option_args );
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
-						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_key( $option['value'] ) ); ?>
 
-						<div 
+						<span 
 						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
-						style="padding:2px 0;">
+						style="display:block;padding:2px 0;">
 
 							<input
 							type="radio" 
@@ -2630,27 +2513,28 @@ class WP_Backstage {
 							
 							?></label>
 
-						</div>
+						</span>
 
 					<?php }
 
 				} ?>
 			
-			</fieldset>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2669,21 +2553,24 @@ class WP_Backstage {
 	protected function render_checkbox_set( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<fieldset 
+			<span 
 			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
 					<legend 
 					id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-					style="padding:2px 0;font-size:inherit;"><?php 
+					style="display:inline-block;padding:2px 0;font-size:inherit;"><?php 
 
 						echo wp_kses( $field['label'], $this->kses_label );
 					
@@ -2698,11 +2585,11 @@ class WP_Backstage {
 
 						$option = wp_parse_args( $option, $this->default_option_args );
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
-						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_title_with_dashes( $option['value'] ) ); ?>
+						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_key( $option['value'] ) ); ?>
 
-						<div 
+						<span 
 						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
-						style="padding:2px 0;">
+						style="display:block;padding:2px 0;">
 
 							<input
 							type="checkbox" 
@@ -2722,27 +2609,28 @@ class WP_Backstage {
 							
 							?></label>
 
-						</div>
+						</span>
 
 					<?php }
 
 				} ?>
 			
-			</fieldset>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2774,109 +2662,6 @@ class WP_Backstage {
 
 	}
 
-	
-	/**
-	 * Render Media Uploader Thumbnail
-	 *
-	 * Render the media uploader thumbnail used for displaying selected images, 
-	 * and for rendering the template that the media field will use in JS to 
-	 * render previews. Note that for `$type`, `clone` is used for actual 
-	 * thumbnails while `template` is used to output a template for the media 
-	 * uploader.
-	 *
-	 * @since   0.0.1 
-	 * @param   string  $attachment_id  The attachment ID of the media post to render.
-	 * @param   string  $type           The type of thumbnail as `template` or `clone`. 
-	 * @param   string  $args           An array of media uploader field arguments.
-	 * @return  void
-	 */
-	protected function render_media_uploader_thumbnail( $attachment_id = 0, $type = 'clone', $args = array() ) {
-
-		$orientation_class = 'portrait';
-		$src = '';
-		$cursor_style = ( $args['multiple'] ) ? 'cursor:move;' : 'cursor:normal;';
-		$display_style = ( $type === 'template' ) ? 'display:none;' : 'display:block;';
-
-		if ( ( $attachment_id > 0 ) && ( $type === 'clone' ) ) {
-			
-			$image_attrs = wp_get_attachment_image_src( absint( $attachment_id ), 'medium', true );
-			$src = $image_attrs[0];
-			
-			if ( $image_attrs[1] > $image_attrs[2] ) {
-				$orientation_class = 'landscape';
-			}
-
-		}
-
-		if ( ( $attachment_id > 0 ) || ( $type === 'template' ) ) {
-
-			$thumbnail_type_attr = sprintf( 
-				'data-media-uploader-%1$s="%2$s"', 
-				esc_attr( $type ), 
-				( $type === 'clone' ) ? absint( $attachment_id ) : 'true' 
-			);
-
-			$mime_type = ( $type !== 'template' ) ? get_post_mime_type( $attachment_id ) : ''; ?>
-
-			<figure 
-			tabindex="0" 
-			class="attachment" 
-			style="<?php echo esc_attr( $cursor_style . $display_style ); ?>"
-			<?php echo $thumbnail_type_attr; ?>>
-
-				<div 
-				class="attachment-preview <?php echo esc_attr( $orientation_class ); ?>"
-				style="<?php echo esc_attr( $cursor_style ); ?>">
-
-					<div class="thumbnail">
-
-						<div class="centered">
-
-							<img src="<?php echo esc_url( $src ); ?>">
-
-						</div>
-
-						<div class="filename" style="<?php echo ( strpos( $mime_type, 'image' ) === false ) ? 'display:block;' : 'display:none;'; ?>">
-
-							<div class="filename-inside-div"><?php 
-
-								if ($type !== 'template') {
-
-									echo esc_html( basename( get_attached_file( $attachment_id ) ) );
-
-								}
-
-							?></div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-				<button 
-				type="button" 
-				class="check" 
-				tabindex="0">
-					
-					<i 
-					class="media-modal-icon"
-					style="background-position:-60px 0;"></i>
-
-					<span class="screen-reader-text"><?php 
-
-						echo esc_attr( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
-
-					?></span>
-
-				</button>
-
-			</figure>
-
-		<?php }
-
-	}
-
 	/**
 	 * Render Media Uploader
 	 *
@@ -2888,17 +2673,20 @@ class WP_Backstage {
 	 * sorting.
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Full rewrite of the media uploader markup.
 	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */
 	protected function render_media_uploader( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
 		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'wp-backstage' ) : __( 'Set %1$s', 'wp-backstage' ); ?>
 
-		<fieldset 
+		<span 
+		class="wp-backstage-media-uploader"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-media-uploader-id="<?php echo esc_attr( $id ); ?>"
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
@@ -2909,93 +2697,10 @@ class WP_Backstage {
 			<?php if ( $field['show_label'] ) { ?>
 				
 				<legend 
-				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-				style="cursor:pointer;padding:2px 0;font-size:inherit;"><?php 
-
+				class="wp-backstage-media-uploader__legend"
+				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"><?php 
 					echo wp_kses( $field['label'], $this->kses_label ); 
-			
 				?></legend>
-
-			<?php } ?>
-
-			<div 
-			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>"
-			style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:block;'; ?>">
-
-				<?php
-				$this->render_media_uploader_thumbnail( '', 'template', $args ); 
-
-				if ( ! empty( $field['value'] ) ) {
-
-					if ( is_array( $field['value'] ) ) {
-
-						foreach ( $field['value'] as $attachment_id ) {
-
-							$this->render_media_uploader_thumbnail( absint( $attachment_id ), 'clone', $args );
-
-						}
-
-					} else {
-
-						$this->render_media_uploader_thumbnail( absint( $field['value'] ), 'clone', $args );
-					}
-
-				} ?>
-
-			</div>
-
-			<div class="clear"></div>
-
-			<div style="padding:4px 0 2px;">
-
-				<button 
-				id="<?php printf( esc_attr( '%1$s_button_set' ), $id ); ?>"
-				type="button"
-				class="button"
-				style="<?php echo ! empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, ! empty( $field['value'] ) ); ?>><?php 
-
-						echo esc_html( $this->get_media_uploader_label( __( 'Upload %1$s', 'wp-backstage' ), $field ) ); 
-
-				?></button>
-
-				<?php if ( $args['multiple'] ) { ?>
-
-					<button 
-					id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
-					type="button"
-					class="button"
-					style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-					<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
-
-							echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
-
-					?></button>
-
-				<?php } ?>
-
-				<button 
-				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
-				type="button" 
-				class="button"
-				style="<?php echo empty( $field['value'] ) ? 'display:none;' : 'display:inline-block;'; ?>"
-				<?php disabled( true, empty( $field['value'] ) ); ?>><?php 
-
-						echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
-
-				?></button>
-
-			</div>
-
-			<?php if ( ! empty( $field['description'] ) ) { ?>
-
-				<p 
-				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
-
-					echo wp_kses( $field['description'], $this->kses_p ); 
-
-				?></p>
 
 			<?php } ?>
 
@@ -3007,7 +2712,78 @@ class WP_Backstage {
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
-		</fieldset>
+			<span 
+			class="wp-backstage-media-uploader__preview"
+			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>">
+				<span 
+				class="wp-backstage-media-uploader__attachment"
+				data-attachment-id="0">
+					<img 
+					class="wp-backstage-media-uploader__attachment-image"
+					src="" alt="" title="" />
+					<span class="wp-backstage-media-uploader__attachment-caption screen-reader-text"></span>
+				</span>
+				<span 
+				class="wp-backstage-media-uploader__preview-list"
+				id="<?php printf( esc_attr( '%1$s_preview_list' ), $id ); ?>">
+					
+				</span>
+			</span>
+
+			<span
+			class="wp-backstage-media-uploader__buttons" 
+			id="<?php printf( esc_attr( '%1$s_buttons' ), $id ); ?>">
+
+				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--add button" 
+				id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
+				type="button"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Add %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
+
+				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--add-to button" 
+				id="<?php printf( esc_attr( '%1$s_button_add_to' ), $id ); ?>"
+				type="button"
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
+
+				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--replace button" 
+				id="<?php printf( esc_attr( '%1$s_button_replace' ), $id ); ?>"
+				type="button"
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Replace %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
+
+				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--remove button" 
+				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
+				type="button" 
+				disabled
+				style="display:none;"><?php 
+					echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
+				?></button>
+
+			</span>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<span 
+				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
+				class="description"
+				style="display:block;"><?php 
+
+					echo wp_kses( $field['description'], $this->kses_p ); 
+
+				?></span>
+
+			<?php } ?>
+
+		</span>
 
 	<?php } 
 
@@ -3027,15 +2803,18 @@ class WP_Backstage {
 	protected function render_address( $field = array() ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
-		$id = sanitize_title_with_dashes( $field['name'] );
+		
+		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$value = is_array( $field['value'] ) ? $field['value'] : array();
 		$values = wp_parse_args( $value, $this->default_address_values );
 		$args = wp_parse_args( $field['args'], $this->default_address_args ); ?>
 
-		<fieldset 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-address-id="<?php echo esc_attr( $id ); ?>"
-		style="max-width:<?php echo esc_attr( $args['max_width'] ); ?>;">
+		data-default-country="<?php echo esc_attr( $this->default_address_values['country'] ); ?>""
+		data-default-state="<?php echo esc_attr( $this->default_address_values['state'] ); ?>""
+		style="display:block;max-width:<?php echo esc_attr( $args['max_width'] ); ?>;">
 
 			<?php if ( $field['show_label'] ) { ?>
 
@@ -3049,9 +2828,13 @@ class WP_Backstage {
 
 			<?php } ?>
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
-				<div id="<?php printf( esc_attr( '%1$s_country_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_country_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
@@ -3060,7 +2843,7 @@ class WP_Backstage {
 						<small><?php 
 
 							echo wp_kses( __( 'Country', 'wp_backstage' ), $this->kses_label );  
-						
+
 						?></small>
 
 					</label>
@@ -3088,9 +2871,11 @@ class WP_Backstage {
 
 					?></select>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_address_1_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_address_1_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_address_1' ), $id ); ?>"
@@ -3116,9 +2901,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_address_2_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_address_2_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_address_2' ), $id ); ?>"
@@ -3144,10 +2931,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_city_container' ), $id ); ?>"
-				style="width:49%;float:left;margin-right:2%;">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_city_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;margin-right:2%;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_city' ), $id ); ?>"
@@ -3173,10 +2961,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_state_container' ), $id ); ?>"
-				style="width:49%;float:left;">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_state_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_state' ), $id ); ?>"
@@ -3202,10 +2991,10 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_us_state_container' ), $id ); ?>"
-				style="width:49%;float:left;">
+				<span id="<?php printf( esc_attr( '%1$s_us_state_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
@@ -3242,11 +3031,11 @@ class WP_Backstage {
 
 					?></select>
 
-				</div>
+				</span>
 
-				<div class="clear"></div>
-
-				<div id="<?php printf( esc_attr( '%1$s_zip_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_zip_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_zip' ), $id ); ?>"
@@ -3272,875 +3061,24 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 				
-				</div>
+				</span>
 
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</fieldset>
-
-	<?php }
-
-	/**
-	 * Inline Editor Style
-	 *
-	 * Conditionally inlines the editor field style if this instance has any 
-	 * editor fields.
-	 * 
-	 * @since   0.0.1
-	 * @return  void  
-	 */
-	public function inline_editor_style() {
-
-		if ( ! $this->has_editor ) {
-			return;
-		} ?>
-
-		<style 
-		id="wp_backstage_editor_style"
-		type="text/css">
-
-			.mce-toolbar .mce-btn.mce-active, 
-			.mce-toolbar .mce-btn.mce-active button, 
-			.mce-toolbar .mce-btn.mce-active i, 
-			.mce-toolbar .mce-btn.mce-active:hover button, 
-			.mce-toolbar .mce-btn.mce-active:hover i {
-				color: inherit;
-			}
-
-			.form-field .wp-editor-area {
-				border-width: 0;
-			}
-
-		</style>
-
-	<?php }
-
-	/**
-	 * Inline Media Uploader Script
-	 *
-	 * Conditionally inlines the media uploader script if this instance has any 
-	 * media uploaders.
-	 * 
-	 * @todo    Set selection when the uploader modal is opened.
-	 *
-	 * @link    https://codex.wordpress.org/Javascript_Reference/wp.media wp.media
-	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
-	 * @link    https://jqueryui.com/sortable/ jQuery UI Sortable
-	 * @link    https://jqueryui.com/ jQuery UI
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_media_uploader_script() {
-
-		if ( ! $this->has_media ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_media_uploader_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function init(uploader = null) {
-					
-					if (! uploader) { 
-						return; 
-					}
-						
-					const fieldId = uploader.getAttribute('data-media-uploader-id');
-					const input = uploader.querySelector('#' + fieldId);
-					const legend = uploader.querySelector('#' + fieldId + '_legend');
-					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
-					const setButton = uploader.querySelector('#' + fieldId + '_button_set');
-					const addButton = uploader.querySelector('#' + fieldId + '_button_add');
-					const removeButton = uploader.querySelector('#' + fieldId + '_button_remove');
-					const preview = uploader.querySelector('#' + fieldId + '_preview');
-					const previewTemplate = uploader.querySelector('[data-media-uploader-template]');
-					const initialClones = uploader.querySelectorAll('[data-media-uploader-clone]');
-					const title = uploader.getAttribute('data-media-uploader-title');
-					const buttonText = uploader.getAttribute('data-media-uploader-button');
-					const type = uploader.getAttribute('data-media-uploader-type');
-					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
-					
-					const modal = wp.media({
-						title: title,
-						multiple: isMultiple, 
-						library: { type: type || 'image' }, 
-						button: { text: buttonText },
-						frame: 'select', 
-					});
-
-					function handleOpen(e = null) {
-						modal.open();
-					}
-					function handleRemove(e = null) {
-						e.preventDefault();
-						removeClones();
-						resetField();
-					}
-					function handleModalOpen() {
-						// TO-DO: Set selection when opened.
-						/* const ids = input.value ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
-						const selection = modal.state().get('selection');
-						if (! isMultiple) {
-							selection.add(wp.media.attachment(ids[0]));
-						} else {
-							for (var i = 0; i < ids.length; i++) {
-								selection.add(wp.media.attachment(ids[i]));
-							}
-						} */
-					}
-					function handleSelect() {
-						const selection = modal.state().get('selection').toJSON();
-						if (selection && (selection.length > 0)) {
-							var saveIds = (input.value && isMultiple) ? input.value.split(',').map(function(id) { return parseInt(id); }) : [];
-							if (! isMultiple) {
-								removeClones();
-							}
-							for (var i = 0; i < selection.length; i++) {
-								const attachment = selection[i];
-								const attachmentId = parseInt(attachment.id, 10);
-								saveIds.push(attachmentId);
-								preview.appendChild(getClone(attachment));
-							}
-							setField(saveIds.join(','));
-							if (isMultiple) {
-								refreshSorting();
-							}
-						}
-					}
-					function getClone(attachment = null) {
-						const clone = previewTemplate.cloneNode(true);
-						const cloneImg = clone.querySelector('img');
-						const orientationContainer = clone.querySelector('.attachment-preview');
-						const filename = clone.querySelector('.filename > div');
-
-						clone.removeAttribute('data-media-uploader-template');
-						clone.setAttribute('data-media-uploader-clone', parseInt(attachment.id, 10));
-						cloneImg.setAttribute('src', attachment.mime.includes('image') ? attachment.url : attachment.icon);
-						clone.style.display = 'block';
-
-						if (attachment.width > attachment.height) {
-							orientationContainer.classList.remove('portrait');
-							orientationContainer.classList.add('landscape');
-						} else {
-							orientationContainer.classList.add('portrait');
-							orientationContainer.classList.remove('landscape');
-						}
-						filename.innerHTML = attachment.filename;
-						filename.style.display = (attachment.mime.indexOf('image') === -1) ? 'block' : 'none';
-
-						initClone(clone);
-
-						return clone;
-					}
-					function removeClones() {
-						const clones = getClones();
-						if (clones && (clones.length > 0)) {
-							for (var i = 0; i < clones.length; i++) {
-								preview.removeChild(clones[i]);
-							}
-						}
-					}
-					function enableButton(button = null) {
-						if (button) {
-							button.removeAttribute('disabled', true);
-							button.style.display = 'inline-block';
-						}
-					}
-					function disableButton(button = null) {
-						if (button) {
-							button.setAttribute('disabled', true);
-							button.style.display = 'none';
-						}
-					}
-					function setField(value = null) {
-						input.value = value;
-						preview.style.display = 'block';
-						disableButton(setButton);
-						enableButton(removeButton);
-						if (isMultiple) {
-							enableButton(addButton);
-						}
-					}
-					function resetField() {
-						input.value = '';
-						preview.style.display = 'none';
-						enableButton(setButton);
-						disableButton(removeButton);
-						if (isMultiple) {
-							disableButton(addButton);
-						}
-					}
-					function initSorting() {
-						$(preview).sortable({
-							items: '[data-media-uploader-clone]', 
-							stop: handleSortStop,  
-						});
-					}
-					function refreshSorting() {
-						$(preview).sortable('refresh');
-					}
-					function handleSortStop(e = null, ui = null) {
-						const { item } = ui;
-						if (item[0].classList.contains('attachment')) {
-							const clones = getClones();
-							const saveIds = [];
-							if (clones && (clones.length > 0)) {
-								for (var i = 0; i < clones.length; i++) {
-									const attachmentId = parseInt(clones[i].getAttribute('data-media-uploader-clone'), 10);
-									saveIds.push(attachmentId);
-								}
-							}
-							input.value = saveIds.join(',');
-						}
-					}
-					function handleCloneMouseEnter(e = null) {
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.classList.add('selected');
-							e.target.classList.add('details');
-						}
-					}
-					function handleCloneMouseLeave(e = null) {
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.classList.remove('selected');
-							e.target.classList.remove('details');
-						}
-					}
-					function handleCloneClick(e = null) {
-						e.preventDefault();
-						if (e.target.getAttribute('data-media-uploader-clone')) {
-							e.target.focus();
-						} else {
-							getParentClone(e.target).focus();
-						}
-					}
-					function handleCheckClick(e = null) {
-						e.preventDefault();
-						const clone = getParentClone(e.target);
-						const attachmentId = parseInt(clone.getAttribute('data-media-uploader-clone'), 10);
-						var values = input.value ? input.value.split(',').map(function(id) { return parseInt(id, 10); }) : [];
-						const valuesIndex = values.indexOf(attachmentId);
-						if (valuesIndex !== -1) {
-							const removed = values.splice(valuesIndex, 1);
-						}
-						input.value = values.join(',');
-						preview.removeChild(clone);
-						if (! input.value) {
-							resetField();
-						}
-					}
-					function initClone(clone = null) {
-						if (clone) {
-							const check = clone.querySelector('.check');
-							clone.addEventListener('mouseenter', handleCloneMouseEnter);
-							clone.addEventListener('mouseleave', handleCloneMouseLeave);
-							clone.addEventListener('click', handleCloneClick);
-							check.addEventListener('click', handleCheckClick);
-						}
-					}
-					function getClones() {
-						return preview.querySelectorAll('[data-media-uploader-clone]');
-					}
-					function getParentClone(el = null) {
-						while ((el = el.parentElement) && ! el.getAttribute('data-media-uploader-clone'));
-						return el;
-					}
-
-					modal.on('select', handleSelect);
-					modal.on('open', handleModalOpen);
-					setButton.addEventListener('click', handleOpen);
-					removeButton.addEventListener('click', handleRemove);
-					if (legend) {
-						legend.addEventListener('click', handleOpen);
-					}
-					if (labels && (labels.length > 0)) {
-						for (var i = 0; i < labels.length; i++) {
-							labels[i].addEventListener('click', handleOpen);
-						}
-					}
-					if (initialClones && (initialClones.length > 0)) {
-						for (var i = 0; i < initialClones.length; i++) {
-							initClone(initialClones[i]);
-						}
-					}
-					if (isMultiple) {
-						addButton.addEventListener('click', handleOpen);
-						initSorting();
-					}
-					uploader.mediaUploader = {
-						reset: function() {
-							removeClones();
-							resetField();
-						}, 
-					};
-				}
-
-				function initAll(container = null) {
-					container = container || document;
-					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
-					if (uploaders && (uploaders.length > 0)) {
-						for (var i = 0; i < uploaders.length; i++) {
-							init(uploaders[i]);
-						}
-					}
-				}
-				function reset(uploader = null) {
-					uploader.mediaUploader.reset();
-				}
-				function resetAll(container = null) {
-					container = container || document;
-					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
-					if (uploaders && (uploaders.length > 0)) {
-						for (var i = 0; i < uploaders.length; i++) {
-							reset(uploaders[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.mediaUploader = Object.assign(window.wpBackstage.mediaUploader, {
-					initAll: initAll,
-					init: init,
-					resetAll: resetAll,
-					reset: reset,
-				});
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Datepicker Script
-	 *
-	 * Conditionally inlines the date picker script if this instance has any 
-	 * date fields.
-	 * 
-	 * @link    https://jqueryui.com/datepicker/ jQuery UI Datepicker
-	 * @link    https://jqueryui.com/ jQuery UI
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
-	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_date_picker_script() {
-
-		if ( ! $this->has_date ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_date_picker_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function init(datePicker = null) {
-					
-					if (! datePicker) { 
-						return;
-					}
-
-					const fieldId = datePicker.getAttribute('data-date-picker-id');
-					const format = datePicker.getAttribute('data-date-picker-format');
-					const input = datePicker.querySelector('#' + fieldId);
-
-					$(input).datepicker({
-						dateFormat: format || 'yy-mm-dd', 
-					});
-				}
-
-				function initAll(container = null) {
-					container = container || document;
-					const datePickers = container.querySelectorAll('[data-date-picker-id]');
-					if (datePickers && (datePickers.length > 0)) {
-						for (var i = 0; i < datePickers.length; i++) {
-							init(datePickers[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.datePicker = Object.assign(window.wpBackstage.datePicker, {
-					initAll: initAll,
-					init: init,
-				});
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Colorpicker Script
-	 *
-	 * Conditionally inlines the color picker script if this instance has any 
-	 * color fields.
-	 * 
-	 * @link    http://automattic.github.io/Iris/ Iris
-	 * @link    https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/ New Color Picker in WP 3.5
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
-	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_color_picker_script() {
-
-		if ( ! $this->has_color ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_color_picker_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function init(colorPicker = null) {
-					
-					if (! colorPicker) { 
-						return;
-					}
-
-					const fieldId = colorPicker.getAttribute('data-color-picker-id');
-					const input = colorPicker.querySelector('#' + fieldId);
-					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
-					const mode = colorPicker.getAttribute('data-color-picker-mode');
-					var palettes = colorPicker.getAttribute('data-color-picker-palettes');
-					palettes = palettes.startsWith('#') ? palettes.split(',') : (palettes === 'true');
-
-					function handleLabelClick(e) {
-						e.preventDefault();
-						resultButton = colorPicker.querySelector('.wp-color-result');
-						if (resultButton) {
-							resultButton.focus();
-						}
-					}
-
-					var options = {
-						defaultColor: false, // bool, string
-						palettes: palettes // bool, []
-					};
-					// Add seperately to ensure default WP setting 
-					// is respected if no mode is set.
-					if (mode) {
-						options.mode = mode; // string (hsl, hsv)
-					}
-
-					$(input).wpColorPicker(options);
-					if (labels && (labels.length > 0)) {
-						for (var i = 0; i < labels.length; i++) {
-							labels[i].addEventListener('click', handleLabelClick);
-						}
-					}
-				}
-
-				function initAll(container = null) {
-					container = container || document;
-					const colorPickers = container.querySelectorAll('[data-color-picker-id]');
-					if (colorPickers && (colorPickers.length > 0)) {
-						for (var i = 0; i < colorPickers.length; i++) {
-							init(colorPickers[i]);
-						}
-					}
-				}
-				function reset(colorPicker = null) {
-					const resetButton = colorPicker.querySelector('.wp-picker-clear, .wp-picker-default');
-					resetButton.click();
-				}
-				function resetAll(container = null) {
-					container = container || document;
-					const colorPickers = container.querySelectorAll('[data-color-picker-id]');
-					if (colorPickers && (colorPickers.length > 0)) {
-						for (var i = 0; i < colorPickers.length; i++) {
-							reset(colorPickers[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.colorPicker = Object.assign(window.wpBackstage.colorPicker, {
-					initAll: initAll,
-					init: init,
-					resetAll: resetAll,
-					reset: reset,
-				});
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Code Editor Script
-	 *
-	 * Conditionally inlines the code editor script if this instance has any 
-	 * code editor fields. All of the initializer functions fire at window load,
-	 * to ensure that all CodeMirror instances have finished initializing first.
-	 * 
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
-	 * @link    https://make.wordpress.org/core/tag/codemirror/ CodeMirror in WP
-	 * @link    https://codemirror.net/ CodeMirror
-	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
-	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_code_editor_script() {
-
-		if ( empty( $this->code_editors ) ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_code_editor_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function init(codeEditor = null) {
-					const fieldId = codeEditor.getAttribute('data-code-editor-id');
-					const settingsKey = codeEditor.getAttribute('data-code-editor-settings');
-					const labels = document.querySelectorAll('[for="' + fieldId + '"]');
-					const settings = window.wpBackstage.codeEditor.settings[settingsKey];
-					wp.codeEditor.initialize(fieldId, settings);
-					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
-					const CodeMirrorInst = codeMirrorEl.CodeMirror;
-					
-					var timer = null;
-
-					function handleLabelClick(e = null) {
-						CodeMirrorInst.focus();
-					}
-
-					CodeMirrorInst.on('change', function(instance, changes) {
-						clearTimeout(timer);
-						timer = setTimeout(function() {
-							instance.save();
-						}, 750);
-					});
-					if (labels && (labels.length > 0)) {
-						for (var i = 0; i < labels.length; i++) {
-							labels[i].addEventListener('click', handleLabelClick);
-						}
-					}
-				}
-
-				function refresh(codeEditor = null) {
-					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
-					const CodeMirrorInst = codeMirrorEl.CodeMirror;
-					CodeMirrorInst.refresh();
-				}
-
-				function initAll(container = null) {
-					container = container || document;
-					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
-					if (codeEditors && (codeEditors.length > 0)) {
-						for (var i = 0; i < codeEditors.length; i++) {
-							init(codeEditors[i]);
-						}
-					}
-				}
-
-				function refreshAll(container = null) {
-					container = container || document;
-					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
-					if (codeEditors && (codeEditors.length > 0)) {
-						for (var i = 0; i < codeEditors.length; i++) {
-							refresh(codeEditors[i]);
-						}
-					}
-				}
-
-				function reset(codeEditor = null) {
-					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
-					const CodeMirrorInst = codeMirrorEl.CodeMirror;
-					const textarea = CodeMirrorInst.getTextArea();
-					CodeMirrorInst.setValue(textarea.value);
-					CodeMirrorInst.clearHistory();
-				}
-
-				function resetAll(container = null) {
-					container = container || document;
-					const codeEditors = container.querySelectorAll('[data-code-editor-id]');
-					if (codeEditors && (codeEditors.length > 0)) {
-						for (var i = 0; i < codeEditors.length; i++) {
-							reset(codeEditors[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.codeEditor = Object.assign(window.wpBackstage.codeEditor, {
-					initAll: initAll,
-					init: init,
-					refreshAll: refreshAll,
-					refresh: refresh,
-					resetAll: resetAll,
-					reset: reset,
-				});
-
-				window.addEventListener('load', function(e) {
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Address Script
-	 *
-	 * Conditionally inlines the address script if this instance has any 
-	 * address fields.
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_address_script() {
-
-		if ( ! $this->has_address ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_address_script"
-		type="text/javascript">
-
-			(function($) {
-
-				function init(address = null) {
-					
-					if (! address) { 
-						return;
-					}
-
-					const fieldId = address.getAttribute('data-address-id');
-					const countrySelect = address.querySelector('#' + fieldId + '_country');
-					const stateContainer = address.querySelector('#' + fieldId + '_state_container');
-					const usStateContainer = address.querySelector('#' + fieldId + '_us_state_container');
-
-					function enableField(field = null) {
-						const control = field.querySelector('input, textarea, select');
-						control.removeAttribute('disabled');
-						field.style.display = 'block';
-					}
-					function disableField(field = null) {
-						const control = field.querySelector('input, textarea, select');
-						control.setAttribute('disabled', true);
-						field.style.display = 'none';
-					}
-					function toggleByCountry(value = '') {
-						if (value === 'US') {
-							enableField(usStateContainer)
-							disableField(stateContainer);
-						} else {
-							enableField(stateContainer)
-							disableField(usStateContainer);
-						}
-					}
-					function handleCountryChange(e = null) {
-						toggleByCountry(e.target.value);
-					}
-					
-					toggleByCountry(countrySelect.value);
-					countrySelect.addEventListener('change', handleCountryChange);
-				}
-
-				function initAll(container = null) {
-					container = container || document;
-					const addresses = container.querySelectorAll('[data-address-id]');
-					if (addresses && (addresses.length > 0)) {
-						for (var i = 0; i < addresses.length; i++) {
-							init(addresses[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.address = Object.assign(window.wpBackstage.address, {
-					initAll: initAll,
-					init: init,
-				});
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Editor Script
-	 *
-	 * Conditionally inlines the editor script if this instance has any 
-	 * editor fields.
-	 *
-	 * @todo     Find out why gallery shortcodes are not being rendered visually.
-	 *
-	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor wp.editor
-	 * @link     https://developer.wordpress.org/reference/functions/wp_enqueue_editor/ wp_enqueue_editor()
-	 * @link     https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/ WP Editor API Changes in 4.8
-	 * @link     https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
-	 * @link     https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
-	 * 
-	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
-	 */
-	public function inline_editor_script() {
-
-		if ( ! $this->has_editor ) {
-			return;
-		} ?>
-
-		<script 
-		id="wp_backstage_editor_script"
-		type="text/javascript">
-
-			(function($) {
-
-				var saveTimer = null;
-
-				function destroy(editor = null) {
-					const fieldId = editor.getAttribute('data-editor-id');
-					wp.editor.remove(fieldId);
-				}
-
-				function handleSetup(e = null, wpEditor = null) {
-					const editor = document.querySelector('[data-editor-id="' + wpEditor.id + '"]');
-					if (editor) {
-						const formatSelect = (editor.getAttribute('data-format-select') === 'true');
-						const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
-						wpEditor.settings.plugins = 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview';
-						wpEditor.settings.toolbar1 = 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link';
-						if (formatSelect) {
-							wpEditor.settings.toolbar1 = 'formatselect,' + wpEditor.settings.toolbar1;
-						}
-						if (kitchenSink) {
-							wpEditor.settings.toolbar1 += ',wp_adv';
-							wpEditor.settings.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
-						}
-						wpEditor.on('change', function(e) {
-							clearTimeout(saveTimer);
-							saveTimer = setTimeout(function() {
-								wpEditor.save();
-							}, 750);
-						});
-					} 
-				}
-
-				function init(editor = null) {
-					const fieldId = editor.getAttribute('data-editor-id');
-					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
-
-					wp.editor.initialize(fieldId, {
-						mediaButtons: mediaButtons, 
-						quicktags: true, 
-						tinymce: {
-							wpautop: true, 
-						}, 
-					});
-				}
-				function destroyAll(container = null) {
-					container = container || document;
-					const editors = container.querySelectorAll('[data-editor-id]');
-					if (editors && (editors.length > 0)) {
-						for (var i = 0; i < editors.length; i++) {
-							destroy(editors[i]);
-						}
-					}
-				}
-				function initAll(container = null) {
-					container = container || document;
-					const editors = container.querySelectorAll('[data-editor-id]');
-					if (editors && (editors.length > 0)) {
-						for (var i = 0; i < editors.length; i++) {
-							init(editors[i]);
-						}
-					}
-				}
-				function refresh(editor = null) {
-					destroy(editor);
-					init(editor);
-				}
-				function refreshAll(container = null) {
-					container = container || document;
-					destroyAll(container);
-					initAll(container);
-				}
-				
-				function reset(editor = null) {
-					const fieldId = editor.getAttribute('data-editor-id');
-					const textarea = editor.querySelector('#' + fieldId);
-					textarea.value== textarea.defaultValue;
-				}
-				function resetAll(container = null) {
-					container = container || document;
-					const editors = container.querySelectorAll('[data-editor-id]');
-					if (editors && (editors.length > 0)) {
-						for (var i = 0; i < editors.length; i++) {
-							reset(editors[i]);
-						}
-					}
-				}
-
-				window.wpBackstage.editor = Object.assign(window.wpBackstage.editor, {
-					initAll: initAll,
-					init: init,
-					refreshAll: refreshAll,
-					refresh: refresh,
-					resetAll: resetAll,
-					reset: reset,
-				});
-
-				window.addEventListener('load', function(e) {
-					$(document).on( 'tinymce-editor-setup', handleSetup);
-					initAll();
-				});
-
-			})(jQuery);
-
-		</script>
+		</span>
 
 	<?php }
 

@@ -198,6 +198,17 @@ function wp_backstage_init() {
 		),
 		array( 
 			'type'        => 'media', 
+			'name'        => 'wp_backstage_audio_field', 
+			'label'       => __( 'Audio', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload audio.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'type'   => 'audio',
+				'attach' => true,  
+			), 
+		),
+		array( 
+			'type'        => 'media', 
 			'name'        => 'wp_backstage_application_field', 
 			'label'       => __( 'Documents', 'wp_backstage' ), 
 			'description' => __( 'Please select or upload documents.', 'wp_backstage' ), 
@@ -351,7 +362,6 @@ function wp_backstage_init() {
 		'singular_base'  => 'test-page', 
 		'archive_base'   => 'test-pages', 
 		'rest_base'      => 'test-pages', 
-		'group_meta_key' => 'wp_backstage_page_meta',
 		'hierarchical'   => true, 
 		'glance_item'    => true, 
 		'meta_boxes'     => array(
@@ -382,7 +392,6 @@ function wp_backstage_init() {
 		'singular_base'  => 'test-post', 
 		'archive_base'   => 'test-posts', 
 		'rest_base'      => 'test-posts', 
-		'group_meta_key' => 'wp_backstage_post_meta',
 		'taxonomies'     => array( 'category', 'post_tag' ), 
 		'glance_item'    => true, 
 		'meta_boxes'     => array(
@@ -406,7 +415,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'post', array(
-		'group_meta_key' => 'wp_backstage_default_post_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_post_fields', 
@@ -428,7 +436,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'page', array(
-		'group_meta_key' => 'wp_backstage_default_page_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_page_fields', 
@@ -450,7 +457,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'attachment', array(
-		'group_meta_key' => 'wp_backstage_default_attachment_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_attachment_fields', 
@@ -482,7 +488,6 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-tag', 
 		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_cat_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::add( 'wp_backstage_tag', array( 
@@ -496,22 +501,18 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-tags', 
 		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_tag_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'category', array( 
-		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_cat_meta', 
+		'fields' => $all_fields, 
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'post_tag', array( 
-		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_tag_meta', 
+		'fields' => $all_fields, 
 	) );
 
 	WP_Backstage_Nav_Menu_Item::modify( array( 
 		'fields' => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_nav_menu_item_meta', 
 	) );
 
 	WP_Backstage_User::modify( array( 
@@ -535,7 +536,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Options', 'wp_backstage' ), 
 		'description'       => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_options_fields', 
@@ -557,7 +557,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Theme Options', 'wp_backstage' ), 
 		'description'       => __( 'A test custom theme options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_theme_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_theme_options_fields', 
@@ -579,7 +578,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Tool', 'wp_backstage' ), 
 		'description'       => __( 'A test custom tool options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_tool', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_tool_options_fields', 
@@ -593,6 +591,12 @@ function wp_backstage_init() {
 				'description' => __( 'These extra meta fields control further tool options. <a href="#">Example Link</a>', 'wp_backstage' ), 
 			),
 		), 
+	) );
+
+	WP_Backstage_Widget::add( 'wp_backstage_widget', array( 
+		'title'       => __( 'Test Widget', 'wp_backstage' ), 
+		'description' => __( 'A test custom widget containing all field types.', 'wp_backstage' ), 
+		'fields'      => $all_fields, 
 	) );
 
 }

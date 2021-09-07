@@ -2,13 +2,19 @@
 /**
  * WP Backstage Options
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Options
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  An array of default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  An array of default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'type'              => 'settings', // settings, theme, tools
@@ -31,7 +38,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Default Section Args
 	 * 
-	 * @var  array  $default_section_args  An array of default section arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_section_args  An array of default section arguments.
 	 */
 	protected $default_section_args = array(
 		'id'          => '', 
@@ -43,7 +51,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  An array of required argument keys.
+	 * @since  0.0.1
+	 * @var    array  $required_args  An array of required argument keys.
 	 */
 	protected $required_args = array(
 		'type', 
@@ -52,7 +61,8 @@ class WP_Backstage_Options extends WP_Backstage {
 	/**
 	 * Registered
 	 * 
-	 * @var  array  $registered  An array of already-registered option keys.
+	 * @since  0.0.1
+	 * @var    array  $registered  An array of already-registered option keys.
 	 */
 	protected static $registered = array();
 
@@ -213,7 +223,7 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * by the plugin and gives a simple place to hook the options script from
 	 * `WP_Backstage_Setup`.
 	 * 
-	 * @since  1.1.0
+	 * @since  2.0.0
 	 * @return void
 	 */
 	public function hook_script_action() {
@@ -226,7 +236,7 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * Init
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added `hook_script_action` actions to all types of options pages.
+	 * @since   2.0.0  Added `hook_script_action` actions to all types of options pages.
 	 * @return  void 
 	 */
 	public function init() {

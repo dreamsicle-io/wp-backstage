@@ -1,5 +1,26 @@
 <?php 
+/**
+ * WP Backstage Widget Base
+ *
+ * @since       2.0.0
+ * @package     wp_backstage
+ * @subpackage  includes
+ */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
+/**
+ * WP Backstage Widget Base
+ * 
+ * Sets up a global widget that all WP Backstage widgets use as their base by
+ * adding hooks and filters for the form, the output, and saving of instances.
+ *
+ * @since       2.0.0
+ * @package     wp_backstage
+ * @subpackage  includes
+ */
 class WP_Backstage_Widget_Base extends WP_Widget {
 
 	public function __construct( $slug = '', $args = array() ) {

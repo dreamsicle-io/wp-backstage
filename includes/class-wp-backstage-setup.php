@@ -1,14 +1,20 @@
 <?php
 /**
- * WP Backstage
+ * WP Backstage Setup
  *
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
- * WP Backstage
+ * WP Backstage Setup
  *
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Errors
 	 * 
-	 * @since  1.1.0
+	 * @since  2.0.0
 	 * @var    array  $errors  The array of all errors on the instance.
 	 */
 	protected $errors = array();
@@ -27,7 +33,7 @@ class WP_Backstage_Setup {
 	 * 
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
 	 * 
-	 * @since  1.1.0
+	 * @since  2.0.0
 	 * @var    array  $errors  The array of all errors on the instance.
 	 */
 	protected $plugin_dependencies = array();
@@ -35,7 +41,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Construct
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function __construct() {
@@ -112,7 +118,7 @@ class WP_Backstage_Setup {
 	 * 
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	protected function set_errors() {
@@ -150,7 +156,7 @@ class WP_Backstage_Setup {
 	 * 
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   string  $plugin  The plugin file name as `classic-editor/classic-editor.php`.
 	 * @return  void 
 	 */
@@ -168,7 +174,7 @@ class WP_Backstage_Setup {
 	 *
 	 * A utility method to easily check if the instance has errors or not.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  bool  Whether the instance has errors or not. 
 	 */
 	public function has_errors() {
@@ -180,7 +186,7 @@ class WP_Backstage_Setup {
 	 *
 	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function print_errors() {
@@ -222,7 +228,7 @@ class WP_Backstage_Setup {
 	 * 
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void
 	 */
 	function render_help_tab() {
@@ -256,7 +262,7 @@ class WP_Backstage_Setup {
 	 * 
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   WP_Screen  $screen  an instance of `WP_Screen`.
 	 * @return  void
 	 */
@@ -274,7 +280,7 @@ class WP_Backstage_Setup {
 	 *
 	 * Inlines the editor field style.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_media_uploader_style() { ?>
@@ -399,7 +405,7 @@ class WP_Backstage_Setup {
 	 *
 	 * Inlines the code editor field style.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_code_editor_style() { ?>
@@ -514,7 +520,7 @@ class WP_Backstage_Setup {
 	 *
 	 * Inlines the script that initializes the global `wpBackstage` JavaScript object.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void
 	 */
 	public function inline_global_script() { ?>
@@ -544,7 +550,7 @@ class WP_Backstage_Setup {
 	 * @link    https://jqueryui.com/ jQuery UI
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Full rewrite of the media uploader script.
+	 * @since   2.0.0  Full rewrite of the media uploader script.
 	 * @return  void  
 	 */
 	public function inline_media_uploader_script() { ?>
@@ -891,7 +897,7 @@ class WP_Backstage_Setup {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
+	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_date_picker_script() { ?>
@@ -949,7 +955,7 @@ class WP_Backstage_Setup {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
+	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_color_picker_script() { ?>
@@ -1061,7 +1067,7 @@ class WP_Backstage_Setup {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
+	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_code_editor_script() { ?>
@@ -1169,7 +1175,7 @@ class WP_Backstage_Setup {
 	 * Inlines the address script.
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object.
+	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void  
 	 */
 	public function inline_address_script() { ?>
@@ -1251,7 +1257,7 @@ class WP_Backstage_Setup {
 	 * @link     https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Added methods to global `wpBackstage` object and fixes shortcode rendering.
+	 * @since   2.0.0  Added methods to global `wpBackstage` object and fixes shortcode rendering.
 	 * @return  void  
 	 */
 	public function inline_editor_script() { ?>
@@ -1397,7 +1403,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Post Type Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_post_type_script() { ?>
@@ -1501,7 +1507,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Nav Menu Item Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_nav_menu_item_script() { ?>
@@ -1681,7 +1687,7 @@ class WP_Backstage_Setup {
 	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
 	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_nav_menu_item_customizer_script() { ?>
@@ -2050,7 +2056,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Options Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_options_script() { ?>
@@ -2083,7 +2089,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Widget Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_widget_script() { ?>
@@ -2205,7 +2211,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Widget Customizer Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_widget_customizer_script() { ?>
@@ -2286,7 +2292,7 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline User Script
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_user_script() { ?>

@@ -2,13 +2,19 @@
 /**
  * WP Backstage User
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage User
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'field_groups' => array(), 
@@ -26,7 +33,8 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Default Field Group Args
 	 * 
-	 * @var  array  $default_field_group_args  The default field group arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_field_group_args  The default field group arguments for this instance.
 	 */
 	protected $default_field_group_args = array(
 		'id'          => '', 
@@ -38,13 +46,15 @@ class WP_Backstage_User extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
+	 * @since   0.0.1
 	 * @param   array              $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_User  A fully constructed instance of `WP_Backstage_User`. 
 	 */

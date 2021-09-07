@@ -2,15 +2,19 @@
 /**
  * WP Backstage Nav Menu Item
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Nav Menu Item
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -19,7 +23,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'fields' => array(), 
@@ -28,13 +33,15 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
+	 * @since   0.0.1
 	 * @param   array              $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Nav_Menu_Item  A fully constructed instance of `WP_Backstage_Nav_Menu_Item`. 
 	 */
@@ -49,7 +56,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Construct
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
 	 */
@@ -68,7 +75,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Set Args
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $args  An array of arguments.
 	 * @return  void
 	 */
@@ -79,7 +86,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Set Errors
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	protected function set_errors() {
@@ -107,7 +114,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Init
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function init() {
@@ -140,7 +147,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Get Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
@@ -166,7 +173,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * 
 	 * Adds all values to the Nav Menu Item object.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  object  The nav menu item object.
 	 */
 	public function setup_nav_menu_item( $item = null ) {
@@ -191,7 +198,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Render Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   int      $item_id  The nav menu item ID.
 	 * @param   WP_Post  $item     The nav menu item post object.
 	 * @param   int      $depth    The depth of menu item.
@@ -256,7 +263,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * in the customizer for menu items, therefore the `before` and `after` field actions
 	 * are different in this case and are passed different values.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function render_customizer_fields() {
@@ -313,7 +320,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	/**
 	 * Save
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   int    $menu_id  The ID of the menu that the item is in.
 	 * @param   int    $item_id  The ID of the menu item.
 	 * @param   array  $menu_item_data  The menu item data.
@@ -359,7 +366,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * 
 	 * @todo    Though it's probably not needed, try to check nonce here.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   WP_Customize_Manager  $wp_customize The current WP Customize instance.
 	 * @return  void
 	 */
@@ -416,7 +423,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @link    https://developer.wordpress.org/reference/hooks/default_hidden_columns/ Hook: default_hidden_columns
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array      $hidden  An array of hidden columns.
 	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
 	 * @return  void 

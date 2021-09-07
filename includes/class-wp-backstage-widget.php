@@ -2,15 +2,19 @@
 /**
  * WP Backstage Widget
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Widget
  *
- * @since       1.1.0
+ * @since       2.0.0
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -19,7 +23,8 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'fields' => array(), 
@@ -28,13 +33,15 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
 	protected $required_args = array();
 
 	/**
 	 * Add
 	 * 
+	 * @since   0.0.1
 	 * @param   string               $slug  The instance's unique identifier.
 	 * @param   array                $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Widget  A fully constructed instance of `WP_Backstage_Widget`. 
@@ -50,7 +57,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Construct
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $slug  The instance's unique identifier.
 	 * @param   array  $args  An array of arguments.
 	 * @return  void 
@@ -70,7 +77,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Set Args
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $args  An array of arguments.
 	 * @return  void
 	 */
@@ -81,7 +88,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Set Errors
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	protected function set_errors() {
@@ -109,7 +116,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Init
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  void 
 	 */
 	public function init() {
@@ -136,7 +143,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Register
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
 	function register() {
@@ -147,7 +154,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Get Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
@@ -177,7 +184,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	 * @link https://developer.wordpress.org/reference/classes/wp_widget/  WP_Widget
 	 * @link https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/  WP_Widget::get_field_name()
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array   $field_name  The field name.
 	 * @param   string  $id_base     The current widget instance id base.
 	 * @param   string  $number      The current widget instance number.
@@ -200,7 +207,7 @@ class WP_Backstage_Widget extends WP_Backstage {
      * Copied from `WP_Widget::get_field_id()` inorder to make `$id_base` and
 	 * `$number` pluggable.
      *
-     * @since   1.1.0
+     * @since   2.0.0
      * @param   array   $field_name  The field name.
 	 * @param   string  $id_base     The current widget instance id base.
 	 * @param   string  $number      The current widget instance number.
@@ -216,7 +223,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	/**
 	 * Render Fields
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array   $instance  The current widget instance values.
 	 * @param   string  $id_base   The current widget instance id base.
 	 * @param   string  $number    The current widget instance number.
@@ -275,7 +282,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 	 * 
 	 * @todo    Though its probably not needed, try to check nonce here.
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   array  $new_instance  The new widget instance values.
 	 * @param   array  $old_instance  The old widget instance values.
 	 * @return  void 

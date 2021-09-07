@@ -2,13 +2,19 @@
 /**
  * WP Backstage Taxonomy
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Taxonomy
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'singular_name'   => '', 
@@ -34,7 +41,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required argument keys for this instance.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required argument keys for this instance.
 	 */
 	protected $required_args = array(
 		'singular_name', 
@@ -44,7 +52,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Required Args - Modify
 	 * 
-	 * @since 1.1.0
+	 * @since 2.0.0
 	 * @var   array  $required_args  The required argument keys for this instance if modifying.
 	 */
 	protected $required_args_modify = array();
@@ -72,7 +80,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   string                 $slug  The slug for the taxonomy.
 	 * @param   array                  $args  The arguments for this instance.
 	 * @return  WP_Backstage_Taxonomy  A fully constructed instance of `WP_Backstage_User`. 
@@ -89,7 +97,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
+	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the taxonomy.
 	 * @param   array   $args  The developer-provided arguments for this instance.
 	 * @param   bool    $new   Whether this instance constructs a new taxonomy or modifies an existing one.
@@ -226,7 +234,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Init
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Ensures a new taxonomy is only registered if adding a new one.
+	 * @since   2.0.0  Ensures a new taxonomy is only registered if adding a new one.
 	 * @return  void 
 	 */
 	public function init() {

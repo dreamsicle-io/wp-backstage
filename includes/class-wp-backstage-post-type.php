@@ -2,13 +2,19 @@
 /**
  * WP Backstage Post Type
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Post Type
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Hidden Meta Boxes
 	 * 
-	 * @var  array  $hidden_meta_boxes  An array of hidden meta box IDs.
+	 * @since  0.0.1
+	 * @var    array  $hidden_meta_boxes  An array of hidden meta box IDs.
 	 */
 	protected $hidden_meta_boxes = array( 
 		'trackbacksdiv', 
@@ -30,7 +37,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'menu_name'       => '', 
@@ -68,7 +76,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Required Args - Add
 	 * 
-	 * @var  array  $required_args  The required argument keys for this instance if adding.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required argument keys for this instance if adding.
 	 */
 	protected $required_args = array(
 		'singular_name', 
@@ -78,7 +87,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Required Args - Modify
 	 * 
-	 * @since 1.1.0
+	 * @since 2.0.0
 	 * @var   array  $required_args  The required argument keys for this instance if modifying.
 	 */
 	protected $required_args_modify = array();
@@ -86,7 +95,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Default Meta Box Args
 	 * 
-	 * @var  array  $default_meta_box_args  The default meta box arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_meta_box_args  The default meta box arguments for this instance.
 	 */
 	protected $default_meta_box_args = array( 
 		'id'          => '', 
@@ -121,7 +131,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_post/ WP_Post
 	 * 
-	 * @since   1.1.0
+	 * @since   2.0.0
 	 * @param   string                  $slug  The slug for the post type.
 	 * @param   array                   $args  The arguments for this instance.
 	 * @return  WP_Backstage_Post_Type  A fully constructed instance of `WP_Backstage_Post_Type`. 
@@ -138,7 +148,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Construct
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
+	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the post type.
 	 * @param   array   $args  The developer-provided arguments for this instance.
 	 * @param   bool    $new   Whether this instance constructs a new post type or modifies an existing one.

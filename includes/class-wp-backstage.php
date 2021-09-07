@@ -2,13 +2,19 @@
 /**
  * WP Backstage
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -27,14 +33,16 @@ class WP_Backstage {
 	 *
 	 * @link https://developer.wordpress.org/reference/functions/sanitize_key/ sanitize_key()
 	 * 
-	 * @var  string  $slug  the text slug that identifies the instance.
+	 * @since  0.0.1
+	 * @var    string  $slug  the text slug that identifies the instance.
 	 */
 	protected $slug = '';
 
 	/**
 	 * Errors
 	 * 
-	 * @var  array  $errors  The array of all errors on the instance.
+	 * @since  0.0.1
+	 * @var    array  $errors  The array of all errors on the instance.
 	 */
 	protected $errors = array();
 
@@ -43,70 +51,80 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 * 
-	 * @var  string|array  $screen_id  The screen ID or IDs that apply to this instance.
+	 * @since  0.0.1
+	 * @var    string|array  $screen_id  The screen ID or IDs that apply to this instance.
 	 */
 	protected $screen_id = '';
 
 	/**
 	 * Has Media
 	 * 
-	 * @var  bool  $has_media  Whether this instance has media fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_media  Whether this instance has media fields or not.
 	 */
 	protected $has_media = false;
 
 	/**
 	 * Has Date
 	 * 
-	 * @var  bool  $has_date  Whether this instance has date fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_date  Whether this instance has date fields or not.
 	 */
 	protected $has_date = false;
 
 	/**
 	 * Has Color
 	 * 
-	 * @var  bool  $has_color  Whether this instance has color fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_color  Whether this instance has color fields or not.
 	 */
 	protected $has_color = false;
 
 	/**
 	 * Has Address
 	 * 
-	 * @var  bool  $has_address  Whether this instance has address fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_address  Whether this instance has address fields or not.
 	 */
 	protected $has_address = false;
 
 	/**
 	 * Has Editor
 	 * 
-	 * @var  bool  $has_editor  Whether this instance has editor fields or not.
+	 * @since  0.0.1
+	 * @var    bool  $has_editor  Whether this instance has editor fields or not.
 	 */
 	protected $has_editor = false;
 
 	/**
 	 * Code Editors
 	 * 
-	 * @var  array  $code_editors  An array of this instance's code editors.
+	 * @since  0.0.1
+	 * @var    array  $code_editors  An array of this instance's code editors.
 	 */
 	protected $code_editors = array();
 
 	/**
 	 * Countries
 	 * 
-	 * @var  array  $countries  An array of localized countries.
+	 * @since  0.0.1
+	 * @var    array  $countries  An array of localized countries.
 	 */
 	protected $countries = array();
 
 	/**
 	 * US States
 	 * 
-	 * @var  array  $us_states  An array of localized US states.
+	 * @since  0.0.1
+	 * @var    array  $us_states  An array of localized US states.
 	 */
 	protected $us_states = array();
 
 	/**
 	 * Default Field Args
 	 * 
-	 * @var  array  $default_field_args  An array of default field args.
+	 * @since  0.0.1
+	 * @var    array  $default_field_args  An array of default field args.
 	 */
 	protected $default_field_args = array(
 		'type'        => 'text', 
@@ -125,14 +143,16 @@ class WP_Backstage {
 	/**
 	 * Date Format
 	 * 
-	 * @var  string  $date_format  The php date format.
+	 * @since  0.0.1
+	 * @var    string  $date_format  The php date format.
 	 */
 	protected $date_format = '';
 
 	/**
 	 * Default Option Args
 	 * 
-	 * @var  array  $default_option_args  An array of default option arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_option_args  An array of default option arguments.
 	 */
 	protected $default_option_args = array(
 		'value'       => '', 
@@ -143,7 +163,8 @@ class WP_Backstage {
 	/**
 	 * Default Media Uploader Args
 	 * 
-	 * @var  array  $default_media_uploader_args  An array of default media field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_media_uploader_args  An array of default media field arguments.
 	 */
 	protected $default_media_uploader_args = array(
 		'multiple' => false, 
@@ -153,7 +174,8 @@ class WP_Backstage {
 	/**
 	 * Default Date Args
 	 * 
-	 * @var  array  $default_date_args  An array of default date field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_date_args  An array of default date field arguments.
 	 */
 	protected $default_date_args = array(
 		'format' => 'yy-mm-dd', 
@@ -162,7 +184,8 @@ class WP_Backstage {
 	/**
 	 * Default Color Args
 	 * 
-	 * @var  array  $default_color_args  An array of default color field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_color_args  An array of default color field arguments.
 	 */
 	protected $default_color_args = array(
 		'mode'     => '', 
@@ -172,7 +195,8 @@ class WP_Backstage {
 	/**
 	 * Default Editor Args
 	 * 
-	 * @var  array  $default_editor_args  An array of default editor field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_editor_args  An array of default editor field arguments.
 	 */
 	protected $default_editor_args = array(
 		'max_width'     => '100%', 
@@ -184,7 +208,8 @@ class WP_Backstage {
 	/**
 	 * Default Code Args
 	 * 
-	 * @var  array  $default_code_args  An array of default code editor arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_code_args  An array of default code editor arguments.
 	 */
 	protected $default_code_args = array(
 		'mime'      => 'text/html', 
@@ -194,7 +219,8 @@ class WP_Backstage {
 	/**
 	 * Default Address Args
 	 * 
-	 * @var  array  $default_address_args  An array of default address arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_address_args  An array of default address arguments.
 	 */
 	protected $default_address_args = array(
 		'max_width' => '100%', 
@@ -203,7 +229,8 @@ class WP_Backstage {
 	/**
 	 * Default Address Values
 	 * 
-	 * @var  array  $default_address_values  An array of default address field arguments.
+	 * @since  0.0.1
+	 * @var    array  $default_address_values  An array of default address field arguments.
 	 */
 	protected $default_address_values = array(
 		'country'   => 'US', 
@@ -217,7 +244,8 @@ class WP_Backstage {
 	/**
 	 * Remove Label For Fields
 	 * 
-	 * @var  array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
+	 * @since  0.0.1
+	 * @var    array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
 	 */
 	protected $remove_label_for_fields = array( 
 		'radio', 
@@ -229,7 +257,8 @@ class WP_Backstage {
 	/**
 	 * Non Regular Text Fields
 	 * 
-	 * @var  array  $non_regular_text_fields  Field types that do not include text-style inputs.
+	 * @since  0.0.1
+	 * @var    array  $non_regular_text_fields  Field types that do not include text-style inputs.
 	 */
 	protected $non_regular_text_fields = array( 
 		'number', 
@@ -249,7 +278,8 @@ class WP_Backstage {
 	/**
 	 * Textarea Control Fields
 	 * 
-	 * @var  array  $textarea_control_fields  Field types that use a textarea input as a control.
+	 * @since  0.0.1
+	 * @var    array  $textarea_control_fields  Field types that use a textarea input as a control.
 	 */
 	protected $textarea_control_fields = array( 
 		'editor', 
@@ -262,7 +292,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  0.0.1
+	 * @var    array  $kses_p  KSES configuration for paragraph tags.
 	 */
 	protected $kses_p = array(
 		'a' => array(
@@ -306,7 +337,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @var  array  $kses_label  KSES configuration for label tags.
+	 * @since  0.0.1
+	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
 	protected $kses_label = array(
 		'em' => array(
@@ -339,7 +371,8 @@ class WP_Backstage {
 	 * localized label and set the number of options that are necessary for each 
 	 * time piece (`hour`, `minute`, `second`) respectively.
 	 * 
-	 * @var  array  $time_pieces  The configuration for time fields.
+	 * @since  0.0.1
+	 * @var    array  $time_pieces  The configuration for time fields.
 	 */
 	protected $time_pieces = array();
 
@@ -348,7 +381,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 *
-	 * @var  array $global_code_settings  Global settings for CodeMirror.
+	 * @since  0.0.1
+	 * @var    array $global_code_settings  Global settings for CodeMirror.
 	 */
 	protected $global_code_settings = array( 
 		'codemirror' => array(
@@ -362,7 +396,8 @@ class WP_Backstage {
 	 * @link  https://developer.wordpress.org/reference/functions/wp_nonce_field/ wp_nonce_field
 	 * @link  https://codex.wordpress.org/WordPress_Nonces WP nonces
 	 * 
-	 * @var  string  $nonce_key  The key for nonce fields.
+	 * @since  0.0.1
+	 * @var    string  $nonce_key  The key for nonce fields.
 	 */
 	protected $nonce_key = '_wp_backstage_nonce';
 
@@ -1066,7 +1101,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Sanitizes more strictly to support strange behavior on menu items.
+	 * @since   2.0.0  Sanitizes more strictly to support strange behavior on menu items.
 	 * @param   array  $values  The values to sanitize. Expects an array of strings.
 	 * @return  array  An array of values. 
 	 */
@@ -1089,8 +1124,9 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Parses against default address values.
 	 * @param   array  $value  The value to sanitize. Expects an array of address `key => value` pairs.
-	 * @return  array/null   An array of address key => value pairs. 
+	 * @return  array  An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
 		$value = wp_parse_args( $value, $this->default_address_values );
@@ -1104,6 +1140,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0   Parses more strictly to support customizer changes.
 	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values or a time string as hh:mm:ss.
 	 * @return  string  a string as `hh:mm:ss`. 
 	 */
@@ -1125,6 +1162,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Removed check for single vs. multiple and treats both as array.
 	 * @param   mixed  $value  The value to sanitize. Expects a CSV string or array of attachment IDs.
 	 * @return  array   An array of integers. 
 	 */
@@ -1141,6 +1179,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Removed check for single media vs. multiple media.
 	 * @param   array  $field  The field args.
 	 * @param   mixed  $value  The field value.
 	 * @return  mixed  The sanitized value according to the field type. 
@@ -1202,6 +1241,7 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0   Removed check for single media vs. multiple media.
 	 * @param   array   $field  The field args.
 	 * @return  string  The sanitize callback function name as a string. 
 	 */
@@ -2633,7 +2673,7 @@ class WP_Backstage {
 	 * sorting.
 	 * 
 	 * @since   0.0.1
-	 * @since   1.1.0  Full rewrite of the media uploader markup.
+	 * @since   2.0.0  Full rewrite of the media uploader markup.
 	 * @param   array  $field  An array of field arguments.
 	 * @return  void 
 	 */

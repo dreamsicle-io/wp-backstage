@@ -1,4 +1,15 @@
 <?php
+/**
+ * WP Backstage Tests
+ *
+ * @since       0.0.1
+ * @package     wp_backstage
+ * @subpackage  examples
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * WP Backstage Init

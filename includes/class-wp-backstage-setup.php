@@ -15,6 +15,47 @@
 class WP_Backstage_Setup {
 
 	/**
+	 * Errors
+	 * 
+	 * @since  1.1.0
+	 * @var    array  $errors  The array of all errors on the instance.
+	 */
+	protected $errors = array();
+
+	/**
+	 * Plugin Dependencies
+	 * 
+	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
+	 * 
+	 * @since  1.1.0
+	 * @var    array  $errors  The array of all errors on the instance.
+	 */
+	protected $plugin_dependencies = array();
+
+	/**
+	 * Construct
+	 * 
+	 * @since   1.1.0
+	 * @return  void 
+	 */
+	public function __construct() {
+		$this->plugin_dependencies = array(
+			array(
+				'key'  => 'classic-editor/classic-editor.php',
+				'name' => __( 'Classic Editor', 'wp_backstage' ),
+				'url'  => 'https://wordpress.org/plugins/classic-editor/',
+			),
+			array(
+				'key'  => 'classic-widgets/classic-widgets.php',
+				'name' => __( 'Classic Widgets', 'wp_backstage' ),
+				'url'  => 'https://wordpress.org/plugins/classic-widgets/',
+			),
+		);
+		$this->set_errors();
+		$GLOBALS['wp_backstage'] = $this;
+	}
+
+	/**
 	 * Init
 	 *
 	 * Hook all methods to WordPress.
@@ -32,6 +73,13 @@ class WP_Backstage_Setup {
 	 * @return  void 
 	 */
 	public function init() {
+
+		if ( $this->has_errors() ) {
+			add_action( 'admin_notices', array( $this, 'print_errors' ) );
+			return;
+		}
+
+		add_action( 'current_screen', array( $this, 'add_help_tab' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
@@ -57,6 +105,168 @@ class WP_Backstage_Setup {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_widget_customizer_script' ), 10 );
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
+	}
+
+	/**
+	 * Set Errors
+	 * 
+	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
+	 * 
+	 * @since   1.1.0
+	 * @return  void 
+	 */
+	protected function set_errors() {
+
+		if ( is_array( $this->plugin_dependencies ) && ! empty( $this->plugin_dependencies ) ) {
+
+			foreach ( $this->plugin_dependencies as $plugin_dependency ) {
+
+				if ( ! $this->is_plugin_active( $plugin_dependency['key'] ) ) {
+
+					$this->errors[] = new WP_Error( 'plugin_dependency', sprintf( 
+						/* translators: 1:required arg key. */
+						__( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'wp-backstage' ), 
+						sprintf( 
+							'<a href="%1$s">%2$s</a>', 
+							esc_url( $plugin_dependency['url'] ), 
+							esc_html( $plugin_dependency['name'] ) 
+						)
+					) );
+
+				}
+
+			}
+
+		}
+
+	}
+	
+	/**
+	 * Is Plugin Active
+	 * 
+	 * The native is_plugin_active() function in WordPress does not exist 
+	 * at the time this class is constructed. This function checks against 
+	 * the `active_plugins` option in the database.
+	 * 
+	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
+	 * 
+	 * @since   1.1.0
+	 * @param   string  $plugin  The plugin file name as `classic-editor/classic-editor.php`.
+	 * @return  void 
+	 */
+	protected function is_plugin_active( $plugin ) {
+		$active_plugins = get_option('active_plugins');
+		$is_active = false;
+		if ( is_array( $active_plugins ) && in_array( $plugin, $active_plugins ) ) {
+			$is_active = true;
+		}
+		return $is_active;
+	}
+
+	/**
+	 * Has Errors
+	 *
+	 * A utility method to easily check if the instance has errors or not.
+	 * 
+	 * @since   1.1.0
+	 * @return  bool  Whether the instance has errors or not. 
+	 */
+	public function has_errors() {
+		return is_array( $this->errors ) && ! empty( $this->errors );
+	}
+
+	/**
+	 * Print Errors
+	 *
+	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
+	 * 
+	 * @since   1.1.0
+	 * @return  void 
+	 */
+	public function print_errors() {
+
+		if ( $this->has_errors() ) {
+
+			foreach ( $this->errors as $error ) {
+				
+				if ( is_wp_error( $error ) ) {
+
+					$message = sprintf( 
+						/* translators: 1: error message. */
+						__( 'Error: %1$s', 'wp-backstage' ), 
+						$error->get_error_message() 
+					); ?>
+
+					<div class="notice notice-error">
+
+						<p><?php 
+				
+							echo wp_kses( $message, $this->kses_p );
+
+						?></p>
+
+					</div>
+				
+				<?php }
+			
+			}
+
+		}
+
+	}
+
+	/**
+	 * Render Help Tab
+	 * 
+	 * Renders the WP Backstage help tab on all screens. See `WP_Backstage_Setup::add_help_tab`.
+	 * 
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 * @since   1.1.0
+	 * @return  void
+	 */
+	function render_help_tab() {
+		$screen = get_current_screen(); ?>
+		<h3><?php esc_html_e( 'Debug', 'wp_backstage' ); ?></h3>
+		<p><?php esc_html_e( 'The following is useful debug information for WP Backstage development.', 'wp_backstage' ); ?></p>
+		<p><strong><?php esc_html_e( 'Current Screen', 'wp_backstage' ); ?></strong></p>
+		<ul>
+			<li>
+				<strong><?php esc_html_e( 'Parent Base:', 'wp_backstage' ); ?></strong>
+				&nbsp;
+				<code><?php echo esc_html( $screen->parent_base ); ?></code>
+			</li>
+			<li>
+				<strong><?php esc_html_e( 'Base:', 'wp_backstage' ); ?></strong>
+				&nbsp;
+				<code><?php echo esc_html( $screen->base ); ?></code>
+			</li>
+			<li>
+				<strong><?php esc_html_e( 'ID:', 'wp_backstage' ); ?></strong>
+				&nbsp;
+				<code><?php echo esc_html( $screen->id ); ?></code>
+			</li>
+		</ul>
+	<?php }
+
+	/**
+	 * Add Help Tab
+	 * 
+	 * Registers the WP Backstage help tab. See `WP_Backstage_Setup::render_help_tab`.
+	 * 
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 * @since   1.1.0
+	 * @param   WP_Screen  $screen  an instance of `WP_Screen`.
+	 * @return  void
+	 */
+	function add_help_tab( $screen = null ) {
+		$screen->add_help_tab( array(
+			'id'       => 'wp_backstage',
+			'title'    => __( 'WP Backstage', 'wp_backstage' ),
+			'callback' => array( $this, 'render_help_tab' ),
+			'priority' => 50,
+		) );
 	}
 
 	/**

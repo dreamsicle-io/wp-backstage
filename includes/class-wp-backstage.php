@@ -724,7 +724,7 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @return  bool  Whether the instance has errors or not. 
 	 */
-	protected function has_errors() {
+	public function has_errors() {
 		return is_array( $this->errors ) && ! empty( $this->errors );
 	}
 
@@ -809,6 +809,12 @@ class WP_Backstage {
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );

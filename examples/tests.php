@@ -504,11 +504,11 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'category', array( 
-		'fields'         => $all_fields, 
+		'fields' => $all_fields, 
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'post_tag', array( 
-		'fields'         => $all_fields, 
+		'fields' => $all_fields, 
 	) );
 
 	WP_Backstage_Nav_Menu_Item::modify( array( 

@@ -7,11 +7,11 @@ Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: LICENSE
  
-Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, and custom user, option, and theme setting fields.
+Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, options pages with custom fields and widgets with custom fields; and extend existing WordPress objects like pages, posts, categories, tags, users and nav menu items.
 
 == Description ==
 
-Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, and custom user, option, and theme setting fields.
+Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, options pages with custom fields and widgets with custom fields; and extend existing WordPress objects like pages, posts, categories, tags, users and nav menu items.
 
 - [Usage examples](https://github.com/dreamsicle-io/wp-backstage/blob/master/examples/tests.php)
 - [API Reference](https://wpbackstage.dreamsicle.io/reference/)

@@ -111,6 +111,12 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 		
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
@@ -351,11 +357,11 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * 
 	 * Save the Nav Menu Item settings after the customizer has finished saving.
 	 * 
-	 * @todo Though it's probably not needed, try to check nonce here.
+	 * @todo    Though it's probably not needed, try to check nonce here.
 	 * 
 	 * @since   1.1.0
-	 * @param   object  $wp_customize The current WP Customize instance.
-	 * @return  void;
+	 * @param   WP_Customize_Manager  $wp_customize The current WP Customize instance.
+	 * @return  void
 	 */
 	public function save_customizer( $wp_customize = null ) {
 
@@ -441,7 +447,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	 * Manage Customizer Meta Preview
 	 * 
 	 * Preview changes to the nav menu item roles. Note the unimplemented 
-	 * to-do in the doc block for the setting's preview method.
+	 * to-do in the doc block for the setting's preview method. This will only
+	 * work for existing menu items. New menu items have a dynamically generated ID
+	 * and do not exist in the database yet.
 	 *
 	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
 	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter

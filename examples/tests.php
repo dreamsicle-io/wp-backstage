@@ -1,4 +1,15 @@
 <?php
+/**
+ * WP Backstage Tests
+ *
+ * @since       0.0.1
+ * @package     wp_backstage
+ * @subpackage  examples
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * WP Backstage Init
@@ -10,7 +21,7 @@
  * @link  https://developer.wordpress.org/reference/functions/get_theme_support/ get_theme_support()
  * 
  * @since   0.0.1
- * @since   1.1.0  Added ability to turn tests on and off using `theme_support`.
+ * @since   2.0.0  Added ability to turn tests on and off using `theme_support`.
  * @return  void
  */
 function wp_backstage_init() {

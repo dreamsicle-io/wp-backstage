@@ -1482,6 +1482,8 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
+				var controlExpandTimer = null;
+
 				function setControlElementValue(controlElement = null, value = undefined) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
@@ -1749,17 +1751,25 @@ class WP_Backstage_Setup {
 					wp.customize.control.bind('add', function(control) {
 						if (control.extended(wp.customize.Menus.MenuItemControl)) {
 							control.deferred.embedded.done(function() {
+
 								setTimeout(function() {
 									extendControl(control);
 									setControlValues(control);
 									initFields(control);
 									initChangeHandlers(control);
-									control.expanded.bind(function(isExpanded) {
+								}, 500);
+
+								control.expanded.bind(function(isExpanded) {
+									if (controlExpandTimer) {
+										clearTimeout(controlExpandTimer);
+									}
+									controlExpandTimer = setTimeout(function() {
 										if (isExpanded) {
 											handleControlExpanded(control);
 										}
-									});
-								}, 500);
+									}, 500);
+								});
+								
 							});
 						}
 					});

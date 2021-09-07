@@ -25,7 +25,6 @@ class WP_Backstage_Options extends WP_Backstage {
 		'menu_title'        => '', 
 		'description'       => '', 
 		'capability'        => 'manage_options', 
-		'group_options_key' => '', 
 		'sections'          => array(), 
 	);
 
@@ -164,22 +163,18 @@ class WP_Backstage_Options extends WP_Backstage {
 
 		}
 
-		if ( ! empty( $this->args['group_options_key'] ) ) {
+		if ( in_array( $this->slug, self::$registered ) ) {
 
-			if ( in_array( $this->args['group_options_key'], self::$registered ) ) {
+			$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
+				/* translators: 1: options page slug, 2: option key. */
+				__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>' . $this->slug . '</code>'
+			) );
 
-				$this->errors[] = new WP_Error( 'duplicate_options_key', sprintf( 
-					/* translators: 1: options page slug, 2: option key. */
-					__( '[options: %1$s] There is already an option with the %2$s key.', 'wp-backstage' ), 
-					$this->slug,
-					'<code>' . $this->args['group_options_key'] . '</code>'
-				) );
+		} else {
 
-			} else {
-
-				self::$registered[] = $this->args['group_options_key'];
-
-			}
+			self::$registered[] = $this->slug;
 
 		}
 
@@ -342,10 +337,6 @@ class WP_Backstage_Options extends WP_Backstage {
 	}
 
 	public function save() {
-
-		if ( empty( $this->args['group_options_key'] ) ) {
-			return null;
-		}
 		
 		$fields = $this->get_fields();
 		$values = array();
@@ -383,20 +374,16 @@ class WP_Backstage_Options extends WP_Backstage {
 	public function add_settings() {
 
 		$sections = $this->get_sections();
-
-		if ( ! empty( $this->args['group_options_key'] ) ) {
-
-			register_setting(
-				$this->slug, 
-				$this->args['group_options_key'], 
-				array(
-					'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
-					'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
-					'sanitize_callback' => array( $this, 'save' ), 
-				)
-			);
-
-		}
+		
+		register_setting(
+			$this->slug, 
+			$this->slug, 
+			array(
+				'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
+				'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
+				'sanitize_callback' => array( $this, 'save' ), 
+			)
+		);
 
 		if ( is_array( $sections ) && ! empty( $sections ) ) {
 			

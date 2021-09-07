@@ -210,7 +210,7 @@ class WP_Backstage {
 		'address_1' => '', 
 		'address_2' => '', 
 		'city'      => '', 
-		'state'     => '', 
+		'state'     => 'AL', 
 		'zip'       => '', 
 	);
 
@@ -1084,12 +1084,10 @@ class WP_Backstage {
 	 * 
 	 * @since   0.0.1
 	 * @param   array  $value  The value to sanitize. Expects an array of address `key => value` pairs.
-	 * @return  array  An array of address key => value pairs. 
+	 * @return  array/null   An array of address key => value pairs. 
 	 */
 	public function sanitize_address( $value = array() ) {
-		if ( ! is_array( $value ) ) {
-			$value = array();
-		}
+		$value = wp_parse_args( $value, $this->default_address_values );
 		return array_map( 'esc_attr', $value );
 	}
 
@@ -1100,40 +1098,35 @@ class WP_Backstage {
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   array   $value  The value to sanitize. Expects an array of 3 2-digit time values.
-	 * @return  string  a string as `00:00:00`. 
+	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values or a time string as hh:mm:ss.
+	 * @return  string  a string as `hh:mm:ss`. 
 	 */
-	public function sanitize_time( $value = array() ) {
-		if ( ! is_array( $value ) || empty( $value ) ) {
-			$value = array( '00', '00', '00' );
+	public function sanitize_time( $value = null ) {
+		if ( ! is_array( $value ) && ! empty( $value ) ) {
+			$value = explode( ':', $value );
 		}
+		$value = array(
+			0 => ! empty( $value[0] ) ? $value[0] : '00',
+			1 => ! empty( $value[1] ) ? $value[1] : '00',
+			2 => ! empty( $value[2] ) ? $value[2] : '00',
+		);
 		return implode( ':', array_map( 'esc_attr', $value ) );
 	}
 
 	/**
-	 * Sanitize Single Media
-	 * 
-	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
-	 * 
-	 * @since   0.0.1
-	 * @param   int  $value  The value to sanitize. Expects an attachment ID.
-	 * @return  int  An integer, or null if empty. 
-	 */
-	public function sanitize_single_media( $value = null ) {
-		return ( $value !== '' ) ? intval( $value ) : null;
-	}
-
-	/**
-	 * Sanitize Multi Media
+	 * Sanitize Media
 	 *
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 * 
 	 * @since   0.0.1
-	 * @param   string  $value  The value to sanitize. Expects a CSV of attachment IDs.
+	 * @param   mixed  $value  The value to sanitize. Expects a CSV string or array of attachment IDs.
 	 * @return  array   An array of integers. 
 	 */
-	public function sanitize_multi_media( $value = '' ) {
-		return ! empty( $value ) ? array_map( 'intval', explode( ',', $value ) ) : null;
+	public function sanitize_media( $value = null ) {
+		if ( ! is_array( $value ) && ! empty( $value ) ) {
+			$value = explode( ',', $value );
+		}
+		return ! empty( $value ) ? array_map( 'intval', $value ) : array();
 	}
 
 	/**
@@ -1180,12 +1173,7 @@ class WP_Backstage {
 				$value = $this->sanitize_time( $value );
 				break;
 			case 'media':
-				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-				if ( $args['multiple'] ) {
-					$value = $this->sanitize_multi_media( $value );
-				} else {
-					$value = $this->sanitize_single_media( $value );
-				}
+				$value = $this->sanitize_media( $value );
 				break;
 			default:
 				$value = $this->sanitize_text( $value );
@@ -1245,12 +1233,7 @@ class WP_Backstage {
 				$callback = 'sanitize_time';
 				break;
 			case 'media':
-				$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
-				if ( $args['multiple'] ) {
-					$callback = 'sanitize_multi_media';
-				} else {
-					$callback = 'sanitize_single_media';
-				}
+				$callback = 'sanitize_media';
 				break;
 			default:
 				$callback = 'sanitize_text';
@@ -1708,10 +1691,13 @@ class WP_Backstage {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>">
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -1737,21 +1723,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -1773,12 +1760,14 @@ class WP_Backstage {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_date_args ); ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
-		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>">
+		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -1806,21 +1795,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -1846,7 +1836,11 @@ class WP_Backstage {
 			if ( strlen( $option ) === 1 ) {
 				$option = '0' . $option;
 			}
-			printf( '<option value="%1$s" %2$s>%1$s</option>', esc_attr( $option ), selected( $option, $selected ) );
+			printf( 
+				'<option value="%1$s" %2$s>%1$s</option>', 
+				esc_attr( $option ), 
+				selected( $option, $selected ) 
+			);
 		}
 
 	}
@@ -1869,14 +1863,15 @@ class WP_Backstage {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
-		<fieldset 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
 			<?php if ( $field['show_label'] ) { ?>
 
 				<legend 
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-				style="padding:2px 0;font-size:inherit;"><?php 
+				style="padding:2px 0;font-size:inherit;display:inline-block;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -1884,9 +1879,9 @@ class WP_Backstage {
 
 			<?php } ?>
 
-			<div 
+			<span 
 			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
-			style="padding:0 0 2px;">
+			style="display:block;padding:0 0 2px;">
 
 				<?php 
 				$i = 0;
@@ -1923,10 +1918,9 @@ class WP_Backstage {
 
 						?></select>
 
-						<?php 
-						if ( ($i + 1) < count( $this->time_pieces ) ) {
-							echo '<span class="sep">:</span>';
-						} ?>
+						<?php if ( ($i + 1) < count( $this->time_pieces ) ) { ?>
+							<span class="sep" style="display:inline-block">:</span>
+						<?php } ?>
 
 					</span>
 
@@ -1935,21 +1929,22 @@ class WP_Backstage {
 
 				} ?>
 
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</fieldset>
+		</span>
 
 	<?php }
 
@@ -1978,13 +1973,14 @@ class WP_Backstage {
 			$palettes = $args['palettes'] ? 'true' : 'false';
 		} ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-color-picker-mode="<?php echo esc_attr( $args['mode'] ); ?>"
-		data-color-picker-palettes="<?php echo $palettes; ?>">
+		data-color-picker-palettes="<?php echo $palettes; ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2010,21 +2006,22 @@ class WP_Backstage {
 				<?php disabled( true, $field['disabled'] ); ?>
 				<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2044,9 +2041,13 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<input 
 				type="checkbox" 
@@ -2067,21 +2068,22 @@ class WP_Backstage {
 				
 				?></label>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2100,10 +2102,13 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2132,21 +2137,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2173,15 +2179,15 @@ class WP_Backstage {
 		$field['input_attrs']['class'] = sprintf( 'wp-editor-area %1$s', $input_class ); ?>
 
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-media-buttons="<?php echo ( $args['media_buttons'] ) ? 'true' : 'false'; ?>"
 		data-format-select="<?php echo ( $args['format_select'] ) ? 'true' : 'false'; ?>"
 		data-kitchen-sink="<?php echo ( $args['kitchen_sink'] ) ? 'true' : 'false'; ?>"
-		style="max-width:<?php echo $args['max_width']; ?>;">
+		style="display:block;max-width:<?php echo $args['max_width']; ?>;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2210,21 +2216,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2251,13 +2258,13 @@ class WP_Backstage {
 		$args = wp_parse_args( $field['args'], $this->default_code_args );
 		$settings_key = $field['settings_key'] ? $field['settings_key'] : $id; ?>
 
-		<div 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-code-editor-settings="<?php echo esc_attr( $settings_key ); ?>"
-		style="max-width:<?php echo $args['max_width']; ?>;">
+		style="display:block;max-width:<?php echo $args['max_width']; ?>;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2286,21 +2293,22 @@ class WP_Backstage {
 
 				?></textarea>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2322,10 +2330,11 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
 
 				<?php if ( $field['show_label'] ) { ?>
 
@@ -2371,21 +2380,22 @@ class WP_Backstage {
 
 				?></select>
 			
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2407,16 +2417,18 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<fieldset 
+			<span 
 			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
-					<legend style="padding:2px 0;font-size:inherit;"><?php 
+					<legend style="display:inline-block;padding:2px 0;font-size:inherit;"><?php 
 
 						echo wp_kses( $field['label'], $this->kses_label );
 					
@@ -2433,9 +2445,9 @@ class WP_Backstage {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_key( $option['value'] ) ); ?>
 
-						<div 
+						<span 
 						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
-						style="padding:2px 0;">
+						style="display:block;padding:2px 0;">
 
 							<input
 							type="radio" 
@@ -2455,27 +2467,28 @@ class WP_Backstage {
 							
 							?></label>
 
-						</div>
+						</span>
 
 					<?php }
 
 				} ?>
 			
-			</fieldset>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2498,18 +2511,20 @@ class WP_Backstage {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
-		<div 
-		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>">
+		<span 
+		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
+		style="display:block;">
 
-			<fieldset 
+			<span 
 			id="<?php echo esc_attr( $id ); ?>"
-			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>">
+			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
+			style="display:block;">
 
 				<?php if ( $field['show_label'] ) { ?>
 
 					<legend 
 					id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-					style="padding:2px 0;font-size:inherit;"><?php 
+					style="display:inline-block;padding:2px 0;font-size:inherit;"><?php 
 
 						echo wp_kses( $field['label'], $this->kses_label );
 					
@@ -2526,9 +2541,9 @@ class WP_Backstage {
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 						$input_id = sprintf( esc_attr( '%1$s_%2$s' ), $id, sanitize_key( $option['value'] ) ); ?>
 
-						<div 
+						<span 
 						id="<?php printf( esc_attr( '%1$s_input_container' ), $input_id ); ?>"
-						style="padding:2px 0;">
+						style="display:block;padding:2px 0;">
 
 							<input
 							type="checkbox" 
@@ -2548,27 +2563,28 @@ class WP_Backstage {
 							
 							?></label>
 
-						</div>
+						</span>
 
 					<?php }
 
 				} ?>
 			
-			</fieldset>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p );
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</div>
+		</span>
 
 	<?php }
 
@@ -2623,7 +2639,8 @@ class WP_Backstage {
 		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
 		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'wp-backstage' ) : __( 'Set %1$s', 'wp-backstage' ); ?>
 
-		<fieldset 
+		<span 
+		class="wp-backstage-media-uploader"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-media-uploader-id="<?php echo esc_attr( $id ); ?>"
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
@@ -2634,8 +2651,8 @@ class WP_Backstage {
 			<?php if ( $field['show_label'] ) { ?>
 				
 				<legend 
-				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
-				style="cursor:pointer;padding:2px 0;font-size:inherit;"><?php 
+				class="wp-backstage-media-uploader__legend"
+				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"><?php 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				?></legend>
 
@@ -2649,73 +2666,78 @@ class WP_Backstage {
 			aria-describedby="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>"
 			<?php echo $this->format_attrs( $field['input_attrs'] ); ?> />
 
-			<div id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>">
-				<li data-attachment-id="0">
-					<figure>
-						<img src="" alt="" title="" />
-						<figcaption class="screen-reader-text"></figcaption>
-					</figure>
-				</li>
-				<ul id="<?php printf( esc_attr( '%1$s_preview_list' ), $id ); ?>">
+			<span 
+			class="wp-backstage-media-uploader__preview"
+			id="<?php printf( esc_attr( '%1$s_preview' ), $id ); ?>">
+				<span 
+				class="wp-backstage-media-uploader__attachment"
+				data-attachment-id="0">
+					<img 
+					class="wp-backstage-media-uploader__attachment-image"
+					src="" alt="" title="" />
+					<span class="wp-backstage-media-uploader__attachment-caption screen-reader-text"></span>
+				</span>
+				<span 
+				class="wp-backstage-media-uploader__preview-list"
+				id="<?php printf( esc_attr( '%1$s_preview_list' ), $id ); ?>">
 					
-				</ul>
-			</div>
+				</span>
+			</span>
 
-			<div id="<?php printf( esc_attr( '%1$s_buttons' ), $id ); ?>">
+			<span
+			class="wp-backstage-media-uploader__buttons" 
+			id="<?php printf( esc_attr( '%1$s_buttons' ), $id ); ?>">
 
 				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--add button" 
 				id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
-				type="button"
-				class="button"
-				style="margin:0 8px 0 0;"><?php 
+				type="button"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Add %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
 				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--add-to button" 
 				id="<?php printf( esc_attr( '%1$s_button_add_to' ), $id ); ?>"
 				type="button"
-				class="button"
-				style="margin:0 8px 0 0;"
 				disabled
 				style="display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
 				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--replace button" 
 				id="<?php printf( esc_attr( '%1$s_button_replace' ), $id ); ?>"
 				type="button"
-				class="button"
-				style="margin:0 8px 0 0;"
 				disabled
 				style="display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Replace %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
 				<button 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--remove button" 
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
-				class="button"
-				style="margin:0 8px 0 0;"
 				disabled
 				style="display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</fieldset>
+		</span>
 
 	<?php } 
 
@@ -2741,10 +2763,12 @@ class WP_Backstage {
 		$values = wp_parse_args( $value, $this->default_address_values );
 		$args = wp_parse_args( $field['args'], $this->default_address_args ); ?>
 
-		<fieldset 
+		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-address-id="<?php echo esc_attr( $id ); ?>"
-		style="max-width:<?php echo esc_attr( $args['max_width'] ); ?>;">
+		data-default-country="<?php echo esc_attr( $this->default_address_values['country'] ); ?>""
+		data-default-state="<?php echo esc_attr( $this->default_address_values['state'] ); ?>""
+		style="display:block;max-width:<?php echo esc_attr( $args['max_width'] ); ?>;">
 
 			<?php if ( $field['show_label'] ) { ?>
 
@@ -2758,9 +2782,13 @@ class WP_Backstage {
 
 			<?php } ?>
 
-			<div id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>" >
+			<span 
+			id="<?php printf( esc_attr( '%1$s_input_container' ), $id ); ?>"
+			style="display:block;">
 
-				<div id="<?php printf( esc_attr( '%1$s_country_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_country_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_country' ), $id ); ?>"
@@ -2769,7 +2797,7 @@ class WP_Backstage {
 						<small><?php 
 
 							echo wp_kses( __( 'Country', 'wp_backstage' ), $this->kses_label );  
-						
+
 						?></small>
 
 					</label>
@@ -2797,9 +2825,11 @@ class WP_Backstage {
 
 					?></select>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_address_1_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_address_1_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_address_1' ), $id ); ?>"
@@ -2825,9 +2855,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_address_2_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_address_2_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_address_2' ), $id ); ?>"
@@ -2853,10 +2885,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_city_container' ), $id ); ?>"
-				style="width:49%;float:left;margin-right:2%;">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_city_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;margin-right:2%;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_city' ), $id ); ?>"
@@ -2882,10 +2915,11 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_state_container' ), $id ); ?>"
-				style="width:49%;float:left;">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_state_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_state' ), $id ); ?>"
@@ -2911,10 +2945,10 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 
-				</div>
+				</span>
 
-				<div id="<?php printf( esc_attr( '%1$s_us_state_container' ), $id ); ?>"
-				style="width:49%;float:left;">
+				<span id="<?php printf( esc_attr( '%1$s_us_state_container' ), $id ); ?>"
+				style="display:block;width:49%;float:left;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_us_state' ), $id ); ?>"
@@ -2951,11 +2985,11 @@ class WP_Backstage {
 
 					?></select>
 
-				</div>
+				</span>
 
-				<div class="clear"></div>
-
-				<div id="<?php printf( esc_attr( '%1$s_zip_container' ), $id ); ?>">
+				<span 
+				id="<?php printf( esc_attr( '%1$s_zip_container' ), $id ); ?>"
+				style="display:block;">
 
 					<label 
 					for="<?php printf( esc_attr( '%1$s_zip' ), $id ); ?>"
@@ -2981,23 +3015,24 @@ class WP_Backstage {
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php echo $this->format_attrs( $field['input_attrs'] ); ?>/>
 				
-				</div>
+				</span>
 
-			</div>
+			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
 
-				<p 
+				<span 
 				id="<?php printf( esc_attr( '%1$s_description' ), $id ); ?>" 
-				class="description"><?php 
+				class="description"
+				style="display:block;"><?php 
 
 					echo wp_kses( $field['description'], $this->kses_p ); 
 				
-				?></p>
+				?></span>
 
 			<?php } ?>
 
-		</fieldset>
+		</span>
 
 	<?php }
 

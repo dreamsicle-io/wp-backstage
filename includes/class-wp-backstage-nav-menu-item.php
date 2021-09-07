@@ -121,11 +121,11 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );
 		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'render_customizer_fields' ), 10 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'save' ), 10, 3 );
+		add_action( 'customize_save_after', array( $this, 'save_customizer' ), 10 );
 		add_action( 'wp_setup_nav_menu_item', array( $this, 'setup_nav_menu_item' ), 10 );
-		// if ( ! is_customize_preview() ) {
-			add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
-		// }
+		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
+		add_action( 'customize_register', array( $this, 'manage_customizer_meta_preview' ), 10 );
 
 		parent::init();
 
@@ -212,7 +212,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows = 3;
+					$default_rows = ($field['type'] === 'textarea') ? 3 : 10;
 					$default_cols = 20;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
@@ -272,7 +272,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field ); ?>
 
-				<div 
+				<p 
 				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
 				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
 				data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php 
@@ -283,7 +283,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 					do_action( $this->format_field_action( 'customizer_after' ), $field, $field_name );
 
-				?></div>
+				?></p>
 
 			<?php }
 
@@ -321,21 +321,58 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 					
 					update_post_meta( $item_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
-
 				} else {
 
 					delete_post_meta( $item_id, $field['name'] );
-					
-					unset( $values[$field['name']] );
 
 				}
 
 			}
 
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
+		}
 
-				update_post_meta( $item_id, $this->args['group_meta_key'], $values );
+	}
+	
+	/**
+	 * Save Customizer.
+	 * 
+	 * @
+	 */
+	public function save_customizer( $wp_customize = null ) {
+
+		foreach ( $wp_customize->settings() as $setting ) {
+			
+			if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting && $setting->check_capabilities() ) {
+
+				$item_id = $setting->post_id;
+				$posted_values = $setting->manager->unsanitized_post_values()[$setting->id];
+
+				if ( ! current_user_can( 'edit_post', $item_id ) ) { return; }
+				if ( ! $posted_values || empty( $posted_values ) ) { return; }
+
+				$fields = $this->get_fields();
+
+				if ( is_array( $fields ) && ! empty( $fields ) ) {
+					
+					$values = array();
+
+					foreach ( $fields as $field ) {
+
+						if ( isset( $posted_values[$field['name']] ) ) {
+
+							$value = $this->sanitize_field( $field, $posted_values[$field['name']] );
+							
+							update_post_meta( $item_id, $field['name'], $value );
+
+						} else {
+
+							delete_post_meta( $item_id, $field['name'] );
+
+						}
+
+					}
+
+				}
 
 			}
 
@@ -378,6 +415,48 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		}
 
 		return $hidden;
+
+	}
+
+	/**
+	 * Manage Customizer Meta Preview
+	 * 
+	 * Preview changes to the nav menu item roles. Note the unimplemented 
+	 * to-do in the doc block for the setting's preview method.
+	 *
+	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
+	 *
+	 * @param   WP_Customize_Manager  $wp_customize  The WP Customize instance.
+	 * @return  void
+	 */
+	public function manage_customizer_meta_preview( $wp_customize = null ) {
+
+		if ( $wp_customize->settings_previewed() ) {
+
+			foreach ( $wp_customize->settings() as $setting ) {
+
+				if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting ) {
+					
+					add_filter( 'get_post_metadata', function( $value, $object_id, $meta_key, $single ) use ( $setting ) {
+						
+						if ( $object_id === $setting->post_id ) {
+
+							$field = $this->get_field_by( 'name', $meta_key );
+							$posted_values = $setting->manager->unsanitized_post_values()[$setting->id];
+							$value = $this->sanitize_field( $field, $posted_values[$field['name']] );
+
+						}
+
+						return $value;
+
+					}, 10, 4 );
+
+				}
+
+			}
+
+		}
 
 	}
 

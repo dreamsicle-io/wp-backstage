@@ -546,7 +546,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Options', 'wp_backstage' ), 
 		'description'       => __( 'A test custom options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_options_fields', 
@@ -568,7 +567,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Theme Options', 'wp_backstage' ), 
 		'description'       => __( 'A test custom theme options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_theme_options', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_theme_options_fields', 
@@ -590,7 +588,6 @@ function wp_backstage_init() {
 		'menu_title'        => __( 'Test Tool', 'wp_backstage' ), 
 		'description'       => __( 'A test custom tool options page containing all field types.', 'wp_backstage' ), 
 		'show_in_rest'      => true, 
-		'group_options_key' => 'wp_backstage_tool', 
 		'sections' => array(
 			array(
 				'id'          => 'wp_backstage_tool_options_fields', 

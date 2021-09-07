@@ -235,7 +235,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 				}
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows = 3;
+					$default_rows = ( $field['type'] === 'textarea' ) ? 6 : 10;
 					$default_cols = 20;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
@@ -248,7 +248,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
 
-				<div style="margin:1em 0;"><?php 
+				<p><?php 
 
 					do_action( $this->format_field_action( 'before' ), $field, $item );
 
@@ -256,7 +256,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 
 					do_action( $this->format_field_action( 'after' ), $field, $item );
 
-				?></div>
+				?></p>
 
 			<?php }
 
@@ -266,6 +266,8 @@ class WP_Backstage_Widget extends WP_Backstage {
 
 	/**
 	 * Save
+	 * 
+	 * @todo    Though its probably not needed, try to check nonce here.
 	 * 
 	 * @since   1.1.0
 	 * @param   array  $new_instance  The new widget instance values.

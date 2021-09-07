@@ -364,21 +364,11 @@ class WP_Backstage_User extends WP_Backstage {
 
 					update_user_meta( $user_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
-
 				} else {
 
 					delete_user_meta( $user_id, $field['name'] );
-					
-					unset( $values[$field['name']] );
 
 				}
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_user_meta( $user_id, $this->args['group_meta_key'], $values );
 
 			}
 

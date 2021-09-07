@@ -516,9 +516,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Save
 	 *
-	 * Saves the form data as individual keys. Also saves a full array of 
-	 * `$field['name'] => $value` pairs as a new custom field with the 
-	 * `group_meta_key` argument as the key.
+	 * Saves the form data as individual keys.
 	 * 
 	 * Note that on attachments, the `edit_attachment` hook only sends 
 	 * the first parameter ($post_id).
@@ -552,8 +550,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 					update_post_meta( $post_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
-
 					if ( $field['type'] === 'media' ) {
 
 						$this->handle_attachments( $post_id, $value, $field );
@@ -563,16 +559,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 				} else {
 
 					delete_post_meta( $post_id, $field['name'] );
-					
-					unset( $values[$field['name']] );
 
 				}
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
 
 			}
 

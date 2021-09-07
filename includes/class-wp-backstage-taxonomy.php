@@ -487,9 +487,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Save
 	 *
-	 * Saves the form data as individual keys. Also saves a full array 
-	 * of `$field['name'] => $value` pairs as a new custom field with the 
-	 * `group_meta_key` argument as the key.
+	 * Saves the form data as individual keys.
 	 *
 	 * @todo    Document `$tt_id` better.
 	 * 
@@ -519,21 +517,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					update_term_meta( $term_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
-
 				} else {
 
 					delete_term_meta( $term_id, $field['name'] );
-					
-					unset( $values[$field['name']] );
 
 				}
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_term_meta( $term_id, $this->args['group_meta_key'], $values );
 
 			}
 

@@ -73,41 +73,49 @@ class WP_Backstage_Setup {
 		id="wp_backstage_media_uploader_style"
 		type="text/css">
 
-			[data-media-uploader-id] ul {
+			.wp-backstage-media-uploader__legend {
+				cursor: pointer;
+				padding: 2px 0;
+				font-size: inherit;
+			}
+
+			.wp-backstage-media-uploader__buttons {
+				display: block;
+				position: relative;
+			}
+
+			.wp-backstage-media-uploader__button {
+				margin: 0 8px 0 0;
+			}
+
+			.wp-backstage-media-uploader__preview-list {
 				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
 
-			[data-media-uploader-id] ul::after,
-			[data-media-uploader-id] ul::before {
+			.wp-backstage-media-uploader__preview-list::after,
+			.wp-backstage-media-uploader__preview-list::before {
 				content: '';
 				display: table;
 				clear: both;
 			}
 
-			[data-media-uploader-id] ul li {
+			.wp-backstage-media-uploader__attachment {
 				display: block;
 				position: relative;
 				padding: 0;
 				max-width: 100%;
 				margin: 0 12px 12px 0;
 				float: left;
+				background-color: #ffffff;
 			}
 			
-			[data-media-uploader-id] li[data-attachment-id="0"] {
+			.wp-backstage-media-uploader__attachment[data-attachment-id="0"] {
 				display: none !important;
 			}
-
-			[data-media-uploader-id] ul li figure {
-				display: block;
-				margin: 0;
-				padding: 0;
-				background-color: #ffffff;
-				position: relative;
-			}
 			
-			[data-media-uploader-id] ul li img {
+			.wp-backstage-media-uploader__attachment-image {
 				display: block;
 				width: 100%;
 				margin: 0;
@@ -428,7 +436,7 @@ class WP_Backstage_Setup {
 					for (var i = 0; i < attachments.length; i++) {
 						const clone = template.cloneNode(true);
 						const image = clone.querySelector('img');
-						const caption = clone.querySelector('figcaption');
+						const caption = clone.querySelector('.screen-reader-text');
 						const url = attachments[i].mime.includes('image') ? attachments[i].sizes[size].url : attachments[i].icon;
 						clone.setAttribute('data-attachment-id', attachments[i].id);
 						clone.style.cursor = isMultiple ? 'move' : 'pointer';
@@ -1046,9 +1054,29 @@ class WP_Backstage_Setup {
 
 				var saveTimer = null;
 
+				function findParentEditor(element = null) {
+					var parentNode = element.parentNode;
+					while (! parentNode.hasAttribute('data-editor-id')) {
+						parentNode = parentNode.parentNode;
+					}
+					return parentNode;
+				}
+
 				function destroy(editor = null) {
 					const fieldId = editor.getAttribute('data-editor-id');
+					const label = editor.querySelector('#' + fieldId + '_label');
+					if (label) {
+						label.removeEventListener('click', handleLabelClick);
+					}
 					wp.editor.remove(fieldId);
+				}
+
+				function handleLabelClick(e = null) {
+					// TODO: Figure out why tiny MCE is only focusing the last editor on the page,
+					// regardless of the ID passed.
+					// const editor = findParentEditor(e.target);
+					// const fieldId = editor.getAttribute('data-editor-id');
+					// tinyMCE.execCommand('mceFocus', false, fieldId);
 				}
 
 				function handleSetup(e = null, wpEditor = null) {
@@ -1065,6 +1093,7 @@ class WP_Backstage_Setup {
 
 				function init(editor = null) {
 					const fieldId = editor.getAttribute('data-editor-id');
+					const label = editor.querySelector('#' + fieldId + '_label');
 					const mediaButtons = (editor.getAttribute('data-media-buttons') === 'true');
 					const formatSelect = (editor.getAttribute('data-format-select') === 'true');
 					const kitchenSink = (editor.getAttribute('data-kitchen-sink') === 'true');
@@ -1079,12 +1108,16 @@ class WP_Backstage_Setup {
 						}, 
 						
 					};
+
 					if (formatSelect) {
 						settings.tinymce.toolbar1 = 'formatselect,' + settings.tinymce.toolbar1;
 					}
 					if (kitchenSink) {
 						settings.tinymce.toolbar1 = settings.tinymce.toolbar1 + ',wp_adv';
 						settings.tinymce.toolbar2 = 'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help';
+					}
+					if (label) {
+						label.addEventListener('click', handleLabelClick);
 					}
 
 					wp.editor.initialize(fieldId, settings);
@@ -1270,6 +1303,7 @@ class WP_Backstage_Setup {
 			(function($) {
 
 				var navMenuItemHandleTimer = null;
+				var navMenuItemMoveTimer = null;
 
 				function getInitialItems() {
 					const itemList = document.getElementById('menu-to-edit');
@@ -1281,6 +1315,14 @@ class WP_Backstage_Setup {
 					const itemList = document.getElementById('menu-to-edit');
 					const items = itemList.querySelectorAll('.menu-item');
 					return Array.from(items).filter(item => ! item.hasAttribute('data-wp-backstage-initialized'));
+				}
+
+				function findParentNavMenuItem(element = null) {
+					var parentNode = element.parentNode;
+					while (! parentNode.classList.contains('menu-item')) {
+						parentNode = parentNode.parentNode;
+					}
+					return parentNode;
 				}
 
 				function handleSuccess(e = null, request = null, settings = null) {
@@ -1304,6 +1346,33 @@ class WP_Backstage_Setup {
 					}
 				}
 
+				function handleNavMenuItemMoveLinkClick(e = null) {
+					const navMenuItem = findParentNavMenuItem(e.target);
+					if (navMenuItemMoveTimer) {
+						clearTimeout(navMenuItemMoveTimer);
+					}
+					navMenuItemMoveTimer = setTimeout(function() {
+						if (navMenuItem.classList.contains('menu-item-edit-active')) {
+							window.wpBackstage.editor.refreshAll(navMenuItem);
+							window.wpBackstage.codeEditor.refreshAll(navMenuItem);
+						}
+					}, 500);
+				}
+
+				function initNavMenuItemMoveLink(link = null) {
+					link.addEventListener('click', handleNavMenuItemMoveLinkClick);
+				}
+
+				function initAllNavMenuItemMoveLinks(container = null) {
+					container = container || document.getElementById('menu-to-edit');
+					const navMenuItemMoveLinks = container.querySelectorAll('.menus-move');
+					if (navMenuItemMoveLinks && (navMenuItemMoveLinks.length > 0)) {
+						for (var i = 0; i < navMenuItemMoveLinks.length; i++) {
+							initNavMenuItemMoveLink(navMenuItemMoveLinks[i]);
+						}
+					}
+				}
+
 				function init() {
 					const initialItems = getInitialItems();
 					for (var i = 0; i < initialItems.length; i++) {
@@ -1318,21 +1387,19 @@ class WP_Backstage_Setup {
 					initAllNavMenuItemHandles();
 					initNavMenuSortable();
 					initAllScreenOptions();
+					initAllNavMenuItemMoveLinks();
 					$(document).ajaxSuccess(handleSuccess);
 				}
 
 				function handleNavMenuItemHandleClick(e = null) {
-					var { parentNode } = e.target;
+					const navMenuItem = findParentNavMenuItem(e.target);
 					if (navMenuItemHandleTimer) {
 						clearTimeout(navMenuItemHandleTimer);
 					}
-					while (! parentNode.classList.contains('menu-item')) {
-						parentNode = parentNode.parentNode;
-					}
 					navMenuItemHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(parentNode);
-							window.wpBackstage.codeEditor.refreshAll(parentNode);
+						if (navMenuItem.classList.contains('menu-item-edit-active')) {
+							window.wpBackstage.editor.refreshAll(navMenuItem);
+							window.wpBackstage.codeEditor.refreshAll(navMenuItem);
 						}
 					}, 500);
 				}
@@ -1401,7 +1468,8 @@ class WP_Backstage_Setup {
 	/**
 	 * Inline Nav Menu Item Customizer Script
 	 * 
-	 * @link  https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
 	 * 
 	 * @since   1.1.0
 	 * @return  void  
@@ -1414,8 +1482,6 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
-				var navMenuItemHandleTimer = null;
-
 				function setControlElementValue(controlElement = null, value = undefined) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
@@ -1425,13 +1491,11 @@ class WP_Backstage_Setup {
 							input.attr('checked', Boolean(value));
 							break;
 						}
-						case 'select': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
-							select.val(value);
-							break;
-						}
 						case 'radio': {
 							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							if (! value && (radios.length > 0)) {
+								value = $(radios[0]).val();
+							}
 							radios.each(function() {
 								const radio = $(this);
 								radio.attr('checked', (radio.val() === value));
@@ -1442,18 +1506,18 @@ class WP_Backstage_Setup {
 							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
 							checkboxes.each(function() {
 								const checkbox = $(this);
-								checkbox.attr('checked', value.includes(checkbox.val()));
+								checkbox.attr('checked', (Array.isArray(value) && value.includes(checkbox.val())));
 							});
 							break;
 						}
 						case 'time': {
-							const timePieces = value.split(':');
+							const timePieces = (value && ! Array.isArray(value)) ? value.split(':') : value;
 							const hourSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[hour]"]');
 							const minuteSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[minute]"]');
 							const secondSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[second]"]');
-							hourSelect.val(timePieces[0]);
-							minuteSelect.val(timePieces[1]);
-							secondSelect.val(timePieces[2]);
+							hourSelect.val((timePieces && timePieces[0]) ? timePieces[0] : hourSelect.find('option:first-child').val());
+							minuteSelect.val((timePieces && timePieces[1]) ? timePieces[1] : minuteSelect.find('option:first-child').val());
+							secondSelect.val((timePieces && timePieces[2]) ? timePieces[2] : secondSelect.find('option:first-child').val());
 							break;
 						}
 						case 'address': {
@@ -1464,13 +1528,18 @@ class WP_Backstage_Setup {
 							const stateSelect = controlElement.element.find('select[name="menu-item-' + fieldName + '[state]"]');
 							const stateInput = controlElement.element.find('input[name="menu-item-' + fieldName + '[state]"]');
 							const zipInput = controlElement.element.find('[name="menu-item-' + fieldName + '[zip]"]');
-							countrySelect.val(value.country);
-							address1Input.val(value.address_1);
-							address2Input.val(value.address_2);
-							cityInput.val(value.city);
-							stateSelect.val(value.state);
-							stateInput.val(value.state);
-							zipInput.val(value.zip);
+							countrySelect.val((value && value.country) ? value.country : 'US');
+							address1Input.val((value && value.address_1) ? value.address_1 : '');
+							address2Input.val((value && value.address_2) ? value.address_2 : '');
+							cityInput.val((value && value.city) ? value.city : '');
+							stateSelect.val((value && value.state) ? value.state : 'AL');
+							stateInput.val((value && value.state) ? value.state : '');
+							zipInput.val((value && value.zip) ? value.zip : '');
+							break;
+						}
+						case 'select': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.val(value || select.find('option:first-child').val());
 							break;
 						}
 						default: {
@@ -1481,23 +1550,111 @@ class WP_Backstage_Setup {
 					}
 				}
 
+				function initControlElementChangeHandler(controlElement = null, setting = null) {
+					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
+					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
+					switch (fieldType) {
+						case 'checkbox': {
+							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							input.on('change', function(e) {
+								handleSettingChange(setting, fieldName, e.target.checked ? e.target.value : undefined);
+							});
+							break;
+						}
+						case 'radio': {
+							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							radios.each(function() {
+								const radio = $(this);
+								radio.on('change', function(e) {
+									if (e.target.checked) {
+										handleSettingChange(setting, fieldName, e.target.value);
+									}
+								});
+							});
+							break;
+						}
+						case 'checkbox_set': {
+							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
+							checkboxes.each(function() {
+								const checkbox = $(this);
+								checkbox.on('change', function(e) {
+									handleCheckboxSetSettingChange(setting, fieldName, e.target.value, e.target.checked);
+								});
+							});
+							break;
+						}
+						case 'time': {
+							const hourSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[hour]"]');
+							const minuteSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[minute]"]');
+							const secondSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[second]"]');
+							hourSelect.on('change', function(e) {
+								handleTimeSettingChange(setting, fieldName, 0, e.target.value);
+							});
+							minuteSelect.on('change', function(e) {
+								handleTimeSettingChange(setting, fieldName, 1, e.target.value);
+							});
+							secondSelect.on('change', function(e) {
+								handleTimeSettingChange(setting, fieldName, 2, e.target.value);
+							});
+							break;
+						}
+						case 'address': {
+							const countrySelect = controlElement.element.find('[name="menu-item-' + fieldName + '[country]"]');
+							const address1Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_1]"]');
+							const address2Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_2]"]');
+							const cityInput = controlElement.element.find('[name="menu-item-' + fieldName + '[city]"]');
+							const stateSelect = controlElement.element.find('select[name="menu-item-' + fieldName + '[state]"]');
+							const stateInput = controlElement.element.find('input[name="menu-item-' + fieldName + '[state]"]');
+							const zipInput = controlElement.element.find('[name="menu-item-' + fieldName + '[zip]"]');
+							countrySelect.on('change', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'country', e.target.value);
+							});
+							address1Input.on('change input propertychange paste', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'address_1', e.target.value);
+							});
+							address2Input.on('change input propertychange paste', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'address_2', e.target.value);
+							});
+							cityInput.on('change input propertychange paste', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'city', e.target.value);
+							});
+							stateSelect.on('change', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'state', e.target.value);
+							});
+							stateInput.on('change input propertychange paste', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'state', e.target.value);
+							});
+							zipInput.on('change input propertychange paste', function(e) {
+								handleAddressSettingChange(setting, fieldName, 'zip', e.target.value);
+							});
+							break;
+						}
+						default: {
+							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							input.on('change input propertychange paste', function(e) {
+								handleSettingChange(setting, fieldName, e.target.value);
+							});
+							break;
+						}
+					}
+				}
+
 				function setControlValues(control = null) {
 					const values = control.setting();
-					const fields = control.container.find('[data-wp-backstage-field-name]');
-					fields.each(function() {
-						const field = $(this);
-						const fieldName = field.attr('data-wp-backstage-field-name');
-						setControlElementValue(control.elements[fieldName], values[fieldName]);
-					});
+					const elements = control.wpBackstageElements;
+					for (var fieldName in elements) {
+						setControlElementValue(elements[fieldName], values[fieldName]);
+					}
 				}
 
 				function extendControl(control = null) {
+					control.wpBackstageElements = {};
 					const fields = control.container.find('[data-wp-backstage-field-name]');
 					fields.each(function() {
 						const field = $(this);
 						const fieldName = field.attr('data-wp-backstage-field-name');
 						const fieldFound = control.container.find('[data-wp-backstage-field-name="' + fieldName + '"]');
-						control.elements[fieldName] = new wp.customize.Element(fieldFound);
+						control.wpBackstageElements[fieldName] = new wp.customize.Element(fieldFound);
 					});
 				}
 
@@ -1515,18 +1672,94 @@ class WP_Backstage_Setup {
 					window.wpBackstage.codeEditor.refreshAll(control.container[0]);
 				}
 
+				function handleNavMenuSortStop(e = null, ui = null) {
+					const item = ui.item[0];
+					if (item.classList.contains('menu-item')) {
+						window.wpBackstage.editor.refreshAll(item);
+						window.wpBackstage.codeEditor.refreshAll(item);
+					}
+				}
+
+				function handleSectionInitSortables(section = null) {
+					section.contentContainer.on('sortstop', handleNavMenuSortStop);
+				}
+
+				function handleSettingChange(setting = null, fieldName = '', value = undefined) {
+					const currentValues = setting();
+					if (currentValues[fieldName] !== value) {
+						setting.set(Object.assign(
+							{},
+							_.clone(currentValues),
+							{ [fieldName]: value }
+						));
+					}
+				}
+
+				function handleAddressSettingChange(setting = null, fieldName = '', addressKey = '', value = undefined) {
+					const currentValues = setting();
+					if (currentValues[fieldName][addressKey] !== value) {
+						handleSettingChange(setting, fieldName, Object.assign(
+							{},
+							_.clone(currentValues[fieldName]),
+							{ [addressKey]: value }
+						));
+					}
+				}
+
+				function handleTimeSettingChange(setting = null, fieldName = '', index = 0, value = undefined) {
+					const currentValues = setting();
+					const timePieces = currentValues[fieldName] ? _.clone(currentValues[fieldName]).split(':') : ['00', '00', '00'];
+					if (timePieces[index] !== value) {
+						timePieces[index] = value;
+						handleSettingChange(setting, fieldName, timePieces.join(':'));
+					}
+				}
+
+				function handleCheckboxSetSettingChange(setting = null, fieldName = '', value = undefined, checked = false) {
+					const currentValues = setting();
+					const values = currentValues[fieldName] ? _.clone(currentValues[fieldName]) : [];
+					if (checked) {
+						values.push(value);
+					} else {
+						index = values.indexOf(value);
+						if (index >= 0) {
+							values.splice(index, 1);
+						}
+					}
+					handleSettingChange(setting, fieldName, values);
+				}
+
+				function initChangeHandlers(control = null) {
+					const elements = control.wpBackstageElements;
+					for (var fieldName in elements) {
+						initControlElementChangeHandler(elements[fieldName], control.setting);
+					}
+				}
+
 				function init() {
+					wp.customize.bind( 'ready', function() {
+						wp.customize.section.each(function(section) { 
+							if (section.id.startsWith('nav_menu')) {
+								section.deferred.initSortables.done(function() {
+									handleSectionInitSortables(section);
+								});
+							}
+						});
+					});
 					wp.customize.control.bind('add', function(control) {
 						if (control.extended(wp.customize.Menus.MenuItemControl)) {
 							control.deferred.embedded.done(function() {
-								extendControl(control);
-								setControlValues(control);
-								initFields(control);
-								control.expanded.bind(function(isExpanded) {
-									if (isExpanded) {
-										handleControlExpanded(control);
-									}
-								});
+								setTimeout(function() {
+									extendControl(control);
+									setControlValues(control);
+									initFields(control);
+									initChangeHandlers(control);
+									control.expanded.bind(function(isExpanded) {
+										if (isExpanded) {
+											handleControlExpanded(control);
+										}
+									});
+								}, 500);
 							});
 						}
 					});
@@ -1652,34 +1885,40 @@ class WP_Backstage_Setup {
 					return parentNode;
 				}
 
+				function handleWidgetAdded(widget = null) {
+					window.wpBackstage.colorPicker.initAll(widget);
+					window.wpBackstage.datePicker.initAll(widget);
+					window.wpBackstage.address.initAll(widget);
+					window.wpBackstage.mediaUploader.initAll(widget);
+					window.wpBackstage.codeEditor.initAll(widget);
+					window.wpBackstage.editor.initAll(widget);
+					initAllWidgetHandles(widget);
+				}
+
+				function handleWidgetUpdated(widget = null) {
+					window.wpBackstage.colorPicker.initAll(widget);
+					window.wpBackstage.datePicker.initAll(widget);
+					window.wpBackstage.address.initAll(widget);
+					window.wpBackstage.mediaUploader.initAll(widget);
+					window.wpBackstage.codeEditor.initAll(widget);
+					// The editor must be destroyed and reinitialized,
+					// as something about it is still being attached
+					// to the DOM in this case.
+					window.wpBackstage.editor.refreshAll(widget);
+				}
+
 				function handleSuccess(e = null, request = null, settings = null) {
 					if (settings && settings.data) {
 						const params = new URLSearchParams(settings.data);
 						const action = params.get('action');
 						if (action === 'save-widget') {
-							const isNew = Boolean(params.get('add_new'));
-							const isDelete = Boolean(params.get('delete_widget'));
 							const widget = findWidget(params.get('widget-id'));
-							if (isNew) {
-								window.wpBackstage.colorPicker.initAll(widget);
-								window.wpBackstage.datePicker.initAll(widget);
-								window.wpBackstage.address.initAll(widget);
-								window.wpBackstage.mediaUploader.initAll(widget);
-								window.wpBackstage.codeEditor.initAll(widget);
-								window.wpBackstage.editor.initAll(widget);
-								initAllWidgetHandles(widget);
-							} else if (isDelete) {
+							if (Boolean(params.get('add_new'))) {
+								handleWidgetAdded(widget);
+							} else if (Boolean(params.get('delete_widget'))) {
 								// This is fired when widgets are deleted.
 							} else {
-								window.wpBackstage.colorPicker.initAll(widget);
-								window.wpBackstage.datePicker.initAll(widget);
-								window.wpBackstage.address.initAll(widget);
-								window.wpBackstage.mediaUploader.initAll(widget);
-								window.wpBackstage.codeEditor.initAll(widget);
-								// The editor must be destroyed and reinitialized,
-								// as something about it is still being attached
-								// to the DOM in this case.
-								window.wpBackstage.editor.refreshAll(widget);
+								handleWidgetUpdated(widget);
 							}
 						} else if (action === 'widgets-order') {
 							// This is fired when widgets are reordered.
@@ -1757,41 +1996,7 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
-				var widgetHandleTimer = null;
-				var sectionExpandTimer = null;
-
-				function handleWidgetHandleClick(e = null) {
-					var { parentNode } = e.target;
-					if (widgetHandleTimer) {
-						clearTimeout(widgetHandleTimer);
-					}
-					while (! parentNode.classList.contains('widget')) {
-						parentNode = parentNode.parentNode;
-					}
-					widgetHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('open')) {
-							initOrRefreshAll(parentNode);
-						}
-					}, 500);
-				}
-
-				function initWidgetHandle(handle = null) {
-					handle.addEventListener('click', handleWidgetHandleClick);
-				}
-				
-				function initAllWidgetHandles(container = null) {
-					container = container || document;
-					const widgetHandles = container.querySelectorAll('.widget-top');
-					if (widgetHandles && (widgetHandles.length > 0)) {
-						for (var i = 0; i < widgetHandles.length; i++) {
-							initWidgetHandle(widgetHandles[i]);
-						}
-					}
-				}
-
-				function handleSectionExpanded(section = null) {
-					initAllWidgetHandles(section.contentContainer[0]);
-				}
+				var controlExpandTimer = null;
 
 				function initOrRefreshAll(widget = null) {
 					if ( ! widget.hasAttribute('data-wp-backstage-initialized') ) {
@@ -1808,17 +2013,43 @@ class WP_Backstage_Setup {
 					}
 				}
 
+				function handleWidgetsSortStop(e = null, ui = null) {
+					const widget = ui.item.find('.widget');
+					initOrRefreshAll(widget[0]);
+				}
+
+				function handleControlExpanded(control = null) {
+					const widget = control.container.find('.widget');
+					initOrRefreshAll(widget[0]);
+				}
+
+				function initSectionSortables(section = null) {
+					section.contentContainer.on('sortstop', handleWidgetsSortStop);
+				}
+
 				function init() {
 					wp.customize.bind( 'ready', function() {
 						wp.customize.section.each( function (section) { 
 							if (section.id.startsWith('sidebar-widgets')) {
-								section.expanded.bind( function(isExpanding) {
-									if (isExpanding) {
-										handleSectionExpanded(section);
-									}
+								section.deferred.embedded.done(function() {
+									initSectionSortables(section);
 								});
 							}
 						});
+					});
+					wp.customize.control.bind('add', function(control) {
+						if (control.id.startsWith('widget_wp_backstage_widget')) {
+							control.expanded.bind(function(isExpanded) {
+								if (controlExpandTimer) {
+									clearTimeout(controlExpandTimer);
+								}
+								controlExpandTimer = setTimeout(function() {
+									if (isExpanded) {
+										handleControlExpanded(control);
+									}
+								}, 500);
+							});
+						}
 					});
 				}
 

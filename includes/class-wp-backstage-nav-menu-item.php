@@ -265,6 +265,19 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
 				$field['name'] = sprintf( 'menu-item-%1$s', $field_name );
 				$field['id'] = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+
+				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
+					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
+				}
+
+				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
+					$default_rows = ($field['type'] === 'textarea') ? 3 : 10;
+					$default_cols = 20;
+					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
+					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
+					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
+				}
 
 				if ( $field['type'] === 'code' ) {
 					$field['settings_key'] = $field_name;
@@ -334,9 +347,15 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 	}
 	
 	/**
-	 * Save Customizer.
+	 * Save Customizer
 	 * 
-	 * @
+	 * Save the Nav Menu Item settings after the customizer has finished saving.
+	 * 
+	 * @todo Though it's probably not needed, try to check nonce here.
+	 * 
+	 * @since   1.1.0
+	 * @param   object  $wp_customize The current WP Customize instance.
+	 * @return  void;
 	 */
 	public function save_customizer( $wp_customize = null ) {
 

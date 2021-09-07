@@ -225,7 +225,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
 
-				<div 
+				<p 
 				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description-wide"
 				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php 
 
@@ -235,7 +235,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 
 					do_action( $this->format_field_action( 'after' ), $field, $item );
 
-				?></div>
+				?></p>
 
 			<?php }
 

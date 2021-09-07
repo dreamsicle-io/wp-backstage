@@ -362,7 +362,6 @@ function wp_backstage_init() {
 		'singular_base'  => 'test-page', 
 		'archive_base'   => 'test-pages', 
 		'rest_base'      => 'test-pages', 
-		'group_meta_key' => 'wp_backstage_page_meta',
 		'hierarchical'   => true, 
 		'glance_item'    => true, 
 		'meta_boxes'     => array(
@@ -393,7 +392,6 @@ function wp_backstage_init() {
 		'singular_base'  => 'test-post', 
 		'archive_base'   => 'test-posts', 
 		'rest_base'      => 'test-posts', 
-		'group_meta_key' => 'wp_backstage_post_meta',
 		'taxonomies'     => array( 'category', 'post_tag' ), 
 		'glance_item'    => true, 
 		'meta_boxes'     => array(
@@ -417,7 +415,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'post', array(
-		'group_meta_key' => 'wp_backstage_default_post_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_post_fields', 
@@ -439,7 +436,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'page', array(
-		'group_meta_key' => 'wp_backstage_default_page_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_page_fields', 
@@ -461,7 +457,6 @@ function wp_backstage_init() {
 	) );
 
 	WP_Backstage_Post_Type::modify( 'attachment', array(
-		'group_meta_key' => 'wp_backstage_default_attachment_meta',
 		'meta_boxes'     => array(
 			array(
 				'id'          => 'wp_backstage_default_attachment_fields', 
@@ -493,7 +488,6 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-tag', 
 		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_cat_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::add( 'wp_backstage_tag', array( 
@@ -507,22 +501,18 @@ function wp_backstage_init() {
 		'rest_base'      => 'test-tags', 
 		'post_types'     => array( 'wp_backstage_page', 'wp_backstage_post' ), 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_tag_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'category', array( 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_cat_meta', 
 	) );
 
 	WP_Backstage_Taxonomy::modify( 'post_tag', array( 
 		'fields'         => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_tag_meta', 
 	) );
 
 	WP_Backstage_Nav_Menu_Item::modify( array( 
 		'fields' => $all_fields, 
-		'group_meta_key' => 'wp_backstage_default_nav_menu_item_meta', 
 	) );
 
 	WP_Backstage_User::modify( array( 

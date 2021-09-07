@@ -2,13 +2,19 @@
 /**
  * WP Backstage Taxonomy
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Taxonomy
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'singular_name'   => '', 
@@ -34,12 +41,21 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Required Args
 	 * 
-	 * @var  array  $required_args  The required argument keys for this instance.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required argument keys for this instance.
 	 */
 	protected $required_args = array(
 		'singular_name', 
 		'plural_name', 
 	);
+
+	/**
+	 * Required Args - Modify
+	 * 
+	 * @since 2.0.0
+	 * @var   array  $required_args  The required argument keys for this instance if modifying.
+	 */
+	protected $required_args_modify = array();
 
 	/**
 	 * Add
@@ -60,20 +76,41 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	}
 
 	/**
+	 * Modify
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
+	 * 
+	 * @since   2.0.0
+	 * @param   string                 $slug  The slug for the taxonomy.
+	 * @param   array                  $args  The arguments for this instance.
+	 * @return  WP_Backstage_Taxonomy  A fully constructed instance of `WP_Backstage_User`. 
+	 */
+	public static function modify( $slug = '', $args = array() ) {
+
+		$Taxonomy = new WP_Backstage_Taxonomy( $slug, $args, false );
+		$Taxonomy->init();
+		return $Taxonomy;
+
+	}
+
+	/**
 	 * Construct
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the taxonomy.
 	 * @param   array   $args  The developer-provided arguments for this instance.
+	 * @param   bool    $new   Whether this instance constructs a new taxonomy or modifies an existing one.
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array() ) {
+	public function __construct( $slug = '', $args = array(), $new = true ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
-		$this->slug = sanitize_title_with_dashes( $slug );
+		$this->new = boolval( $new );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
 		$this->nonce_key = sprintf( '_wp_backstage_taxonomy_%1$s_nonce', $this->slug );
@@ -150,19 +187,31 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$this->slug
 			) );
 		
-		} elseif ( in_array( $this->slug, get_taxonomies() ) ) {
+		} elseif ( $this->new && in_array( $this->slug, get_taxonomies() ) ) {
 
 			$this->errors[] = new WP_Error( 'taxonomy_exists', sprintf( 
-				/* translators: 1: taxonomy slug */
-				__( '[taxonomy: %1$s] A taxonomy with this slug already exists.', 'wp-backstage' ), 
-				$this->slug
+				/* translators: 1: taxonomy slug, 2: method suggestion */
+				__( '[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Taxonomy::modify()</code>'
+			) );
+
+		} elseif ( ! $this->new && ! in_array( $this->slug, get_taxonomies() ) ) {
+
+			$this->errors[] = new WP_Error( 'taxonomy_not_exists', sprintf( 
+				/* translators: 1: taxonomy slug, 2: method suggestion */
+				__( '[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Taxonomy::add()</code>'
 			) );
 
 		}
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
 
-			foreach ( $this->required_args as $required_arg ) {
+		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
+
+			foreach ( $required_args as $required_arg ) {
 
 				if ( empty( $this->args[$required_arg] ) ) {
 
@@ -185,16 +234,25 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 * Init
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0  Ensures a new taxonomy is only registered if adding a new one.
 	 * @return  void 
 	 */
 	public function init() {
+
+		global $wp_backstage;
+
+		if ( $wp_backstage->has_errors() ) {
+			return;
+		}
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
 			return;
 		}
 
-		add_action( 'init', array( $this, 'register' ), 0 );
+		if ( $this->new ) {
+			add_action( 'init', array( $this, 'register' ), 0 );
+		}
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
 		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );
@@ -205,7 +263,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_add_term_script' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
 		parent::init();
@@ -405,7 +462,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 						
 						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
 						
-							<label for="<?php echo sanitize_title_with_dashes( $field['name'] ); ?>"><?php 
+							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php 
 
 								echo wp_kses( $field['label'], $this->kses_label ); 
 
@@ -444,9 +501,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	/**
 	 * Save
 	 *
-	 * Saves the form data as individual keys. Also saves a full array 
-	 * of `$field['name'] => $value` pairs as a new custom field with the 
-	 * `group_meta_key` argument as the key.
+	 * Saves the form data as individual keys.
 	 *
 	 * @todo    Document `$tt_id` better.
 	 * 
@@ -476,23 +531,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 
 					update_term_meta( $term_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
+				} else {
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+					delete_term_meta( $term_id, $field['name'] );
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
-
-					update_term_meta( $term_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_term_meta( $term_id, $this->args['group_meta_key'], $values );
+				}
 
 			}
 
@@ -615,7 +658,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->taxonomy === $this->slug ) {
+		if ( $this->is_screen( 'taxonomy', $this->slug ) ) {
 
 			$fields = $this->get_fields();
 
@@ -634,95 +677,5 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 		return $hidden;
 
 	}
-
-	/**
-	 * Inline Add Term Script
-	 * 
-	 * @since   0.0.1
-	 * @return  void  
-	 */
-	public function inline_add_term_script() {
-
-		if ( ! $this->is_screen( 'id', $this->screen_id ) || ! $this->is_screen( 'base', 'edit-tags' ) ) {
-			return;
-		} ?>
-
-		<script type="text/javascript">
-
-			(function($) {
-
-				function init() {
-					const form = document.querySelector('#addtag');
-
-					function parseParams(string = '') {
-						var params = {};
-						const pieces = string.split('&');
-						for (var i = 0; i < pieces.length; i++) {
-							const paramPieces = pieces[i].split('=');
-							if (paramPieces[0]) {
-								params[paramPieces[0]] = paramPieces[1] ? paramPieces[1] : '';
-							}
-						}
-						return params;
-					}
-					function resetColorPickers() {
-						const colorPickers = form.querySelectorAll('.wp-picker-container');
-						if (colorPickers && (colorPickers.length > 0)) {
-							for (var i = 0; i < colorPickers.length; i++) {
-								const resetButton = colorPickers[i].querySelector('.wp-picker-clear, .wp-picker-default');
-								resetButton.click();
-							}
-						}
-					}
-					function resetCodeEditors() {
-						const codeEditors = form.querySelectorAll('.CodeMirror');
-						if (codeEditors && (codeEditors.length > 0)) {
-							for (var i = 0; i < codeEditors.length; i++) {
-								const CodeMirrorInst = codeEditors[i].CodeMirror;
-								if (CodeMirrorInst) {
-									const textarea = CodeMirrorInst.getTextArea();
-									CodeMirrorInst.setValue(textarea.value);
-									CodeMirrorInst.clearHistory();
-								} 
-							}
-						}
-					}
-					function resetMediaUploaders() {
-						const mediaUploaders = form.querySelectorAll('[data-media-uploader-id]');
-						if (mediaUploaders && (mediaUploaders.length > 0)) {
-							for (var i = 0; i < mediaUploaders.length; i++) {
-								const mediaUploaderInst = mediaUploaders[i].mediaUploader;
-								if (mediaUploaderInst) {
-									mediaUploaderInst.reset();
-								}
-							}
-						}
-					}
-					function resetForm() {
-						form.reset();
-						resetColorPickers();
-						resetCodeEditors();
-						resetMediaUploaders();
-					}
-					function handleSuccess(e = null, request = null, settings = null) {
-						if (settings && settings.data) {
-							const params = parseParams(settings.data);
-							const { action } = params;
-							if (action === 'add-tag') {
-								resetForm();
-							}
-						}
-					}
-
-					$(document).ajaxSuccess(handleSuccess);
-				}
-
-				document.addEventListener('DOMContentLoaded', init);
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
 
 }

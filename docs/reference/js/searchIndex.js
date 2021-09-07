@@ -1,6 +1,86 @@
 Search.appendIndex(
     [
                 {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item",
+            "name": "WP_Backstage_Nav_Menu_Item",
+            "summary": "WP\u0020Backstage\u0020Nav\u0020Menu\u0020Item",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Amodify\u0028\u0029",
+            "name": "modify",
+            "summary": "Add",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_modify"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method___construct"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Aset_args\u0028\u0029",
+            "name": "set_args",
+            "summary": "Set\u0020Args",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_set_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Aset_errors\u0028\u0029",
+            "name": "set_errors",
+            "summary": "Set\u0020Errors",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_set_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "Init",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_init"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Aget_fields\u0028\u0029",
+            "name": "get_fields",
+            "summary": "Get\u0020Fields",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_get_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Asetup_nav_menu_item\u0028\u0029",
+            "name": "setup_nav_menu_item",
+            "summary": "Setup\u0020Nav\u0020Menu\u0020Item",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_setup_nav_menu_item"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_fields\u0028\u0029",
+            "name": "render_fields",
+            "summary": "Render\u0020Fields",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_customizer_fields\u0028\u0029",
+            "name": "render_customizer_fields",
+            "summary": "Render\u0020Customizer\u0020Fields",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_customizer_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_save"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Asave_customizer\u0028\u0029",
+            "name": "save_customizer",
+            "summary": "Save\u0020Customizer",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_save_customizer"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Amanage_default_hidden_columns\u0028\u0029",
+            "name": "manage_default_hidden_columns",
+            "summary": "Manage\u0020Default\u0020Hidden\u0020Columns",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_manage_default_hidden_columns"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Amanage_customizer_meta_preview\u0028\u0029",
+            "name": "manage_customizer_meta_preview",
+            "summary": "Manage\u0020Customizer\u0020Meta\u0020Preview",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_manage_customizer_meta_preview"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003A\u0024default_args",
+            "name": "default_args",
+            "summary": "Default\u0020Args",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#property_default_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003A\u0024required_args",
+            "name": "required_args",
+            "summary": "Required\u0020Args",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#property_required_args"
+        },                {
             "fqsen": "\\WP_Backstage_Options",
             "name": "WP_Backstage_Options",
             "summary": "WP\u0020Backstage\u0020Options",
@@ -25,6 +105,11 @@ Search.appendIndex(
             "name": "set_errors",
             "summary": "Set\u0020Errors",
             "url": "classes/WP-Backstage-Options.html#method_set_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Options\u003A\u003Ahook_script_action\u0028\u0029",
+            "name": "hook_script_action",
+            "summary": "Hook\u0020Script\u0020Action",
+            "url": "classes/WP-Backstage-Options.html#method_hook_script_action"
         },                {
             "fqsen": "\\WP_Backstage_Options\u003A\u003Ainit\u0028\u0029",
             "name": "init",
@@ -115,6 +200,11 @@ Search.appendIndex(
             "name": "add",
             "summary": "Add",
             "url": "classes/WP-Backstage-Post-Type.html#method_add"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Amodify\u0028\u0029",
+            "name": "modify",
+            "summary": "Modify",
+            "url": "classes/WP-Backstage-Post-Type.html#method_modify"
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
@@ -226,11 +316,6 @@ Search.appendIndex(
             "summary": "Inline\u0020Dashboard\u0020Glance\u0020Item\u0020Style",
             "url": "classes/WP-Backstage-Post-Type.html#method_inline_dashboard_glance_item_style"
         },                {
-            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Ainline_thumbnail_column_style\u0028\u0029",
-            "name": "inline_thumbnail_column_style",
-            "summary": "Inline\u0020Thumbnail\u0020Column\u0020Style",
-            "url": "classes/WP-Backstage-Post-Type.html#method_inline_thumbnail_column_style"
-        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024hidden_meta_boxes",
             "name": "hidden_meta_boxes",
             "summary": "Hidden\u0020Meta\u0020Boxes",
@@ -243,13 +328,178 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024required_args",
             "name": "required_args",
-            "summary": "Required\u0020Args",
+            "summary": "Required\u0020Args\u0020\u002D\u0020Add",
             "url": "classes/WP-Backstage-Post-Type.html#property_required_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024required_args_modify",
+            "name": "required_args_modify",
+            "summary": "Required\u0020Args\u0020\u002D\u0020Modify",
+            "url": "classes/WP-Backstage-Post-Type.html#property_required_args_modify"
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024default_meta_box_args",
             "name": "default_meta_box_args",
             "summary": "Default\u0020Meta\u0020Box\u0020Args",
             "url": "classes/WP-Backstage-Post-Type.html#property_default_meta_box_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup",
+            "name": "WP_Backstage_Setup",
+            "summary": "WP\u0020Backstage\u0020Setup",
+            "url": "classes/WP-Backstage-Setup.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct",
+            "url": "classes/WP-Backstage-Setup.html#method___construct"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "Init",
+            "url": "classes/WP-Backstage-Setup.html#method_init"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Aset_errors\u0028\u0029",
+            "name": "set_errors",
+            "summary": "Set\u0020Errors",
+            "url": "classes/WP-Backstage-Setup.html#method_set_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ais_plugin_active\u0028\u0029",
+            "name": "is_plugin_active",
+            "summary": "Is\u0020Plugin\u0020Active",
+            "url": "classes/WP-Backstage-Setup.html#method_is_plugin_active"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ahas_errors\u0028\u0029",
+            "name": "has_errors",
+            "summary": "Has\u0020Errors",
+            "url": "classes/WP-Backstage-Setup.html#method_has_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Aprint_errors\u0028\u0029",
+            "name": "print_errors",
+            "summary": "Print\u0020Errors",
+            "url": "classes/WP-Backstage-Setup.html#method_print_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Arender_help_tab\u0028\u0029",
+            "name": "render_help_tab",
+            "summary": "Render\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-Setup.html#method_render_help_tab"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Aadd_help_tab\u0028\u0029",
+            "name": "add_help_tab",
+            "summary": "Add\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-Setup.html#method_add_help_tab"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_media_uploader_style\u0028\u0029",
+            "name": "inline_media_uploader_style",
+            "summary": "Inline\u0020Media\u0020Uplaoder\u0020Style",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_media_uploader_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_editor_style\u0028\u0029",
+            "name": "inline_editor_style",
+            "summary": "Inline\u0020Editor\u0020Style",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_editor_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_customizer_style\u0028\u0029",
+            "name": "inline_customizer_style",
+            "summary": "Inline\u0020customizer\u0020Style",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_customizer_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_code_editor_style\u0028\u0029",
+            "name": "inline_code_editor_style",
+            "summary": "Inline\u0020Code\u0020Editor\u0020Style",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_code_editor_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Aenqueue_admin_scripts\u0028\u0029",
+            "name": "enqueue_admin_scripts",
+            "summary": "Enqueue\u0020Admin\u0020Scripts",
+            "url": "classes/WP-Backstage-Setup.html#method_enqueue_admin_scripts"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_thumbnail_column_style\u0028\u0029",
+            "name": "inline_thumbnail_column_style",
+            "summary": "Inline\u0020Thumbnail\u0020Column\u0020Style",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_thumbnail_column_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_global_script\u0028\u0029",
+            "name": "inline_global_script",
+            "summary": "Inline\u0020Global\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_global_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_media_uploader_script\u0028\u0029",
+            "name": "inline_media_uploader_script",
+            "summary": "Inline\u0020Media\u0020Uploader\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_media_uploader_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_date_picker_script\u0028\u0029",
+            "name": "inline_date_picker_script",
+            "summary": "Inline\u0020Datepicker\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_date_picker_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_color_picker_script\u0028\u0029",
+            "name": "inline_color_picker_script",
+            "summary": "Inline\u0020Colorpicker\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_color_picker_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_code_editor_script\u0028\u0029",
+            "name": "inline_code_editor_script",
+            "summary": "Inline\u0020Code\u0020Editor\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_code_editor_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_address_script\u0028\u0029",
+            "name": "inline_address_script",
+            "summary": "Inline\u0020Address\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_address_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_editor_script\u0028\u0029",
+            "name": "inline_editor_script",
+            "summary": "Inline\u0020Editor\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_editor_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_post_type_script\u0028\u0029",
+            "name": "inline_post_type_script",
+            "summary": "Inline\u0020Post\u0020Type\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_post_type_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_nav_menu_item_script\u0028\u0029",
+            "name": "inline_nav_menu_item_script",
+            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_nav_menu_item_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_nav_menu_item_customizer_script\u0028\u0029",
+            "name": "inline_nav_menu_item_customizer_script",
+            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_nav_menu_item_customizer_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_taxonomy_script\u0028\u0029",
+            "name": "inline_taxonomy_script",
+            "summary": "Inline\u0020Taxonomy\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_taxonomy_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_options_script\u0028\u0029",
+            "name": "inline_options_script",
+            "summary": "Inline\u0020Options\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_options_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_widget_script\u0028\u0029",
+            "name": "inline_widget_script",
+            "summary": "Inline\u0020Widget\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_widget_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_widget_customizer_script\u0028\u0029",
+            "name": "inline_widget_customizer_script",
+            "summary": "Inline\u0020Widget\u0020Customizer\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_widget_customizer_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003Ainline_user_script\u0028\u0029",
+            "name": "inline_user_script",
+            "summary": "Inline\u0020User\u0020Script",
+            "url": "classes/WP-Backstage-Setup.html#method_inline_user_script"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003A\u0024errors",
+            "name": "errors",
+            "summary": "Errors",
+            "url": "classes/WP-Backstage-Setup.html#property_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Setup\u003A\u003A\u0024plugin_dependencies",
+            "name": "plugin_dependencies",
+            "summary": "Plugin\u0020Dependencies",
+            "url": "classes/WP-Backstage-Setup.html#property_plugin_dependencies"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy",
             "name": "WP_Backstage_Taxonomy",
@@ -260,6 +510,11 @@ Search.appendIndex(
             "name": "add",
             "summary": "Add",
             "url": "classes/WP-Backstage-Taxonomy.html#method_add"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amodify\u0028\u0029",
+            "name": "modify",
+            "summary": "Modify",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_modify"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
@@ -326,11 +581,6 @@ Search.appendIndex(
             "summary": "Manage\u0020Default\u0020Hidden\u0020Columns",
             "url": "classes/WP-Backstage-Taxonomy.html#method_manage_default_hidden_columns"
         },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Ainline_add_term_script\u0028\u0029",
-            "name": "inline_add_term_script",
-            "summary": "Inline\u0020Add\u0020Term\u0020Script",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_inline_add_term_script"
-        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024default_args",
             "name": "default_args",
             "summary": "Default\u0020Args",
@@ -340,6 +590,11 @@ Search.appendIndex(
             "name": "required_args",
             "summary": "Required\u0020Args",
             "url": "classes/WP-Backstage-Taxonomy.html#property_required_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024required_args_modify",
+            "name": "required_args_modify",
+            "summary": "Required\u0020Args\u0020\u002D\u0020Modify",
+            "url": "classes/WP-Backstage-Taxonomy.html#property_required_args_modify"
         },                {
             "fqsen": "\\WP_Backstage_User",
             "name": "WP_Backstage_User",
@@ -426,6 +681,101 @@ Search.appendIndex(
             "summary": "Required\u0020Args",
             "url": "classes/WP-Backstage-User.html#property_required_args"
         },                {
+            "fqsen": "\\WP_Backstage_Widget_Base",
+            "name": "WP_Backstage_Widget_Base",
+            "summary": "WP\u0020Backstage\u0020Widget\u0020Base",
+            "url": "classes/WP-Backstage-Widget-Base.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/WP-Backstage-Widget-Base.html#method___construct"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003Awidget\u0028\u0029",
+            "name": "widget",
+            "summary": "",
+            "url": "classes/WP-Backstage-Widget-Base.html#method_widget"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003Aform\u0028\u0029",
+            "name": "form",
+            "summary": "",
+            "url": "classes/WP-Backstage-Widget-Base.html#method_form"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "",
+            "url": "classes/WP-Backstage-Widget-Base.html#method_update"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget",
+            "name": "WP_Backstage_Widget",
+            "summary": "WP\u0020Backstage\u0020Widget",
+            "url": "classes/WP-Backstage-Widget.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Add",
+            "url": "classes/WP-Backstage-Widget.html#method_add"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct",
+            "url": "classes/WP-Backstage-Widget.html#method___construct"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aset_args\u0028\u0029",
+            "name": "set_args",
+            "summary": "Set\u0020Args",
+            "url": "classes/WP-Backstage-Widget.html#method_set_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aset_errors\u0028\u0029",
+            "name": "set_errors",
+            "summary": "Set\u0020Errors",
+            "url": "classes/WP-Backstage-Widget.html#method_set_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "Init",
+            "url": "classes/WP-Backstage-Widget.html#method_init"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aregister\u0028\u0029",
+            "name": "register",
+            "summary": "Register",
+            "url": "classes/WP-Backstage-Widget.html#method_register"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aget_fields\u0028\u0029",
+            "name": "get_fields",
+            "summary": "Get\u0020Fields",
+            "url": "classes/WP-Backstage-Widget.html#method_get_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aget_field_name\u0028\u0029",
+            "name": "get_field_name",
+            "summary": "Get\u0020Field\u0020Name",
+            "url": "classes/WP-Backstage-Widget.html#method_get_field_name"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Aget_field_id\u0028\u0029",
+            "name": "get_field_id",
+            "summary": "Get\u0020Field\u0020ID",
+            "url": "classes/WP-Backstage-Widget.html#method_get_field_id"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Arender_fields\u0028\u0029",
+            "name": "render_fields",
+            "summary": "Render\u0020Fields",
+            "url": "classes/WP-Backstage-Widget.html#method_render_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save",
+            "url": "classes/WP-Backstage-Widget.html#method_save"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003A\u0024default_args",
+            "name": "default_args",
+            "summary": "Default\u0020Args",
+            "url": "classes/WP-Backstage-Widget.html#property_default_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget\u003A\u003A\u0024required_args",
+            "name": "required_args",
+            "summary": "Required\u0020Args",
+            "url": "classes/WP-Backstage-Widget.html#property_required_args"
+        },                {
             "fqsen": "\\WP_Backstage",
             "name": "WP_Backstage",
             "summary": "WP\u0020Backstage",
@@ -456,26 +806,6 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage.html#method_init"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Aadd_admin_head_style_action\u0028\u0029",
-            "name": "add_admin_head_style_action",
-            "summary": "Add\u0020Admin\u0020Head\u0020Style\u0020Action",
-            "url": "classes/WP-Backstage.html#method_add_admin_head_style_action"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Aadd_admin_footer_script_action\u0028\u0029",
-            "name": "add_admin_footer_script_action",
-            "summary": "Add\u0020Admin\u0020Footer\u0020Script\u0020Action",
-            "url": "classes/WP-Backstage.html#method_add_admin_footer_script_action"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Aformat_head_style_action\u0028\u0029",
-            "name": "format_head_style_action",
-            "summary": "Format\u0020Head\u0020Style\u0020Action",
-            "url": "classes/WP-Backstage.html#method_format_head_style_action"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Aformat_footer_script_action\u0028\u0029",
-            "name": "format_footer_script_action",
-            "summary": "Format\u0020Footer\u0020Script\u0020Action",
-            "url": "classes/WP-Backstage.html#method_format_footer_script_action"
-        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Aformat_field_action\u0028\u0029",
             "name": "format_field_action",
             "summary": "Format\u0020Field\u0020Action",
@@ -485,16 +815,6 @@ Search.appendIndex(
             "name": "format_column_content_filter",
             "summary": "Format\u0020Column\u0020Content\u0020Filter",
             "url": "classes/WP-Backstage.html#method_format_column_content_filter"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ahook_inline_styles\u0028\u0029",
-            "name": "hook_inline_styles",
-            "summary": "Hook\u0020Inline\u0020Styles",
-            "url": "classes/WP-Backstage.html#method_hook_inline_styles"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ahook_inline_scripts\u0028\u0029",
-            "name": "hook_inline_scripts",
-            "summary": "Hook\u0020Inline\u0020Scripts",
-            "url": "classes/WP-Backstage.html#method_hook_inline_scripts"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Arender_edit_nonce\u0028\u0029",
             "name": "render_edit_nonce",
@@ -506,10 +826,10 @@ Search.appendIndex(
             "summary": "Render\u0020Add\u0020nonce",
             "url": "classes/WP-Backstage.html#method_render_add_nonce"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Aenqueue_admin_scripts\u0028\u0029",
-            "name": "enqueue_admin_scripts",
-            "summary": "Enqueue\u0020Admin\u0020Scripts",
-            "url": "classes/WP-Backstage.html#method_enqueue_admin_scripts"
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_code_editor_script\u0028\u0029",
+            "name": "inline_code_editor_script",
+            "summary": "Inline\u0020Code\u0020Editor\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_code_editor_script"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Asanitize_text\u0028\u0029",
             "name": "sanitize_text",
@@ -566,15 +886,10 @@ Search.appendIndex(
             "summary": "Sanitize\u0020Time",
             "url": "classes/WP-Backstage.html#method_sanitize_time"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Asanitize_single_media\u0028\u0029",
-            "name": "sanitize_single_media",
-            "summary": "Sanitize\u0020Single\u0020Media",
-            "url": "classes/WP-Backstage.html#method_sanitize_single_media"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Asanitize_multi_media\u0028\u0029",
-            "name": "sanitize_multi_media",
-            "summary": "Sanitize\u0020Multi\u0020Media",
-            "url": "classes/WP-Backstage.html#method_sanitize_multi_media"
+            "fqsen": "\\WP_Backstage\u003A\u003Asanitize_media\u0028\u0029",
+            "name": "sanitize_media",
+            "summary": "Sanitize\u0020Media",
+            "url": "classes/WP-Backstage.html#method_sanitize_media"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Asanitize_field\u0028\u0029",
             "name": "sanitize_field",
@@ -696,11 +1011,6 @@ Search.appendIndex(
             "summary": "Get\u0020Media\u0020Uploader\u0020Label",
             "url": "classes/WP-Backstage.html#method_get_media_uploader_label"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Arender_media_uploader_thumbnail\u0028\u0029",
-            "name": "render_media_uploader_thumbnail",
-            "summary": "Render\u0020Media\u0020Uploader\u0020Thumbnail",
-            "url": "classes/WP-Backstage.html#method_render_media_uploader_thumbnail"
-        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Arender_media_uploader\u0028\u0029",
             "name": "render_media_uploader",
             "summary": "Render\u0020Media\u0020Uploader",
@@ -710,41 +1020,6 @@ Search.appendIndex(
             "name": "render_address",
             "summary": "Render\u0020Address",
             "url": "classes/WP-Backstage.html#method_render_address"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_editor_style\u0028\u0029",
-            "name": "inline_editor_style",
-            "summary": "Inline\u0020Editor\u0020Style",
-            "url": "classes/WP-Backstage.html#method_inline_editor_style"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_media_uploader_script\u0028\u0029",
-            "name": "inline_media_uploader_script",
-            "summary": "Inline\u0020Media\u0020Uploader\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_media_uploader_script"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_date_picker_script\u0028\u0029",
-            "name": "inline_date_picker_script",
-            "summary": "Inline\u0020Datepicker\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_date_picker_script"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_color_picker_script\u0028\u0029",
-            "name": "inline_color_picker_script",
-            "summary": "Inline\u0020Colorpicker\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_color_picker_script"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_code_editor_script\u0028\u0029",
-            "name": "inline_code_editor_script",
-            "summary": "Inline\u0020Code\u0020Editor\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_code_editor_script"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_address_script\u0028\u0029",
-            "name": "inline_address_script",
-            "summary": "Inline\u0020Address\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_address_script"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_editor_script\u0028\u0029",
-            "name": "inline_editor_script",
-            "summary": "Inline\u0020Editor\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_editor_script"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003A\u0024slug",
             "name": "slug",

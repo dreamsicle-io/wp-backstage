@@ -2,13 +2,19 @@
 /**
  * WP Backstage Post Type
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} 
+
 /**
  * WP Backstage Post Type
  *
+ * @since       0.0.1
  * @package     wp_backstage
  * @subpackage  includes
  */
@@ -17,7 +23,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Hidden Meta Boxes
 	 * 
-	 * @var  array  $hidden_meta_boxes  An array of hidden meta box IDs.
+	 * @since  0.0.1
+	 * @var    array  $hidden_meta_boxes  An array of hidden meta box IDs.
 	 */
 	protected $hidden_meta_boxes = array( 
 		'trackbacksdiv', 
@@ -30,7 +37,8 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Default Args
 	 * 
-	 * @var  array  $default_args  The default arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
 		'menu_name'       => '', 
@@ -66,9 +74,10 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	);
 
 	/**
-	 * Required Args
+	 * Required Args - Add
 	 * 
-	 * @var  array  $required_args  The required argument keys for this instance.
+	 * @since  0.0.1
+	 * @var    array  $required_args  The required argument keys for this instance if adding.
 	 */
 	protected $required_args = array(
 		'singular_name', 
@@ -76,9 +85,18 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	);
 
 	/**
+	 * Required Args - Modify
+	 * 
+	 * @since 2.0.0
+	 * @var   array  $required_args  The required argument keys for this instance if modifying.
+	 */
+	protected $required_args_modify = array();
+
+	/**
 	 * Default Meta Box Args
 	 * 
-	 * @var  array  $default_meta_box_args  The default meta box arguments for this instance.
+	 * @since  0.0.1
+	 * @var    array  $default_meta_box_args  The default meta box arguments for this instance.
 	 */
 	protected $default_meta_box_args = array( 
 		'id'          => '', 
@@ -98,7 +116,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @since   0.0.1
 	 * @param   string                 $slug  The slug for the post type.
 	 * @param   array                  $args  The arguments for this instance.
-	 * @return  WP_Backstage_Taxonomy  A fully constructed instance of `WP_Backstage_Post_Type`. 
+	 * @return  WP_Backstage_Post_Type  A fully constructed instance of `WP_Backstage_Post_Type`. 
 	 */
 	public static function add( $slug = '', $args = array() ) {
 
@@ -109,20 +127,41 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	}
 
 	/**
+	 * Modify
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_post/ WP_Post
+	 * 
+	 * @since   2.0.0
+	 * @param   string                  $slug  The slug for the post type.
+	 * @param   array                   $args  The arguments for this instance.
+	 * @return  WP_Backstage_Post_Type  A fully constructed instance of `WP_Backstage_Post_Type`. 
+	 */
+	public static function modify( $slug = '', $args = array() ) {
+
+		$Post_Type = new WP_Backstage_Post_Type( $slug, $args, false );
+		$Post_Type->init();
+		return $Post_Type;
+
+	}
+
+	/**
 	 * Construct
 	 * 
 	 * @since   0.0.1
+	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string  $slug  The developer-provided slug for the post type.
 	 * @param   array   $args  The developer-provided arguments for this instance.
+	 * @param   bool    $new   Whether this instance constructs a new post type or modifies an existing one.
 	 * @return  void 
 	 */
-	protected function __construct( $slug = '', $args = array() ) {
+	public function __construct( $slug = '', $args = array(), $new = true ) {
 
 		$this->default_field_args = array_merge( $this->default_field_args, array(
 			'has_column'  => false, 
 			'is_sortable' => false, 
 		) );
-		$this->slug = sanitize_title_with_dashes( $slug );
+		$this->new = boolval($new);
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
 		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
@@ -191,6 +230,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * Set Errors
 	 * 
 	 * @since   0.0.1
+	 * @param   bool  $new  Whether the errors should be set for a new post type or an existing one.
 	 * @return  void 
 	 */
 	protected function set_errors() {
@@ -211,19 +251,31 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 				$this->slug
 			) );
 		
-		} elseif ( in_array( $this->slug, get_post_types() ) ) {
+		} elseif ( $this->new && in_array( $this->slug, get_post_types() ) ) {
 
 			$this->errors[] = new WP_Error( 'post_type_exists', sprintf( 
-				/* translators: 1: post type slug */
-				__( '[post type: %1$s] A post type with this slug already exists.', 'wp-backstage' ), 
-				$this->slug
+				/* translators: 1: post type slug, 2: method suggestion */
+				__( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Post_type::modify()</code>'
+			) );
+
+		} elseif ( ! $this->new && ! in_array( $this->slug, get_post_types() ) ) {
+
+			$this->errors[] = new WP_Error( 'post_type_not_exists', sprintf( 
+				/* translators: 1: post type slug, 2: method suggestion */
+				__( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'wp-backstage' ), 
+				$this->slug,
+				'<code>WP_Backstage_Post_type::add()</code>'
 			) );
 
 		}
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
 
-			foreach ( $this->required_args as $required_arg ) {
+		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
+
+			foreach ( $required_args as $required_arg ) {
 
 				if ( empty( $this->args[$required_arg] ) ) {
 
@@ -250,17 +302,30 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function init() {
 
-		if ( $this->has_errors() ) {
-			
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			
-			return;
+		global $wp_backstage;
 
+		if ( $wp_backstage->has_errors() ) {
+			return;
 		}
 
-		add_action( 'init', array( $this, 'register' ), 0 );
+		if ( $this->has_errors() ) {
+			add_action( 'admin_notices', array( $this, 'print_errors' ) );
+			return;
+		}
+
+		if ( $this->new ) {
+			add_action( 'init', array( $this, 'register' ), 0 );
+			add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
+			add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
+			add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
+			add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
+		}
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+		if ( $this->slug === 'attachment' ) {
+			add_action( 'edit_attachment', array( $this, 'save' ), 10 );
+		} else {
+			add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+		}
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
@@ -269,11 +334,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
-		add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
-		add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
-		add_filter( 'admin_print_scripts-index.php', array( $this, 'inline_dashboard_glance_item_style' ), 10 );
-		add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
-		add_action( $this->format_head_style_action(), array( $this, 'inline_thumbnail_column_style' ), 10 );
 
 		parent::init();
 
@@ -472,9 +532,10 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	/**
 	 * Save
 	 *
-	 * Saves the form data as individual keys. Also saves a full array of 
-	 * `$field['name'] => $value` pairs as a new custom field with the 
-	 * `group_meta_key` argument as the key.
+	 * Saves the form data as individual keys.
+	 * 
+	 * Note that on attachments, the `edit_attachment` hook only sends 
+	 * the first parameter ($post_id).
 	 *
 	 * @since   0.0.1
 	 * @param   int      $post_id  The ID of the post being saved.
@@ -483,7 +544,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 * @return  void 
 	 */
 	public function save( $post_id = 0, $post = null, $update = false ) {
-
+		
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { return; }
 		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
@@ -505,29 +566,17 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 					update_post_meta( $post_id, $field['name'], $value );
 
-					$values[$field['name']] = $value;
-
 					if ( $field['type'] === 'media' ) {
 
 						$this->handle_attachments( $post_id, $value, $field );
 
 					}
 
-				} elseif ( in_array( $field['type'], array( 'checkbox', 'checkbox_set', 'radio' ) ) ) {
+				} else {
 
-					$value = ( $field['type'] === 'radio' ) ? '' : false;
+					delete_post_meta( $post_id, $field['name'] );
 
-					update_post_meta( $post_id, $field['name'], $value );
-
-					$values[$field['name']] = $value;
-
-				} 
-
-			}
-
-			if ( ! empty( $this->args['group_meta_key'] ) ) {
-
-				update_post_meta( $post_id, $this->args['group_meta_key'], $values );
+				}
 
 			}
 
@@ -655,7 +704,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
 
-		if ( is_array( $columns ) && ! empty( $columns ) ) {
+		if ( is_array( $columns ) ) {
 
 			// loop the columns so that the new columns can
 			// be inserted where they are wanted
@@ -839,7 +888,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 					$meta_box['priority'], 
 					array( 
 						'description' => $meta_box['description'], 
-						'fields'      => $meta_box['fields'], 
+						'fields'      => $meta_box['fields'],
 					)
 				);
 
@@ -923,7 +972,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
-		if ( $screen->post_type === $this->slug ) {
+		if ( $this->is_screen( 'post_type', $this->slug ) ) {
 
 			$fields = $this->get_fields();
 
@@ -1034,41 +1083,6 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 			printf( '#dashboard_right_now ul li > .%1$s-count > .dashicons { color: #82878c; speak: none; padding: 0 5px 0 0; position: relative; }', $this->slug ); 
 
 		?></style>
-
-	<?php }
-
-	/**
-	 * Inline Thumbnail Column Style
-	 * 
-	 * @since   0.0.1
-	 * @return  void
-	 */
-	public function inline_thumbnail_column_style() {
-
-		if ( ! $this->is_screen( 'base', 'edit' ) || ! post_type_supports( $this->slug, 'thumbnail' ) ) {
-			return;
-		} ?>
-		
-		<style 
-		id="wp_backstage_thumbnail_column_style"
-		type="text/css">
-
-			table.wp-list-table th.column-thumbnail,
-			table.wp-list-table td.column-thumbnail {
-				text-align: center;
-				width: 40px;
-			}
-
-			@media screen and (max-width: 783px) {
-				table.wp-list-table tr.is-expanded th.column-thumbnail,
-				table.wp-list-table tr.is-expanded td.column-thumbnail,
-				table.wp-list-table th.column-thumbnail,
-				table.wp-list-table td.column-thumbnail {
-					display: none !important;
-				}
-			}
-
-		</style>
 
 	<?php }
 

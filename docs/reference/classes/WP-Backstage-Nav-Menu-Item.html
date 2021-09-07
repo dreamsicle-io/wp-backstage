@@ -77,7 +77,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    WP_Backstage_Post_Type
+    WP_Backstage_Nav_Menu_Item
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/WP-Backstage.html"><abbr title="\WP_Backstage">WP_Backstage</abbr></a>
@@ -88,12 +88,12 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">21</span>
 </aside>
 
-            <p class="phpdocumentor-summary">WP Backstage Post Type</p>
+            <p class="phpdocumentor-summary">WP Backstage Nav Menu Item</p>
 
     <section class="phpdocumentor-description"></section>
 
@@ -107,7 +107,7 @@
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -170,7 +170,7 @@
 <dd>Default Address Values</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#property_default_args">$default_args</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#property_default_args">$default_args</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -217,13 +217,6 @@
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>Default Media Uploader Args</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#property_default_meta_box_args">$default_meta_box_args</a>
-    <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>Default Meta Box Args</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage.html#property_default_option_args">$default_option_args</a>
@@ -282,13 +275,6 @@
 <dd>Has Media</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#property_hidden_meta_boxes">$hidden_meta_boxes</a>
-    <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>Hidden Meta Boxes</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage.html#property_kses_label">$kses_label</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -324,18 +310,11 @@
 <dd>Remove Label For Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#property_required_args">$required_args</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#property_required_args">$required_args</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd>Required Args - Add</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#property_required_args_modify">$required_args_modify</a>
-    <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>Required Args - Modify</dd>
+<dd>Required Args</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage.html#property_screen_id">$screen_id</a>
@@ -373,18 +352,11 @@
 <dd>US States</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method___construct">__construct()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method___construct">__construct()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
 <dd>Construct</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_add">add()</a>
-    <span>
-                        &nbsp;: <a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a>    </span>
-</dt>
-<dd>Add</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_add_field_columns">add_field_columns()</a>
@@ -394,20 +366,6 @@
 <dd>Add Field Columns</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_add_meta_boxes">add_meta_boxes()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Add Meta Boxes</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_add_thumbnail_column">add_thumbnail_column()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Add Thumbnail Columns</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_has_errors">has_errors()</a>
     <span>
                         &nbsp;: bool    </span>
@@ -415,7 +373,7 @@
 <dd>Has Errors</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_init">init()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_init">init()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
@@ -429,46 +387,18 @@
 <dd>Inline Code Editor Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_inline_dashboard_glance_item_style">inline_dashboard_glance_item_style()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_manage_customizer_meta_preview">manage_customizer_meta_preview()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
-<dd>Inline Dashboard Glance Item Style</dd>
+<dd>Manage Customizer Meta Preview</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_dashboard_activity_query_args">manage_dashboard_activity_query_args()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Manage Dashboard Activity Query Args</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_dashboard_glance_items">manage_dashboard_glance_items()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Manage Dashboard Glance Items</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_columns">manage_default_hidden_columns()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_manage_default_hidden_columns">manage_default_hidden_columns()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
 <dd>Manage Default Hidden Columns</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_meta_boxes">manage_default_hidden_meta_boxes()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Manage Default Hidden Meta Boxes</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_post_title">manage_post_title()</a>
-    <span>
-                        &nbsp;: string    </span>
-</dt>
-<dd>Manage Post Title</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_manage_sortable_columns">manage_sortable_columns()</a>
@@ -478,18 +408,11 @@
 <dd>Manage Sortable Columns</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_manage_sorting">manage_sorting()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_modify">modify()</a>
     <span>
-                        &nbsp;: void    </span>
+                        &nbsp;: <a href="classes/WP-Backstage-Nav-Menu-Item.html"><abbr title="\WP_Backstage_Nav_Menu_Item">WP_Backstage_Nav_Menu_Item</abbr></a>    </span>
 </dt>
-<dd>Manage Sorting</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_modify">modify()</a>
-    <span>
-                        &nbsp;: <a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a>    </span>
-</dt>
-<dd>Modify</dd>
+<dd>Add</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_print_errors">print_errors()</a>
@@ -499,13 +422,6 @@
 <dd>Print Errors</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_register">register()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Register</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_render_add_nonce">render_add_nonce()</a>
     <span>
                         &nbsp;: string    </span>
@@ -513,11 +429,11 @@
 <dd>Render Add nonce</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_render_admin_column">render_admin_column()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_render_customizer_fields">render_customizer_fields()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
-<dd>Render Admin Column</dd>
+<dd>Render Customizer Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_render_edit_nonce">render_edit_nonce()</a>
@@ -527,11 +443,11 @@
 <dd>Render Edit nonce</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_render_meta_box">render_meta_box()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields">render_fields()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
-<dd>Render Meta Box</dd>
+<dd>Render Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_sanitize_address">sanitize_address()</a>
@@ -625,11 +541,25 @@
 <dd>Sanitize URL</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage-Post-Type.html#method_save">save()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_save">save()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
 <dd>Save</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_save_customizer">save_customizer()</a>
+    <span>
+                        &nbsp;: void    </span>
+</dt>
+<dd>Save Customizer</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_setup_nav_menu_item">setup_nav_menu_item()</a>
+    <span>
+                        &nbsp;: object    </span>
+</dt>
+<dd>Setup Nav Menu Item</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_format_attrs">format_attrs()</a>
@@ -667,7 +597,7 @@
 <dd>Get Field By</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_get_fields">get_fields()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_get_fields">get_fields()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
@@ -681,25 +611,11 @@
 <dd>Get Fields By</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_get_label">get_label()</a>
-    <span>
-                        &nbsp;: <abbr title="\strint">strint</abbr>    </span>
-</dt>
-<dd>Get Label</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_get_media_uploader_label">get_media_uploader_label()</a>
     <span>
                         &nbsp;: <abbr title="\strint">strint</abbr>    </span>
 </dt>
 <dd>Get Media Uploader Label</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_get_meta_boxes">get_meta_boxes()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Get Meta Boxes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_get_option_labels">get_option_labels()</a>
@@ -714,13 +630,6 @@
                         &nbsp;: string    </span>
 </dt>
 <dd>Get Sanitize Callback</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_handle_attachments">handle_attachments()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Handle Attachments</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_is_screen">is_screen()</a>
@@ -821,13 +730,6 @@
 <dd>Render Textarea</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_render_thumbnail">render_thumbnail()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Render Thumbnail</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_render_time">render_time()</a>
     <span>
                         &nbsp;: void    </span>
@@ -842,14 +744,14 @@
 <dd>Render Time Options</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_set_args">set_args()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_set_args">set_args()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
 <dd>Set Args</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage-Post-Type.html#method_set_errors">set_errors()</a>
+    <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_set_errors">set_errors()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
@@ -865,7 +767,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/WP-Backstage-Post-Type.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/WP-Backstage-Nav-Menu-Item.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -1111,14 +1013,14 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_default_args">
         $default_args
-        <a href="classes/WP-Backstage-Post-Type.html#property_default_args" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#property_default_args" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 </aside>
 
         <p class="phpdocumentor-summary">Default Args</p>
@@ -1127,7 +1029,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$default_args</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;menu_name&#039; =&gt; &#039;&#039;, &#039;singular_name&#039; =&gt; &#039;&#039;, &#039;plural_name&#039; =&gt; &#039;&#039;, &#039;thumbnail_label&#039; =&gt; &#039;&#039;, &#039;description&#039; =&gt; &#039;&#039;, &#039;public&#039; =&gt; 	rue, &#039;hierarchical&#039; =&gt; alse, &#039;with_front&#039; =&gt; alse, &#039;singular_base&#039; =&gt; &#039;&#039;, &#039;archive_base&#039; =&gt; &#039;&#039;, &#039;rest_base&#039; =&gt; &#039;&#039;, &#039;menu_icon&#039; =&gt; &#039;dashicons-admin-post&#039;, &#039;glance_item&#039; =&gt; 	rue, &#039;activity&#039; =&gt; 	rue, &#039;capability_type&#039; =&gt; &#039;post&#039;, &#039;supports&#039; =&gt; array(&#039;title&#039;, &#039;slug&#039;, &#039;author&#039;, &#039;editor&#039;, &#039;excerpt&#039;, &#039;thumbnail&#039;, &#039;comments&#039;, &#039;trackbacks&#039;, &#039;revisions&#039;, &#039;custom-fields&#039;, &#039;page-attributes&#039;), &#039;taxonomies&#039; =&gt; array(), &#039;meta_boxes&#039; =&gt; array())</span></code>
+     = <span class="phpdocumentor-signature__default-value">array(&#039;fields&#039; =&gt; array())</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1411,53 +1313,6 @@ ull, &#039;disabled&#039; =&gt; alse, &#039;description&#039; =&gt; &#039;&#039
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$default_media_uploader_args</span>
      = <span class="phpdocumentor-signature__default-value">array(&#039;multiple&#039; =&gt; alse, &#039;type&#039; =&gt; &#039;&#039;)</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_default_meta_box_args">
-        $default_meta_box_args
-        <a href="classes/WP-Backstage-Post-Type.html#property_default_meta_box_args" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">101</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Default Meta Box Args</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$default_meta_box_args</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;id&#039; =&gt; &#039;&#039;, &#039;title&#039; =&gt; &#039;&#039;, &#039;description&#039; =&gt; &#039;&#039;, &#039;context&#039; =&gt; &#039;&#039;, &#039;priority&#039; =&gt; &#039;&#039;, &#039;hidden&#039; =&gt; &#039;&#039;, &#039;fields&#039; =&gt; array())</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1870,53 +1725,6 @@ ull, &#039;disabled&#039; =&gt; alse, &#039;description&#039; =&gt; &#039;&#039
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_hidden_meta_boxes">
-        $hidden_meta_boxes
-        <a href="classes/WP-Backstage-Post-Type.html#property_hidden_meta_boxes" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">29</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Hidden Meta Boxes</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$hidden_meta_boxes</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;trackbacksdiv&#039;, &#039;slugdiv&#039;, &#039;authordiv&#039;, &#039;commentstatusdiv&#039;, &#039;postcustom&#039;)</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_kses_label">
         $kses_label
         <a href="classes/WP-Backstage.html#property_kses_label" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2186,69 +1994,22 @@ ull, &#039;disabled&#039; =&gt; alse, &#039;description&#039; =&gt; &#039;&#039
 >
     <h4 class="phpdocumentor-element__name" id="property_required_args">
         $required_args
-        <a href="classes/WP-Backstage-Post-Type.html#property_required_args" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#property_required_args" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Required Args - Add</p>
+        <p class="phpdocumentor-summary">Required Args</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$required_args</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;singular_name&#039;, &#039;plural_name&#039;)</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_required_args_modify">
-        $required_args_modify
-        <a href="classes/WP-Backstage-Post-Type.html#property_required_args_modify" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">93</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Required Args - Modify</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$required_args_modify</span>
      = <span class="phpdocumentor-signature__default-value">array()</span></code>
 
         <section class="phpdocumentor-description"></section>
@@ -2263,7 +2024,7 @@ ull, &#039;disabled&#039; =&gt; alse, &#039;description&#039; =&gt; &#039;&#039
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -2538,7 +2299,7 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/WP-Backstage-Post-Type.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/WP-Backstage-Nav-Menu-Item.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -2548,48 +2309,30 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/WP-Backstage-Post-Type.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 </aside>
 
         <p class="phpdocumentor-summary">Construct</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slug</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$new</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$slug</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The developer-provided slug for the post type.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The developer-provided arguments for this instance.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$new</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Whether this instance constructs a new post type or modifies an existing one.</p>
+                    <section class="phpdocumentor-description"><p>An array of arguments.</p>
 </section>
 
             </dd>
@@ -2605,19 +2348,9 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>Adds $new parameter for distinguishing between <code class="prettyprint">add</code> and <code class="prettyprint">modify</code> behavior.</p>
-</section>
+                                                 <section class="phpdocumentor-description"></section>
 
                                     </dd>
                         </dl>
@@ -2626,85 +2359,6 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_add">
-        add()
-        <a href="classes/WP-Backstage-Post-Type.html#method_add" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">121</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Add</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slug</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$slug</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The slug for the post type.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The arguments for this instance.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_post/"> <p>WP_Post</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>A fully constructed instance of <code class="prettyprint">WP_Backstage_Post_Type</code>.</p>
-</section>
 
     
 </article>
@@ -2791,117 +2445,6 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_add_meta_boxes">
-        add_meta_boxes()
-        <a href="classes/WP-Backstage-Post-Type.html#method_add_meta_boxes" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">874</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Add Meta Boxes</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">add_meta_boxes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_add_thumbnail_column">
-        add_thumbnail_column()
-        <a href="classes/WP-Backstage-Post-Type.html#method_add_thumbnail_column" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">705</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Add Thumbnail Columns</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">add_thumbnail_column</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$columns</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$columns</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of already-set columns.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The filtered columns.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_has_errors">
         has_errors()
         <a href="classes/WP-Backstage.html#method_has_errors" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2955,12 +2498,12 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
 >
     <h4 class="phpdocumentor-element__name" id="method_init">
         init()
-        <a href="classes/WP-Backstage-Post-Type.html#method_init" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_init" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">303</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 </aside>
 
         <p class="phpdocumentor-summary">Init</p>
@@ -2982,7 +2525,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -3119,25 +2662,41 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_inline_dashboard_glance_item_style">
-        inline_dashboard_glance_item_style()
-        <a href="classes/WP-Backstage-Post-Type.html#method_inline_dashboard_glance_item_style" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_manage_customizer_meta_preview">
+        manage_customizer_meta_preview()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_manage_customizer_meta_preview" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1076</span>
+    <span class="phpdocumentor-element-found-in__line">467</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Inline Dashboard Glance Item Style</p>
+        <p class="phpdocumentor-summary">Manage Customizer Meta Preview</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_dashboard_glance_item_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">manage_customizer_meta_preview</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Customize_Manager">WP_Customize_Manager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$wp_customize</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><p>Preview changes to the nav menu item roles. Note the unimplemented
+to-do in the doc block for the setting's preview method. This will only
+work for existing menu items. New menu items have a dynamically generated ID
+and do not exist in the database yet.</p>
+</section>
 
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$wp_customize</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Customize_Manager">WP_Customize_Manager</abbr></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The WP Customize instance.</p>
+</section>
+
+            </dd>
+            </dl>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -3145,13 +2704,20 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer"> <p>Stack Overflow Discussion on Nav Menu Items in the Customizer</p>
+ </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb"> <p>Customizer Roles Plugin Example by Weston Ruter</p>
+ </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3159,131 +2725,6 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_manage_dashboard_activity_query_args">
-        manage_dashboard_activity_query_args()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_dashboard_activity_query_args" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1042</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Manage Dashboard Activity Query Args</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_dashboard_activity_query_args</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The array of already-set query arguments.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The filtered array of query arguments.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_manage_dashboard_glance_items">
-        manage_dashboard_glance_items()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_dashboard_glance_items" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1004</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Manage Dashboard Glance Items</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_dashboard_glance_items</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$items</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-        <section class="phpdocumentor-description"><p>Note that the output will be wrapped in <code class="prettyprint">&lt;li&gt;</code> tags.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$items</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The array of alread-set glance items.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The filtered glance items array.</p>
-</section>
 
     
 </article>
@@ -3295,12 +2736,12 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
 >
     <h4 class="phpdocumentor-element__name" id="method_manage_default_hidden_columns">
         manage_default_hidden_columns()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_columns" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_manage_default_hidden_columns" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">973</span>
+    <span class="phpdocumentor-element-found-in__line">431</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Default Hidden Columns</p>
@@ -3309,8 +2750,10 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"><p>Note that this will only work if this post type's columns
-UI has never been modified by the user.</p>
+        <section class="phpdocumentor-description"><p>Adds all generated fields to the hidden columns array by default, so as
+to not choke up the UI. Note that this will only work if this post type's
+columns UI has never been modified by the user. Hooked to
+<code class="prettyprint">default_hidden_columns</code>.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3320,7 +2763,7 @@ UI has never been modified by the user.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of already-set hidden column names.</p>
+                    <section class="phpdocumentor-description"><p>An array of hidden columns.</p>
 </section>
 
             </dd>
@@ -3342,10 +2785,26 @@ UI has never been modified by the user.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/hooks/default_hidden_columns/"> <p>Hook: default_hidden_columns</p>
+ </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_screen/"> <p>WP_Screen</p>
+ </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -3356,149 +2815,6 @@ UI has never been modified by the user.</p>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_manage_default_hidden_meta_boxes">
-        manage_default_hidden_meta_boxes()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_meta_boxes" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">670</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Manage Default Hidden Meta Boxes</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_default_hidden_meta_boxes</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"><p>Note that this will only work if the post type UI has never
-been modified by the user.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$hidden</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of already-set hidden meta box IDs.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$screen</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr></span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An instance of <code class="prettyprint">WP_Screen</code>.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_manage_post_title">
-        manage_post_title()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_post_title" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">350</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Manage Post Title</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_post_title</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$title</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$title</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The post title.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The post ID.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The filtered post title.</p>
-</section>
 
     
 </article>
@@ -3580,34 +2896,34 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_manage_sorting">
-        manage_sorting()
-        <a href="classes/WP-Backstage-Post-Type.html#method_manage_sorting" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_modify">
+        modify()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_modify" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">825</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Manage Sorting</p>
+        <p class="phpdocumentor-summary">Add</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_sorting</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Query">WP_Query</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">modify</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Nav-Menu-Item.html"><abbr title="\WP_Backstage_Nav_Menu_Item">WP_Backstage_Nav_Menu_Item</abbr></a></span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$query</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Query">WP_Query</abbr></span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An instance of <code class="prettyprint">WP_Query</code>.</p>
+                    <section class="phpdocumentor-description"><p>An array of arguments for this instance.</p>
 </section>
 
             </dd>
@@ -3631,87 +2947,9 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Nav-Menu-Item.html"><abbr title="\WP_Backstage_Nav_Menu_Item">WP_Backstage_Nav_Menu_Item</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_modify">
-        modify()
-        <a href="classes/WP-Backstage-Post-Type.html#method_modify" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">139</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Modify</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">modify</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slug</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$slug</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The slug for the post type.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The arguments for this instance.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_post/"> <p>WP_Post</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Post-Type.html"><abbr title="\WP_Backstage_Post_Type">WP_Backstage_Post_Type</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>A fully constructed instance of <code class="prettyprint">WP_Backstage_Post_Type</code>.</p>
+            <section class="phpdocumentor-description"><p>A fully constructed instance of <code class="prettyprint">WP_Backstage_Nav_Menu_Item</code>.</p>
 </section>
 
     
@@ -3752,75 +2990,6 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_error/"> <p>WP_Error()</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_register">
-        register()
-        <a href="classes/WP-Backstage-Post-Type.html#method_register" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">408</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Register</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">register</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"><p>This method does the actual registration of the post type. It will set
-everything needed to extend WordPress to allow for the new post type such
-as adding all the labels, setting the rewrite rules and REST API base,
-and configures the WP admin UI.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/register_post_type/"> <p>register_post_type()</p>
- </a>
-                    
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_post_type/"> <p>WP_Post_Type</p>
  </a>
                     
                                     </dd>
@@ -3900,46 +3069,28 @@ and configures the WP admin UI.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_render_admin_column">
-        render_admin_column()
-        <a href="classes/WP-Backstage-Post-Type.html#method_render_admin_column" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_render_customizer_fields">
+        render_customizer_fields()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_render_customizer_fields" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">779</span>
+    <span class="phpdocumentor-element-found-in__line">269</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Render Admin Column</p>
+        <p class="phpdocumentor-summary">Render Customizer Fields</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">render_admin_column</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$column</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">render_customizer_fields</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$column</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The column name.</p>
+        <section class="phpdocumentor-description"><p>Render the customizer template for new menu items. Note that the templating is different
+in the customizer for menu items, therefore the <code class="prettyprint">before</code> and <code class="prettyprint">after</code> field actions
+are different in this case and are passed different values.</p>
 </section>
 
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The post ID for this row.</p>
-</section>
-
-            </dd>
-            </dl>
-
+    
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -3950,7 +3101,7 @@ and configures the WP admin UI.</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -4022,41 +3173,68 @@ and configures the WP admin UI.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_render_meta_box">
-        render_meta_box()
-        <a href="classes/WP-Backstage-Post-Type.html#method_render_meta_box" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_render_fields">
+        render_fields()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">909</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Render Meta Box</p>
+        <p class="phpdocumentor-summary">Render Fields</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">render_meta_box</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meta_box</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">render_fields</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$item_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$item</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$depth</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr></span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$item_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An instance of <code class="prettyprint">WP_Post</code>.</p>
+                    <section class="phpdocumentor-description"><p>The nav menu item ID.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$meta_box</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$item</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of WP meta box args passed from the <code class="prettyprint">add_meta_box()</code> function.</p>
+                    <section class="phpdocumentor-description"><p>The nav menu item post object.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$depth</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The depth of menu item.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">object</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An object of menu item arguments.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ID of the nav menu that this item is related to.</p>
 </section>
 
             </dd>
@@ -4072,7 +3250,7 @@ and configures the WP admin UI.</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -5119,51 +4297,48 @@ and configures the WP admin UI.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_save">
         save()
-        <a href="classes/WP-Backstage-Post-Type.html#method_save" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_save" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">546</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 </aside>
 
         <p class="phpdocumentor-summary">Save</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$update</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$menu_id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$item_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$menu_item_data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"><p>Saves the form data as individual keys.</p>
-<p>Note that on attachments, the <code class="prettyprint">edit_attachment</code> hook only sends
-the first parameter ($post_id).</p>
-</section>
+        <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post_id</span>
+                <span class="phpdocumentor-signature__argument__name">$menu_id</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The ID of the post being saved.</p>
+                    <section class="phpdocumentor-description"><p>The ID of the menu that the item is in.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Post">WP_Post</abbr></span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$item_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The full <code class="prettyprint">WP_Post</code> object for the post being saved.</p>
+                    <section class="phpdocumentor-description"><p>The ID of the menu item.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$update</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$menu_item_data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Whether the post is being updated or not.</p>
+                    <section class="phpdocumentor-description"><p>The menu item data.</p>
 </section>
 
             </dd>
@@ -5179,7 +4354,7 @@ the first parameter ($post_id).</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -5190,6 +4365,138 @@ the first parameter ($post_id).</p>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_save_customizer">
+        save_customizer()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_save_customizer" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">373</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Save Customizer</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">save_customizer</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Customize_Manager">WP_Customize_Manager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$wp_customize</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>Save the Nav Menu Item settings after the customizer has finished saving.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$wp_customize</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Customize_Manager">WP_Customize_Manager</abbr></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The current WP Customize instance.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Though it's probably not needed, try to check nonce here.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"></section>
+
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setup_nav_menu_item">
+        setup_nav_menu_item()
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_setup_nav_menu_item" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">179</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Setup Nav Menu Item</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">setup_nav_menu_item</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$item</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">object</span></code>
+
+        <section class="phpdocumentor-description"><p>Adds all values to the Nav Menu Item object.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$item</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"></section>
+
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">object</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The nav menu item object.</p>
+</section>
 
     
 </article>
@@ -5539,12 +4846,12 @@ value.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_get_fields">
         get_fields()
-        <a href="classes/WP-Backstage-Post-Type.html#method_get_fields" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_get_fields" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">505</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 </aside>
 
         <p class="phpdocumentor-summary">Get Fields</p>
@@ -5566,7 +4873,7 @@ value.</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -5576,7 +4883,7 @@ value.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>an array of field arg arrays.</p>
+            <section class="phpdocumentor-description"><p>An array of field argument arrays.</p>
 </section>
 
     
@@ -5668,57 +4975,6 @@ value.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_get_label">
-        get_label()
-        <a href="classes/WP-Backstage-Post-Type.html#method_get_label" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">382</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Get Label</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">get_label</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$template</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\strint">strint</abbr></span></code>
-
-        <section class="phpdocumentor-description"><p>A utility method to get a localized label for the various post type
-labels needed when registering a post type.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$template</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>A localized <code class="prettyprint">sprintf()</code> template where <code class="prettyprint">%1$s</code> is the post type
-singular name, <code class="prettyprint">%2$s</code> is the post type plural name, and <code class="prettyprint">%3$s</code> is
-the thumbnail label.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\strint">strint</abbr></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The formatted text.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_get_media_uploader_label">
         get_media_uploader_label()
         <a href="classes/WP-Backstage.html#method_get_media_uploader_label" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5767,56 +5023,6 @@ uploader field's markup.</p>
     <span class="phpdocumentor-signature__response_type"><abbr title="\strint">strint</abbr></span>
             &mdash;
             <section class="phpdocumentor-description"><p>The formatted text.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get_meta_boxes">
-        get_meta_boxes()
-        <a href="classes/WP-Backstage-Post-Type.html#method_get_meta_boxes" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">481</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Get Meta Boxes</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">get_meta_boxes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>An array of meta box argument arrays.</p>
 </section>
 
     
@@ -5977,71 +5183,6 @@ function. This method provides a mask of all of this class's
             &mdash;
             <section class="phpdocumentor-description"><p>The sanitize callback function name as a string.</p>
 </section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_handle_attachments">
-        handle_attachments()
-        <a href="classes/WP-Backstage-Post-Type.html#method_handle_attachments" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">597</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Handle Attachments</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">handle_attachments</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"><p>Attaches all media used in media uploader fields to the post being saved.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The ID of the post being saved.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attachment ID or array of attachment IDs to attach.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$field</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of field arguments.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
 
     
 </article>
@@ -6986,67 +6127,6 @@ users, options, etc.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_render_thumbnail">
-        render_thumbnail()
-        <a href="classes/WP-Backstage-Post-Type.html#method_render_thumbnail" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">750</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Render Thumbnail</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">render_thumbnail</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$post_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$post_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The post ID of the post to render the thumbnail for.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_render_time">
         render_time()
         <a href="classes/WP-Backstage.html#method_render_time" class="headerlink"><i class="fas fa-link"></i></a>
@@ -7185,12 +6265,12 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
 >
     <h4 class="phpdocumentor-element__name" id="method_set_args">
         set_args()
-        <a href="classes/WP-Backstage-Post-Type.html#method_set_args" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_set_args" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 </aside>
 
         <p class="phpdocumentor-summary">Set Args</p>
@@ -7224,7 +6304,7 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -7246,12 +6326,12 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
 >
     <h4 class="phpdocumentor-element__name" id="method_set_errors">
         set_errors()
-        <a href="classes/WP-Backstage-Post-Type.html#method_set_errors" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#method_set_errors" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">236</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 </aside>
 
         <p class="phpdocumentor-summary">Set Errors</p>
@@ -7273,7 +6353,7 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
 
@@ -7303,7 +6383,7 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
 </section>
             </div>
         </div>
-        <a href="classes/WP-Backstage-Post-Type.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/WP-Backstage-Nav-Menu-Item.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

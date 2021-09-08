@@ -455,7 +455,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage {
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows = ($field['type'] === 'textarea') ? 5 : 50;
+					$default_rows = ($field['type'] === 'textarea') ? 5 : 10;
 					$default_cols = 40;
 					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;

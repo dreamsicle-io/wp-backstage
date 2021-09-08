@@ -655,14 +655,17 @@ class WP_Backstage_Setup {
 					const attachment = findParentAttachment(e.target);
 					const attachmentID = parseInt(attachment.getAttribute('data-attachment-id'), 10);
 					const currentAttachmentIDs = getInputValue(uploader); 
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
 					const newAttachmentIDs = currentAttachmentIDs.filter(function(currentAttachmentID) {
 						return (currentAttachmentID !== attachmentID);
 					});
 					setInputValue(uploader, newAttachmentIDs);
 					removeClone(uploader, attachmentID);
-					refreshSortable(uploader);
 					if (newAttachmentIDs.length <= 0) {
 						reset(uploader);
+					}
+					if (isMultiple) {
+						refreshSortable(uploader);
 					}
 				}
 

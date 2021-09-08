@@ -1036,31 +1036,6 @@ Search.appendIndex(
             "summary": "Screen\u0020ID",
             "url": "classes/WP-Backstage.html#property_screen_id"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003A\u0024has_media",
-            "name": "has_media",
-            "summary": "Has\u0020Media",
-            "url": "classes/WP-Backstage.html#property_has_media"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003A\u0024has_date",
-            "name": "has_date",
-            "summary": "Has\u0020Date",
-            "url": "classes/WP-Backstage.html#property_has_date"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003A\u0024has_color",
-            "name": "has_color",
-            "summary": "Has\u0020Color",
-            "url": "classes/WP-Backstage.html#property_has_color"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003A\u0024has_address",
-            "name": "has_address",
-            "summary": "Has\u0020Address",
-            "url": "classes/WP-Backstage.html#property_has_address"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003A\u0024has_editor",
-            "name": "has_editor",
-            "summary": "Has\u0020Editor",
-            "url": "classes/WP-Backstage.html#property_has_editor"
-        },                {
             "fqsen": "\\WP_Backstage\u003A\u003A\u0024code_editors",
             "name": "code_editors",
             "summary": "Code\u0020Editors",

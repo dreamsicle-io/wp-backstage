@@ -524,7 +524,9 @@ class WP_Backstage_Setup {
 	 * @return  void
 	 */
 	public function inline_global_script() { ?>
-		<script id="wp_backstage_global_script">
+		<script 
+		id="wp_backstage_global_script"
+		type="text/javascript">
 			window.wpBackstage = {
 				colorPicker: {},
 				datePicker: {},
@@ -838,7 +840,7 @@ class WP_Backstage_Setup {
 						modal: modal,
 						ui: {
 							input: input,
-							legend, legend,
+							legend: legend,
 							addButton: addButton,
 							addToButton: addToButton,
 							replaceButton: replaceButton,
@@ -1279,6 +1281,8 @@ class WP_Backstage_Setup {
 	 * Inline Editor Script
 	 *
 	 * Inlines the editor script.
+	 * 
+	 * @todo     Make sure clicking on label focuses the editor.
 	 *
 	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor wp.editor
 	 * @link     https://developer.wordpress.org/reference/functions/wp_enqueue_editor/ wp_enqueue_editor()
@@ -1444,14 +1448,19 @@ class WP_Backstage_Setup {
 
 			(function($) {
 
-				function handleMetaBoxHandleClick(e = null) {
-					var { parentNode } = e.target;
+				function findParentMetaBox(element = null) {
+					var parentNode = element.parentNode;
 					while (! parentNode.classList.contains('postbox')) {
 						parentNode = parentNode.parentNode;
 					}
-					if (! parentNode.classList.contains('closed')) {
-						window.wpBackstage.editor.refreshAll(parentNode);
-						window.wpBackstage.codeEditor.refreshAll(parentNode);
+					return parentNode
+				}
+
+				function handleMetaBoxHandleClick(e = null) {
+					const metaBox = findParentMetaBox(e.target);
+					if (! metaBox.classList.contains('closed')) {
+						window.wpBackstage.editor.refreshAll(metaBox);
+						window.wpBackstage.codeEditor.refreshAll(metaBox);
 					}
 				}
 
@@ -2134,7 +2143,12 @@ class WP_Backstage_Setup {
 
 				function findWidget(id = '') {
 					const input = document.querySelector('.widget-id[value="' + id + '"]');
-					var parentNode = input.parentNode;
+					const widget = findParentWidget(input);
+					return widget;
+				}
+
+				function findParentWidget(element = null) {
+					var parentNode = element.parentNode;
 					while (! parentNode.classList.contains('widget')) {
 						parentNode = parentNode.parentNode;
 					}
@@ -2187,17 +2201,14 @@ class WP_Backstage_Setup {
 				}
 
 				function handleWidgetHandleClick(e = null) {
-					var { parentNode } = e.target;
+					const widget = findParentWidget(e.target);
 					if (widgetHandleTimer) {
 						clearTimeout(widgetHandleTimer);
 					}
-					while (! parentNode.classList.contains('widget')) {
-						parentNode = parentNode.parentNode;
-					}
 					widgetHandleTimer = setTimeout(function() {
-						if (parentNode.classList.contains('open')) {
-							window.wpBackstage.editor.refreshAll(parentNode);
-							window.wpBackstage.codeEditor.refreshAll(parentNode);
+						if (widget.classList.contains('open')) {
+							window.wpBackstage.editor.refreshAll(widget);
+							window.wpBackstage.codeEditor.refreshAll(widget);
 						}
 					}, 500);
 				}

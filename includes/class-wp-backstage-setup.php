@@ -838,7 +838,7 @@ class WP_Backstage_Setup {
 						modal: modal,
 						ui: {
 							input: input,
-							legend, legend,
+							legend: legend,
 							addButton: addButton,
 							addToButton: addToButton,
 							replaceButton: replaceButton,

@@ -2673,6 +2673,11 @@ class WP_Backstage {
 				<span 
 				class="wp-backstage-media-uploader__attachment"
 				data-attachment-id="0">
+					<button type="button" class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+						<span class="screen-reader-text"><?php 
+							esc_html_e( 'Remove', 'wp_backstage' ) 
+						?></span>
+					</button>
 					<img 
 					class="wp-backstage-media-uploader__attachment-image"
 					src="" alt="" title="" />

@@ -569,6 +569,14 @@ class WP_Backstage_Setup {
 					return parentNode;
 				}
 
+				function findParentAttachment(element = null) {
+					var parentNode = element.parentNode;
+					while (! parentNode.hasAttribute('data-attachment-id')) {
+						parentNode = parentNode.parentNode;
+					}
+					return parentNode;
+				}
+
 				function handleCloneClick(e = null) {
 					const uploader = findParentUploader(e.target);
 					uploader.wpBackstage.modal.open();
@@ -637,6 +645,21 @@ class WP_Backstage_Setup {
 					})
 				}
 
+				function handleAttachmentRemoveButtonClick(e = null) {
+					e.preventDefault();
+					e.stopPropagation();
+					const uploader = findParentUploader(e.target);
+					const attachment = findParentAttachment(e.target);
+					const attachmentID = parseInt(attachment.getAttribute('data-attachment-id'), 10);
+					const currentAttachmentIDs = getInputValue(uploader); 
+					const newAttachmentIDs = currentAttachmentIDs.filter(function(currentAttachmentID) {
+						return (currentAttachmentID !== attachmentID);
+					});
+					setInputValue(uploader, newAttachmentIDs);
+					removeClone(uploader, attachmentID);
+					refreshSortable(uploader);
+				}
+
 				function appendClones(uploader = null, newAttachments = [], replace = false) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const template = uploader.wpBackstage.ui.template;
@@ -652,7 +675,8 @@ class WP_Backstage_Setup {
 					for (var i = 0; i < attachments.length; i++) {
 						const clone = template.cloneNode(true);
 						const image = clone.querySelector('img');
-						const caption = clone.querySelector('.screen-reader-text');
+						const caption = clone.querySelector('.wp-backstage-media-uploader__attachment-caption');
+						const removeButton = clone.querySelector('.wp-backstage-media-uploader__attachment-remove');
 						const url = attachments[i].mime.includes('image') ? attachments[i].sizes[size].url : attachments[i].icon;
 						clone.setAttribute('data-attachment-id', attachments[i].id);
 						clone.style.cursor = isMultiple ? 'move' : 'pointer';
@@ -660,17 +684,23 @@ class WP_Backstage_Setup {
 						image.setAttribute('alt', attachments[i].alt);
 						image.setAttribute('title', attachments[i].title);
 						caption.setAttribute('title', attachments[i].caption);
+						removeButton.addEventListener('click', handleAttachmentRemoveButtonClick);
 						clone.addEventListener('click', handleCloneClick);
 						previewList.appendChild(clone);
 					}
 				}
 
+				function removeClone(uploader = null, attachmentID = 0) {
+					const previewList = uploader.wpBackstage.ui.previewList;
+					const clone = previewList.querySelector('[data-attachment-id="' + attachmentID + '"]');
+					if (clone) {
+						previewList.removeChild(clone);
+					}
+				}
+
 				function removeClones(uploader = null) {
 					const previewList = uploader.wpBackstage.ui.previewList;
-					const clones = previewList.querySelectorAll('[data-attachment-id]');
-					for (var i = 0; i < clones.length; i++) {
-						previewList.removeChild(clones[i]);
-					}
+					previewList.innerHTML = '';
 				}
 
 				function setInputValue(uploader = null, attachmentIDs = []) {

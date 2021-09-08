@@ -57,46 +57,6 @@ class WP_Backstage {
 	protected $screen_id = '';
 
 	/**
-	 * Has Media
-	 * 
-	 * @since  0.0.1
-	 * @var    bool  $has_media  Whether this instance has media fields or not.
-	 */
-	protected $has_media = false;
-
-	/**
-	 * Has Date
-	 * 
-	 * @since  0.0.1
-	 * @var    bool  $has_date  Whether this instance has date fields or not.
-	 */
-	protected $has_date = false;
-
-	/**
-	 * Has Color
-	 * 
-	 * @since  0.0.1
-	 * @var    bool  $has_color  Whether this instance has color fields or not.
-	 */
-	protected $has_color = false;
-
-	/**
-	 * Has Address
-	 * 
-	 * @since  0.0.1
-	 * @var    bool  $has_address  Whether this instance has address fields or not.
-	 */
-	protected $has_address = false;
-
-	/**
-	 * Has Editor
-	 * 
-	 * @since  0.0.1
-	 * @var    bool  $has_editor  Whether this instance has editor fields or not.
-	 */
-	protected $has_editor = false;
-
-	/**
 	 * Code Editors
 	 * 
 	 * @since  0.0.1
@@ -742,11 +702,6 @@ class WP_Backstage {
 			'WI' => __( 'Wisconsin', 'wp_backstage' ), 
 			'WY' => __( 'Wyoming', 'wp_backstage' ), 
 		);
-		$this->has_media = ! empty( $this->get_field_by( 'type', 'media' ) );
-		$this->has_date = ! empty( $this->get_field_by( 'type', 'date' ) );
-		$this->has_color = ! empty( $this->get_field_by( 'type', 'color' ) );
-		$this->has_address = ! empty( $this->get_field_by( 'type', 'address' ) );
-		$this->has_editor = ! empty( $this->get_field_by( 'type', 'editor' ) );
 		$this->code_editors = $this->get_fields_by( 'type', 'code' );
 
 	}
@@ -2108,7 +2063,7 @@ class WP_Backstage {
 				<label 
 				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
-				style="display:inline-block;"><?php 
+				style="display:inline-block;vertical-align:top;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -2603,7 +2558,7 @@ class WP_Backstage {
 							<label 
 							id="<?php printf( '%1$s_label', esc_attr( $input_id ) ); ?>"
 							for="<?php echo esc_attr( $input_id ); ?>"
-							style="display:inline-block;margin:0;"><?php 
+							style="display:inline-block;vertical-align:top;"><?php 
 
 								echo esc_html( $option_label );
 							
@@ -2718,6 +2673,11 @@ class WP_Backstage {
 				<span 
 				class="wp-backstage-media-uploader__attachment"
 				data-attachment-id="0">
+					<button type="button" class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+						<span class="screen-reader-text"><?php 
+							esc_html_e( 'Remove', 'wp_backstage' ) 
+						?></span>
+					</button>
 					<img 
 					class="wp-backstage-media-uploader__attachment-image"
 					src="" alt="" title="" />

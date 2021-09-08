@@ -1449,7 +1449,7 @@ class WP_Backstage_Setup {
 			(function($) {
 
 				function findParentMetaBox(element = null) {
-					var parentNode = e.target.parentNode;
+					var parentNode = element.parentNode;
 					while (! parentNode.classList.contains('postbox')) {
 						parentNode = parentNode.parentNode;
 					}

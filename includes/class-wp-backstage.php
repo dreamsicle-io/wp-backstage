@@ -2063,7 +2063,7 @@ class WP_Backstage {
 				<label 
 				id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
 				for="<?php echo esc_attr( $id ); ?>"
-				style="display:inline-block;"><?php 
+				style="display:inline-block;vertical-align:top;"><?php 
 
 					echo wp_kses( $field['label'], $this->kses_label ); 
 				
@@ -2558,7 +2558,7 @@ class WP_Backstage {
 							<label 
 							id="<?php printf( '%1$s_label', esc_attr( $input_id ) ); ?>"
 							for="<?php echo esc_attr( $input_id ); ?>"
-							style="display:inline-block;margin:0;"><?php 
+							style="display:inline-block;vertical-align:top;"><?php 
 
 								echo esc_html( $option_label );
 							

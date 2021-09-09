@@ -553,7 +553,6 @@ class WP_Backstage_Setup {
 	 * 
 	 * @since   0.0.1
 	 * @since   2.0.0  Full rewrite of the media uploader script.
-	 * @since   2.0.1  Ensures the field resets if all attachments are removed.
 	 * @return  void  
 	 */
 	public function inline_media_uploader_script() { ?>

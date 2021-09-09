@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WP_BACKSTAGE', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-require WP_BACKSTAGE . '/includes/class-wp-backstage-setup.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage.php';
+require WP_BACKSTAGE . '/includes/class-wp-backstage-component.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-post-type.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-nav-menu-item.php';
@@ -29,7 +29,7 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-widget.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget-base.php';
 require WP_BACKSTAGE . '/examples/tests.php';
 
-add_action( 'plugins_loaded', array( new WP_Backstage_Setup(), 'init' ), 10 );
+add_action( 'plugins_loaded', array( new WP_Backstage, 'init' ), 10 );
 
 /**
  * WP Backstage Activation

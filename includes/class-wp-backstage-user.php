@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package     wp_backstage
  * @subpackage  includes
  */
-class WP_Backstage_User extends WP_Backstage {
+class WP_Backstage_User extends WP_Backstage_Component {
 
 	/**
 	 * Default Args
@@ -249,7 +249,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 				<h2><?php 
 
-					echo wp_kses( $field_group['title'], $this->kses_p ); 
+					echo wp_kses( $field_group['title'], WP_Backstage::$kses_p ); 
 
 				?></h2>
 
@@ -257,7 +257,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 					<p class="description"><?php 
 
-						echo wp_kses( $field_group['description'], $this->kses_p );
+						echo wp_kses( $field_group['description'], WP_Backstage::$kses_p );
 
 					?></p>
 
@@ -318,7 +318,7 @@ class WP_Backstage_User extends WP_Backstage {
 						
 							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php 
 
-								echo wp_kses( $field['label'], $this->kses_label ); 
+								echo wp_kses( $field['label'], WP_Backstage::$kses_label ); 
 
 							?></label>
 
@@ -326,7 +326,7 @@ class WP_Backstage_User extends WP_Backstage {
 
 							<span><?php 
 
-								echo wp_kses( $field['label'], $this->kses_label ); 
+								echo wp_kses( $field['label'], WP_Backstage::$kses_label ); 
 
 							?></span>
 

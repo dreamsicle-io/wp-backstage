@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package     wp_backstage
  * @subpackage  includes
  */
-class WP_Backstage_Post_Type extends WP_Backstage {
+class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 	/**
 	 * Hidden Meta Boxes
@@ -951,7 +951,7 @@ class WP_Backstage_Post_Type extends WP_Backstage {
 
 			<p><?php 
 
-				echo wp_kses( $meta_box['args']['description'], $this->kses_p );
+				echo wp_kses( $meta_box['args']['description'], WP_Backstage::$kses_p );
 
 			?></p>
 

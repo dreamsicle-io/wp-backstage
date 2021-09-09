@@ -139,10 +139,39 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_action( 'customize_register', array( $this, 'manage_customizer_meta_preview' ), 10 );
+		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
 
 		parent::init();
 
 	}
+
+	public function inline_customizer_style() {
+		
+		$fields = $this->get_fields(); ?>
+
+		<style 
+		id="wp_backstage_nav_menu_item_customizer_style"
+		type="text/css"><?php 
+		
+			foreach ( $fields as $field ) {
+				
+				$field = wp_parse_args( $field, $this->default_field_args );
+				
+				echo esc_attr( sprintf( 
+					'.control-section-nav_menu .field-%1$s { display: none; }', 
+					sanitize_key( $field['name'] ) 
+				) );
+				
+				echo esc_attr( sprintf( 
+					'.control-section-nav_menu.field-%1$s-active .field-%1$s { display: block; }', 
+					sanitize_key( $field['name'] ) 
+				) );
+				
+			}
+
+		?></style>
+
+	<?php }
 
 	/**
 	 * Get Fields
@@ -233,7 +262,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				}
 
 				if ( $field['type'] === 'code' ) {
-					$field['settings_key'] = $field_name;
+					$field['args']['settings_key'] = $field_name;
 				}
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
@@ -293,7 +322,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage {
 				}
 
 				if ( $field['type'] === 'code' ) {
-					$field['settings_key'] = $field_name;
+					$field['args']['settings_key'] = $field_name;
 				}
 
 				$field = apply_filters( $this->format_field_action( 'args' ), $field ); ?>

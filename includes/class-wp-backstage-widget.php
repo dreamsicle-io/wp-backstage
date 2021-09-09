@@ -240,7 +240,7 @@ class WP_Backstage_Widget extends WP_Backstage {
 				$field_name = $field['name'];
 				$field['name'] = $this->get_field_name( $field_name, $id_base, $number );
 				$field['id'] = $this->get_field_id( $field_name, $id_base, $number );
-				$field['value'] = $instance[$field_name];
+				$field['value'] = isset( $instance[$field_name] ) ? $instance[$field_name] : null;
 				$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -256,18 +256,18 @@ class WP_Backstage_Widget extends WP_Backstage {
 				}
 
 				if ( $field['type'] === 'code' ) {
-					$field['settings_key'] = $field_name;
+					$field['args']['settings_key'] = $field_name;
 				}
 
-				$field = apply_filters( $this->format_field_action( 'args' ), $field, $item ); ?>
+				$field = apply_filters( $this->format_field_action( 'args' ), $field, $instance ); ?>
 
 				<p><?php 
 
-					do_action( $this->format_field_action( 'before' ), $field, $item );
+					do_action( $this->format_field_action( 'before' ), $field, $instance );
 
 					$this->render_field_by_type( $field ); 
 
-					do_action( $this->format_field_action( 'after' ), $field, $item );
+					do_action( $this->format_field_action( 'after' ), $field, $instance );
 
 				?></p>
 

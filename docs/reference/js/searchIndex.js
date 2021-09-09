@@ -31,6 +31,11 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_init"
         },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Ainline_customizer_style\u0028\u0029",
+            "name": "inline_customizer_style",
+            "summary": "",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_inline_customizer_style"
+        },                {
             "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Aget_fields\u0028\u0029",
             "name": "get_fields",
             "summary": "Get\u0020Fields",

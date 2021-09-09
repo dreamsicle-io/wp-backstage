@@ -1999,10 +1999,23 @@ class WP_Backstage_Setup {
 					}
 				}
 
+				function handleSectionExpanded(section = null) {
+					const openNavMenuItems = section.contentContainer.find('.menu-item-edit-active');
+					for (var i = 0; i < openNavMenuItems.length; i++) {
+						window.wpBackstage.editor.refreshAll(openNavMenuItems[i]);
+						window.wpBackstage.codeEditor.refreshAll(openNavMenuItems[i]);
+					}
+				}
+
 				function init() {
 					wp.customize.bind( 'ready', function() {
 						wp.customize.section.each(function(section) { 
 							if (section.id.startsWith('nav_menu')) {
+								section.expanded.bind(function(isExpanded) {
+									if (isExpanded) {
+										handleSectionExpanded(section);
+									}
+								});
 								section.deferred.initSortables.done(function() {
 									handleSectionInitSortables(section);
 								});

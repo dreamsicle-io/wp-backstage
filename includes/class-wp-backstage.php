@@ -173,8 +173,9 @@ class WP_Backstage {
 	 * @var    array  $default_code_args  An array of default code editor arguments.
 	 */
 	protected $default_code_args = array(
-		'mime'      => 'text/html', 
-		'max_width' => '100%', 
+		'settings_key' => '',
+		'mime'         => 'text/html', 
+		'max_width'    => '100%', 
 	);
 
 	/**
@@ -2180,7 +2181,6 @@ class WP_Backstage {
 		$input_class = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 		$field['input_attrs']['class'] = sprintf( 'wp-editor-area %1$s', $input_class ); ?>
 
-
 		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-editor-id="<?php echo esc_attr( $id ); ?>"
@@ -2258,7 +2258,7 @@ class WP_Backstage {
 		
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_code_args );
-		$settings_key = $field['settings_key'] ? $field['settings_key'] : $id; ?>
+		$settings_key = $args['settings_key'] ? $args['settings_key'] : $id; ?>
 
 		<span 
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"

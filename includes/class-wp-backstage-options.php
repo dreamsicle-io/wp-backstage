@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package     wp_backstage
  * @subpackage  includes
  */
-class WP_Backstage_Options extends WP_Backstage {
+class WP_Backstage_Options extends WP_Backstage_Component {
 
 	/**
 	 * Default Args
@@ -221,7 +221,7 @@ class WP_Backstage_Options extends WP_Backstage {
 	 * There is no general options page action for printing footer scripts. 
 	 * This hook allows WP Backstage to know if this is a settings page added 
 	 * by the plugin and gives a simple place to hook the options script from
-	 * `WP_Backstage_Setup`.
+	 * the `WP_Backstage` setup class.
 	 * 
 	 * @since  2.0.0
 	 * @return void
@@ -292,7 +292,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 					<p><?php 
 
-						echo wp_kses( $this->args['description'], $this->kses_p );
+						echo wp_kses( $this->args['description'], WP_Backstage::$kses_p );
 
 					?></p>
 
@@ -395,7 +395,7 @@ class WP_Backstage_Options extends WP_Backstage {
 			$this->slug, 
 			$this->slug, 
 			array(
-				'description'       => wp_kses( $this->args['description'], $this->kses_p ), 
+				'description'       => wp_kses( $this->args['description'], WP_Backstage::$kses_p ), 
 				'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
 				'sanitize_callback' => array( $this, 'save' ), 
 			)
@@ -436,7 +436,7 @@ class WP_Backstage_Options extends WP_Backstage {
 							$this->slug, 
 							$field['name'], 
 							array(
-								'description'       => wp_kses( $field['description'], $this->kses_p ), 
+								'description'       => wp_kses( $field['description'], WP_Backstage::$kses_p ), 
 								'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
 								'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ), 
 							)
@@ -557,7 +557,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 				<p class="description"><?php
 
-					echo wp_kses( $section['description'], $this->kses_p );
+					echo wp_kses( $section['description'], WP_Backstage::$kses_p );
 
 				?></p>
 
@@ -573,7 +573,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 			<h1><?php 
 
-				echo wp_kses( $this->args['title'], $this->kses_p ); 
+				echo wp_kses( $this->args['title'], WP_Backstage::$kses_p ); 
 
 			?></h1>
 
@@ -581,7 +581,7 @@ class WP_Backstage_Options extends WP_Backstage {
 
 				<p class="description"><?php 
 
-					echo wp_kses( $this->args['description'], $this->kses_p ); 
+					echo wp_kses( $this->args['description'], WP_Backstage::$kses_p ); 
 
 				?></p>
 

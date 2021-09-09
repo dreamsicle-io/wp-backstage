@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package     wp_backstage
  * @subpackage  includes
  */
-class WP_Backstage_Widget extends WP_Backstage {
+class WP_Backstage_Widget extends WP_Backstage_Component {
 
 	/**
 	 * Default Args

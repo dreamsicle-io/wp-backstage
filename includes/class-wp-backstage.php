@@ -87,6 +87,7 @@ class WP_Backstage {
 	 * @var    array  $default_field_args  An array of default field args.
 	 */
 	protected $default_field_args = array(
+		'id'          => '',
 		'type'        => 'text', 
 		'name'        => '', 
 		'label'       => '', 

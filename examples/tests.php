@@ -177,11 +177,22 @@ function wp_backstage_init() {
 		),
 		array( 
 			'type'        => 'media', 
+			'name'        => 'wp_backstage_media_field', 
+			'label'       => __( 'Any Media', 'wp_backstage' ), 
+			'description' => __( 'Please select or upload any kind of media.', 'wp_backstage' ), 
+			'has_column'  => true, 
+			'args'        => array(
+				'attach' => true,  
+			), 
+		),
+		array( 
+			'type'        => 'media', 
 			'name'        => 'wp_backstage_image_field', 
 			'label'       => __( 'Image', 'wp_backstage' ), 
 			'description' => __( 'Please select or upload an image.', 'wp_backstage' ), 
 			'has_column'  => true, 
 			'args'        => array(
+				'type'   => 'image',
 				'attach' => true, 
 			), 
 		),
@@ -192,6 +203,7 @@ function wp_backstage_init() {
 			'description' => __( 'Please select or upload multiple images.', 'wp_backstage' ), 
 			'has_column'  => true, 
 			'args'        => array(
+				'type'   => 'image',
 				'multiple' => true, 
 				'attach'   => true, 
 			), 

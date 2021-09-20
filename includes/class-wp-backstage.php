@@ -746,6 +746,14 @@ class WP_Backstage {
 					}
 				}
 
+				function getAttachmentURL(attachment = null, size = 'medium') {
+					let url = attachment.icon;
+					if (attachment.mime.includes('image')) {
+						url = (attachment.sizes && attachment.sizes[size]) ? attachment.sizes[size].url : attachment.url;
+					}
+					return url;
+				}
+
 				function appendClones(uploader = null, newAttachments = [], replace = false) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const template = uploader.wpBackstage.ui.template;
@@ -763,7 +771,7 @@ class WP_Backstage {
 						const image = clone.querySelector('img');
 						const caption = clone.querySelector('.wp-backstage-media-uploader__attachment-caption');
 						const removeButton = clone.querySelector('.wp-backstage-media-uploader__attachment-remove');
-						const url = attachments[i].mime.includes('image') ? attachments[i].sizes[size].url : attachments[i].icon;
+						const url = getAttachmentURL(attachments[i], size);
 						clone.setAttribute('data-attachment-id', attachments[i].id);
 						clone.style.cursor = isMultiple ? 'move' : 'pointer';
 						image.setAttribute('src', url);
@@ -906,7 +914,7 @@ class WP_Backstage {
 					const modal = wp.media({
 						title: title,
 						multiple: isMultiple, 
-						library: { type: type || 'image' }, 
+						library: { type: type || '' }, 
 						button: { text: buttonText },
 						frame: 'select', 
 					});

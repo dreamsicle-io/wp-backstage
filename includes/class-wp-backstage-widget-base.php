@@ -37,7 +37,9 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	}
 	
 	public function widget( $args, $instance ) {
+		echo $args['before_widget'];
 		do_action( sprintf( 'wp_backstage_widget_output_%1$s', $this->slug ), $args, $instance );
+		echo $args['after_widget'];
 	}
 			
 	public function form( $instance ) {

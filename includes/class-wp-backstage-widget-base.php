@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * adding hooks and filters for the form, the output, and saving of instances.
  *
  * @since       2.0.0
+ * @since       2.2.0  Added `before_widget` and `after_widget` args to `widget` method.
  * @package     wp_backstage
  * @subpackage  includes
  */

@@ -3,7 +3,7 @@
 Contributors: noahmason
 Tags: post-types, taxonomies, attachments, nav-menus, options, settings, widgets, meta-boxes, custom-fields
 Tested up to: 5.8
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: LICENSE
  

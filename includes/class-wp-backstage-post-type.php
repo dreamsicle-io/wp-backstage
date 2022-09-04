@@ -712,7 +712,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
 
-		if ( is_array( $columns ) ) {
+		if ( post_type_supports( $this->slug, 'thumbnail' ) && is_array( $columns ) ) {
 
 			// loop the columns so that the new columns can
 			// be inserted where they are wanted

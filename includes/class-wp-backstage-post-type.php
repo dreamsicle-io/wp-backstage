@@ -397,7 +397,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * This method does the actual registration of the post type. It will set 
 	 * everything needed to extend WordPress to allow for the new post type such 
 	 * as adding all the labels, setting the rewrite rules and REST API base, 
-	 * and configures the WP admin UI.
+	 * and configures the WP admin UI. `%1$s` refers to the singular label, 
+	 * while `%2$s` refers to the plural label. `%3$s` refers to the thumbnail label.
 	 *
 	 * @link   https://developer.wordpress.org/reference/functions/register_post_type/ register_post_type()
 	 * @link   https://developer.wordpress.org/reference/classes/wp_post_type/ WP_Post_Type
@@ -408,33 +409,40 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	public function register() {
 
 		$labels = array(
-			'name'                  => $this->args['plural_name'],
-			'singular_name'         => $this->args['singular_name'],
-			'menu_name'             => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
-			'name_admin_bar'        => $this->args['singular_name'],
-			'archives'              => $this->get_label( __( '%1$s Archives', 'wp-backstage' ) ),
-			'attributes'            => $this->get_label( __( '%1$s Attributes', 'wp-backstage' ) ),
-			'parent_item_colon'     => $this->get_label( __( 'Parent %1$s:', 'wp-backstage' ) ),
-			'all_items'             => $this->get_label( __( 'All %2$s', 'wp-backstage' ) ),
-			'add_new_item'          => $this->get_label( __( 'Add New %1$s', 'wp-backstage' ) ),
-			'add_new'               => $this->get_label( __( 'Add New', 'wp-backstage' ) ),
-			'new_item'              => $this->get_label( __( 'New %1$s', 'wp-backstage' ) ),
-			'edit_item'             => $this->get_label( __( 'Edit %1$s', 'wp-backstage' ) ),
-			'update_item'           => $this->get_label( __( 'Update %1$s', 'wp-backstage' ) ),
-			'view_item'             => $this->get_label( __( 'View %1$s', 'wp-backstage' ) ),
-			'view_items'            => $this->get_label( __( 'View %2$s', 'wp-backstage' ) ),
-			'search_items'          => $this->get_label( __( 'Search %2$s', 'wp-backstage' ) ),
-			'not_found'             => $this->get_label( __( 'No %2$s found', 'wp-backstage' ) ),
-			'not_found_in_trash'    => $this->get_label( __( 'Not %2$s found in Trash', 'wp-backstage' ) ),
-			'featured_image'        => $this->args['thumbnail_label'],
-			'set_featured_image'    => $this->get_label( __( 'Set %3$s', 'wp-backstage' ) ),
-			'remove_featured_image' => $this->get_label( __( 'Remove %3$s', 'wp-backstage' ) ),
-			'use_featured_image'    => $this->get_label( __( 'Use as %3$s', 'wp-backstage' ) ),
-			'insert_into_item'      => $this->get_label( __( 'Insert into %1$s', 'wp-backstage' ) ),
-			'uploaded_to_this_item' => $this->get_label( __( 'Uploaded to this %1$s', 'wp-backstage' ) ),
-			'items_list'            => $this->get_label( __( '%2$s list', 'wp-backstage' ) ),
-			'items_list_navigation' => $this->get_label( __( '%2$s list navigation', 'wp-backstage' ) ),
-			'filter_items_list'     => $this->get_label( __( 'Filter %2$s list', 'wp-backstage' ) ),
+			'name'                     => $this->args['plural_name'],
+			'singular_name'            => $this->args['singular_name'],
+			'menu_name'                => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
+			'name_admin_bar'           => $this->args['singular_name'],
+			'archives'                 => $this->get_label( __( '%1$s Archives', 'wp-backstage' ) ),
+			'attributes'               => $this->get_label( __( '%1$s Attributes', 'wp-backstage' ) ),
+			'parent_item_colon'        => $this->get_label( __( 'Parent %1$s:', 'wp-backstage' ) ),
+			'all_items'                => $this->get_label( __( 'All %2$s', 'wp-backstage' ) ),
+			'add_new_item'             => $this->get_label( __( 'Add New %1$s', 'wp-backstage' ) ),
+			'add_new'                  => $this->get_label( __( 'Add New', 'wp-backstage' ) ),
+			'new_item'                 => $this->get_label( __( 'New %1$s', 'wp-backstage' ) ),
+			'edit_item'                => $this->get_label( __( 'Edit %1$s', 'wp-backstage' ) ),
+			'update_item'              => $this->get_label( __( 'Update %1$s', 'wp-backstage' ) ),
+			'view_item'                => $this->get_label( __( 'View %1$s', 'wp-backstage' ) ),
+			'view_items'               => $this->get_label( __( 'View %2$s', 'wp-backstage' ) ),
+			'search_items'             => $this->get_label( __( 'Search %2$s', 'wp-backstage' ) ),
+			'not_found'                => $this->get_label( __( 'No %2$s found', 'wp-backstage' ) ),
+			'not_found_in_trash'       => $this->get_label( __( 'No %2$s found in trash', 'wp-backstage' ) ),
+			'featured_image'           => $this->args['thumbnail_label'],
+			'set_featured_image'       => $this->get_label( __( 'Set %3$s', 'wp-backstage' ) ),
+			'remove_featured_image'    => $this->get_label( __( 'Remove %3$s', 'wp-backstage' ) ),
+			'use_featured_image'       => $this->get_label( __( 'Use as %3$s', 'wp-backstage' ) ),
+			'insert_into_item'         => $this->get_label( __( 'Insert into %1$s', 'wp-backstage' ) ),
+			'uploaded_to_this_item'    => $this->get_label( __( 'Uploaded to this %1$s', 'wp-backstage' ) ),
+			'items_list'               => $this->get_label( __( '%2$s list', 'wp-backstage' ) ),
+			'items_list_navigation'    => $this->get_label( __( '%2$s list navigation', 'wp-backstage' ) ),
+			'filter_items_list'        => $this->get_label( __( 'Filter %2$s list', 'wp-backstage' ) ),
+			'item_published'           => $this->get_label( __( '%1$s published.', 'wp-backstage' ) ), 
+			'item_published_privately' => $this->get_label( __( '%1$s published privately.', 'wp-backstage' ) ), 
+			'item_reverted_to_draft'   => $this->get_label( __( '%1$s reverted to draft.', 'wp-backstage' ) ), 
+			'item_scheduled'           => $this->get_label( __( '%1$s scheduled.', 'wp-backstage' ) ), 
+			'item_updated'             => $this->get_label( __( '%1$s updated.', 'wp-backstage' ) ), 
+			'item_link'                => $this->get_label( __( '%1$s Link', 'wp-backstage' ) ), 
+			'item_link_description'    => $this->get_label( __( 'A link to a %1$s', 'wp-backstage' ) ), 
 		);
 
 		$rewrite = array(
@@ -704,7 +712,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	public function add_thumbnail_column( $columns = array() ) {
 
-		if ( is_array( $columns ) ) {
+		if ( post_type_supports( $this->slug, 'thumbnail' ) && is_array( $columns ) ) {
 
 			// loop the columns so that the new columns can
 			// be inserted where they are wanted

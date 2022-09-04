@@ -1,7 +1,15 @@
 {
+	"require-dev": {
+		"wp-cli/i18n-command": "^2.4"
+	},
     "scripts": {
-        "build:docs": [
-        	"php ./phpdocumentor.phar -d \"./includes\" -t \"./docs/reference\""
-        ]
+		"post-install-cmd": "composer run update-hooks",
+		"post-update-cmd": "composer run update-hooks",
+		"build": ["composer run build-pot", "composer run build-docs"],
+		"build-pot": "wp i18n make-pot . languages/wp-backstage.pot",
+		"build-docs": "php ./phpdocumentor.phar -d \"./includes\" -t \"./docs/reference\"",
+		"update-hooks": ["composer run remove-hooks", "composer run add-hooks"],
+		"add-hooks": "cp -v -f pre-commit .git/hooks/pre-commit",
+		"remove-hooks": "find .git/hooks/* ! -name *.sample -delete -print"
     }
 }

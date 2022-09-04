@@ -1,0 +1,4 @@
+#!/bin/sh
+
+composer run build
+git add "languages/wp-backstage.pot" "docs"

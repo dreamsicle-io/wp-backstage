@@ -1322,6 +1322,7 @@ class WP_Backstage_Component {
 	 * value.
 	 * 
 	 * @since   0.0.1
+	 * @since   2.4.0  Renders the actual value if no label is found on fields like select, radio, and checkbox set.
 	 * @param   mixed  $value  The value to format.
 	 * @param   array  $field  An array of field arguments.
 	 * @return  void

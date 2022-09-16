@@ -957,11 +957,13 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
 
-			<p><?php 
+			<div style="margin: 12px -12px -12px; padding: 12px; background: #f6f7f7; border-top: 1px solid #dcdcde;">
 
-				echo wp_kses( $meta_box['args']['description'], WP_Backstage::$kses_p );
+				<p style="margin: 0;"><?php 
+					echo wp_kses( $meta_box['args']['description'], WP_Backstage::$kses_p );
+				?></p>
 
-			?></p>
+			</div>
 
 		<?php }
 

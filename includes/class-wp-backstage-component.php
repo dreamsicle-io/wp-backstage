@@ -1022,19 +1022,25 @@ class WP_Backstage_Component {
 	 * 
 	 * @since   0.0.1
 	 * @since   2.0.0   Parses more strictly to support customizer changes.
-	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values or a time string as hh:mm:ss.
+	 * @since   2.4.0   Fixes bug introduced at 2.0.0 that parsed the values incorrectly.
+	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values keyed as "hour", "minute", "second"; or a time string as hh:mm:ss.
 	 * @return  string  a string as `hh:mm:ss`. 
 	 */
-	public function sanitize_time( $value = null ) {
+	public function sanitize_time( $value = array() ) {
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
-			$value = explode( ':', $value );
+			$pieces = explode( ':', $value );
+			$value = array(
+				'hour'   => isset( $pieces[0] ) ? $pieces[0] : '00',
+				'minute' => isset( $pieces[1] ) ? $pieces[1] : '00',
+				'second' => isset( $pieces[2] ) ? $pieces[2] : '00',
+			);
 		}
-		$value = array(
-			0 => ! empty( $value[0] ) ? $value[0] : '00',
-			1 => ! empty( $value[1] ) ? $value[1] : '00',
-			2 => ! empty( $value[2] ) ? $value[2] : '00',
+		$new_value =array(
+			'hour'   => isset( $value['hour'] ) ? $value['hour'] : '00',
+			'minute' => isset( $value['minute'] ) ? $value['minute'] : '00',
+			'second' => isset( $value['second'] ) ? $value['second'] : '00',
 		);
-		return implode( ':', array_map( 'esc_attr', $value ) );
+		return implode( ':', array_map( 'esc_attr', $new_value ) );
 	}
 
 	/**
@@ -1051,7 +1057,7 @@ class WP_Backstage_Component {
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
 			$value = explode( ',', $value );
 		}
-		return ! empty( $value ) ? array_map( 'intval', $value ) : array();
+		return ! empty( $value ) ? array_map( 'absint', $value ) : array();
 	}
 
 	/**
@@ -1316,6 +1322,7 @@ class WP_Backstage_Component {
 	 * value.
 	 * 
 	 * @since   0.0.1
+	 * @since   2.4.0  Renders the actual value if no label is found on fields like select, radio, and checkbox set.
 	 * @param   mixed  $value  The value to format.
 	 * @param   array  $field  An array of field arguments.
 	 * @return  void
@@ -1338,11 +1345,11 @@ class WP_Backstage_Component {
 					break;
 				case 'radio':
 					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
+					$content = esc_html( isset( $labels[$value] ) ? $labels[$value] : $value );
 					break;
 				case 'select':
 					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
+					$content = esc_html( isset( $labels[$value] ) ? $labels[$value] : $value );
 					break;
 				case 'checkbox':
 					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>';
@@ -1367,7 +1374,7 @@ class WP_Backstage_Component {
 					if ( is_array( $value ) && ! empty( $value ) ) {
 						$option_labels = $this->get_option_labels( $field );
 						foreach( $value as $key ) {
-							$labels[] = $option_labels[$key];
+							$labels[] = isset( $option_labels[$key] ) ? $option_labels[$key] : $key;
 						}
 					}
 					$content = esc_html( implode( ', ', $labels ) );
@@ -1414,7 +1421,7 @@ class WP_Backstage_Component {
 					$attachments = array();
 					foreach( $value as $i => $attachment_id ) {
 						$attachments[] = wp_get_attachment_image( 
-							intval( $attachment_id ), 
+							absint( $attachment_id ), 
 							array($thumbnail_size, $thumbnail_size), 
 							true, 
 							array( 

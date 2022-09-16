@@ -1022,19 +1022,25 @@ class WP_Backstage_Component {
 	 * 
 	 * @since   0.0.1
 	 * @since   2.0.0   Parses more strictly to support customizer changes.
-	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values or a time string as hh:mm:ss.
+	 * @since   2.4.0   Fixes bug introduced at 2.0.0 that parsed the values incorrectly.
+	 * @param   mixed   $value  The value to sanitize. Expects an array of 3 2-digit time values keyed as "hour", "minute", "second"; or a time string as hh:mm:ss.
 	 * @return  string  a string as `hh:mm:ss`. 
 	 */
-	public function sanitize_time( $value = null ) {
+	public function sanitize_time( $value = array() ) {
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
-			$value = explode( ':', $value );
+			$pieces = explode( ':', $value );
+			$value = array(
+				'hour'   => isset( $pieces[0] ) ? $pieces[0] : '00',
+				'minute' => isset( $pieces[1] ) ? $pieces[1] : '00',
+				'second' => isset( $pieces[2] ) ? $pieces[2] : '00',
+			);
 		}
-		$value = array(
-			0 => ! empty( $value[0] ) ? $value[0] : '00',
-			1 => ! empty( $value[1] ) ? $value[1] : '00',
-			2 => ! empty( $value[2] ) ? $value[2] : '00',
+		$new_value =array(
+			'hour'   => isset( $value['hour'] ) ? $value['hour'] : '00',
+			'minute' => isset( $value['minute'] ) ? $value['minute'] : '00',
+			'second' => isset( $value['second'] ) ? $value['second'] : '00',
 		);
-		return implode( ':', array_map( 'esc_attr', $value ) );
+		return implode( ':', array_map( 'esc_attr', $new_value ) );
 	}
 
 	/**

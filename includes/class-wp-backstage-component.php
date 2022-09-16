@@ -1057,7 +1057,7 @@ class WP_Backstage_Component {
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
 			$value = explode( ',', $value );
 		}
-		return ! empty( $value ) ? array_map( 'intval', $value ) : array();
+		return ! empty( $value ) ? array_map( 'absint', $value ) : array();
 	}
 
 	/**
@@ -1344,11 +1344,11 @@ class WP_Backstage_Component {
 					break;
 				case 'radio':
 					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
+					$content = esc_html( isset( $labels[$value] ) ? $labels[$value] : $value );
 					break;
 				case 'select':
 					$labels = $this->get_option_labels( $field );
-					$content = esc_html( $labels[$value] );
+					$content = esc_html( isset( $labels[$value] ) ? $labels[$value] : $value );
 					break;
 				case 'checkbox':
 					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'true', 'wp-backstage' ) . '</span>';
@@ -1373,7 +1373,7 @@ class WP_Backstage_Component {
 					if ( is_array( $value ) && ! empty( $value ) ) {
 						$option_labels = $this->get_option_labels( $field );
 						foreach( $value as $key ) {
-							$labels[] = $option_labels[$key];
+							$labels[] = isset( $option_labels[$key] ) ? $option_labels[$key] : $key;
 						}
 					}
 					$content = esc_html( implode( ', ', $labels ) );
@@ -1420,7 +1420,7 @@ class WP_Backstage_Component {
 					$attachments = array();
 					foreach( $value as $i => $attachment_id ) {
 						$attachments[] = wp_get_attachment_image( 
-							intval( $attachment_id ), 
+							absint( $attachment_id ), 
 							array($thumbnail_size, $thumbnail_size), 
 							true, 
 							array( 

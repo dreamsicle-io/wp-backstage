@@ -164,6 +164,7 @@ class WP_Backstage {
 		}
 
 		add_action( 'current_screen', array( $this, 'add_help_tab' ), 10 );
+		add_action( 'admin_print_styles', array( $this, 'inline_field_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
@@ -367,10 +368,16 @@ class WP_Backstage {
 		id="wp_backstage_media_uploader_style"
 		type="text/css">
 
+			.wp-backstage-media-uploader {
+				display: block;
+			}
+
 			.wp-backstage-media-uploader__legend {
 				cursor: pointer;
 				padding: 2px 0;
 				font-size: inherit;
+				display: inline-block;
+				width: auto;
 			}
 
 			.wp-backstage-media-uploader__buttons {
@@ -379,7 +386,14 @@ class WP_Backstage {
 			}
 
 			.wp-backstage-media-uploader__button {
-				margin: 0 8px 0 0;
+				margin: 0 8px 0 0 !important;
+			}
+
+			.wp-backstage-media-uploader__button--remove {
+				background: transparent;
+				border: 0;
+				cursor: pointer;
+				padding: 0;
 			}
 
 			.wp-backstage-media-uploader__preview-list {
@@ -587,6 +601,27 @@ class WP_Backstage {
 				table.wp-list-table td.column-thumbnail {
 					display: none !important;
 				}
+			}
+
+		</style>
+
+	<?php }
+
+	/**
+	 * Inline Field Style
+	 * 
+	 * @since   2.5.0
+	 * @return  void
+	 */
+	public function inline_field_style() { ?>
+		
+		<style 
+		id="wp_backstage_post_type_style"
+		type="text/css">
+
+			/* Meta box fields */
+			.postbox .wp-backstage-field {
+				margin-bottom: 12px;
 			}
 
 		</style>

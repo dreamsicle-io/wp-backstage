@@ -1338,10 +1338,10 @@ class WP_Backstage_Component {
 					$content = '<a href="' . esc_attr( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
 					break;
 				case 'email':
-					$content = '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>';
+					$content = '<a href="mailto:' . esc_attr( $value ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
 					break;
 				case 'tel':
-					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '">' . esc_html( $value ) . '</a>';
+					$content = '<a href="tel:' . esc_attr( preg_replace('/[^0-9]/', '', $value ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $value ) . '</a>';
 					break;
 				case 'radio':
 					$labels = $this->get_option_labels( $field );

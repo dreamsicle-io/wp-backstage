@@ -403,14 +403,14 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_columns">manage_default_hidden_columns()</a>
     <span>
-                        &nbsp;: void    </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Manage Default Hidden Columns</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Post-Type.html#method_manage_default_hidden_meta_boxes">manage_default_hidden_meta_boxes()</a>
     <span>
-                        &nbsp;: void    </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Manage Default Hidden Meta Boxes</dd>
 
@@ -2732,7 +2732,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1086</span>
+    <span class="phpdocumentor-element-found-in__line">1089</span>
 </aside>
 
         <p class="phpdocumentor-summary">Inline Dashboard Glance Item Style</p>
@@ -2781,7 +2781,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1052</span>
+    <span class="phpdocumentor-element-found-in__line">1055</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Dashboard Activity Query Args</p>
@@ -2843,7 +2843,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1014</span>
+    <span class="phpdocumentor-element-found-in__line">1017</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Dashboard Glance Items</p>
@@ -2906,14 +2906,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">983</span>
+    <span class="phpdocumentor-element-found-in__line">984</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Default Hidden Columns</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>Note that this will only work if this post type's columns
 UI has never been modified by the user.</p>
@@ -2956,12 +2956,23 @@ UI has never been modified by the user.</p>
                                                  <section class="phpdocumentor-description"></section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Only add the field to hidden columns array if the field is set to have a column.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
+            <section class="phpdocumentor-description"><p>An array of column names</p>
+</section>
 
     
 </article>
@@ -2985,7 +2996,7 @@ UI has never been modified by the user.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_default_hidden_meta_boxes</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">manage_default_hidden_meta_boxes</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>Note that this will only work if the post type UI has never
 been modified by the user.</p>
@@ -3031,9 +3042,10 @@ been modified by the user.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
+            <section class="phpdocumentor-description"><p>An array of meta box ids</p>
+</section>
 
     
 </article>

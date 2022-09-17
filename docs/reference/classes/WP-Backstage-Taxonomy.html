@@ -361,7 +361,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Taxonomy.html#method_manage_default_hidden_columns">manage_default_hidden_columns()</a>
     <span>
-                        &nbsp;: void    </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Manage Default Hidden Columns</dd>
 
@@ -2540,14 +2540,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">667</span>
+    <span class="phpdocumentor-element-found-in__line">670</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Default Hidden Columns</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>Adds all generated fields to the hidden columns array by default, so as
 to not choke up the UI. Note that this will only work if this taxonomy's
@@ -2608,12 +2608,23 @@ columns UI has never been modified by the user. Hooked to
                                                  <section class="phpdocumentor-description"></section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Only add the field to hidden columns array if the field is set to have a column.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
+            <section class="phpdocumentor-description"><p>An array of column names</p>
+</section>
 
     
 </article>
@@ -2704,7 +2715,7 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">614</span>
+    <span class="phpdocumentor-element-found-in__line">615</span>
 </aside>
 
         <p class="phpdocumentor-summary">Manage Sorting</p>
@@ -2781,6 +2792,16 @@ table.</p>
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
                                                  <section class="phpdocumentor-description"></section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Makes table alias unique in each run of the function to suppress sql warnings.</p>
+</section>
 
                                     </dd>
                         </dl>

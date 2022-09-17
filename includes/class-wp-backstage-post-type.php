@@ -673,7 +673,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array      $hidden  An array of already-set hidden meta box IDs.
 	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
-	 * @return  void 
+	 * @return  array      An array of meta box ids
 	 */
 	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen = null ) {
 
@@ -976,9 +976,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * UI has never been modified by the user.
 	 * 
 	 * @since   0.0.1
+	 * @since   2.5.0      Only add the field to hidden columns array if the field is set to have a column.
 	 * @param   array      $hidden  An array of already-set hidden column names.
 	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
-	 * @return  void 
+	 * @return  array      An array of column names 
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
@@ -990,7 +991,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 				foreach ( $fields as $field ) {
 
-					$hidden[] = $field['name'];
+					if ( $field['has_column'] ) {
+						$hidden[] = $field['name'];
+					}
 
 				}
 

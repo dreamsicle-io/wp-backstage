@@ -1626,6 +1626,7 @@ class WP_Backstage_Component {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-input"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -1695,6 +1696,7 @@ class WP_Backstage_Component {
 		$args = wp_parse_args( $field['args'], $this->default_date_args ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-date"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-date-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-date-picker-format="<?php echo esc_attr( $args['format'] ); ?>"
@@ -1798,6 +1800,7 @@ class WP_Backstage_Component {
 		$value_pieces = ! empty( $field['value'] ) ? explode( ':', $field['value'] ) : array(); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-time"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -1908,6 +1911,7 @@ class WP_Backstage_Component {
 		} ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-color"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-color-picker-id="<?php echo esc_attr( $id ); ?>"
 		data-color-picker-mode="<?php echo esc_attr( $args['mode'] ); ?>"
@@ -1976,6 +1980,7 @@ class WP_Backstage_Component {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-checkbox"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -2037,6 +2042,7 @@ class WP_Backstage_Component {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-textarea"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -2113,6 +2119,7 @@ class WP_Backstage_Component {
 		$field['input_attrs']['class'] = sprintf( 'wp-editor-area %1$s', $input_class ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-editor"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-media-buttons="<?php echo ( $args['media_buttons'] ) ? 'true' : 'false'; ?>"
@@ -2192,6 +2199,7 @@ class WP_Backstage_Component {
 		$settings_key = $args['settings_key'] ? $args['settings_key'] : $id; ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-code"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-code-editor-id="<?php echo esc_attr( $id ); ?>"
 		data-code-editor-settings="<?php echo esc_attr( $settings_key ); ?>"
@@ -2264,6 +2272,7 @@ class WP_Backstage_Component {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-select"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -2351,6 +2360,7 @@ class WP_Backstage_Component {
 		$id = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-radio"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -2445,6 +2455,7 @@ class WP_Backstage_Component {
 		$value = is_array( $field['value'] ) ? $field['value'] : array(); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-checkbox-set"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		style="display:block;">
 
@@ -2573,7 +2584,7 @@ class WP_Backstage_Component {
 		$modal_button_template = $args['multiple'] ? __( 'Add to %1$s', 'wp-backstage' ) : __( 'Set %1$s', 'wp-backstage' ); ?>
 
 		<span 
-		class="wp-backstage-media-uploader"
+		class="wp-backstage-field wp-backstage-field--type-media wp-backstage-media-uploader"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-media-uploader-id="<?php echo esc_attr( $id ); ?>"
 		data-media-uploader-multiple="<?php echo $args['multiple'] ? 'true' : 'false'; ?>"
@@ -2702,6 +2713,7 @@ class WP_Backstage_Component {
 		$args = wp_parse_args( $field['args'], $this->default_address_args ); ?>
 
 		<span 
+		class="wp-backstage-field wp-backstage-field--type-address"
 		id="<?php printf( esc_attr( '%1$s_container' ), $id ); ?>"
 		data-address-id="<?php echo esc_attr( $id ); ?>"
 		data-default-country="<?php echo esc_attr( $this->default_address_values['country'] ); ?>""

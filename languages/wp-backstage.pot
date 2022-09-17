@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-17T03:48:02+00:00\n"
+"POT-Creation-Date: 2022-09-17T04:21:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1288,35 +1288,35 @@ msgstr ""
 msgid "Wyoming"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2610
+#: includes/class-wp-backstage-component.php:2621
 msgid "Remove"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2737
+#: includes/class-wp-backstage-component.php:2749
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2778
+#: includes/class-wp-backstage-component.php:2790
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2808
+#: includes/class-wp-backstage-component.php:2820
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2838
+#: includes/class-wp-backstage-component.php:2850
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2868
+#: includes/class-wp-backstage-component.php:2880
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2897
+#: includes/class-wp-backstage-component.php:2909
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2938
+#: includes/class-wp-backstage-component.php:2950
 msgid "Zip Code"
 msgstr ""
 

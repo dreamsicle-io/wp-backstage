@@ -624,6 +624,11 @@ class WP_Backstage {
 				margin-bottom: 12px;
 			}
 
+			/* Widget fields */
+			#widgets-right .widget .wp-backstage-field .description {
+				padding: 0;
+			}
+
 		</style>
 
 	<?php }

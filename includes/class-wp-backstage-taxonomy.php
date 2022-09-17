@@ -606,14 +606,16 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/hooks/parse_term_query/ Hook: parse_term_query
 	 * 
 	 * @since   0.0.1
+	 * @since   2.5.0  Makes table alias unique in each run of the function to suppress sql warnings.
 	 * @param   array  $pieces      An array of query pieces that make up the `SQL` statement.
 	 * @param   array  $taxonomies  An array of taxonomy names that this query is handling.
 	 * @param   array  $args        An array of arguments
 	 * @return  array  The filtered query pieces with new sorting applied.
 	 */
 	public function manage_sorting( $pieces = array(), $taxonomies = array(), $args = array() ) {
-
+		
 		global $wpdb; 
+		$table_alias = uniqid( 'tm_' );
 
 		if ( in_array( $this->slug, $taxonomies ) ) {
 
@@ -627,13 +629,13 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 					if ( $field['has_column'] && $field['is_sortable'] ) {
 
-						$pieces['join']    .= ' INNER JOIN ' . $wpdb->termmeta . ' AS tm ON t.term_id = tm.term_id ';
-						$pieces['where']   .= ' AND tm.meta_key = "' . esc_attr( $field['name'] ) . '" '; 
+						$pieces['join']    .= ' INNER JOIN ' . $wpdb->termmeta . ' AS ' . $table_alias . ' ON t.term_id = ' . $table_alias . '.term_id ';
+						$pieces['where']   .= ' AND ' . $table_alias . '.meta_key = "' . esc_attr( $field['name'] ) . '" '; 
 
 						if ( $field['type'] === 'number' ) {
-							$pieces['orderby']  = ' ORDER BY CAST(tm.meta_value AS SIGNED) '; 
+							$pieces['orderby']  = ' ORDER BY CAST(' . $table_alias . '.meta_value AS SIGNED) '; 
 						} else {
-							$pieces['orderby']  = ' ORDER BY tm.meta_value '; 
+							$pieces['orderby']  = ' ORDER BY ' . $table_alias . '.meta_value '; 
 						}
 
 					}
@@ -660,9 +662,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * 
 	 * @since   0.0.1
+	 * @since   2.5.0      Only add the field to hidden columns array if the field is set to have a column.
 	 * @param   array      $hidden  An array of hidden columns.
 	 * @param   WP_Screen  $screen  An instance of `WP_Screen`.
-	 * @return  void 
+	 * @return  array      An array of column names
 	 */
 	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
 
@@ -674,7 +677,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 				foreach ( $fields as $field ) {
 
-					$hidden[] = $field['name'];
+					if ( $field['has_column'] ) {
+						$hidden[] = $field['name'];
+					}
 
 				}
 

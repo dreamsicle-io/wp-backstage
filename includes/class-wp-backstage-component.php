@@ -2640,7 +2640,8 @@ class WP_Backstage_Component {
 				<button 
 				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--add button" 
 				id="<?php printf( esc_attr( '%1$s_button_add' ), $id ); ?>"
-				type="button"><?php 
+				type="button"
+				style="vertical-align: middle;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Add %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
@@ -2649,7 +2650,7 @@ class WP_Backstage_Component {
 				id="<?php printf( esc_attr( '%1$s_button_add_to' ), $id ); ?>"
 				type="button"
 				disabled
-				style="display:none;"><?php 
+				style="vertical-align: middle; display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Add to %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
@@ -2658,16 +2659,16 @@ class WP_Backstage_Component {
 				id="<?php printf( esc_attr( '%1$s_button_replace' ), $id ); ?>"
 				type="button"
 				disabled
-				style="display:none;"><?php 
+				style="vertical-align: middle; display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Replace %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 
 				<button 
-				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--remove button" 
+				class="wp-backstage-media-uploader__button wp-backstage-media-uploader__button--remove button-link" 
 				id="<?php printf( esc_attr( '%1$s_button_remove' ), $id ); ?>"
 				type="button" 
 				disabled
-				style="display:none;"><?php 
+				style="vertical-align: middle; display:none;"><?php 
 					echo esc_html( $this->get_media_uploader_label( __( 'Remove %1$s', 'wp-backstage' ), $field ) ); 
 				?></button>
 

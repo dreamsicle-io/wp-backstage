@@ -696,6 +696,11 @@ Search.appendIndex(
             "summary": "Inline\u0020Thumbnail\u0020Column\u0020Style",
             "url": "classes/WP-Backstage.html#method_inline_thumbnail_column_style"
         },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_field_style\u0028\u0029",
+            "name": "inline_field_style",
+            "summary": "Inline\u0020Field\u0020Style",
+            "url": "classes/WP-Backstage.html#method_inline_field_style"
+        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_global_script\u0028\u0029",
             "name": "inline_global_script",
             "summary": "Inline\u0020Global\u0020Script",

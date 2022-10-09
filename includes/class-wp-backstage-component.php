@@ -819,10 +819,8 @@ class WP_Backstage_Component {
 	/**
 	 * Inline Code Editor Script
 	 *
-	 * Conditionally enqueue required scripts and styles. This handles enqueues
-	 * for the media uploader, WP editor, and color picker. This is also responsible 
-	 * for loading up jQuery UI Core and required jQuery UI widgets like the date 
-	 * picker and sortable. Finally, this will initialize all code editor instances.
+	 * Inlines the code editor settings objects. This provides necessary context to 
+	 * the code editor scripts when initializing code editor fields.
 	 *
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/ wp_enqueue_script()
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_style/ wp_enqueue_style()

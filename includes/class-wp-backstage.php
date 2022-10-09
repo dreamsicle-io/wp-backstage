@@ -355,7 +355,7 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Inline Media Uplaoder Style
+	 * Inline Media Uploader Style
 	 *
 	 * Inlines the editor field style.
 	 * 
@@ -473,9 +473,9 @@ class WP_Backstage {
 	/**
 	 * Inline customizer Style
 	 *
-	 * Inlines the editor field style.
+	 * Inlines the customizer style.
 	 * 
-	 * @since   0.0.1
+	 * @since   2.0.0
 	 * @return  void  
 	 */
 	public function inline_customizer_style() { ?>

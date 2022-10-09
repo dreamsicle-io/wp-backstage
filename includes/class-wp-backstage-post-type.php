@@ -377,7 +377,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *                            singular name, `%2$s` is the post type plural name, and `%3$s` is 
 	 *                            the thumbnail label.
 	 * @param  array   $field     An array of field arguments.
-	 * @return strint  The formatted text.
+	 * @return string  The formatted text.
 	 */
 	protected function get_label( $template = '' ) {
 

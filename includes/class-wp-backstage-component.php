@@ -2540,7 +2540,7 @@ class WP_Backstage_Component {
 	 * 
 	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the field's label.
 	 * @param  array   $field     An array of field arguments.
-	 * @return strint  The formatted text.
+	 * @return string  The formatted text.
 	 */
 	protected function get_media_uploader_label( $template = '', $field = array() ) {
 

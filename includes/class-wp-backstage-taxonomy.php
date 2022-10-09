@@ -278,7 +278,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param  string  $template  A localized `sprintf()` template where `%1$s` is the taxonomy 
 	 *                            singular name and `%2$s` is the taxonomy plural name.
 	 * @param  array   $field     An array of field arguments.
-	 * @return strint  The formatted text.
+	 * @return string  The formatted text.
 	 */
 	protected function get_label( $template = '' ) {
 

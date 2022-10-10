@@ -1,6 +1,5 @@
 {
 	"phpcs.enable": true,
 	"phpcs.autoConfigSearch": true,
-	"phpcs.executablePath": "./vendor/bin/phpcs",
-	"phpcs.standard": "./phpcs.xml"
+	"phpcs.executablePath": "./vendor/bin/phpcs"
 }

@@ -1,15 +1,27 @@
 {
 	"require-dev": {
-		"wp-cli/i18n-command": "^2.4"
+		"wp-cli/i18n-command": "^2.4",
+		"squizlabs/php_codesniffer": "^3.7",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+		"wp-coding-standards/wpcs": "^2.3"
 	},
     "scripts": {
-		"post-install-cmd": "composer run update-hooks",
-		"post-update-cmd": "composer run update-hooks",
+		"post-install-cmd": ["composer run update-hooks"],
+		"post-update-cmd": ["composer run update-hooks"],
 		"build": ["composer run build-pot", "composer run build-docs"],
 		"build-pot": "wp i18n make-pot . languages/wp-backstage.pot",
 		"build-docs": "php ./phpdocumentor.phar -d \"./includes\" -t \"./docs/reference\"",
 		"update-hooks": ["composer run remove-hooks", "composer run add-hooks"],
 		"add-hooks": "cp -v -f pre-commit .git/hooks/pre-commit",
-		"remove-hooks": "find .git/hooks/* ! -name *.sample -delete -print"
-    }
+		"remove-hooks": "find .git/hooks/* ! -name *.sample -delete -print",
+		"lint": ["composer run lint-php"],
+		"lint-php": "./vendor/bin/phpcs -s --standard=WordPress --extensions=php --ignore=*/.github/*,*/.phpdoc/*,*/docs/*,*/languages/*,*/vendor/* ./",
+		"fix": ["composer run fix-php"],
+		"fix-php": "./vendor/bin/phpcbf -s --standard=WordPress --extensions=php --ignore=*/.github/*,*/.phpdoc/*,*/docs/*,*/languages/*,*/vendor/* ./"
+    },
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }

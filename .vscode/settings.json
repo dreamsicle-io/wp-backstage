@@ -1,5 +1,10 @@
 {
-	"phpcs.enable": true,
-	"phpcs.autoConfigSearch": true,
-	"phpcs.executablePath": "./vendor/bin/phpcs"
+	"phpSniffer.autoDetect": true,
+	"phpSniffer.run": "onType",
+	"phpSniffer.onTypeDelay": 500,
+	"[php]": {
+		"editor.defaultFormatter": "wongjn.php-sniffer",
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true
+	}
 }

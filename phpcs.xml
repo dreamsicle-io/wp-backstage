@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Theme Coding Standards">
+<ruleset name="WP Backstage Coding Standards">
 	<!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
 	<!-- See https://github.com/WordPress/WordPress-Coding-Standards -->
 
 	<!-- Set a description for this ruleset. -->
-	<description>A custom set of code standard rules to check for WordPress themes.</description>
+	<description>A custom set of code standard rules to check for the WP Backstage plugin.</description>
 
 	<!--
 	#############################################################################
 	COMMAND LINE ARGUMENTS
-	https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
 	#############################################################################
 	-->
 

@@ -15,9 +15,9 @@
 		"add-hooks": "cp -v -f pre-commit .git/hooks/pre-commit",
 		"remove-hooks": "find .git/hooks/* ! -name *.sample -delete -print",
 		"lint": ["composer run lint-php"],
-		"lint-php": "./vendor/bin/phpcs -s --standard=WordPress --extensions=php --ignore=*/.github/*,*/.phpdoc/*,*/docs/*,*/languages/*,*/vendor/* ./",
+		"lint-php": "./vendor/bin/phpcs",
 		"fix": ["composer run fix-php"],
-		"fix-php": "./vendor/bin/phpcbf -s --standard=WordPress --extensions=php --ignore=*/.github/*,*/.phpdoc/*,*/docs/*,*/languages/*,*/vendor/* ./"
+		"fix-php": "./vendor/bin/phpcbf"
     },
 	"config": {
 		"allow-plugins": {

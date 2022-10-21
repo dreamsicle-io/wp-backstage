@@ -103,7 +103,7 @@ function wp_backstage_init() {
 			'options'     => array(
 				array(
 					'value' => '',
-					'label' => __( '&horbar; Select an Option &horbar;', 'wp_backstage_examples' ),
+					'label' => __( '― Select an Option ―', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_1',

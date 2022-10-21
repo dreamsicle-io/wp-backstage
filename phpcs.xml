@@ -1,29 +1,30 @@
 <?xml version="1.0"?>
 <ruleset name="WP Backstage Coding Standards">
-	<!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
+	<!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset -->
 	<!-- See https://github.com/WordPress/WordPress-Coding-Standards -->
 
 	<!-- Set a description for this ruleset. -->
 	<description>A custom set of code standard rules to check for the WP Backstage plugin.</description>
 
-	<!--
-	#############################################################################
-	COMMAND LINE ARGUMENTS
-	#############################################################################
-	-->
-
-	<!-- Pass some flags to PHPCS:
-		 s flag: Show sniff codes in all reports.
+	<!-- 
+	Pass some flags to PHPCS:
+	s flag: Show sniff codes in all reports.
 	-->
 	<arg value="s"/>
 
-	<!-- Strip the filepaths down to the relevant bit. -->
+	<!-- 
+	Strip the filepaths down to the relevant bit. 
+	-->
 	<arg name="basepath" value="./"/>
 
-	<!-- Check PHP files only. JavaScript and CSS files are checked separately using the @wordpress/scripts package. -->
+	<!-- 
+	Check PHP files only.
+	-->
 	<arg name="extensions" value="php"/>
 
-	<!-- Check all files in this directory and the directories below it. -->
+	<!-- 
+	Check all files in this directory and the directories below it. 
+	-->
 	<file>.</file>
 
 	<!-- Exclude patterns. -->
@@ -33,38 +34,38 @@
 	<exclude-pattern>/languages/*</exclude-pattern>
 	<exclude-pattern>/docs/*</exclude-pattern>
 	<exclude-pattern>/vendor/*</exclude-pattern>
-	<exclude-pattern>/node_modules/*</exclude-pattern>
 
-
-	<!--
-	#############################################################################
-	USE THE WordPress AND THE Theme Review RULESET
-	#############################################################################
+	<!-- 
+	Set the minimum supported WP version. This is used by several sniffs.
+	The minimum version set here should be in line with the minimum WP version
+	as set in the "Requires at least" tag in the readme.txt file. 
 	-->
-
-	<rule ref="WordPress" />
-
-	<!--
-	#############################################################################
-	SNIFF SPECIFIC CONFIGURATION
-	#############################################################################
-	-->
-
-	<!-- Set the minimum supported WP version. This is used by several sniffs.
-		 The minimum version set here should be in line with the minimum WP version
-		 as set in the "Requires at least" tag in the readme.txt file. -->
 	<config name="minimum_supported_wp_version" value="5.0.0"/>
 
-	<!-- Verify that the text_domain is set to the desired text-domain.
-		 Multiple valid text domains can be provided as a comma-delimited list. -->
+	<!-- 
+	Use the WordPress ruleset.
+	-->
+	<rule ref="WordPress">
+		<exclude name="Squiz.PHP.EmbeddedPhp"/>
+		<exclude name="WordPress.PHP.YodaConditions" />
+		<exclude name="WordPress.PHP.StrictInArray" />
+		<exclude name="WordPress.WP.CapitalPDangit" />
+	</rule>
+
+	<!-- 
+	Verify that the text_domain is set to the desired text-domain.
+	Multiple valid text domains can be provided as a comma-delimited list. 
+	-->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array" value="wp_backstage"/>
 		</properties>
 	</rule>
 
-	<!-- Verify that everything in the global namespace is prefixed with a theme specific prefix.
-		 Multiple valid prefixes can be provided as a comma-delimited list. -->
+	<!-- 
+	Verify that everything in the global namespace is prefixed with a theme specific prefix.
+	Multiple valid prefixes can be provided as a comma-delimited list. 
+	-->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array" value="wp_backstage" />

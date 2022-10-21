@@ -9,13 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-10T23:28:39+00:00\n"
+"POT-Creation-Date: 2022-10-21T18:22:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
 
 #. Plugin Name of the plugin
-#: includes/class-wp-backstage.php:351
+#: includes/class-wp-backstage.php:349
 msgid "WP Backstage"
 msgstr ""
 
@@ -33,6 +33,18 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://www.dreamsicle.io"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:301
+msgid "Hour"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:305
+msgid "Minute"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:309
+msgid "Second"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:314
@@ -1288,72 +1300,406 @@ msgstr ""
 msgid "Wyoming"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2619
+#. translators: 1: error message.
+#: includes/class-wp-backstage-component.php:663
+#: includes/class-wp-backstage.php:280
+msgid "Error: %1$s"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:1294
+msgid "True"
+msgstr ""
+
+#. translators: 1: field label
+#. translators: 1: post type thumbnail label.
+#: includes/class-wp-backstage-component.php:2553
+#: includes/class-wp-backstage-post-type.php:498
+msgid "Set %1$s"
+msgstr ""
+
+#. translators: 1: field label
+#: includes/class-wp-backstage-component.php:2558
+#: includes/class-wp-backstage-component.php:2568
+msgid "Add to %1$s"
+msgstr ""
+
+#. translators: 1: field label
+#: includes/class-wp-backstage-component.php:2563
+msgid "Add %1$s"
+msgstr ""
+
+#. translators: 1: field label
+#: includes/class-wp-backstage-component.php:2573
+msgid "Replace %1$s"
+msgstr ""
+
+#. translators: 1: field label
+#. translators: 1: post type thumbnail label.
+#: includes/class-wp-backstage-component.php:2578
+#: includes/class-wp-backstage-post-type.php:503
+msgid "Remove %1$s"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:2620
 msgid "Remove"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2748
+#: includes/class-wp-backstage-component.php:2749
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2789
+#: includes/class-wp-backstage-component.php:2793
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2819
+#: includes/class-wp-backstage-component.php:2826
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2849
+#: includes/class-wp-backstage-component.php:2859
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2879
+#: includes/class-wp-backstage-component.php:2892
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2908
+#: includes/class-wp-backstage-component.php:2924
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2949
+#: includes/class-wp-backstage-component.php:2968
 msgid "Zip Code"
 msgstr ""
 
+#. translators: 1:required arg key.
+#: includes/class-wp-backstage-nav-menu-item.php:104
+msgid "[nav_menu_item] The %1$s key is required."
+msgstr ""
+
+#. translators: 1: post type slug.
+#: includes/class-wp-backstage-options.php:165
+msgid "[options: %1$s] A slug is required when adding a new options page."
+msgstr ""
+
+#. translators: 1: options page slug, 2:required arg key.
+#: includes/class-wp-backstage-options.php:182
+msgid "[options: %1$s] The %2$s key is required."
+msgstr ""
+
+#. translators: 1: options page slug, 2: option key.
+#: includes/class-wp-backstage-options.php:198
+#: includes/class-wp-backstage-options.php:222
+msgid "[options: %1$s] There is already an option with the %2$s key."
+msgstr ""
+
+#: includes/class-wp-backstage-options.php:299
+msgid "Go to tool"
+msgstr ""
+
+#: includes/class-wp-backstage-post-type.php:196
+msgid "Featured Image"
+msgstr ""
+
+#. translators: 1: post type slug.
+#: includes/class-wp-backstage-post-type.php:245
+msgid "[post type: %1$s] A slug is required when adding a new post type."
+msgstr ""
+
+#. translators: 1: post type slug.
+#: includes/class-wp-backstage-post-type.php:256
+msgid "[post type: %1$s] A post type slug must be between 1 and 20 characters."
+msgstr ""
+
+#. translators: 1: post type slug, 2: method suggestion
+#: includes/class-wp-backstage-post-type.php:267
+msgid "[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type."
+msgstr ""
+
+#. translators: 1: post type slug, 2: method suggestion
+#: includes/class-wp-backstage-post-type.php:279
+msgid "[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type."
+msgstr ""
+
+#. translators: 1: post type slug, 2:required arg key.
+#: includes/class-wp-backstage-post-type.php:299
+msgid "[post type: %1$s] The %2$s key is required."
+msgstr ""
+
 #. translators: 1: post type, 2: post title.
-#: includes/class-wp-backstage-post-type.php:360
+#: includes/class-wp-backstage-post-type.php:375
 msgctxt "dashboard activity post link title"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage.php:129
+#: includes/class-wp-backstage-post-type.php:430
+msgid "Add New"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:433
+msgid "%1$s Archives"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:438
+msgid "%1$s Attributes"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-post-type.php:443
+#: includes/class-wp-backstage-taxonomy.php:319
+msgid "Parent %1$s:"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-post-type.php:448
+#: includes/class-wp-backstage-taxonomy.php:309
+msgid "All %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-post-type.php:453
+#: includes/class-wp-backstage-taxonomy.php:329
+msgid "Add New %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:458
+msgid "New %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-post-type.php:463
+#: includes/class-wp-backstage-taxonomy.php:334
+msgid "Edit %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-post-type.php:468
+#: includes/class-wp-backstage-taxonomy.php:339
+msgid "Update %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#. translators: 1: post type plural name.
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-post-type.php:473
+#: includes/class-wp-backstage-post-type.php:478
+#: includes/class-wp-backstage-taxonomy.php:344
+msgid "View %1$s"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-post-type.php:483
+#: includes/class-wp-backstage-taxonomy.php:369
+msgid "Search %1$s"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#: includes/class-wp-backstage-post-type.php:488
+msgid "No %1$s found"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#: includes/class-wp-backstage-post-type.php:493
+msgid "No %1$s found in trash"
+msgstr ""
+
+#. translators: 1: post type thumbnail label.
+#: includes/class-wp-backstage-post-type.php:508
+msgid "Use as %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:513
+msgid "Insert into %1$s"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:518
+msgid "Uploaded to this %1$s"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-post-type.php:523
+#: includes/class-wp-backstage-taxonomy.php:384
+msgid "%1$s list"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-post-type.php:528
+#: includes/class-wp-backstage-taxonomy.php:389
+msgid "%1$s list navigation"
+msgstr ""
+
+#. translators: 1: post type plural name.
+#: includes/class-wp-backstage-post-type.php:533
+msgid "Filter %1$s list"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:538
+msgid "%1$s published."
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:543
+msgid "%1$s published privately."
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:548
+msgid "%1$s reverted to draft."
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:553
+msgid "%1$s scheduled."
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:558
+msgid "%1$s updated."
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:563
+msgid "%1$s Link"
+msgstr ""
+
+#. translators: 1: post type singular name.
+#: includes/class-wp-backstage-post-type.php:568
+msgid "A link to a %1$s"
+msgstr ""
+
+#. translators: 1: published count, 2: post type label
+#: includes/class-wp-backstage-post-type.php:1149
+msgctxt "dashboard glance item"
+msgid "%1$d %2$s"
+msgstr ""
+
+#. translators: 1: taxonomy slug.
+#: includes/class-wp-backstage-taxonomy.php:182
+msgid "[taxonomy: %1$s] A slug is required when adding a new taxonomy."
+msgstr ""
+
+#. translators: 1: taxonomy slug.
+#: includes/class-wp-backstage-taxonomy.php:193
+msgid "[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters."
+msgstr ""
+
+#. translators: 1: taxonomy slug, 2: method suggestion
+#: includes/class-wp-backstage-taxonomy.php:204
+msgid "[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy."
+msgstr ""
+
+#. translators: 1: taxonomy slug, 2: method suggestion
+#: includes/class-wp-backstage-taxonomy.php:216
+msgid "[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy."
+msgstr ""
+
+#. translators: 1: taxonomy slug, 2:required arg key.
+#: includes/class-wp-backstage-taxonomy.php:236
+msgid "[taxonomy: %1$s] The %2$s key is required."
+msgstr ""
+
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-taxonomy.php:314
+msgid "Parent %1$s"
+msgstr ""
+
+#. translators: 1: Taxonomy singular name.
+#: includes/class-wp-backstage-taxonomy.php:324
+msgid "New %1$s Name"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:349
+msgid "Separate %1$s with commas"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:354
+msgid "Add or remove %1$s"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:359
+msgid "Choose from the most used %1$s"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:364
+msgid "Popular %1$s"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:374
+msgid "No %1$s Found"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:379
+msgid "No %1$s"
+msgstr ""
+
+#. translators: 1: Taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:394
+msgid "Back to %1$s"
+msgstr ""
+
+#. translators: 1:required arg key.
+#: includes/class-wp-backstage-user.php:142
+msgid "[user] The %1$s key is required."
+msgstr ""
+
+#. translators: 1:required arg key.
+#: includes/class-wp-backstage-widget.php:106
+msgid "[widget] The %1$s key is required."
+msgstr ""
+
+#: includes/class-wp-backstage.php:127
 msgid "Classic Editor"
 msgstr ""
 
-#: includes/class-wp-backstage.php:134
+#: includes/class-wp-backstage.php:132
 msgid "Classic Widgets"
 msgstr ""
 
-#: includes/class-wp-backstage.php:315
+#. translators: 1:required arg key.
+#: includes/class-wp-backstage.php:213
+msgid "[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated."
+msgstr ""
+
+#: includes/class-wp-backstage.php:312
 msgid "Debug"
 msgstr ""
 
-#: includes/class-wp-backstage.php:316
+#: includes/class-wp-backstage.php:313
 msgid "The following is useful debug information for WP Backstage development."
 msgstr ""
 
-#: includes/class-wp-backstage.php:317
+#: includes/class-wp-backstage.php:314
 msgid "Current Screen"
 msgstr ""
 
-#: includes/class-wp-backstage.php:320
+#: includes/class-wp-backstage.php:317
 msgid "Parent Base:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:325
+#: includes/class-wp-backstage.php:322
 msgid "Base:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:330
+#: includes/class-wp-backstage.php:327
 msgid "ID:"
 msgstr ""

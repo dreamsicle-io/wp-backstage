@@ -4,7 +4,6 @@
 	"phpSniffer.onTypeDelay": 500,
 	"[php]": {
 		"editor.defaultFormatter": "wongjn.php-sniffer",
-		"editor.formatOnPaste": true,
-		"editor.formatOnSave": true
+		"editor.formatOnSave": true,
 	}
 }

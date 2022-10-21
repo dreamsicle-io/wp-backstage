@@ -7,6 +7,8 @@
  * @subpackage  examples
  */
 
+ // phpcs:disable WordPress.WP.I18n.TextDomainMismatch
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -105,20 +107,20 @@ function wp_backstage_init() {
 				),
 				array(
 					'value' => 'option_1',
-					'label' => __( 'Option 1' ),
+					'label' => __( 'Option 1', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_2',
-					'label' => __( 'Option 2' ),
+					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
 					'value'    => 'option_3',
-					'label'    => __( 'Option 3' ),
+					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
 					'disabled' => true,
 				),
 				array(
 					'value' => 'option_4',
-					'label' => __( 'Option 4' ),
+					'label' => __( 'Option 4', 'wp_backstage_examples' ),
 				),
 			),
 		),
@@ -132,20 +134,20 @@ function wp_backstage_init() {
 			'options'     => array(
 				array(
 					'value' => 'option_1',
-					'label' => __( 'Option 1' ),
+					'label' => __( 'Option 1', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_2',
-					'label' => __( 'Option 2' ),
+					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
 					'value'    => 'option_3',
-					'label'    => __( 'Option 3' ),
+					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
 					'disabled' => true,
 				),
 				array(
 					'value' => 'option_4',
-					'label' => __( 'Option 4' ),
+					'label' => __( 'Option 4', 'wp_backstage_examples' ),
 				),
 			),
 		),
@@ -158,20 +160,20 @@ function wp_backstage_init() {
 			'options'     => array(
 				array(
 					'value' => 'option_1',
-					'label' => __( 'Option 1' ),
+					'label' => __( 'Option 1', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_2',
-					'label' => __( 'Option 2' ),
+					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
 					'value'    => 'option_3',
-					'label'    => __( 'Option 3' ),
+					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
 					'disabled' => true,
 				),
 				array(
 					'value' => 'option_4',
-					'label' => __( 'Option 4' ),
+					'label' => __( 'Option 4', 'wp_backstage_examples' ),
 				),
 			),
 		),
@@ -621,6 +623,7 @@ function wp_backstage_init() {
 					'id'          => 'wp_backstage_theme_options_fields',
 					'title'       => __( 'All Fields', 'wp_backstage_examples' ),
 					'description' => __( 'These extra meta fields control further theme options. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+					// phpcs:ignore Squiz.PHP.CommentedOutCode
 					// 'fields'      => $all_fields,
 				),
 				array(
@@ -645,6 +648,7 @@ function wp_backstage_init() {
 					'id'          => 'wp_backstage_tool_options_fields',
 					'title'       => __( 'All Fields', 'wp_backstage_examples' ),
 					'description' => __( 'These extra meta fields control further tool options. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+					// phpcs:ignore Squiz.PHP.CommentedOutCode
 					// 'fields'      => $all_fields,
 				),
 				array(

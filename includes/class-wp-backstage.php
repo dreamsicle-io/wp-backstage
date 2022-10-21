@@ -125,12 +125,12 @@ class WP_Backstage {
 		$this->plugin_dependencies = array(
 			array(
 				'key'  => 'classic-editor/classic-editor.php',
-				'name' => __( 'Classic Editor', 'wp_backstage' ),
+				'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
 				'url'  => 'https://wordpress.org/plugins/classic-editor/',
 			),
 			array(
 				'key'  => 'classic-widgets/classic-widgets.php',
-				'name' => __( 'Classic Widgets', 'wp_backstage' ),
+				'name' => _x( 'Classic Widgets', 'plugin dependency - classic widgets', 'wp_backstage' ),
 				'url'  => 'https://wordpress.org/plugins/classic-widgets/',
 			),
 		);
@@ -210,8 +210,8 @@ class WP_Backstage {
 					$this->errors[] = new WP_Error(
 						'plugin_dependency',
 						sprintf(
-							/* translators: 1:required arg key. */
-							__( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'wp_backstage' ),
+							/* translators: 1: plugin name link. */
+							_x( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'plugin dependency message', 'wp_backstage' ),
 							sprintf(
 								'<a href="%1$s">%2$s</a>',
 								esc_url( $plugin_dependency['url'] ),
@@ -278,7 +278,7 @@ class WP_Backstage {
 
 					$message = sprintf(
 						/* translators: 1: error message. */
-						__( 'Error: %1$s', 'wp_backstage' ),
+						_x( 'Error: %1$s', 'plugin error message', 'wp_backstage' ),
 						$error->get_error_message()
 					); ?>
 
@@ -347,7 +347,7 @@ class WP_Backstage {
 		$screen->add_help_tab(
 			array(
 				'id'       => 'wp_backstage',
-				'title'    => __( 'WP Backstage', 'wp_backstage' ),
+				'title'    => _x( 'WP Backstage', 'help tab title', 'wp_backstage' ),
 				'callback' => array( $this, 'render_help_tab' ),
 				'priority' => 50,
 			)

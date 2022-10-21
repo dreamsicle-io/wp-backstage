@@ -36,8 +36,10 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @return void
 	 */
 	public function __construct( $slug = '', $args = array() ) {
+
 		$this->slug = $slug;
 		$this->args = $args;
+
 		parent::__construct(
 			$this->slug,
 			$this->args['title'],

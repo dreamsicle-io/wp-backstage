@@ -180,7 +180,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'required_taxonomy_slug',
 				sprintf(
 					/* translators: 1: taxonomy slug. */
-					__( '[taxonomy: %1$s] A slug is required when adding a new taxonomy.', 'wp_backstage' ),
+					_x( '[taxonomy: %1$s] A slug is required when adding a new taxonomy.', 'taxonomy - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -191,7 +191,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_slug_length',
 				sprintf(
 					/* translators: 1: taxonomy slug. */
-					__( '[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters.', 'wp_backstage' ),
+					_x( '[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters.', 'taxonomy - slug length error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -202,7 +202,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_exists',
 				sprintf(
 					/* translators: 1: taxonomy slug, 2: method suggestion */
-					__( '[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'wp_backstage' ),
+					_x( '[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'taxonomy - existing slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Taxonomy::modify()</code>'
 				)
@@ -214,7 +214,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_not_exists',
 				sprintf(
 					/* translators: 1: taxonomy slug, 2: method suggestion */
-					__( '[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'wp_backstage' ),
+					_x( '[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'taxonomy - nonexisting slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Taxonomy::add()</code>'
 				)
@@ -234,7 +234,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 						'required_taxonomy_arg',
 						sprintf(
 							/* translators: 1: taxonomy slug, 2:required arg key. */
-							__( '[taxonomy: %1$s] The %2$s key is required.', 'wp_backstage' ),
+							_x( '[taxonomy: %1$s] The %2$s key is required.', 'taxonomy - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -307,92 +307,92 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			'menu_name'                  => $this->args['plural_name'],
 			'all_items'                  => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'All %1$s', 'wp_backstage' ),
+				_x( 'All %1$s', 'taxonomy - all items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'parent_item'                => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'Parent %1$s', 'wp_backstage' ),
+				_x( 'Parent %1$s', 'taxonomy - parent item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'parent_item_colon'          => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'Parent %1$s:', 'wp_backstage' ),
+				_x( 'Parent %1$s:', 'taxonomy - parent item colon', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'new_item_name'              => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'New %1$s Name', 'wp_backstage' ),
+				_x( 'New %1$s Name', 'taxonomy - new item name', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'add_new_item'               => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'Add New %1$s', 'wp_backstage' ),
+				_x( 'Add New %1$s', 'taxonomy - add new item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'edit_item'                  => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'Edit %1$s', 'wp_backstage' ),
+				_x( 'Edit %1$s', 'taxonomy - edit item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'update_item'                => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'Update %1$s', 'wp_backstage' ),
+				_x( 'Update %1$s', 'taxonomy - update item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'view_item'                  => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				__( 'View %1$s', 'wp_backstage' ),
+				_x( 'View %1$s', 'taxonomy - view item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'separate_items_with_commas' => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Separate %1$s with commas', 'wp_backstage' ),
+				_x( 'Separate %1$s with commas', 'taxonomy - separate items with commas', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'add_or_remove_items'        => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Add or remove %1$s', 'wp_backstage' ),
+				_x( 'Add or remove %1$s', 'taxonomy - add or remove items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'choose_from_most_used'      => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Choose from the most used %1$s', 'wp_backstage' ),
+				_x( 'Choose from the most used %1$s', 'taxonomy - choose from most used', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'popular_items'              => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Popular %1$s', 'wp_backstage' ),
+				_x( 'Popular %1$s', 'taxonomy - popular items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'search_items'               => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Search %1$s', 'wp_backstage' ),
+				_x( 'Search %1$s', 'taxonomy - search items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'not_found'                  => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'No %1$s Found', 'wp_backstage' ),
+				_x( 'No %1$s Found', 'taxonomy - not found', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'no_terms'                   => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'No %1$s', 'wp_backstage' ),
+				_x( 'No %1$s', 'taxonomy - no terms', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'items_list'                 => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( '%1$s list', 'wp_backstage' ),
+				_x( '%1$s list', 'taxonomy - items list', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'items_list_navigation'      => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( '%1$s list navigation', 'wp_backstage' ),
+				_x( '%1$s list navigation', 'taxonomy - items list navigation', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'back_to_items'              => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				__( 'Back to %1$s', 'wp_backstage' ),
+				_x( 'Back to %1$s', 'taxonomy - back to items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 		);

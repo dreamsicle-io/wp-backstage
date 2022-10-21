@@ -89,6 +89,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	/**
 	 * Set Errors
 	 *
+	 * @todo  Set error when existing registered widget has same slug.
+	 *
 	 * @since   2.0.0
 	 * @return  void
 	 */
@@ -104,7 +106,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 						'required_widget_arg',
 						sprintf(
 							/* translators: 1:required arg key. */
-							__( '[widget] The %1$s key is required.', 'wp_backstage' ),
+							_x( '[widget] The %1$s key is required.', 'widget - required arg error', 'wp_backstage' ),
 							'<code>' . $required_arg . '</code>'
 						)
 					);

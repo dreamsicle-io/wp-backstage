@@ -163,7 +163,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 				'required_options_slug',
 				sprintf(
 					/* translators: 1: post type slug. */
-					__( '[options: %1$s] A slug is required when adding a new options page.', 'wp_backstage' ),
+					_x( '[options: %1$s] A slug is required when adding a new options page.', 'options - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -180,7 +180,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 						'required_options_arg',
 						sprintf(
 							/* translators: 1: options page slug, 2:required arg key. */
-							__( '[options: %1$s] The %2$s key is required.', 'wp_backstage' ),
+							_x( '[options: %1$s] The %2$s key is required.', 'options - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -188,24 +188,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 				}
 			}
-		}
-
-		if ( in_array( $this->slug, self::$registered ) ) {
-
-			$this->errors[] = new WP_Error(
-				'duplicate_options_key',
-				sprintf(
-					/* translators: 1: options page slug, 2: option key. */
-					__( '[options: %1$s] There is already an option with the %2$s key.', 'wp_backstage' ),
-					$this->slug,
-					'<code>' . $this->slug . '</code>'
-				)
-			);
-
-		} else {
-
-			self::$registered[] = $this->slug;
-
 		}
 
 		$fields = $this->get_fields();
@@ -219,8 +201,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 					$this->errors[] = new WP_Error(
 						'duplicate_options_key',
 						sprintf(
-							/* translators: 1: options page slug, 2: option key. */
-							__( '[options: %1$s] There is already an option with the %2$s key.', 'wp_backstage' ),
+							/* translators: 1: options page slug, 2: setting key. */
+							_x( '[options: %1$s] There is already an option with the %2$s key.', 'options - setting exists error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $field['name'] . '</code>'
 						)
@@ -297,7 +279,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		if ( $this->args['type'] === 'tools' ) {
 
 			$link_url   = add_query_arg( array( 'page' => $this->slug ), admin_url( '/tools.php' ) );
-			$link_title = __( 'Go to tool', 'wp_backstage' ); ?>
+			$link_title = _x( 'Go to tool', 'options - tool card link', 'wp_backstage' ); ?>
 
 			<div class="card">
 

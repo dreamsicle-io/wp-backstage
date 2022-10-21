@@ -299,15 +299,15 @@ class WP_Backstage_Component {
 		$this->date_format = get_option( 'date_format' );
 		$this->time_pieces = array(
 			'hour'   => array(
-				'label'          => __( 'Hour', 'wp_backstage' ),
+				'label'          => _x( 'Hour', 'time field - hour', 'wp_backstage' ),
 				'number_options' => 24,
 			),
 			'minute' => array(
-				'label'          => __( 'Minute', 'wp_backstage' ),
+				'label'          => _x( 'Minute', 'time field - minute', 'wp_backstage' ),
 				'number_options' => 60,
 			),
 			'second' => array(
-				'label'          => __( 'Second', 'wp_backstage' ),
+				'label'          => _x( 'Second', 'time field - second', 'wp_backstage' ),
 				'number_options' => 60,
 			),
 		);
@@ -661,7 +661,7 @@ class WP_Backstage_Component {
 
 					$message = sprintf(
 						/* translators: 1: error message. */
-						__( 'Error: %1$s', 'wp_backstage' ),
+						_x( 'Error: %1$s', 'component error message', 'wp_backstage' ),
 						$error->get_error_message()
 					); ?>
 
@@ -1292,7 +1292,7 @@ class WP_Backstage_Component {
 					$content = esc_html( isset( $labels[ $value ] ) ? $labels[ $value ] : $value );
 					break;
 				case 'checkbox':
-					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html__( 'True', 'wp_backstage' ) . '</span>';
+					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html_x( 'True', 'checkbox column - true', 'wp_backstage' ) . '</span>';
 					break;
 				case 'textarea':
 					$content = wpautop( sanitize_textarea_field( $value ) );
@@ -2539,32 +2539,32 @@ class WP_Backstage_Component {
 		// Prepare uploader labels.
 		$single_modal_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Set %1$s', 'wp_backstage' ),
+			_x( 'Set %1$s', 'media uploader modal single button', 'wp_backstage' ),
 			$field['label']
 		);
 		$multiple_modal_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Add to %1$s', 'wp_backstage' ),
+			_x( 'Add to %1$s', 'media uploader modal multiple button', 'wp_backstage' ),
 			$field['label']
 		);
 		$add_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Add %1$s', 'wp_backstage' ),
+			_x( 'Add %1$s', 'media uploader add button', 'wp_backstage' ),
 			$field['label']
 		);
 		$add_to_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Add to %1$s', 'wp_backstage' ),
+			_x( 'Add to %1$s', 'media uploader add to button', 'wp_backstage' ),
 			$field['label']
 		);
 		$replace_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Replace %1$s', 'wp_backstage' ),
+			_x( 'Replace %1$s', 'media uploader replace button', 'wp_backstage' ),
 			$field['label']
 		);
 		$remove_button_text = sprintf(
 			/* translators: 1: field label */
-			__( 'Remove %1$s', 'wp_backstage' ),
+			_x( 'Remove %1$s', 'media uploader remove button', 'wp_backstage' ),
 			$field['label']
 		); ?>
 
@@ -2735,7 +2735,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'Country', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Country', 'address field - country label', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2779,7 +2779,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'Address', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Address', 'address field - line 1', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2812,7 +2812,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'Address (Line 2)', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Address (Line 2)', 'address field - line 2', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2845,7 +2845,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'City', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'City', 'address field - city', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2878,7 +2878,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'State / Province / Region', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'State / Province / Region', 'address field - state input', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2910,7 +2910,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'State', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'State', 'address field - state select', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 
@@ -2954,7 +2954,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( __( 'Zip Code', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Zip Code', 'address field - zip', 'wp_backstage' ), WP_Backstage::$kses_label );
 
 						?></small>
 

@@ -140,7 +140,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 						'required_user_arg',
 						sprintf(
 							/* translators: 1:required arg key. */
-							__( '[user] The %1$s key is required.', 'wp_backstage' ),
+							_x( '[user] The %1$s key is required.', 'user - required arg error', 'wp_backstage' ),
 							'<code>' . $required_arg . '</code>'
 						)
 					);

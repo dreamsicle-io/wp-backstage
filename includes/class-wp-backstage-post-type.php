@@ -194,7 +194,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		if ( empty( $this->args['thumbnail_label'] ) ) {
 
-			$this->args['thumbnail_label'] = __( 'Featured Image', 'wp_backstage' );
+			$this->args['thumbnail_label'] = _x( 'Featured Image', 'post type - default thumbnail label', 'wp_backstage' );
 
 		}
 
@@ -243,7 +243,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'required_post_type_slug',
 				sprintf(
 					/* translators: 1: post type slug. */
-					__( '[post type: %1$s] A slug is required when adding a new post type.', 'wp_backstage' ),
+					_x( '[post type: %1$s] A slug is required when adding a new post type.', 'post type - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -254,7 +254,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_slug_length',
 				sprintf(
 					/* translators: 1: post type slug. */
-					__( '[post type: %1$s] A post type slug must be between 1 and 20 characters.', 'wp_backstage' ),
+					_x( '[post type: %1$s] A post type slug must be between 1 and 20 characters.', 'post type - slug length error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -265,7 +265,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					__( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'wp_backstage' ),
+					_x( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'post type - existing slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::modify()</code>'
 				)
@@ -277,7 +277,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_not_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					__( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'wp_backstage' ),
+					_x( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'post type - nonexisting slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::add()</code>'
 				)
@@ -296,8 +296,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 					$this->errors[] = new WP_Error(
 						'required_post_type_arg',
 						sprintf(
-							/* translators: 1: post type slug, 2:required arg key. */
-							__( '[post type: %1$s] The %2$s key is required.', 'wp_backstage' ),
+							/* translators: 1: post type slug, 2: required arg key. */
+							_x( '[post type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -428,145 +428,150 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			'menu_name'                => ! empty( $this->args['menu_name'] ) ? $this->args['menu_name'] : $this->args['plural_name'],
 			'name_admin_bar'           => $this->args['singular_name'],
 			'featured_image'           => $this->args['thumbnail_label'],
-			'add_new'                  => __( 'Add New', 'wp_backstage' ),
+			'add_new'                  => _x( 'Add New', 'post type - add new', 'wp_backstage' ),
 			'archives'                 => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s Archives', 'wp_backstage' ),
+				_x( '%1$s Archives', 'post type - archives', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'attributes'               => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s Attributes', 'wp_backstage' ),
+				_x( '%1$s Attributes', 'post type - attributes', 'wp_backstage' ),
+				$this->args['singular_name']
+			),
+			'parent_item'              => sprintf(
+				/* translators: 1: post type singular name. */
+				_x( 'Parent %1$s', 'post type - parent item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'parent_item_colon'        => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Parent %1$s:', 'wp_backstage' ),
+				_x( 'Parent %1$s:', 'post type - parent item colon', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'all_items'                => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'All %1$s', 'wp_backstage' ),
+				_x( 'All %1$s', 'post type - all items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'add_new_item'             => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Add New %1$s', 'wp_backstage' ),
+				_x( 'Add New %1$s', 'post type - add new item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'new_item'                 => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'New %1$s', 'wp_backstage' ),
+				_x( 'New %1$s', 'post type - new item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'edit_item'                => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Edit %1$s', 'wp_backstage' ),
+				_x( 'Edit %1$s', 'post type - edit item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'update_item'              => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Update %1$s', 'wp_backstage' ),
+				_x( 'Update %1$s', 'post type - update item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'view_item'                => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'View %1$s', 'wp_backstage' ),
+				_x( 'View %1$s', 'post type - view item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'view_items'               => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'View %1$s', 'wp_backstage' ),
+				_x( 'View %1$s', 'post type - view items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'search_items'             => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'Search %1$s', 'wp_backstage' ),
+				_x( 'Search %1$s', 'post type - search items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'not_found'                => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'No %1$s found', 'wp_backstage' ),
+				_x( 'No %1$s found', 'post type - not found', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'not_found_in_trash'       => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'No %1$s found in trash', 'wp_backstage' ),
+				_x( 'No %1$s found in trash', 'post type - not found in trash', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'set_featured_image'       => sprintf(
 				/* translators: 1: post type thumbnail label. */
-				__( 'Set %1$s', 'wp_backstage' ),
+				_x( 'Set %1$s', 'post type - set featured image', 'wp_backstage' ),
 				$this->args['thumbnail_label']
 			),
 			'remove_featured_image'    => sprintf(
 				/* translators: 1: post type thumbnail label. */
-				__( 'Remove %1$s', 'wp_backstage' ),
+				_x( 'Remove %1$s', 'post type - remove featured image', 'wp_backstage' ),
 				$this->args['thumbnail_label']
 			),
 			'use_featured_image'       => sprintf(
 				/* translators: 1: post type thumbnail label. */
-				__( 'Use as %1$s', 'wp_backstage' ),
+				_x( 'Use as %1$s', 'post type - use featured image', 'wp_backstage' ),
 				$this->args['thumbnail_label']
 			),
 			'insert_into_item'         => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Insert into %1$s', 'wp_backstage' ),
+				_x( 'Insert into %1$s', 'post type - insert into item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'uploaded_to_this_item'    => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'Uploaded to this %1$s', 'wp_backstage' ),
+				_x( 'Uploaded to this %1$s', 'post type - uploaded to this item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'items_list'               => sprintf(
 				/* translators: 1: post type plural name. */
-				__( '%1$s list', 'wp_backstage' ),
+				_x( '%1$s list', 'post type - items list', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'items_list_navigation'    => sprintf(
 				/* translators: 1: post type plural name. */
-				__( '%1$s list navigation', 'wp_backstage' ),
+				_x( '%1$s list navigation', 'post type - items list navigation', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'filter_items_list'        => sprintf(
 				/* translators: 1: post type plural name. */
-				__( 'Filter %1$s list', 'wp_backstage' ),
+				_x( 'Filter %1$s list', 'post type - filter items list', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'item_published'           => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s published.', 'wp_backstage' ),
+				_x( '%1$s published.', 'post type - item published', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_published_privately' => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s published privately.', 'wp_backstage' ),
+				_x( '%1$s published privately.', 'post type - item published privately', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_reverted_to_draft'   => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s reverted to draft.', 'wp_backstage' ),
+				_x( '%1$s reverted to draft.', 'post type - item reverted to draft', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_scheduled'           => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s scheduled.', 'wp_backstage' ),
+				_x( '%1$s scheduled.', 'post type - item scheduled', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_updated'             => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s updated.', 'wp_backstage' ),
+				_x( '%1$s updated.', 'post type - item updated', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_link'                => sprintf(
 				/* translators: 1: post type singular name. */
-				__( '%1$s Link', 'wp_backstage' ),
+				_x( '%1$s Link', 'post type - item link', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'item_link_description'    => sprintf(
 				/* translators: 1: post type singular name. */
-				__( 'A link to a %1$s', 'wp_backstage' ),
+				_x( 'A link to a %1$s', 'post type - item link description', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 		);

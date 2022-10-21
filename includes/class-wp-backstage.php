@@ -3,7 +3,8 @@
  * WP Backstage
  *
  * @since       2.0.0
- * @package     wp_backstage
+ * @since       2.5.0  linted and formatted with phpcs
+ * @package     wp-backstage
  * @subpackage  includes
  */
 
@@ -15,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WP Backstage
  *
  * @since       2.0.0
- * @package     wp_backstage
+ * @package     wp-backstage
  * @subpackage  includes
  */
 class WP_Backstage {

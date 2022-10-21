@@ -2539,32 +2539,32 @@ class WP_Backstage_Component {
 		// Prepare uploader labels.
 		$single_modal_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Set %1$s', 'media uploader modal single button', 'wp_backstage' ),
+			_x( 'Set %1$s', 'media uploader field - modal single button', 'wp_backstage' ),
 			$field['label']
 		);
 		$multiple_modal_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Add to %1$s', 'media uploader modal multiple button', 'wp_backstage' ),
+			_x( 'Add to %1$s', 'media uploader field - modal multiple button', 'wp_backstage' ),
 			$field['label']
 		);
 		$add_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Add %1$s', 'media uploader add button', 'wp_backstage' ),
+			_x( 'Add %1$s', 'media uploader field - add button', 'wp_backstage' ),
 			$field['label']
 		);
 		$add_to_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Add to %1$s', 'media uploader add to button', 'wp_backstage' ),
+			_x( 'Add to %1$s', 'media uploader field - add to button', 'wp_backstage' ),
 			$field['label']
 		);
 		$replace_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Replace %1$s', 'media uploader replace button', 'wp_backstage' ),
+			_x( 'Replace %1$s', 'media uploader field - replace button', 'wp_backstage' ),
 			$field['label']
 		);
 		$remove_button_text = sprintf(
 			/* translators: 1: field label */
-			_x( 'Remove %1$s', 'media uploader remove button', 'wp_backstage' ),
+			_x( 'Remove %1$s', 'media uploader field - remove button', 'wp_backstage' ),
 			$field['label']
 		); ?>
 
@@ -2606,7 +2606,7 @@ class WP_Backstage_Component {
 				data-attachment-id="0">
 					<button type="button" class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
 						<span class="screen-reader-text"><?php
-							esc_html_e( 'Remove', 'wp_backstage' )
+							echo esc_html( _x( 'Remove', 'media uploader field - remove', 'wp_backstage' ) );
 						?></span>
 					</button>
 					<img 

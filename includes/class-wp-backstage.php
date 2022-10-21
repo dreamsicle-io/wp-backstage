@@ -310,22 +310,22 @@ class WP_Backstage {
 	 */
 	public function render_help_tab() {
 		$screen = get_current_screen(); ?>
-		<h3><?php esc_html_e( 'Debug', 'wp_backstage' ); ?></h3>
-		<p><?php esc_html_e( 'The following is useful debug information for WP Backstage development.', 'wp_backstage' ); ?></p>
-		<p><strong><?php esc_html_e( 'Current Screen', 'wp_backstage' ); ?></strong></p>
+		<h3><?php echo esc_html( _x( 'Debug', 'help tab - debug title', 'wp_backstage' ) ); ?></h3>
+		<p><?php echo esc_html( _x( 'The following is useful debug information for WP Backstage development.', 'help tab - debug description', 'wp_backstage' ) ); ?></p>
+		<p><strong><?php echo esc_html( _x( 'Current Screen', 'help tab - debug current screen', 'wp_backstage' ) ); ?></strong></p>
 		<ul>
 			<li>
-				<strong><?php esc_html_e( 'Parent Base:', 'wp_backstage' ); ?></strong>
+				<strong><?php echo esc_html( _x( 'Parent Base:', 'help tab - debug current screen parent base label', 'wp_backstage' ) ); ?></strong>
 				&nbsp;
 				<code><?php echo esc_html( $screen->parent_base ); ?></code>
 			</li>
 			<li>
-				<strong><?php esc_html_e( 'Base:', 'wp_backstage' ); ?></strong>
+				<strong><?php echo esc_html( _x( 'Base:', 'help tab - debug current screen base', 'wp_backstage' ) ); ?></strong>
 				&nbsp;
 				<code><?php echo esc_html( $screen->base ); ?></code>
 			</li>
 			<li>
-				<strong><?php esc_html_e( 'ID:', 'wp_backstage' ); ?></strong>
+				<strong><?php echo esc_html( _x( 'ID:', 'help tab - debug current screen id', 'wp_backstage' ) ); ?></strong>
 				&nbsp;
 				<code><?php echo esc_html( $screen->id ); ?></code>
 			</li>

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-21T18:37:07+00:00\n"
+"POT-Creation-Date: 2022-10-21T19:22:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1312,63 +1312,63 @@ msgstr ""
 
 #. translators: 1: field label
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-component.php:2553
+#: includes/class-wp-backstage-component.php:2541
 #: includes/class-wp-backstage-post-type.php:498
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2558
-#: includes/class-wp-backstage-component.php:2568
+#: includes/class-wp-backstage-component.php:2546
+#: includes/class-wp-backstage-component.php:2556
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2563
+#: includes/class-wp-backstage-component.php:2551
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2573
+#: includes/class-wp-backstage-component.php:2561
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-component.php:2578
+#: includes/class-wp-backstage-component.php:2566
 #: includes/class-wp-backstage-post-type.php:503
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2620
+#: includes/class-wp-backstage-component.php:2608
 msgid "Remove"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2749
+#: includes/class-wp-backstage-component.php:2737
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2793
+#: includes/class-wp-backstage-component.php:2781
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2826
+#: includes/class-wp-backstage-component.php:2814
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2859
+#: includes/class-wp-backstage-component.php:2847
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2892
+#: includes/class-wp-backstage-component.php:2880
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2924
+#: includes/class-wp-backstage-component.php:2912
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2968
+#: includes/class-wp-backstage-component.php:2956
 msgid "Zip Code"
 msgstr ""
 

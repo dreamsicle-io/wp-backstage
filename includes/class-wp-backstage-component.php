@@ -1792,13 +1792,13 @@ class WP_Backstage_Component {
 						aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
 						<?php disabled( true, $field['disabled'] ); ?>
 						<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+						// phpcs:ignore WordPress.Security.EscapeOutput
 						echo $this->format_attrs( $field['input_attrs'] );
-						?> ><?php
+						?>>
 
-							$this->render_time_options( $piece['number_options'], $selected );
+							<?php $this->render_time_options( $piece['number_options'], $selected ); ?>
 
-?></select>
+						</select>
 
 						<?php if ( ( $i + 1 ) < count( $this->time_pieces ) ) { ?>
 							<span class="sep" style="display:inline-block">:</span>
@@ -2025,11 +2025,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?> ><?php
-
-					echo esc_textarea( $field['value'] );
-
-?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
 
 			</span>
 
@@ -2107,11 +2103,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?> ><?php
-
-					echo esc_textarea( $field['value'] );
-
-?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
 
 			</span>
 
@@ -2188,11 +2180,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?> ><?php
-
-					echo esc_textarea( $field['value'] );
-
-?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
 
 			</span>
 
@@ -2261,28 +2249,29 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?> ><?php
+				?>>
 
-if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+					<?php if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) { ?>
 
-	foreach ( $field['options'] as $option ) {
+						<?php foreach ( $field['options'] as $option ) {
 
-		$option       = wp_parse_args( $option, $this->default_option_args );
-		$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+							$option       = wp_parse_args( $option, $this->default_option_args );
+							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
 
 							<option 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
 							<?php selected( $option['value'], $field['value'] ); ?>
 							<?php disabled( true, $option['disabled'] ); ?>><?php
 
-							echo esc_html( $option_label );
+								echo esc_html( $option_label );
 
 							?></option>
 
-						<?php }
-}
+						<?php } ?>
 
-?></select>
+					<?php } ?>
+
+				</select>
 
 			</span>
 
@@ -2341,10 +2330,9 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
 				<?php } ?>
 
-				<?php
-				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+				<?php if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) { ?>
 
-					foreach ( $field['options'] as $i => $option ) {
+					<?php foreach ( $field['options'] as $i => $option ) {
 
 						$option       = wp_parse_args( $option, $this->default_option_args );
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
@@ -2360,11 +2348,10 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 							name="<?php echo esc_attr( $field['name'] ); ?>" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
 							<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
-							echo $this->format_attrs( $field['input_attrs'] );
-							?> 
+							// phpcs:ignore WordPress.Security.EscapeOutput
+							echo $this->format_attrs( $field['input_attrs'] ); ?> 
 							<?php ( empty( $field['value'] ) && ( $i === 0 ) ) ? checked( true, true ) : checked( $option['value'], $field['value'] ); ?>
-							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>/>
+							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?> />
 
 							<label 
 							id="<?php printf( '%1$s_label', esc_attr( $input_id ) ); ?>"
@@ -2377,8 +2364,9 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
 						</span>
 
-					<?php }
-				} ?>
+					<?php } ?>
+
+				<?php } ?>
 
 			</span>
 
@@ -2440,10 +2428,9 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
 				<?php } ?>
 
-				<?php
-				if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
+				<?php if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) { ?>
 
-					foreach ( $field['options'] as $option ) {
+					<?php foreach ( $field['options'] as $option ) {
 
 						$option       = wp_parse_args( $option, $this->default_option_args );
 						$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
@@ -2459,9 +2446,8 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 							name="<?php echo esc_attr( $field['name'] ); ?>[]" 
 							value="<?php echo esc_attr( $option['value'] ); ?>"
 							<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
-							echo $this->format_attrs( $field['input_attrs'] );
-							?> 
+							// phpcs:ignore WordPress.Security.EscapeOutput
+							echo $this->format_attrs( $field['input_attrs'] ); ?> 
 							<?php disabled( true, ( $option['disabled'] || $field['disabled'] ) ); ?>
 							<?php checked( true, in_array( $option['value'], $value ) ); ?>/>
 
@@ -2476,8 +2462,9 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
 						</span>
 
-					<?php }
-				} ?>
+					<?php } ?>
+
+				<?php } ?>
 
 			</span>
 
@@ -2547,6 +2534,7 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 
 		$id   = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+
 		// Prepare uploader labels.
 		$single_modal_button_text = sprintf(
 			/* translators: 1: field label */
@@ -2605,9 +2593,9 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
 			aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
 			<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
-				echo $this->format_attrs( $field['input_attrs'] );
-			?>  />
+			// phpcs:ignore WordPress.Security.EscapeOutput
+			echo $this->format_attrs( $field['input_attrs'] );
+			?> />
 
 			<span 
 			class="wp-backstage-media-uploader__preview"
@@ -2760,23 +2748,23 @@ if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) {
 					style="width:100%;max-width:100%;box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
-					?> ><?php
+					?>>
 
-foreach ( $this->countries as $country_code => $country_label ) { ?>
+						<?php foreach ( $this->countries as $country_code => $country_label ) { ?>
 
 							<option 
 							value="<?php echo esc_attr( $country_code ); ?>"
 							<?php selected( $country_code, $values['country'] ); ?>><?php
 
-							echo esc_html( $country_label );
+								echo esc_html( $country_label );
 
 							?></option>
 
-						<?php }
+						<?php } ?>
 
-?></select>
+					</select>
 
 				</span>
 
@@ -2807,7 +2795,7 @@ foreach ( $this->countries as $country_code => $country_label ) { ?>
 					style="width:100%;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
 					?> />
 
@@ -2840,7 +2828,7 @@ foreach ( $this->countries as $country_code => $country_label ) { ?>
 					style="width:100%;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
 					?> />
 
@@ -2873,7 +2861,7 @@ foreach ( $this->countries as $country_code => $country_label ) { ?>
 					style="width:100%;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
 					?> />
 
@@ -2906,7 +2894,7 @@ foreach ( $this->countries as $country_code => $country_label ) { ?>
 					style="width:100%;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
 					?> />
 
@@ -2935,23 +2923,23 @@ foreach ( $this->countries as $country_code => $country_label ) { ?>
 					style="width:100%;max-width:100%;box-sizing:border-box;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
-					?> ><?php
+					?>>
 
-foreach ( $this->us_states as $us_state_code => $us_state_name ) { ?>
+						<?php foreach ( $this->us_states as $us_state_code => $us_state_name ) { ?>
 
 							<option 
 							value="<?php echo esc_attr( $us_state_code ); ?>"
 							<?php selected( $us_state_code, $values['state'] ); ?>><?php
 
-							echo esc_html( $us_state_name );
+								echo esc_html( $us_state_name );
 
 							?></option>
 
-						<?php }
+						<?php } ?>
 
-?></select>
+					</select>
 
 				</span>
 
@@ -2982,7 +2970,7 @@ foreach ( $this->us_states as $us_state_code => $us_state_name ) { ?>
 					style="width:100%;"
 					<?php disabled( true, $field['disabled'] ); ?>
 					<?php
-				// phpcs:ignore WordPress.Security.EscapeOutput
+					// phpcs:ignore WordPress.Security.EscapeOutput
 					echo $this->format_attrs( $field['input_attrs'] );
 					?> />
 

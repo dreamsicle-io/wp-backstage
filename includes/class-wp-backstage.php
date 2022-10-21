@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} 
+}
 
 /**
  * WP Backstage
@@ -22,7 +22,7 @@ class WP_Backstage {
 
 	/**
 	 * Errors
-	 * 
+	 *
 	 * @since  2.0.0
 	 * @var    array  $errors  The array of all errors on the instance.
 	 */
@@ -30,15 +30,13 @@ class WP_Backstage {
 
 	/**
 	 * Plugin Dependencies
-	 * 
+	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 * 
+	 *
 	 * @since  2.0.0
 	 * @var    array  $errors  The array of all errors on the instance.
 	 */
 	protected $plugin_dependencies = array();
-
-	
 
 	/**
 	 * KSES P
@@ -48,40 +46,40 @@ class WP_Backstage {
 	 * @since  0.0.1
 	 * @var    array  $kses_p  KSES configuration for paragraph tags.
 	 */
-	static $kses_p = array(
-		'a' => array(
-			'class'  => array(), 
-			'id'     => array(), 
-			'style'  => array(), 
+	public static $kses_p = array(
+		'a'      => array(
+			'class'  => array(),
+			'id'     => array(),
+			'style'  => array(),
 			'href'   => array(),
-			'title'  => array(), 
-			'target' => array(), 
-			'rel'    => array(), 
+			'title'  => array(),
+			'target' => array(),
+			'rel'    => array(),
 		),
-		'br' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'br'     => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
-		'em' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'em'     => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
 		'strong' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
-		'code' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'code'   => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
-		'i' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'i'      => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
 	);
 
@@ -93,34 +91,34 @@ class WP_Backstage {
 	 * @since  0.0.1
 	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
-	static $kses_label = array(
-		'em' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+	public static $kses_label = array(
+		'em'     => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
 		'strong' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
-		'code' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'code'   => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
-		'i' => array(
-			'class' => array(), 
-			'id'    => array(), 
-			'style' => array(), 
+		'i'      => array(
+			'class' => array(),
+			'id'    => array(),
+			'style' => array(),
 		),
 	);
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void 
+	 * @return  void
 	 */
 	public function __construct() {
 		$this->plugin_dependencies = array(
@@ -152,9 +150,9 @@ class WP_Backstage {
 	 * @link    https://developer.wordpress.org/reference/hooks/admin_print_footer_scripts-hook_suffix/ hook: admin_print_footer_scripts-{$hook_suffix}
 	 * @link    https://developer.wordpress.org/plugins/hooks/actions/ WP Actions
 	 * @link    https://developer.wordpress.org/plugins/hooks/filters/ WP Filters
-	 * 
+	 *
 	 * @since   0.0.1
-	 * @return  void 
+	 * @return  void
 	 */
 	public function init() {
 
@@ -194,11 +192,11 @@ class WP_Backstage {
 
 	/**
 	 * Set Errors
-	 * 
+	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void 
+	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -208,40 +206,41 @@ class WP_Backstage {
 
 				if ( ! $this->is_plugin_active( $plugin_dependency['key'] ) ) {
 
-					$this->errors[] = new WP_Error( 'plugin_dependency', sprintf( 
-						/* translators: 1:required arg key. */
-						__( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'wp-backstage' ), 
-						sprintf( 
-							'<a href="%1$s">%2$s</a>', 
-							esc_url( $plugin_dependency['url'] ), 
-							esc_html( $plugin_dependency['name'] ) 
+					$this->errors[] = new WP_Error(
+						'plugin_dependency',
+						sprintf(
+							/* translators: 1:required arg key. */
+							__( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'wp_backstage' ),
+							sprintf(
+								'<a href="%1$s">%2$s</a>',
+								esc_url( $plugin_dependency['url'] ),
+								esc_html( $plugin_dependency['name'] )
+							)
 						)
-					) );
+					);
 
 				}
-
 			}
-
 		}
 
 	}
-	
+
 	/**
 	 * Is Plugin Active
-	 * 
-	 * The native is_plugin_active() function in WordPress does not exist 
-	 * at the time this class is constructed. This function checks against 
+	 *
+	 * The native is_plugin_active() function in WordPress does not exist
+	 * at the time this class is constructed. This function checks against
 	 * the `active_plugins` option in the database.
-	 * 
+	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @param   string  $plugin  The plugin file name as `classic-editor/classic-editor.php`.
-	 * @return  void 
+	 * @param   string $plugin  The plugin file name as `classic-editor/classic-editor.php`.
+	 * @return  boolean
 	 */
 	protected function is_plugin_active( $plugin ) {
-		$active_plugins = get_option('active_plugins');
-		$is_active = false;
+		$active_plugins = get_option( 'active_plugins' );
+		$is_active      = false;
 		if ( is_array( $active_plugins ) && in_array( $plugin, $active_plugins ) ) {
 			$is_active = true;
 		}
@@ -252,9 +251,9 @@ class WP_Backstage {
 	 * Has Errors
 	 *
 	 * A utility method to easily check if the instance has errors or not.
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  bool  Whether the instance has errors or not. 
+	 * @return  bool  Whether the instance has errors or not.
 	 */
 	public function has_errors() {
 		return is_array( $this->errors ) && ! empty( $this->errors );
@@ -264,53 +263,51 @@ class WP_Backstage {
 	 * Print Errors
 	 *
 	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void 
+	 * @return  void
 	 */
 	public function print_errors() {
 
 		if ( $this->has_errors() ) {
 
 			foreach ( $this->errors as $error ) {
-				
+
 				if ( is_wp_error( $error ) ) {
 
-					$message = sprintf( 
+					$message = sprintf(
 						/* translators: 1: error message. */
-						__( 'Error: %1$s', 'wp-backstage' ), 
-						$error->get_error_message() 
+						__( 'Error: %1$s', 'wp_backstage' ),
+						$error->get_error_message()
 					); ?>
 
 					<div class="notice notice-error">
 
-						<p><?php 
-				
-							echo wp_kses( $message, WP_Backstage::$kses_p );
+						<p><?php
+
+							echo wp_kses( $message, self::$kses_p );
 
 						?></p>
 
 					</div>
-				
-				<?php }
-			
-			}
 
+				<?php }
+			}
 		}
 
 	}
 
 	/**
 	 * Render Help Tab
-	 * 
+	 *
 	 * Renders the WP Backstage help tab on all screens. See `WP_Backstage::add_help_tab`.
-	 * 
+	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
 	 * @since   2.0.0
 	 * @return  void
 	 */
-	function render_help_tab() {
+	public function render_help_tab() {
 		$screen = get_current_screen(); ?>
 		<h3><?php esc_html_e( 'Debug', 'wp_backstage' ); ?></h3>
 		<p><?php esc_html_e( 'The following is useful debug information for WP Backstage development.', 'wp_backstage' ); ?></p>
@@ -336,31 +333,33 @@ class WP_Backstage {
 
 	/**
 	 * Add Help Tab
-	 * 
+	 *
 	 * Registers the WP Backstage help tab. See `WP_Backstage::render_help_tab`.
-	 * 
+	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
 	 * @since   2.0.0
-	 * @param   WP_Screen  $screen  an instance of `WP_Screen`.
+	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
 	 * @return  void
 	 */
-	function add_help_tab( $screen = null ) {
-		$screen->add_help_tab( array(
-			'id'       => 'wp_backstage',
-			'title'    => __( 'WP Backstage', 'wp_backstage' ),
-			'callback' => array( $this, 'render_help_tab' ),
-			'priority' => 50,
-		) );
+	public function add_help_tab( $screen = null ) {
+		$screen->add_help_tab(
+			array(
+				'id'       => 'wp_backstage',
+				'title'    => __( 'WP Backstage', 'wp_backstage' ),
+				'callback' => array( $this, 'render_help_tab' ),
+				'priority' => 50,
+			)
+		);
 	}
 
 	/**
 	 * Inline Media Uploader Style
 	 *
-	 * Inlines the editor field style.
-	 * 
+	 * Inlines the media uploader field style.
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_media_uploader_style() { ?>
 
@@ -418,11 +417,11 @@ class WP_Backstage {
 				float: left;
 				background-color: #ffffff;
 			}
-			
+
 			.wp-backstage-media-uploader__attachment[data-attachment-id="0"] {
 				display: none !important;
 			}
-			
+
 			.wp-backstage-media-uploader__attachment-image {
 				display: block;
 				width: 100%;
@@ -444,9 +443,9 @@ class WP_Backstage {
 	 * Inline Editor Style
 	 *
 	 * Inlines the editor field style.
-	 * 
+	 *
 	 * @since   0.0.1
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_editor_style() { ?>
 
@@ -474,9 +473,9 @@ class WP_Backstage {
 	 * Inline customizer Style
 	 *
 	 * Inlines the customizer style.
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_customizer_style() { ?>
 
@@ -496,9 +495,9 @@ class WP_Backstage {
 	 * Inline Code Editor Style
 	 *
 	 * Inlines the code editor field style.
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_code_editor_style() { ?>
 
@@ -518,8 +517,8 @@ class WP_Backstage {
 	 * Enqueue Admin Scripts
 	 *
 	 * Conditionally enqueue required scripts and styles. This handles enqueues
-	 * for the media uploader, WP editor, and color picker. This is also responsible 
-	 * for loading up jQuery UI Core and required jQuery UI widgets like the date 
+	 * for the media uploader, WP editor, and color picker. This is also responsible
+	 * for loading up jQuery UI Core and required jQuery UI widgets like the date
 	 * picker and sortable. Finally, this will initialize all code editor instances.
 	 *
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/ wp_enqueue_script()
@@ -530,26 +529,26 @@ class WP_Backstage {
 	 * @link    https://developer.wordpress.org/reference/functions/did_action/ did_action()
 	 * @link    https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/ hook: admin_enqueue_scripts
 	 * @link    https://developer.wordpress.org/themes/basics/including-css-javascript/ Including CSS and Javascript in WP
-	 * 
+	 *
 	 * @since   0.0.1
-	 * @return  void 
+	 * @return  void
 	 */
 	public function enqueue_admin_scripts() {
 
-		// jquery
+		// jquery.
 		if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery' );
 		}
-		// jquery ui
+		// jquery ui.
 		if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 		}
 		if ( ! wp_script_is( 'jquery-ui-theme-default', 'enqueued' ) ) {
-			wp_enqueue_style( 
-				'jquery-ui-theme-default', 
-				'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', 
-				array(), 
-				'1.12.1' 
+			wp_enqueue_style(
+				'jquery-ui-theme-default',
+				'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
+				array(),
+				'1.12.1'
 			);
 		}
 		if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
@@ -558,15 +557,15 @@ class WP_Backstage {
 		if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 		}
-		// editor
+		// editor.
 		if ( ! did_action( 'wp_enqueue_editor' ) ) {
 			wp_enqueue_editor();
 		}
-		// media
+		// media.
 		if ( ! did_action( 'wp_enqueue_media' ) ) {
 			wp_enqueue_media();
 		}
-		// color picker
+		// color picker.
 		if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 			wp_enqueue_script( 'wp-color-picker' );
 		}
@@ -578,12 +577,12 @@ class WP_Backstage {
 
 	/**
 	 * Inline Thumbnail Column Style
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @return  void
 	 */
 	public function inline_thumbnail_column_style() { ?>
-		
+
 		<style 
 		id="wp_backstage_thumbnail_column_style"
 		type="text/css">
@@ -609,12 +608,12 @@ class WP_Backstage {
 
 	/**
 	 * Inline Field Style
-	 * 
+	 *
 	 * @since   2.5.0
 	 * @return  void
 	 */
 	public function inline_field_style() { ?>
-		
+
 		<style 
 		id="wp_backstage_post_type_style"
 		type="text/css">
@@ -637,7 +636,7 @@ class WP_Backstage {
 	 * Inline Global Script
 	 *
 	 * Inlines the script that initializes the global `wpBackstage` JavaScript object.
-	 * 
+	 *
 	 * @since   2.0.0
 	 * @return  void
 	 */
@@ -668,10 +667,10 @@ class WP_Backstage {
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
 	 * @link    https://jqueryui.com/sortable/ jQuery UI Sortable
 	 * @link    https://jqueryui.com/ jQuery UI
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Full rewrite of the media uploader script.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_media_uploader_script() { ?>
 
@@ -899,7 +898,7 @@ class WP_Backstage {
 					}
 					delete uploader.wpBackstage;
 				}
-				
+
 				function destroyAll(container = null) {
 					container = container || document;
 					const uploaders = container.querySelectorAll('[data-media-uploader-id]');
@@ -1051,18 +1050,18 @@ class WP_Backstage {
 	<?php }
 
 	/**
-	 * Inline Datepicker Script
+	 * Inline Date picker Script
 	 *
 	 * Inlines the date picker script.
-	 * 
+	 *
 	 * @link    https://jqueryui.com/datepicker/ jQuery UI Datepicker
 	 * @link    https://jqueryui.com/ jQuery UI
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_date_picker_script() { ?>
 
@@ -1073,7 +1072,7 @@ class WP_Backstage {
 			(function($) {
 
 				function init(datePicker = null) {
-					
+
 					if (! datePicker) { 
 						return;
 					}
@@ -1112,15 +1111,15 @@ class WP_Backstage {
 	 * Inline Colorpicker Script
 	 *
 	 * Inlines the color picker script.
-	 * 
+	 *
 	 * @link    http://automattic.github.io/Iris/ Iris
 	 * @link    https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/ New Color Picker in WP 3.5
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_color_picker_script() { ?>
 
@@ -1142,7 +1141,7 @@ class WP_Backstage {
 				}
 
 				function init(colorPicker = null) {
-					
+
 					if (! colorPicker) { 
 						return;
 					}
@@ -1163,15 +1162,15 @@ class WP_Backstage {
 					}
 
 					const options = {
-						defaultColor: false, // bool, string
-						palettes: palettes, // bool, []
+						defaultColor: false, // bool, string.
+						palettes: palettes, // bool, [].
 						change: handleChange,
 						clear: handleChange,
 					};
 					// Add seperately to ensure default WP setting 
 					// is respected if no mode is set.
 					if (mode) {
-						options.mode = mode; // string (hsl, hsv)
+						options.mode = mode; // string (hsl, hsv).
 					}
 
 					$(input).wpColorPicker(options);
@@ -1223,16 +1222,16 @@ class WP_Backstage {
 	 *
 	 * Inlines the code editor script. All of the initializer functions fire at window load,
 	 * to ensure that all CodeMirror instances have finished initializing first.
-	 * 
+	 *
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
 	 * @link    https://make.wordpress.org/core/tag/codemirror/ CodeMirror in WP
 	 * @link    https://codemirror.net/ CodeMirror
 	 * @link    https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-included-and-registered-by-wordpress Default Scripts Included by WP
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP Javascript Reference
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_code_editor_script() { ?>
 
@@ -1241,7 +1240,7 @@ class WP_Backstage {
 		type="text/javascript">
 
 			(function($) {
-					
+
 				var saveTimer = null;
 
 				function init(codeEditor = null) {
@@ -1337,10 +1336,10 @@ class WP_Backstage {
 	 * Inline Address Script
 	 *
 	 * Inlines the address script.
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_address_script() { ?>
 
@@ -1351,7 +1350,7 @@ class WP_Backstage {
 			(function($) {
 
 				function init(address = null) {
-					
+
 					if (! address) { 
 						return;
 					}
@@ -1383,7 +1382,7 @@ class WP_Backstage {
 					function handleCountryChange(e = null) {
 						toggleByCountry(e.target.value);
 					}
-					
+
 					toggleByCountry(countrySelect.value);
 					countrySelect.addEventListener('change', handleCountryChange);
 				}
@@ -1413,7 +1412,7 @@ class WP_Backstage {
 	 * Inline Editor Script
 	 *
 	 * Inlines the editor script.
-	 * 
+	 *
 	 * @todo     Make sure clicking on label focuses the editor.
 	 *
 	 * @link     https://codex.wordpress.org/Javascript_Reference/wp.editor wp.editor
@@ -1421,10 +1420,10 @@ class WP_Backstage {
 	 * @link     https://make.wordpress.org/core/2017/05/20/editor-api-changes-in-4-8/ WP Editor API Changes in 4.8
 	 * @link     https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
 	 * @link     https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
-	 * 
+	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object and fixes shortcode rendering.
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_editor_script() { ?>
 
@@ -1445,6 +1444,9 @@ class WP_Backstage {
 				}
 
 				function destroy(editor = null) {
+					if (saveTimer) {
+						clearTimeout(saveTimer);
+					}
 					const fieldId = editor.getAttribute('data-editor-id');
 					const label = editor.querySelector('#' + fieldId + '_label');
 					if (label) {
@@ -1461,7 +1463,7 @@ class WP_Backstage {
 					// tinyMCE.execCommand('mceFocus', false, fieldId);
 				}
 
-				function handleSetup(e = null, wpEditor = null) {
+				function handleSetup(wpEditor = null) {
 					wpEditor.on('change', function(e) {
 						if (saveTimer) {
 							clearTimeout(saveTimer);
@@ -1485,10 +1487,15 @@ class WP_Backstage {
 						quicktags: true, 
 						tinymce: {
 							wpautop: true, 
-							plugins: 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview',
+							// The following phpcs:ignore line does not prevent phpcs from
+							// warning and fixing the `wordpress` tinymce plugin which is 
+							// required. Currently the only way to solve this issue is to
+							// ignore the entire rule from the phpcs.xml file.
+							// phpcs:ignore WordPress.WP.CapitalPDangit
+							plugins: 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview', 
 							toolbar1: 'bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link',
+							setup: handleSetup,
 						}, 
-						
 					};
 
 					if (formatSelect) {
@@ -1531,7 +1538,7 @@ class WP_Backstage {
 					destroyAll(container);
 					initAll(container);
 				}
-				
+
 				function reset(editor = null) {
 					const fieldId = editor.getAttribute('data-editor-id');
 					const textarea = editor.querySelector('#' + fieldId);
@@ -1556,10 +1563,6 @@ class WP_Backstage {
 					reset: reset,
 				});
 
-				document.addEventListener('DOMContentLoaded', function(e) {
-					$(document).on( 'tinymce-editor-setup', handleSetup);
-				});
-
 			})(jQuery);
 
 		</script>
@@ -1568,9 +1571,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Post Type Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_post_type_script() { ?>
 
@@ -1619,7 +1622,6 @@ class WP_Backstage {
 				function initMetaBox(metaBox = null) {
 					const handle = metaBox.querySelector('.postbox-header');
 					handle.addEventListener('click', handleMetaBoxHandleClick);
-					
 				}
 
 				function initScreenOption(checkbox = null) {
@@ -1677,9 +1679,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Nav Menu Item Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_nav_menu_item_script() { ?>
 
@@ -1805,7 +1807,7 @@ class WP_Backstage {
 				function initNavMenuItemHandle(handle = null) {
 					handle.addEventListener('click', handleNavMenuItemHandleClick);
 				}
-				
+
 				function initAllNavMenuItemHandles(container = null) {
 					container = container || document.getElementById('menu-to-edit');
 					const navMenuItemHandles = container.querySelectorAll('.menu-item-handle .item-edit');
@@ -1851,15 +1853,15 @@ class WP_Backstage {
 		</script>
 
 	<?php }
-	
+
 	/**
 	 * Inline Nav Menu Item Customizer Script
-	 * 
+	 *
 	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
 	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_nav_menu_item_customizer_script() { ?>
 
@@ -2086,7 +2088,7 @@ class WP_Backstage {
 
 				function handleAddressSettingChange(setting = null, fieldName = '', addressKey = '', value = undefined) {
 					const currentValues = setting();
-					if (currentValues[fieldName][addressKey] !== value) {
+					if (! currentValues[fieldName] || currentValues[fieldName][addressKey] !== value) {
 						handleSettingChange(setting, fieldName, Object.assign(
 							{},
 							_.clone(currentValues[fieldName]),
@@ -2169,7 +2171,7 @@ class WP_Backstage {
 										}
 									}, 500);
 								});
-								
+
 							});
 						}
 					});
@@ -2187,9 +2189,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Taxonomy Script
-	 * 
+	 *
 	 * @since   0.0.1
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_taxonomy_script() { ?>
 
@@ -2239,9 +2241,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Options Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_options_script() { ?>
 
@@ -2272,9 +2274,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Widget Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_widget_script() { ?>
 
@@ -2361,7 +2363,7 @@ class WP_Backstage {
 				function initWidgetHandle(handle = null) {
 					handle.addEventListener('click', handleWidgetHandleClick);
 				}
-				
+
 				function initAllWidgetHandles(container = null) {
 					container = container || document;
 					const widgetHandles = container.querySelectorAll('.widget-top');
@@ -2371,7 +2373,7 @@ class WP_Backstage {
 						}
 					}
 				}
-				
+
 				function init() {
 					const container = document.getElementById('widgets-right');
 					window.wpBackstage.colorPicker.initAll(container);
@@ -2396,9 +2398,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline Widget Customizer Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_widget_customizer_script() { ?>
 
@@ -2477,9 +2479,9 @@ class WP_Backstage {
 
 	/**
 	 * Inline User Script
-	 * 
+	 *
 	 * @since   2.0.0
-	 * @return  void  
+	 * @return  void
 	 */
 	public function inline_user_script() { ?>
 

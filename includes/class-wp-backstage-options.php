@@ -363,6 +363,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	/**
 	 * Add Settings
 	 *
+	 * @todo  Maybe make per field rest option?
+	 *
 	 * @since   0.0.1
 	 * @return  void
 	 */
@@ -406,7 +408,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 							$field['name'],
 							array(
 								'description'       => wp_kses( $field['description'], WP_Backstage::$kses_p ),
-								'show_in_rest'      => $this->args['show_in_rest'], // TODO: Maybe make per field rest option?
+								'show_in_rest'      => $this->args['show_in_rest'],
 								'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
 							)
 						);

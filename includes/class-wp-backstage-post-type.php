@@ -927,8 +927,20 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 				$value = get_post_meta( $post_id, $column, true );
 
-				// short circuit the column content and allow developer to add their own.
+				/**
+				 * Filters the post type custom field's admin column content.
+				 *
+				 * Returning any value here will short circuit the plugin's
+				 * output and render this content instead.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param mixed $value the field's value.
+				 * @param int $post_id The post ID of the current post.
+				 */
 				$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", '', $field, $value, $post_id );
+
 				if ( ! empty( $content ) ) {
 					echo wp_kses_post( $content );
 					return;
@@ -1072,12 +1084,36 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
 				}
 
+				/**
+				 * Filters the field arguments just before the field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Post $post an array of field arguments.
+				 */
 				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $post );
 
+				/**
+				 * Fires before the custom meta field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Post $post an array of field arguments.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $post );
 
 				$this->render_field_by_type( $field );
 
+				/**
+				 * Fires after the custom meta field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Post $post an array of field arguments.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $post );
 
 			}

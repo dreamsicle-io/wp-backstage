@@ -472,15 +472,51 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
 				}
 
+				/**
+				 * Filters the field arguments just before the field is rendered on the "Add" form.
+				 *
+				 * For consistency, this filter passes null as the last argument,
+				 * in place of the taxonomy term object that would be passed on the
+				 * "Edit" form.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
+				 */
 				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null ); ?>
 
 				<div class="form-field"><?php
 
-					do_action( "wp_backstage_{$this->slug}_field_add_before", $field );
+					/**
+					 * Fires before the field is rendered on the "Add" form.
+					 *
+					 * For consistency, this filter passes null as the last argument,
+					 * in place of the taxonomy term object that would be passed on the
+					 * "Edit" form.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
+					 */
+					do_action( "wp_backstage_{$this->slug}_field_add_before", $field, null );
 
 					$this->render_field_by_type( $field );
 
-					do_action( "wp_backstage_{$this->slug}_field_add_after", $field );
+					/**
+					 * Fires after the field is rendered on the "Add" form.
+					 *
+					 * For consistency, this filter passes null as the last argument,
+					 * in place of the taxonomy term object that would be passed on the
+					 * "Edit" form.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
+					 */
+					do_action( "wp_backstage_{$this->slug}_field_add_after", $field, null );
 
 				?></div>
 
@@ -526,6 +562,14 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
 				}
 
+				/**
+				 * Filters the field arguments just before the field is rendered on the "Edit" form.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Term $term The current taxonomy term.
+				 */
 				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $term ); ?>
 
 				<tr class="form-field">
@@ -554,10 +598,26 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 					<td><?php
 
+						/**
+						 * Fires before the field is rendered on the "Edit" form.
+						 *
+						 * @since 0.0.1
+						 *
+						 * @param array $field an array of field arguments.
+						 * @param WP_Term $term The current taxonomy term.
+						 */
 						do_action( "wp_backstage_{$this->slug}_field_edit_before", $field, $term );
 
 						$this->render_field_by_type( $field, $term );
 
+						/**
+						 * Fires after the field is rendered on the "Edit" form.
+						 *
+						 * @since 0.0.1
+						 *
+						 * @param array $field an array of field arguments.
+						 * @param WP_Term $term The current taxonomy term.
+						 */
 						do_action( "wp_backstage_{$this->slug}_field_edit_after", $field, $term );
 
 					?></td>
@@ -639,8 +699,21 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 			$value = get_term_meta( $term_id, $column, true );
 
-			// short circuit the column content and allow developer to add their own.
+			/**
+			 * Filters the taxonomy custom field's admin column content.
+			 *
+			 * Returning any value here will short circuit the plugin's
+			 * output and render this content instead.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param mixed $content the current content.
+			 * @param mixed $value the field's value.
+			 * @param int $term_id The term ID of the current term.
+			 */
 			$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", $content, $field, $value, $term_id );
+
 			if ( ! empty( $content ) ) {
 				return $content;
 			}

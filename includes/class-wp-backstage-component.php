@@ -151,7 +151,7 @@ class WP_Backstage_Component {
 	 * @var    array  $default_color_args  An array of default color field arguments.
 	 */
 	protected $default_color_args = array(
-		'mode'     => '',
+		'mode'     => '', // hsl, hsv.
 		'palettes' => true,
 	);
 

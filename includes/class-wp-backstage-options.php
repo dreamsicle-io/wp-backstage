@@ -230,7 +230,16 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @return void
 	 */
 	public function hook_script_action() {
+
 		if ( ! did_action( 'wp_backstage_options_print_footer_scripts' ) ) {
+
+			/**
+			 * Fires at the bottom of options page scripts rendered by the plugin.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param string $slug The slug of the current options page.
+			 */
 			do_action( 'wp_backstage_options_print_footer_scripts', $this->slug );
 		}
 	}
@@ -453,12 +462,33 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			)
 		);
 
+		/**
+		 * Filters the field arguments just before the field is rendered.
+		 *
+		 * @since 0.0.1
+		 *
+		 * @param array $field an array of field arguments.
+		 */
 		$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $args['field'] );
 
+		/**
+		 * Fires before the settings field is rendered.
+		 *
+		 * @since 0.0.1
+		 *
+		 * @param array $field an array of field arguments.
+		 */
 		do_action( "wp_backstage_{$this->slug}_field_before", $field );
 
 		$this->render_field_by_type( $field );
 
+		/**
+		 * Fires after the settings field is rendered.
+		 *
+		 * @since 0.0.1
+		 *
+		 * @param array $field an array of field arguments.
+		 */
 		do_action( "wp_backstage_{$this->slug}_field_after", $field );
 
 	}

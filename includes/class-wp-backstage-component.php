@@ -129,8 +129,9 @@ class WP_Backstage_Component {
 	 * @var    array  $default_media_uploader_args  An array of default media field arguments.
 	 */
 	protected $default_media_uploader_args = array(
-		'multiple' => false,
 		'type'     => '',
+		'multiple' => false,
+		'attach'   => false,
 	);
 
 	/**

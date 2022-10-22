@@ -2487,34 +2487,6 @@ class WP_Backstage_Component {
 	<?php }
 
 	/**
-	 * Get Media Uploader Label
-	 *
-	 * A utility method to get a label for various UI elements in the media
-	 * uploader field's markup.
-	 *
-	 * @param  string $template  A localized `sprintf()` template where `%1$s` is the field's label.
-	 * @param  array  $field     An array of field arguments.
-	 * @return string  The formatted text.
-	 */
-	protected function get_media_uploader_label( $template = '', $field = array() ) {
-
-		if ( ! empty( $template ) ) {
-
-			return sprintf(
-				/* translators: 1: image label. */
-				$template,
-				$field['label']
-			);
-
-		} else {
-
-			return $field['label'];
-
-		}
-
-	}
-
-	/**
 	 * Render Media Uploader
 	 *
 	 * The media uploader field is capable of selecting media files of all mime

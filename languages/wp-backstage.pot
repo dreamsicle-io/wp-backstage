@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-22T00:44:18+00:00\n"
+"POT-Creation-Date: 2022-10-22T15:29:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1314,77 +1314,77 @@ msgid "True"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2542
+#: includes/class-wp-backstage-component.php:2514
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2547
+#: includes/class-wp-backstage-component.php:2519
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2552
+#: includes/class-wp-backstage-component.php:2524
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2557
+#: includes/class-wp-backstage-component.php:2529
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2562
+#: includes/class-wp-backstage-component.php:2534
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2567
+#: includes/class-wp-backstage-component.php:2539
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2609
+#: includes/class-wp-backstage-component.php:2581
 msgctxt "media uploader field - remove"
 msgid "Remove"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2738
+#: includes/class-wp-backstage-component.php:2710
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2782
+#: includes/class-wp-backstage-component.php:2754
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2815
+#: includes/class-wp-backstage-component.php:2787
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2848
+#: includes/class-wp-backstage-component.php:2820
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2881
+#: includes/class-wp-backstage-component.php:2853
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2913
+#: includes/class-wp-backstage-component.php:2885
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2957
+#: includes/class-wp-backstage-component.php:2929
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""

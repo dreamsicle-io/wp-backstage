@@ -221,11 +221,6 @@ Search.appendIndex(
             "summary": "Render\u0020Checkbox\u0020Set",
             "url": "classes/WP-Backstage-Component.html#method_render_checkbox_set"
         },                {
-            "fqsen": "\\WP_Backstage_Component\u003A\u003Aget_media_uploader_label\u0028\u0029",
-            "name": "get_media_uploader_label",
-            "summary": "Get\u0020Media\u0020Uploader\u0020Label",
-            "url": "classes/WP-Backstage-Component.html#method_get_media_uploader_label"
-        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_media_uploader\u0028\u0029",
             "name": "render_media_uploader",
             "summary": "Render\u0020Media\u0020Uploader",

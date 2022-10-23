@@ -191,6 +191,18 @@ class WP_Backstage_Component {
 	);
 
 	/**
+	 * Default Select Posts Args
+	 *
+	 * @since  3.1.0
+	 * @var    array  $default_select_posts_args  An array of default select posts arguments.
+	 */
+	protected $default_select_posts_args = array(
+		'post_type'         => 'page',
+		'post_status'       => 'any',
+		'option_none_label' => '',
+	);
+
+	/**
 	 * Default Address Values
 	 *
 	 * @since  0.0.1
@@ -237,6 +249,7 @@ class WP_Backstage_Component {
 		'date',
 		'time',
 		'address',
+		'select_posts',
 	);
 
 	/**
@@ -1025,6 +1038,19 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Sanitize Select Posts
+	 *
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
+	 *
+	 * @since   3.1.0
+	 * @param   mixed $value  The value to sanitize. Expects a post ID.
+	 * @return  array   A non-negative integer.
+	 */
+	public function sanitize_select_posts( $value = 0 ) {
+		return absint( $value );
+	}
+
+	/**
 	 * Sanitize Field
 	 *
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
@@ -1070,6 +1096,9 @@ class WP_Backstage_Component {
 				break;
 			case 'media':
 				$value = $this->sanitize_media( $value );
+				break;
+			case 'select_posts':
+				$value = $this->sanitize_select_posts( $value );
 				break;
 			default:
 				$value = $this->sanitize_text( $value );
@@ -1120,6 +1149,8 @@ class WP_Backstage_Component {
 				return 'sanitize_time';
 			case 'media':
 				return 'sanitize_media';
+			case 'select_posts':
+				return 'sanitize_select_posts';
 			default:
 				return 'sanitize_text';
 		}
@@ -1248,6 +1279,9 @@ class WP_Backstage_Component {
 				break;
 			case 'address':
 				$this->render_address( $field );
+				break;
+			case 'select_posts':
+				$this->render_select_posts( $field );
 				break;
 			default:
 				$this->render_input( $field );
@@ -2949,6 +2983,124 @@ class WP_Backstage_Component {
 					?> />
 
 				</span>
+
+			</span>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<span 
+				id="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>" 
+				class="description"
+				style="display:block;"><?php
+
+					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+
+				?></span>
+
+			<?php } ?>
+
+		</span>
+
+	<?php }
+
+	/**
+	 * Render Select Posts
+	 *
+	 * Render an select field prepopulared by WordPress posts.
+	 *
+	 * @since   3.1.0
+	 * @param   array $field  An array of field arguments.
+	 * @return  void
+	 */
+	protected function render_select_posts( $field = array() ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
+		$args  = wp_parse_args( $field['args'], $this->default_select_posts_args );
+
+		$default_option_none_label = _x( 'Select', 'select posts field - default option none label', 'wp_backstage' );
+		$option_none_label         = ! empty( $args['option_none_label'] ) ? $args['option_none_label'] : $default_option_none_label;
+
+		$posts = get_posts(
+			array(
+				'posts_per_page' => -1,
+				'post_type'      => $args['post_type'],
+				'post_status'    => $args['post_status'],
+			)
+		);
+
+		$post_options = walk_page_dropdown_tree(
+			$posts,
+			0,
+			array(
+				'value_field' => 'ID',
+				'selected'    => absint( $field['value'] ),
+			)
+		); ?>
+
+		<span 
+		class="wp-backstage-field wp-backstage-field--type-select"
+		id="<?php printf( '%1$s_container', esc_attr( $id ) ); ?>"
+		style="display:block;">
+
+			<span id="<?php printf( '%1$s_input_container', esc_attr( $id ) ); ?>" >
+
+				<?php if ( $field['show_label'] ) { ?>
+
+					<label 
+					id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
+					for="<?php echo esc_attr( $id ); ?>"
+					style="display:inline-block;"><?php
+
+						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+
+					?></label>
+
+					<br/>
+
+				<?php } ?>
+
+				<select 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo $this->format_attrs( $field['input_attrs'] );
+				?>>
+
+					<option value="" <?php selected( '', $field['value'] ); ?>><?php
+
+						printf( '― %1$s ―', esc_html( $option_none_label ) );
+
+					?></option>
+
+					<?php if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) { ?>
+
+						<?php foreach ( $field['options'] as $option ) {
+
+							$option       = wp_parse_args( $option, $this->default_option_args );
+							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+
+							<option 
+							value="<?php echo esc_attr( $option['value'] ); ?>"
+							<?php selected( $option['value'], $field['value'] ); ?>
+							<?php disabled( true, $option['disabled'] ); ?>><?php
+
+								echo esc_html( $option_label );
+
+							?></option>
+
+						<?php } ?>
+
+					<?php } ?>
+
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput 
+					echo $post_options; ?>
+
+				</select>
 
 			</span>
 

@@ -1,0 +1,9 @@
+{
+	"phpSniffer.autoDetect": true,
+	"phpSniffer.run": "onType",
+	"phpSniffer.onTypeDelay": 500,
+	"[php]": {
+		"editor.defaultFormatter": "wongjn.php-sniffer",
+		"editor.formatOnSave": true,
+	}
+}

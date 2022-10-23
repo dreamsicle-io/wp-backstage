@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation</title>
+            <title>Documentation</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -48,13 +53,20 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
-    <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                <h3 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/default.html"><abbr title="\">Global</abbr></a></h3>
-                                    </section>
+                    <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/wp.html" class="">wp</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/wp-backstage.html" class="">backstage</a>
+                
+            </li>
+            </ul>
 
-    
+                        </section>
+            
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
@@ -80,6 +92,14 @@
     WP_Backstage
 
     
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/wp.html">wp</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/wp-backstage.html">backstage</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/wp-backstage-includes.html">includes</a></li>
+                            </ul>
+        </div>
     
     
     </h2>
@@ -87,12 +107,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
 
             <p class="phpdocumentor-summary">WP Backstage</p>
 
-    <section class="phpdocumentor-description"></section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -106,8 +126,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">subpackage</span>
@@ -131,241 +150,241 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                <dt class="phpdocumentor-table-of-contents__entry -property -public">
+                    <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/WP-Backstage.html#property_kses_label">$kses_label</a>
     <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>KSES Label</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/WP-Backstage.html#property_kses_p">$kses_p</a>
     <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>KSES P</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage.html#property_errors">$errors</a>
     <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>Errors</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage.html#property_plugin_dependencies">$plugin_dependencies</a>
     <span>
-                &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>Plugin Dependencies</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method___construct">__construct()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Construct</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_add_help_tab">add_help_tab()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Add Help Tab</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_enqueue_admin_scripts">enqueue_admin_scripts()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Enqueue Admin Scripts</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_has_errors">has_errors()</a>
     <span>
-                        &nbsp;: bool    </span>
+                                &nbsp;: bool    </span>
 </dt>
 <dd>Has Errors</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_init">init()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Init</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_address_script">inline_address_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Address Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_code_editor_script">inline_code_editor_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Code Editor Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_code_editor_style">inline_code_editor_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Code Editor Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_color_picker_script">inline_color_picker_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Colorpicker Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_customizer_style">inline_customizer_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline customizer Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_date_picker_script">inline_date_picker_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>Inline Datepicker Script</dd>
+<dd>Inline Date picker Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_editor_script">inline_editor_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Editor Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_editor_style">inline_editor_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Editor Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_field_style">inline_field_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Field Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_global_script">inline_global_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Global Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_media_uploader_script">inline_media_uploader_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Media Uploader Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_media_uploader_style">inline_media_uploader_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>Inline Media Uplaoder Style</dd>
+<dd>Inline Media Uploader Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_script">inline_nav_menu_item_customizer_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Nav Menu Item Customizer Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_nav_menu_item_script">inline_nav_menu_item_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Nav Menu Item Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_options_script">inline_options_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Options Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_post_type_script">inline_post_type_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Post Type Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_taxonomy_script">inline_taxonomy_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Taxonomy Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_thumbnail_column_style">inline_thumbnail_column_style()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Thumbnail Column Style</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_user_script">inline_user_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline User Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_widget_customizer_script">inline_widget_customizer_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Widget Customizer Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_inline_widget_script">inline_widget_script()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Inline Widget Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_print_errors">print_errors()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Print Errors</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_render_help_tab">render_help_tab()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Render Help Tab</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_is_plugin_active">is_plugin_active()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: bool    </span>
 </dt>
 <dd>Is Plugin Active</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage.html#method_set_errors">set_errors()</a>
     <span>
-                        &nbsp;: void    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Set Errors</dd>
 
@@ -397,8 +416,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">95</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">KSES Label</p>
 
@@ -408,7 +428,9 @@
     <span class="phpdocumentor-signature__name">$kses_label</span>
      = <span class="phpdocumentor-signature__default-value">array(&#039;em&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;strong&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;code&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;i&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()))</span></code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>KSES configuration for label tags.</p>
+</section>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -430,8 +452,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -452,8 +473,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">KSES P</p>
 
@@ -463,7 +485,9 @@
     <span class="phpdocumentor-signature__name">$kses_p</span>
      = <span class="phpdocumentor-signature__default-value">array(&#039;a&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array(), &#039;href&#039; =&gt; array(), &#039;title&#039; =&gt; array(), &#039;target&#039; =&gt; array(), &#039;rel&#039; =&gt; array()), &#039;br&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;em&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;strong&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;code&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()), &#039;i&#039; =&gt; array(&#039;class&#039; =&gt; array(), &#039;id&#039; =&gt; array(), &#039;style&#039; =&gt; array()))</span></code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>KSES configuration for paragraph tags.</p>
+</section>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -485,8 +509,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -507,8 +530,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">30</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Errors</p>
 
@@ -518,7 +542,9 @@
     <span class="phpdocumentor-signature__name">$errors</span>
      = <span class="phpdocumentor-signature__default-value">array()</span></code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>The array of all errors on the instance.</p>
+</section>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -532,8 +558,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -554,8 +579,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">40</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Plugin Dependencies</p>
 
@@ -565,7 +591,9 @@
     <span class="phpdocumentor-signature__name">$plugin_dependencies</span>
      = <span class="phpdocumentor-signature__default-value">array()</span></code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>The array of all errors on the instance.</p>
+</section>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -587,8 +615,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -613,17 +640,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">124</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Construct</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -637,16 +664,14 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -662,14 +687,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">348</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">346</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Add Help Tab</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">add_help_tab</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">add_help_tab</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Registers the WP Backstage help tab. See <code class="prettyprint">WP_Backstage::render_help_tab</code>.</p>
 </section>
@@ -715,16 +741,14 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -741,13 +765,14 @@
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">537</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Enqueue Admin Scripts</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">enqueue_admin_scripts</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">enqueue_admin_scripts</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Conditionally enqueue required scripts and styles. This handles enqueues
 for the media uploader, WP editor, and color picker. This is also responsible
@@ -832,16 +857,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -858,13 +881,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">259</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Has Errors</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">has_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">has_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
         <section class="phpdocumentor-description"><p>A utility method to easily check if the instance has errors or not.</p>
 </section>
@@ -882,8 +906,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -908,14 +931,15 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">158</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Init</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Hook all methods to WordPress.</p>
 </section>
@@ -997,16 +1021,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1023,13 +1045,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">1345</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Address Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_address_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_address_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the address script.</p>
 </section>
@@ -1047,8 +1070,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1065,8 +1087,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1083,13 +1104,14 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">1237</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Code Editor Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_code_editor_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_code_editor_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the code editor script. All of the initializer functions fire at window load,
 to ensure that all CodeMirror instances have finished initializing first.</p>
@@ -1148,8 +1170,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1166,8 +1187,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1184,13 +1204,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">503</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Code Editor Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_code_editor_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_code_editor_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the code editor field style.</p>
 </section>
@@ -1208,16 +1229,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1234,13 +1253,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">1125</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Colorpicker Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_color_picker_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_color_picker_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the color picker script.</p>
 </section>
@@ -1290,8 +1310,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1308,8 +1327,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1326,15 +1344,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">481</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline customizer Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_customizer_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_customizer_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"><p>Inlines the editor field style.</p>
+        <section class="phpdocumentor-description"><p>Inlines the customizer style.</p>
 </section>
 
     
@@ -1348,18 +1367,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1376,13 +1393,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">1067</span>
-</aside>
 
-        <p class="phpdocumentor-summary">Inline Datepicker Script</p>
+    </aside>
+
+        <p class="phpdocumentor-summary">Inline Date picker Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_date_picker_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_date_picker_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the date picker script.</p>
 </section>
@@ -1432,8 +1450,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1450,8 +1467,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1468,13 +1484,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">1429</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Editor Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_editor_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_editor_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the editor script.</p>
 </section>
@@ -1541,8 +1558,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1559,8 +1575,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1577,13 +1592,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">451</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Editor Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_editor_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_editor_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the editor field style.</p>
 </section>
@@ -1601,16 +1617,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1627,16 +1641,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">616</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Field Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_field_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_field_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -1650,16 +1664,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.5.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1676,13 +1688,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">644</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Global Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_global_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_global_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the script that initializes the global <code class="prettyprint">wpBackstage</code> JavaScript object.</p>
 </section>
@@ -1700,16 +1713,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1726,13 +1737,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">676</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Media Uploader Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_media_uploader_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_media_uploader_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Inlines the media uploader script.</p>
 </section>
@@ -1790,8 +1802,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                             <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -1808,8 +1819,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1826,15 +1836,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">365</span>
-</aside>
 
-        <p class="phpdocumentor-summary">Inline Media Uplaoder Style</p>
+    </aside>
+
+        <p class="phpdocumentor-summary">Inline Media Uploader Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_media_uploader_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_media_uploader_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"><p>Inlines the editor field style.</p>
+        <section class="phpdocumentor-description"><p>Inlines the media uploader field style.</p>
 </section>
 
     
@@ -1850,16 +1861,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1875,17 +1884,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1864</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">1867</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Nav Menu Item Customizer Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_nav_menu_item_customizer_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_nav_menu_item_customizer_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -1915,16 +1924,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1940,17 +1947,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1684</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">1687</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Nav Menu Item Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_nav_menu_item_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_nav_menu_item_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -1964,16 +1971,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1989,17 +1994,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2246</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">2249</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Options Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_options_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_options_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2013,16 +2018,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2038,17 +2041,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1575</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">1579</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Post Type Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_post_type_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_post_type_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2062,16 +2065,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2087,17 +2088,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2194</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">2197</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Taxonomy Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_taxonomy_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_taxonomy_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2111,16 +2112,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2137,16 +2136,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">585</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Thumbnail Column Style</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_thumbnail_column_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_thumbnail_column_style</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2160,16 +2159,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2185,17 +2182,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2484</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">2487</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline User Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_user_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_user_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2209,16 +2206,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2234,17 +2229,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2403</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">2406</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Widget Customizer Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_widget_customizer_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_widget_customizer_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2258,16 +2253,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2283,17 +2276,17 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2279</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">2282</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Inline Widget Script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">inline_widget_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">inline_widget_script</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2307,16 +2300,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2333,16 +2324,16 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">271</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Print Errors</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">print_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">print_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2364,16 +2355,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2389,14 +2378,15 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">313</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">311</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Render Help Tab</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">render_help_tab</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">render_help_tab</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>Renders the WP Backstage help tab on all screens. See <code class="prettyprint">WP_Backstage::add_help_tab</code>.</p>
 </section>
@@ -2430,16 +2420,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2456,13 +2444,14 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">242</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Is Plugin Active</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">is_plugin_active</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$plugin</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">is_plugin_active</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$plugin</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
         <section class="phpdocumentor-description"><p>The native is_plugin_active() function in WordPress does not exist
 at the time this class is constructed. This function checks against
@@ -2502,16 +2491,14 @@ the <code class="prettyprint">active_plugins</code> option in the database.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">bool</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2527,17 +2514,17 @@ the <code class="prettyprint">active_plugins</code> option in the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">202</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Set Errors</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">set_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">set_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -2559,19 +2546,79 @@ the <code class="prettyprint">active_plugins</code> option in the database.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
             </section>
+
+        
+    <script type="text/javascript">
+        function loadExternalCodeSnippets(line) {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                pre.setAttribute('data-line', line)
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        var modals = document.querySelectorAll("[data-modal]");
+
+        modals.forEach(function (trigger) {
+            trigger.addEventListener("click", function (event) {
+                //event.preventDefault();
+                const modal = document.getElementById(trigger.dataset.modal);
+                modal.classList.add("phpdocumentor-modal__open");
+                loadExternalCodeSnippets(trigger.dataset.line)
+                const exits = modal.querySelectorAll("[data-exit-button]");
+                exits.forEach(function (exit) {
+                    exit.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        modal.classList.remove("phpdocumentor-modal__open");
+                    });
+                });
+            });
+        });
+    </script>
 
     </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
@@ -2594,5 +2641,9 @@ the <code class="prettyprint">active_plugins</code> option in the database.</p>
     <script>
         cssVars({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>

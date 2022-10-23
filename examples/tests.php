@@ -378,6 +378,26 @@ function wp_backstage_init() {
 			'description' => __( 'Please enter an address.', 'wp_backstage_examples' ),
 			'has_column'  => true,
 		),
+		array(
+			'type'        => 'select_posts',
+			'name'        => 'wp_backstage_select_page_field',
+			'label'       => __( 'Page', 'wp_backstage_examples' ),
+			'description' => __( 'Please select a page.', 'wp_backstage_examples' ),
+			'has_column'  => true,
+			'args'        => array(
+				'post_type' => 'page',
+			),
+		),
+		array(
+			'type'        => 'select_posts',
+			'name'        => 'wp_backstage_select_post_field',
+			'label'       => __( 'Post', 'wp_backstage_examples' ),
+			'description' => __( 'Please select a post.', 'wp_backstage_examples' ),
+			'has_column'  => true,
+			'args'        => array(
+				'post_type' => 'post',
+			),
+		),
 	);
 
 	WP_Backstage_Post_Type::add(

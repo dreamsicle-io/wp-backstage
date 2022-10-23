@@ -3076,26 +3076,6 @@ class WP_Backstage_Component {
 
 					?></option>
 
-					<?php if ( is_array( $field['options'] ) && ! empty( $field['options'] ) ) { ?>
-
-						<?php foreach ( $field['options'] as $option ) {
-
-							$option       = wp_parse_args( $option, $this->default_option_args );
-							$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
-
-							<option 
-							value="<?php echo esc_attr( $option['value'] ); ?>"
-							<?php selected( $option['value'], $field['value'] ); ?>
-							<?php disabled( true, $option['disabled'] ); ?>><?php
-
-								echo esc_html( $option_label );
-
-							?></option>
-
-						<?php } ?>
-
-					<?php } ?>
-
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput 
 					echo $post_options; ?>

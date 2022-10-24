@@ -3,7 +3,7 @@
  * WP Backstage Tests
  *
  * @since       0.0.1
- * @since       2.5.0 linted and formatted with phpcs
+ * @since       3.0.0 linted and formatted with phpcs
  * @package     wp-backstage
  * @subpackage  examples
  */
@@ -377,6 +377,26 @@ function wp_backstage_init() {
 			'label'       => __( 'Address', 'wp_backstage_examples' ),
 			'description' => __( 'Please enter an address.', 'wp_backstage_examples' ),
 			'has_column'  => true,
+		),
+		array(
+			'type'        => 'select_posts',
+			'name'        => 'wp_backstage_select_page_field',
+			'label'       => __( 'Page', 'wp_backstage_examples' ),
+			'description' => __( 'Please select a page.', 'wp_backstage_examples' ),
+			'has_column'  => true,
+			'args'        => array(
+				'post_type' => 'page',
+			),
+		),
+		array(
+			'type'        => 'select_posts',
+			'name'        => 'wp_backstage_select_post_field',
+			'label'       => __( 'Post', 'wp_backstage_examples' ),
+			'description' => __( 'Please select a post.', 'wp_backstage_examples' ),
+			'has_column'  => true,
+			'args'        => array(
+				'post_type' => 'post',
+			),
 		),
 	);
 

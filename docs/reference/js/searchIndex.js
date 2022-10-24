@@ -106,6 +106,11 @@ Search.appendIndex(
             "summary": "Sanitize\u0020Media",
             "url": "classes/WP-Backstage-Component.html#method_sanitize_media"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Asanitize_select_posts\u0028\u0029",
+            "name": "sanitize_select_posts",
+            "summary": "Sanitize\u0020Select\u0020Posts",
+            "url": "classes/WP-Backstage-Component.html#method_sanitize_select_posts"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Asanitize_field\u0028\u0029",
             "name": "sanitize_field",
             "summary": "Sanitize\u0020Field",
@@ -231,6 +236,11 @@ Search.appendIndex(
             "summary": "Render\u0020Address",
             "url": "classes/WP-Backstage-Component.html#method_render_address"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_select_posts\u0028\u0029",
+            "name": "render_select_posts",
+            "summary": "Render\u0020Select\u0020Posts",
+            "url": "classes/WP-Backstage-Component.html#method_render_select_posts"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024slug",
             "name": "slug",
             "summary": "Slug",
@@ -305,6 +315,11 @@ Search.appendIndex(
             "name": "default_address_args",
             "summary": "Default\u0020Address\u0020Args",
             "url": "classes/WP-Backstage-Component.html#property_default_address_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024default_select_posts_args",
+            "name": "default_select_posts_args",
+            "summary": "Default\u0020Select\u0020Posts\u0020Args",
+            "url": "classes/WP-Backstage-Component.html#property_default_select_posts_args"
         },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024default_address_values",
             "name": "default_address_values",

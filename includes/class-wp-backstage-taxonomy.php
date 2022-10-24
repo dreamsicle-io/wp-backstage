@@ -3,7 +3,7 @@
  * WP Backstage Taxonomy
  *
  * @since       0.0.1
- * @since       2.5.0  linted and formatted with phpcs
+ * @since       3.0.0  linted and formatted with phpcs
  * @package     wp-backstage
  * @subpackage  includes
  */
@@ -749,7 +749,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/hooks/parse_term_query/ Hook: parse_term_query
 	 *
 	 * @since   0.0.1
-	 * @since   2.5.0  Makes table alias unique in each run of the function to suppress sql warnings.
+	 * @since   3.0.0  Makes table alias unique in each run of the function to suppress sql warnings.
 	 * @param   array $pieces      An array of query pieces that make up the `SQL` statement.
 	 * @param   array $taxonomies  An array of taxonomy names that this query is handling.
 	 * @param   array $args        An array of arguments.
@@ -804,7 +804,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 *
 	 * @since   0.0.1
-	 * @since   2.5.0      Only add the field to hidden columns array if the field is set to have a column.
+	 * @since   3.0.0      Only add the field to hidden columns array if the field is set to have a column.
 	 * @param   array     $hidden  An array of hidden columns.
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names

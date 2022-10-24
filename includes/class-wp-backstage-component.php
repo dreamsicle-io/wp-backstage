@@ -3039,7 +3039,7 @@ class WP_Backstage_Component {
 		); ?>
 
 		<span 
-		class="wp-backstage-field wp-backstage-field--type-select"
+		class="wp-backstage-field wp-backstage-field--type-select-posts"
 		id="<?php printf( '%1$s_container', esc_attr( $id ) ); ?>"
 		style="display:block;">
 

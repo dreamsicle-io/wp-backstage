@@ -3,7 +3,7 @@
  * WP Backstage
  *
  * @since       2.0.0
- * @since       2.5.0  linted and formatted with phpcs
+ * @since       3.0.0  linted and formatted with phpcs
  * @package     wp-backstage
  * @subpackage  includes
  */
@@ -614,7 +614,7 @@ class WP_Backstage {
 	/**
 	 * Inline Field Style
 	 *
-	 * @since   2.5.0
+	 * @since   3.0.0
 	 * @return  void
 	 */
 	public function inline_field_style() { ?>

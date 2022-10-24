@@ -193,7 +193,7 @@ class WP_Backstage_Component {
 	/**
 	 * Default Select Posts Args
 	 *
-	 * @since  3.1.0
+	 * @since  3.0.0
 	 * @var    array  $default_select_posts_args  An array of default select posts arguments.
 	 */
 	protected $default_select_posts_args = array(
@@ -1042,7 +1042,7 @@ class WP_Backstage_Component {
 	 *
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 *
-	 * @since   3.1.0
+	 * @since   3.0.0
 	 * @param   mixed $value  The value to sanitize. Expects a post ID.
 	 * @return  array   A non-negative integer.
 	 */
@@ -3008,7 +3008,7 @@ class WP_Backstage_Component {
 	 *
 	 * Render an select field prepopulared by WordPress posts.
 	 *
-	 * @since   3.1.0
+	 * @since   3.0.0
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
 	 */

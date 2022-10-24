@@ -3,7 +3,7 @@
  * WP Backstage
  *
  * @since       2.0.0
- * @since       2.5.0  linted and formatted with phpcs
+ * @since       3.0.0  linted and formatted with phpcs
  * @package     wp-backstage
  * @subpackage  includes
  */
@@ -488,6 +488,10 @@ class WP_Backstage {
 				z-index: 1000000 !important;
 			}
 
+			.wp-picker-clear {
+				width: auto !important;
+			}
+
 		</style>
 
 	<?php }
@@ -610,7 +614,7 @@ class WP_Backstage {
 	/**
 	 * Inline Field Style
 	 *
-	 * @since   2.5.0
+	 * @since   3.0.0
 	 * @return  void
 	 */
 	public function inline_field_style() { ?>
@@ -1934,6 +1938,11 @@ class WP_Backstage {
 							select.val(value || select.find('option:first-child').val());
 							break;
 						}
+						case 'select_posts': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.val(value.toString() || select.find('option:first-child').val());
+							break;
+						}
 						default: {
 							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							input.val(value);
@@ -2021,6 +2030,20 @@ class WP_Backstage {
 							});
 							break;
 						}
+						case 'select': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.on('change', function(e) {
+								handleSettingChange(setting, fieldName, e.target.value );
+							});
+							break;
+						}
+						case 'select_posts': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.on('change', function(e) {
+								handleSettingChange(setting, fieldName, e.target.value );
+							});
+							break;
+						}
 						default: {
 							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							input.on('change input propertychange paste', function(e) {
@@ -2077,6 +2100,7 @@ class WP_Backstage {
 				}
 
 				function handleSettingChange(setting = null, fieldName = '', value = undefined) {
+					console.log(value);
 					const currentValues = setting();
 					if (currentValues[fieldName] !== value) {
 						setting.set(Object.assign(

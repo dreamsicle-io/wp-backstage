@@ -328,6 +328,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
+		// These actions are only fired if a new custom post type is being added.
 		if ( $this->new ) {
 			add_action( 'init', array( $this, 'register' ), 0 );
 			add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
@@ -336,6 +337,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
 		}
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
+		// If the post type is an attachment, there is a different hook used to attach the `save` method.
 		if ( $this->slug === 'attachment' ) {
 			add_action( 'edit_attachment', array( $this, 'save' ), 10 );
 		} else {
@@ -348,7 +350,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+		add_action( 'query_vars', array( $this, 'manage_query_vars' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
+		add_action( 'pre_get_posts', array( $this, 'manage_filtering' ), 10 );
 
 		parent::init();
 
@@ -965,7 +969,16 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	/**
 	 * Manage Sorting
 	 *
+	 * The method is responsible for managing sorting on the query. If a field's
+	 * name is found in the `orderby` key, then its key is added as the meta key
+	 * for the query, and the orderby is reset to either `meta_value` or `meta_value_num`
+	 * according to if the value is expected to be numeric or not. If no meta query is set,
+	 * this will add a meta query that filters for posts that either do or do not have the meta
+	 * value set for the field. By default, setting just `meta_key` is not sufficient if the
+	 * desire is to show posts that don't have a value as well.
+	 *
 	 * @since   0.0.1
+	 * @since   3.1.0  Added a check to see if there is already a meta query before setting the meta query that is added in order to get posts both with or without a value set for the field.
 	 * @param   WP_Query $query  An instance of `WP_Query`.
 	 * @return  void
 	 */
@@ -982,20 +995,29 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 				if ( $field['is_sortable'] ) {
 
-					$query->set(
-						'meta_query',
-						array(
-							'relation' => 'OR',
+					$query->set( 'meta_key', $field['name'] );
+
+					// If there is currently no meta query, get all items whether
+					// they have the meta key or not by setting a meta query.
+					$meta_query = $query->get( 'meta_query' );
+					if ( empty( $meta_query ) ) {
+
+						$query->set(
+							'meta_query',
 							array(
-								'key'     => $field['name'],
-								'compare' => 'EXISTS',
-							),
-							array(
-								'key'     => $field['name'],
-								'compare' => 'NOT EXISTS',
-							),
-						)
-					);
+								'relation' => 'OR',
+								array(
+									'key'     => $field['name'],
+									'compare' => 'EXISTS',
+								),
+								array(
+									'key'     => $field['name'],
+									'compare' => 'NOT EXISTS',
+								),
+							)
+						);
+
+					}
 
 					if ( $field['type'] === 'number' ) {
 
@@ -1010,6 +1032,81 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			}
 		}
 
+	}
+
+	/**
+	 * Manage Filtering
+	 *
+	 * This method is responsible for filtering the query if a query var set to
+	 * a field's name is set. The fields are looped over, and if a field is
+	 * found with the matching query var, builds an array of meta query filters.
+	 * At the end of the loop, if there is a meta query to be set, the "AND" relation
+	 * is also added to the meta query, allowing for complex filtering to be accomplished.
+	 * See `WP_Backstage_Post_Type::manage_query_vars()` to see how the fields are made
+	 * available as public query vars.
+	 *
+	 * @since   3.1.0
+	 * @param   WP_Query $query  An instance of `WP_Query`.
+	 * @return  void
+	 */
+	public function manage_filtering( $query = null ) {
+
+		$query_post_type = $query->get( 'post_type' );
+		$is_post_type    = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
+
+		if ( $is_post_type ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				$meta_query = array();
+
+				foreach ( $fields as $field ) {
+
+					$value = $query->get( $field['name'] );
+
+					if ( isset( $value ) && ! empty( $value ) ) {
+
+						$meta_query[] = array(
+							'key'     => $field['name'],
+							'value'   => $value,
+							'compare' => '=',
+						);
+					}
+				}
+
+				// If we have a non-empty meta query set, add the "AND" relation
+				// to the meta query and set it.
+				if ( is_array( $meta_query ) && ! empty( $meta_query ) ) {
+					$meta_query = array_merge( array( 'relation' => 'AND' ), $meta_query );
+					$query->set( 'meta_query', $meta_query );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Manage Query Vars
+	 *
+	 * This method is responsible for adding all field name's as public query vars.
+	 * This will make them available to `WP_Query` and allow for filtering based on
+	 * the field name.
+	 *
+	 * @since 3.1.0
+	 * @param array $query_vars  An array of the currently public query vars.
+	 * @return array The filtered query vars array.
+	 */
+	public function manage_query_vars( $query_vars = array() ) {
+
+		$fields = $this->get_fields();
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+			foreach ( $fields as $field ) {
+				$query_vars[] = $field['name'];
+			}
+		}
+
+		return $query_vars;
 	}
 
 	/**

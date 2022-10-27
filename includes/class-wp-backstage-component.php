@@ -194,12 +194,23 @@ class WP_Backstage_Component {
 	 * Default Select Posts Args
 	 *
 	 * @since  3.0.0
+	 * @since  3.1.0  Allows for full query args to be passed.
 	 * @var    array  $default_select_posts_args  An array of default select posts arguments.
 	 */
 	protected $default_select_posts_args = array(
-		'post_type'         => 'page',
-		'post_status'       => 'any',
 		'option_none_label' => '',
+		'query'             => array(),
+	);
+
+	/**
+	 * Default Select Users Args
+	 *
+	 * @since  3.0.0
+	 * @var    array  $default_select_users_args  An array of default select users arguments.
+	 */
+	protected $default_select_users_args = array(
+		'option_none_label' => '',
+		'query'             => array(),
 	);
 
 	/**
@@ -250,6 +261,7 @@ class WP_Backstage_Component {
 		'time',
 		'address',
 		'select_posts',
+		'select_users',
 	);
 
 	/**
@@ -711,7 +723,9 @@ class WP_Backstage_Component {
 
 		$screen = get_current_screen();
 
-		if ( is_array( $value ) ) {
+		if ( empty( $screen ) ) {
+			return false;
+		} elseif ( is_array( $value ) ) {
 			return in_array( $screen->$key, $value );
 		} else {
 			return ( $value === $screen->$key );
@@ -1051,12 +1065,27 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Sanitize Select Users
+	 *
+	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
+	 *
+	 * @since   3.1.0
+	 * @param   mixed $value  The value to sanitize. Expects a user ID.
+	 * @return  array   A non-negative integer.
+	 */
+	public function sanitize_select_users( $value = 0 ) {
+		return absint( $value );
+	}
+
+	/**
 	 * Sanitize Field
 	 *
 	 * @link    https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data Validating, Sanitizing, and Escaping User Data in WP
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Removed check for single media vs. multiple media.
+	 * @since   3.0.0  Added case for select_posts.
+	 * @since   3.1.0  Added case for select_users.
 	 * @param   array $field  The field args.
 	 * @param   mixed $value  The field value.
 	 * @return  mixed  The sanitized value according to the field type.
@@ -1100,6 +1129,9 @@ class WP_Backstage_Component {
 			case 'select_posts':
 				$value = $this->sanitize_select_posts( $value );
 				break;
+			case 'select_users':
+				$value = $this->sanitize_select_users( $value );
+				break;
 			default:
 				$value = $this->sanitize_text( $value );
 				break;
@@ -1122,6 +1154,8 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0   Removed check for single media vs. multiple media.
+	 * @since   3.0.0   Added case for select_posts.
+	 * @since   3.1.0   Added case for select_users.
 	 * @param   array $field  The field args.
 	 * @return  string  The sanitize callback function name as a string.
 	 */
@@ -1151,6 +1185,8 @@ class WP_Backstage_Component {
 				return 'sanitize_media';
 			case 'select_posts':
 				return 'sanitize_select_posts';
+			case 'select_users':
+				return 'sanitize_select_users';
 			default:
 				return 'sanitize_text';
 		}
@@ -1239,6 +1275,8 @@ class WP_Backstage_Component {
 	 * called in order to render the appropriate field HTML.
 	 *
 	 * @since   0.0.1
+	 * @since   3.0.0 Added case for select_posts.
+	 * @since   3.1.0 Added case for select_users.
 	 * @param   array $field  An array of field args.
 	 * @return  void
 	 */
@@ -1283,6 +1321,9 @@ class WP_Backstage_Component {
 			case 'select_posts':
 				$this->render_select_posts( $field );
 				break;
+			case 'select_users':
+				$this->render_select_users( $field );
+				break;
 			default:
 				$this->render_input( $field );
 				break;
@@ -1298,6 +1339,8 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.4.0   Renders the actual value if no label is found on fields like select, radio, and checkbox set.
+	 * @since   3.0.0   Adds case for select_posts.
+	 * @since   3.1.0   Adds case for select_users.
 	 * @param mixed $value  The value to format.
 	 * @param array $field  An array of field arguments.
 	 * @return string  The value of the field as a string
@@ -1409,6 +1452,63 @@ class WP_Backstage_Component {
 						);
 					}
 					$content = implode( '', $attachments );
+					break;
+				case 'select_posts':
+					$value      = absint( $value );
+					$url_base   = admin_url( '/' );
+					$query_args = array();
+
+					if ( $this instanceof WP_Backstage_Taxonomy ) {
+						$url_base   = admin_url( '/edit-tags.php' );
+						$query_args = array( 'taxonomy' => $this->slug );
+						// phpcs:ignore WordPress.Security.NonceVerification
+						$url_params = wp_unslash( $_GET );
+						if ( isset( $url_params['post_type'] ) && ! empty( $url_params['post_type'] ) ) {
+							$query_args['post_type'] = $url_params['post_type'];
+						}
+					} elseif ( $this instanceof WP_Backstage_Post_type ) {
+						$url_base   = admin_url( '/edit.php' );
+						$query_args = array( 'post_type' => $this->slug );
+					} elseif ( $this instanceof WP_Backstage_User ) {
+						$url_base = admin_url( '/users.php' );
+					}
+
+					$query_args[ $field['name'] ] = $value;
+
+					$content = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( add_query_arg( $query_args, $url_base ) ),
+						wp_strip_all_tags( get_the_title( $value ) )
+					);
+					break;
+				case 'select_users':
+					$value      = absint( $value );
+					$user       = get_user_by( 'ID', $value );
+					$url_base   = admin_url( '/' );
+					$query_args = array();
+
+					if ( $this instanceof WP_Backstage_Taxonomy ) {
+						$url_base   = admin_url( '/edit-tags.php' );
+						$query_args = array( 'taxonomy' => $this->slug );
+						// phpcs:ignore WordPress.Security.NonceVerification
+						$url_params = wp_unslash( $_GET );
+						if ( isset( $url_params['post_type'] ) && ! empty( $url_params['post_type'] ) ) {
+							$query_args['post_type'] = $url_params['post_type'];
+						}
+					} elseif ( $this instanceof WP_Backstage_Post_type ) {
+						$url_base   = admin_url( '/edit.php' );
+						$query_args = array( 'post_type' => $this->slug );
+					} elseif ( $this instanceof WP_Backstage_User ) {
+						$url_base = admin_url( '/users.php' );
+					}
+
+					$query_args[ $field['name'] ] = $value;
+
+					$content = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( add_query_arg( $query_args, $url_base ) ),
+						esc_html( $user->display_name )
+					);
 					break;
 				default:
 					$content = $value;
@@ -3006,9 +3106,10 @@ class WP_Backstage_Component {
 	/**
 	 * Render Select Posts
 	 *
-	 * Render an select field prepopulared by WordPress posts.
+	 * Render a select field prepopulared by WordPress posts.
 	 *
 	 * @since   3.0.0
+	 * @since   3.1.0 Allows for full query args to be passed.
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
 	 */
@@ -3017,17 +3118,19 @@ class WP_Backstage_Component {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args  = wp_parse_args( $field['args'], $this->default_select_posts_args );
+		$query = wp_parse_args(
+			$args['query'],
+			array(
+				'posts_per_page' => -1,
+				'post_type'      => 'page',
+				'post_status'    => 'any',
+			)
+		);
 
 		$default_option_none_label = _x( 'Select', 'select posts field - default option none label', 'wp_backstage' );
 		$option_none_label         = ! empty( $args['option_none_label'] ) ? $args['option_none_label'] : $default_option_none_label;
 
-		$posts = get_posts(
-			array(
-				'posts_per_page' => -1,
-				'post_type'      => $args['post_type'],
-				'post_status'    => $args['post_status'],
-			)
-		);
+		$posts = get_posts( $query );
 
 		$post_options = walk_page_dropdown_tree(
 			$posts,
@@ -3079,6 +3182,109 @@ class WP_Backstage_Component {
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput 
 					echo $post_options; ?>
+
+				</select>
+
+			</span>
+
+			<?php if ( ! empty( $field['description'] ) ) { ?>
+
+				<span 
+				id="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>" 
+				class="description"
+				style="display:block;"><?php
+
+					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+
+				?></span>
+
+			<?php } ?>
+
+		</span>
+
+	<?php }
+
+	/**
+	 * Render Select Users
+	 *
+	 * Render a select field prepopulared by WordPress users.
+	 *
+	 * @since   3.1.0
+	 * @param   array $field  An array of field arguments.
+	 * @return  void
+	 */
+	protected function render_select_users( $field = array() ) {
+
+		$field = wp_parse_args( $field, $this->default_field_args );
+		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
+		$args  = wp_parse_args( $field['args'], $this->default_select_users_args );
+		$query = wp_parse_args(
+			$args['query'],
+			array(
+				'number' => -1,
+				'count'  => false,
+			)
+		);
+
+		$default_option_none_label = _x( 'Select', 'select users field - default option none label', 'wp_backstage' );
+		$option_none_label         = ! empty( $args['option_none_label'] ) ? $args['option_none_label'] : $default_option_none_label;
+
+		$users = get_users( $query ); ?>
+
+		<span 
+		class="wp-backstage-field wp-backstage-field--type-select-users"
+		id="<?php printf( '%1$s_container', esc_attr( $id ) ); ?>"
+		style="display:block;">
+
+			<span id="<?php printf( '%1$s_input_container', esc_attr( $id ) ); ?>" >
+
+				<?php if ( $field['show_label'] ) { ?>
+
+					<label 
+					id="<?php printf( '%1$s_label', esc_attr( $id ) ); ?>"
+					for="<?php echo esc_attr( $id ); ?>"
+					style="display:inline-block;"><?php
+
+						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+
+					?></label>
+
+					<br/>
+
+				<?php } ?>
+
+				<select 
+				name="<?php echo esc_attr( $field['name'] ); ?>" 
+				id="<?php echo esc_attr( $id ); ?>" 
+				aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
+				<?php disabled( true, $field['disabled'] ); ?>
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo $this->format_attrs( $field['input_attrs'] );
+				?>>
+
+					<option value="" <?php selected( '', $field['value'] ); ?>><?php
+
+						printf( '― %1$s ―', esc_html( $option_none_label ) );
+
+					?></option>
+
+					<?php foreach ( $users as $user ) {
+
+						$option_label = sprintf(
+							/* translators: 1: user display name, 2: user username */
+							_x( '%1$s (%2$s)', 'select users field - option label', 'wp_backstage' ),
+							esc_html( $user->display_name ),
+							esc_html( $user->user_login )
+						); ?>
+
+						<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( true, absint( $field['value'] ) === absint( $user->ID ) ); ?>><?php
+
+							echo esc_html( $option_label );
+
+						?></option>
+
+					<?php } ?>
 
 				</select>
 

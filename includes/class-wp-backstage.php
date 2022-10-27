@@ -1943,6 +1943,11 @@ class WP_Backstage {
 							select.val(value.toString() || select.find('option:first-child').val());
 							break;
 						}
+						case 'select_users': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.val(value.toString() || select.find('option:first-child').val());
+							break;
+						}
 						default: {
 							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							input.val(value);
@@ -2038,6 +2043,13 @@ class WP_Backstage {
 							break;
 						}
 						case 'select_posts': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.on('change', function(e) {
+								handleSettingChange(setting, fieldName, e.target.value );
+							});
+							break;
+						}
+						case 'select_users': {
 							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							select.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value );

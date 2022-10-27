@@ -259,6 +259,13 @@
 <dd>Default Select Posts Args</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/WP-Backstage-Component.html#property_default_select_users_args">$default_select_users_args</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>Default Select Users Args</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage-Component.html#property_errors">$errors</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -441,11 +448,25 @@
 <dd>Manage Default Hidden Meta Boxes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Post-Type.html#method_manage_filtering">manage_filtering()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Manage Filtering</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Post-Type.html#method_manage_post_title">manage_post_title()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Manage Post Title</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Post-Type.html#method_manage_query_vars">manage_query_vars()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Manage Query Vars</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Component.html#method_manage_sortable_columns">manage_sortable_columns()</a>
@@ -579,6 +600,13 @@
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Sanitize Select Posts</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Component.html#method_sanitize_select_users">sanitize_select_users()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Sanitize Select Users</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Component.html#method_sanitize_text">sanitize_text()</a>
@@ -782,6 +810,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Render Select Posts</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/WP-Backstage-Component.html#method_render_select_users">render_select_users()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Render Select Users</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage-Component.html#method_render_textarea">render_textarea()</a>
@@ -1049,7 +1084,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">211</span>
+    <span class="phpdocumentor-element-found-in__line">221</span>
 
     </aside>
 
@@ -1553,10 +1588,59 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$default_select_posts_args</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;post_type&#039; =&gt; &#039;page&#039;, &#039;post_status&#039; =&gt; &#039;any&#039;, &#039;option_none_label&#039; =&gt; &#039;&#039;)</span></code>
+     = <span class="phpdocumentor-signature__default-value">array(&#039;option_none_label&#039; =&gt; &#039;&#039;, &#039;query&#039; =&gt; array())</span></code>
 
     
         <section class="phpdocumentor-description"><p>An array of default select posts arguments.</p>
+</section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_default_select_users_args">
+        $default_select_users_args
+        <a href="classes/WP-Backstage-Component.html#property_default_select_users_args" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">210</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Default Select Users Args</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$default_select_users_args</span>
+     = <span class="phpdocumentor-signature__default-value">array(&#039;option_none_label&#039; =&gt; &#039;&#039;, &#039;query&#039; =&gt; array())</span></code>
+
+    
+        <section class="phpdocumentor-description"><p>An array of default select users arguments.</p>
 </section>
 
     
@@ -1641,7 +1725,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">299</span>
 
     </aside>
 
@@ -1747,7 +1831,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -1757,7 +1841,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$non_regular_text_fields</span>
-     = <span class="phpdocumentor-signature__default-value">array(&#039;number&#039;, &#039;textarea&#039;, &#039;editor&#039;, &#039;select&#039;, &#039;checkbox&#039;, &#039;checkbox_set&#039;, &#039;radio&#039;, &#039;media&#039;, &#039;code&#039;, &#039;date&#039;, &#039;time&#039;, &#039;address&#039;, &#039;select_posts&#039;)</span></code>
+     = <span class="phpdocumentor-signature__default-value">array(&#039;number&#039;, &#039;textarea&#039;, &#039;editor&#039;, &#039;select&#039;, &#039;checkbox&#039;, &#039;checkbox_set&#039;, &#039;radio&#039;, &#039;media&#039;, &#039;code&#039;, &#039;date&#039;, &#039;time&#039;, &#039;address&#039;, &#039;select_posts&#039;, &#039;select_users&#039;)</span></code>
 
     
         <section class="phpdocumentor-description"><p>Field types that do not include text-style inputs.</p>
@@ -1796,7 +1880,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">303</span>
+    <span class="phpdocumentor-element-found-in__line">314</span>
 
     </aside>
 
@@ -1861,7 +1945,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">226</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -2130,7 +2214,7 @@ slugs.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -2179,7 +2263,7 @@ slugs.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -2451,7 +2535,7 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1440</span>
+    <span class="phpdocumentor-element-found-in__line">1537</span>
 
     </aside>
 
@@ -2528,7 +2612,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1021</span>
+    <span class="phpdocumentor-element-found-in__line">1118</span>
 
     </aside>
 
@@ -2575,7 +2659,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">844</span>
+    <span class="phpdocumentor-element-found-in__line">848</span>
 
     </aside>
 
@@ -2636,7 +2720,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">656</span>
+    <span class="phpdocumentor-element-found-in__line">667</span>
 
     </aside>
 
@@ -2734,7 +2818,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">811</span>
+    <span class="phpdocumentor-element-found-in__line">824</span>
 
     </aside>
 
@@ -2848,7 +2932,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1246</span>
+    <span class="phpdocumentor-element-found-in__line">1343</span>
 
     </aside>
 
@@ -2895,7 +2979,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1215</span>
+    <span class="phpdocumentor-element-found-in__line">1312</span>
 
     </aside>
 
@@ -2956,7 +3040,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1178</span>
+    <span class="phpdocumentor-element-found-in__line">1275</span>
 
     </aside>
 
@@ -3019,7 +3103,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1148</span>
+    <span class="phpdocumentor-element-found-in__line">1245</span>
 
     </aside>
 
@@ -3102,7 +3186,7 @@ UI has never been modified by the user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">812</span>
+    <span class="phpdocumentor-element-found-in__line">816</span>
 
     </aside>
 
@@ -3168,6 +3252,73 @@ been modified by the user.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_manage_filtering">
+        manage_filtering()
+        <a href="classes/WP-Backstage-Post-Type.html#method_manage_filtering" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1052</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Manage Filtering</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">manage_filtering</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Query">WP_Query</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>This method is responsible for filtering the query if a query var set to
+a field's name is set. The fields are looped over, and if a field is
+found with the matching query var, builds an array of meta query filters.
+At the end of the loop, if there is a meta query to be set, the &quot;AND&quot; relation
+is also added to the meta query, allowing for complex filtering to be accomplished.
+See <code class="prettyprint">WP_Backstage_Post_Type::manage_query_vars()</code> to see how the fields are made
+available as public query vars.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$query</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Query">WP_Query</abbr></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An instance of <code class="prettyprint">WP_Query</code>.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_manage_post_title">
         manage_post_title()
         <a href="classes/WP-Backstage-Post-Type.html#method_manage_post_title" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3175,7 +3326,7 @@ been modified by the user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -3238,6 +3389,71 @@ been modified by the user.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_manage_query_vars">
+        manage_query_vars()
+        <a href="classes/WP-Backstage-Post-Type.html#method_manage_query_vars" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1100</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Manage Query Vars</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">manage_query_vars</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query_vars</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+        <section class="phpdocumentor-description"><p>This method is responsible for adding all field name's as public query vars.
+This will make them available to <code class="prettyprint">WP_Query</code> and allow for filtering based on
+the field name.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$query_vars</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An array of the currently public query vars.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The filtered query vars array.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_manage_sortable_columns">
         manage_sortable_columns()
         <a href="classes/WP-Backstage-Component.html#method_manage_sortable_columns" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3245,7 +3461,7 @@ been modified by the user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1504</span>
+    <span class="phpdocumentor-element-found-in__line">1601</span>
 
     </aside>
 
@@ -3319,7 +3535,7 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">972</span>
+    <span class="phpdocumentor-element-found-in__line">985</span>
 
     </aside>
 
@@ -3329,7 +3545,15 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">manage_sorting</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Query">WP_Query</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>The method is responsible for managing sorting on the query. If a field's
+name is found in the <code class="prettyprint">orderby</code> key, then its key is added as the meta key
+for the query, and the orderby is reset to either <code class="prettyprint">meta_value</code> or <code class="prettyprint">meta_value_num</code>
+according to if the value is expected to be numeric or not. If no meta query is set,
+this will add a meta query that filters for posts that either do or do not have the meta
+value set for the field. By default, setting just <code class="prettyprint">meta_key</code> is not sufficient if the
+desire is to show posts that don't have a value as well.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3356,6 +3580,16 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
                                                                                 
                                              
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added a check to see if there is already a meta query before setting the meta query that is added in order to get posts both with or without a value set for the field.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3456,7 +3690,7 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">668</span>
+    <span class="phpdocumentor-element-found-in__line">679</span>
 
     </aside>
 
@@ -3511,7 +3745,7 @@ be made sortable if the field's <code class="prettyprint">is_sortable</code> arg
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">423</span>
+    <span class="phpdocumentor-element-found-in__line">427</span>
 
     </aside>
 
@@ -3580,7 +3814,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">783</span>
+    <span class="phpdocumentor-element-found-in__line">796</span>
 
     </aside>
 
@@ -3632,7 +3866,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">916</span>
+    <span class="phpdocumentor-element-found-in__line">920</span>
 
     </aside>
 
@@ -3700,7 +3934,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">764</span>
+    <span class="phpdocumentor-element-found-in__line">777</span>
 
     </aside>
 
@@ -3752,7 +3986,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1055</span>
+    <span class="phpdocumentor-element-found-in__line">1152</span>
 
     </aside>
 
@@ -3820,7 +4054,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">989</span>
+    <span class="phpdocumentor-element-found-in__line">1002</span>
 
     </aside>
 
@@ -3907,7 +4141,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">952</span>
+    <span class="phpdocumentor-element-found-in__line">965</span>
 
     </aside>
 
@@ -3976,7 +4210,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">966</span>
+    <span class="phpdocumentor-element-found-in__line">979</span>
 
     </aside>
 
@@ -4055,7 +4289,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">898</span>
+    <span class="phpdocumentor-element-found-in__line">911</span>
 
     </aside>
 
@@ -4124,7 +4358,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">885</span>
+    <span class="phpdocumentor-element-found-in__line">898</span>
 
     </aside>
 
@@ -4201,7 +4435,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">939</span>
+    <span class="phpdocumentor-element-found-in__line">952</span>
 
     </aside>
 
@@ -4278,7 +4512,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1064</span>
+    <span class="phpdocumentor-element-found-in__line">1092</span>
 
     </aside>
 
@@ -4343,6 +4577,26 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
 </section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_posts.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_users.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -4366,7 +4620,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1033</span>
+    <span class="phpdocumentor-element-found-in__line">1046</span>
 
     </aside>
 
@@ -4445,7 +4699,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">911</span>
+    <span class="phpdocumentor-element-found-in__line">924</span>
 
     </aside>
 
@@ -4514,7 +4768,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1049</span>
+    <span class="phpdocumentor-element-found-in__line">1062</span>
 
     </aside>
 
@@ -4576,6 +4830,75 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_sanitize_select_users">
+        sanitize_select_users()
+        <a href="classes/WP-Backstage-Component.html#method_sanitize_select_users" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1075</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sanitize Select Users</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">sanitize_select_users</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The value to sanitize. Expects a user ID.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data"> <p>Validating, Sanitizing, and Escaping User Data in WP</p>
+ </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>A non-negative integer.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_sanitize_text">
         sanitize_text()
         <a href="classes/WP-Backstage-Component.html#method_sanitize_text" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4583,7 +4906,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">857</span>
+    <span class="phpdocumentor-element-found-in__line">870</span>
 
     </aside>
 
@@ -4660,7 +4983,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">871</span>
+    <span class="phpdocumentor-element-found-in__line">884</span>
 
     </aside>
 
@@ -4737,7 +5060,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1006</span>
+    <span class="phpdocumentor-element-found-in__line">1019</span>
 
     </aside>
 
@@ -4834,7 +5157,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">925</span>
+    <span class="phpdocumentor-element-found-in__line">938</span>
 
     </aside>
 
@@ -4911,7 +5234,7 @@ while <code class="prettyprint">%2$s</code> refers to the plural label. <code cl
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">681</span>
+    <span class="phpdocumentor-element-found-in__line">685</span>
 
     </aside>
 
@@ -4992,7 +5315,7 @@ the first parameter ($post_id).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1534</span>
+    <span class="phpdocumentor-element-found-in__line">1631</span>
 
     </aside>
 
@@ -5056,7 +5379,7 @@ string of sanitized HTML element attributes.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1305</span>
+    <span class="phpdocumentor-element-found-in__line">1345</span>
 
     </aside>
 
@@ -5140,7 +5463,7 @@ value.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1219</span>
+    <span class="phpdocumentor-element-found-in__line">1254</span>
 
     </aside>
 
@@ -5212,7 +5535,7 @@ value.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">643</span>
+    <span class="phpdocumentor-element-found-in__line">647</span>
 
     </aside>
 
@@ -5261,7 +5584,7 @@ value.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1180</span>
+    <span class="phpdocumentor-element-found-in__line">1215</span>
 
     </aside>
 
@@ -5342,7 +5665,7 @@ value.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">396</span>
+    <span class="phpdocumentor-element-found-in__line">400</span>
 
     </aside>
 
@@ -5392,7 +5715,7 @@ labels needed when registering a post type.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">620</span>
+    <span class="phpdocumentor-element-found-in__line">624</span>
 
     </aside>
 
@@ -5441,7 +5764,7 @@ labels needed when registering a post type.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1567</span>
+    <span class="phpdocumentor-element-found-in__line">1664</span>
 
     </aside>
 
@@ -5508,7 +5831,7 @@ not &quot;pretty&quot;.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1128</span>
+    <span class="phpdocumentor-element-found-in__line">1161</span>
 
     </aside>
 
@@ -5577,6 +5900,26 @@ function. This method provides a mask of all of this class's
 </section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_posts.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_users.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -5600,7 +5943,7 @@ function. This method provides a mask of all of this class's
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">743</span>
+    <span class="phpdocumentor-element-found-in__line">747</span>
 
     </aside>
 
@@ -5665,7 +6008,7 @@ function. This method provides a mask of all of this class's
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">710</span>
+    <span class="phpdocumentor-element-found-in__line">721</span>
 
     </aside>
 
@@ -5745,7 +6088,7 @@ function. This method provides a mask of all of this class's
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2702</span>
+    <span class="phpdocumentor-element-found-in__line">2799</span>
 
     </aside>
 
@@ -5810,7 +6153,7 @@ replace the &quot;State/Province/Region&quot; input.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1960</span>
+    <span class="phpdocumentor-element-found-in__line">2057</span>
 
     </aside>
 
@@ -5872,7 +6215,7 @@ replace the &quot;State/Province/Region&quot; input.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2438</span>
+    <span class="phpdocumentor-element-found-in__line">2535</span>
 
     </aside>
 
@@ -5936,7 +6279,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2178</span>
+    <span class="phpdocumentor-element-found-in__line">2275</span>
 
     </aside>
 
@@ -6003,7 +6346,7 @@ box that was hidden on page load, have been handled.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1881</span>
+    <span class="phpdocumentor-element-found-in__line">1978</span>
 
     </aside>
 
@@ -6067,7 +6410,7 @@ pickers found in WordPress. The field is configurable with arguments for
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1666</span>
+    <span class="phpdocumentor-element-found-in__line">1763</span>
 
     </aside>
 
@@ -6131,7 +6474,7 @@ strings are always ISO compliant.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2098</span>
+    <span class="phpdocumentor-element-found-in__line">2195</span>
 
     </aside>
 
@@ -6196,7 +6539,7 @@ when displaying a meta box that was hidden on page load, have been handled.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1245</span>
+    <span class="phpdocumentor-element-found-in__line">1282</span>
 
     </aside>
 
@@ -6238,6 +6581,26 @@ called in order to render the appropriate field HTML.</p>
                                                                                 
                                              
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_posts.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Added case for select_users.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -6259,7 +6622,7 @@ called in order to render the appropriate field HTML.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1594</span>
+    <span class="phpdocumentor-element-found-in__line">1691</span>
 
     </aside>
 
@@ -6322,7 +6685,7 @@ except for <code class="prettyprint">radio</code>, <code class="prettyprint">che
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2539</span>
+    <span class="phpdocumentor-element-found-in__line">2636</span>
 
     </aside>
 
@@ -6398,7 +6761,7 @@ sorting.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2343</span>
+    <span class="phpdocumentor-element-found-in__line">2440</span>
 
     </aside>
 
@@ -6462,7 +6825,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2252</span>
+    <span class="phpdocumentor-element-found-in__line">2349</span>
 
     </aside>
 
@@ -6526,7 +6889,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">3015</span>
+    <span class="phpdocumentor-element-found-in__line">3112</span>
 
     </aside>
 
@@ -6536,7 +6899,7 @@ users, options, etc.</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">render_select_posts</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"><p>Render an select field prepopulared by WordPress posts.</p>
+        <section class="phpdocumentor-description"><p>Render a select field prepopulared by WordPress posts.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -6580,6 +6943,67 @@ users, options, etc.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_render_select_users">
+        render_select_users()
+        <a href="classes/WP-Backstage-Component.html#method_render_select_users" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">3212</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Render Select Users</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">render_select_users</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>Render a select field prepopulared by WordPress users.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$field</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An array of field arguments.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.1.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_render_textarea">
         render_textarea()
         <a href="classes/WP-Backstage-Component.html#method_render_textarea" class="headerlink"><i class="fas fa-link"></i></a>
@@ -6587,7 +7011,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2025</span>
+    <span class="phpdocumentor-element-found-in__line">2122</span>
 
     </aside>
 
@@ -6648,7 +7072,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-post-type.php"><a href="files/includes-class-wp-backstage-post-type.html"><abbr title="includes/class-wp-backstage-post-type.php">class-wp-backstage-post-type.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">887</span>
+    <span class="phpdocumentor-element-found-in__line">891</span>
 
     </aside>
 
@@ -6707,7 +7131,7 @@ users, options, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1773</span>
+    <span class="phpdocumentor-element-found-in__line">1870</span>
 
     </aside>
 
@@ -6770,7 +7194,7 @@ way of ensuring time strings are always ISO compliant.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1742</span>
+    <span class="phpdocumentor-element-found-in__line">1839</span>
 
     </aside>
 

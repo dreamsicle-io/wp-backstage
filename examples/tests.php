@@ -385,7 +385,12 @@ function wp_backstage_init() {
 			'description' => __( 'Please select a page.', 'wp_backstage_examples' ),
 			'has_column'  => true,
 			'args'        => array(
-				'post_type' => 'page',
+				'option_none_label' => __( 'Select a page', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'page',
+					'orderby'   => 'title',
+					'order'     => 'ASC',
+				),
 			),
 		),
 		array(
@@ -395,7 +400,27 @@ function wp_backstage_init() {
 			'description' => __( 'Please select a post.', 'wp_backstage_examples' ),
 			'has_column'  => true,
 			'args'        => array(
-				'post_type' => 'post',
+				'option_none_label' => __( 'Select a post', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'post',
+					'orderby'   => 'date',
+					'order'     => 'DESC',
+				),
+			),
+		),
+		array(
+			'type'        => 'select_users',
+			'name'        => 'wp_backstage_select_user_field',
+			'label'       => __( 'User', 'wp_backstage_examples' ),
+			'description' => __( 'Please select a user.', 'wp_backstage_examples' ),
+			'has_column'  => true,
+			'args'        => array(
+				'option_none_label' => __( 'Select a user', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'post',
+					'orderby'   => 'date',
+					'order'     => 'DESC',
+				),
 			),
 		),
 	);

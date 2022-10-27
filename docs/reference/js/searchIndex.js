@@ -756,26 +756,6 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Taxonomy.html#method_init"
         },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aadd_list_table_query_actions\u0028\u0029",
-            "name": "add_list_table_query_actions",
-            "summary": "Add\u0020List\u0020Table\u0020Query\u0020Action",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_add_list_table_query_actions"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_list_table_query\u0028\u0029",
-            "name": "manage_list_table_query",
-            "summary": "Manage\u0020List\u0020Table\u0020Query\u0020Args",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_list_table_query"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_sorting\u0028\u0029",
-            "name": "manage_sorting",
-            "summary": "Manage\u0020Sorting",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_sorting"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_filtering\u0028\u0029",
-            "name": "manage_filtering",
-            "summary": "Manage\u0020Filtering",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_filtering"
-        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aregister\u0028\u0029",
             "name": "register",
             "summary": "Register",
@@ -805,6 +785,26 @@ Search.appendIndex(
             "name": "manage_admin_column_content",
             "summary": "Manage\u0020Admin\u0020Column\u0020Content",
             "url": "classes/WP-Backstage-Taxonomy.html#method_manage_admin_column_content"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aadd_list_table_query_actions\u0028\u0029",
+            "name": "add_list_table_query_actions",
+            "summary": "Add\u0020List\u0020Table\u0020Query\u0020Action",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_add_list_table_query_actions"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_list_table_query\u0028\u0029",
+            "name": "manage_list_table_query",
+            "summary": "Manage\u0020List\u0020Table\u0020Query\u0020Args",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_list_table_query"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_sorting\u0028\u0029",
+            "name": "manage_sorting",
+            "summary": "Manage\u0020Sorting",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_sorting"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_filtering\u0028\u0029",
+            "name": "manage_filtering",
+            "summary": "Manage\u0020Filtering",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_manage_filtering"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_default_hidden_columns\u0028\u0029",
             "name": "manage_default_hidden_columns",

@@ -278,7 +278,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_filter( sprintf( 'manage_edit-%1$s_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
 		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
-		add_filter( 'terms_clauses', array( $this, 'manage_sorting' ), 10, 3 );
+		add_filter( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
+		add_action( "wp_backstage_{$this->slug}_terms_list_table_query", array( $this, 'manage_list_table_query' ), 10 );
+		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );
+		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
+		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
 		parent::init();
@@ -736,60 +740,196 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	}
 
 	/**
-	 * Manage Sorting
+	 * Add List Table Query Action
 	 *
-	 * Adds sorting by parsing the `SQL` statements on the `parse_term_query`
-	 * hook.
+	 * This method is responsible for adding an action to manage specifically the query that
+	 * populates the terms list table on the edit taxonomy screens. Currently, there is no way
+	 * in core to determine if a query is the main query for taxonomy edit screens. This is
+	 * necessary in order to be able to modify the main query without polluting other term queries
+	 * that may be on the page. It is safe to assume that the first `get_terms()` call that is
+	 * relevant to this taxonomy on the edit screen is the main query that populates the table.
+	 * This method also takes into account the main "count" query as well, which is a seperate call.
 	 *
-	 * @todo    Try to normalize this with other queryies by using `meta_query`.
-	 *          If this is still not possible, Ensure term sorting does not
-	 *          ignore those terms without the meta value logged in the termmeta
-	 *          table.
-	 *
-	 * @link    https://developer.wordpress.org/reference/hooks/parse_term_query/ Hook: parse_term_query
-	 *
-	 * @since   0.0.1
-	 * @since   3.0.0  Makes table alias unique in each run of the function to suppress sql warnings.
-	 * @param   array $pieces      An array of query pieces that make up the `SQL` statement.
-	 * @param   array $taxonomies  An array of taxonomy names that this query is handling.
-	 * @param   array $args        An array of arguments.
-	 * @return  array  The filtered query pieces with new sorting applied.
+	 * @since 3.1.0
+	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+	 * @return void
 	 */
-	public function manage_sorting( $pieces = array(), $taxonomies = array(), $args = array() ) {
+	public function add_list_table_query_actions( $query = null ) {
 
-		global $wpdb;
-		$table_alias = uniqid( 'tm_' );
+		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
 
-		if ( in_array( $this->slug, $taxonomies ) ) {
+			if ( $this->is_screen( 'id', $this->screen_id ) && $this->is_screen( 'base', 'edit-tags' ) ) {
 
-			// phpcs:ignore WordPress.Security.NonceVerification
-			$get_data = ! empty( $_GET ) ? wp_unslash( $_GET ) : null;
+				if ( $query->query_vars['fields'] === 'count' ) {
 
-			$orderby = isset( $get_data['orderby'] ) ? esc_attr( $get_data['orderby'] ) : '';
+					// If this is the first count query, it can be safely assumed that this is the query
+					// that populates the total count at the top of the terms list table.
+					if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_count_query" ) ) {
 
-			if ( ! empty( $orderby ) ) {
+						/**
+						 * Fires when the term query is determined to be the one that populates the list table count.
+						 *
+						 * @since 3.1.0
+						 *
+						 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+						 */
+						do_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", $query );
+					}
+				} else {
 
-				$field = $this->get_field_by( 'name', $orderby );
+					// If this is the first query that is not a count query, it can be safely assumed that
+					// the query is the main query that populates the terms list table.
+					if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_query" ) ) {
 
-				if ( is_array( $field ) && ! empty( $field ) ) {
-
-					if ( $field['has_column'] && $field['is_sortable'] ) {
-
-						$pieces['join']  .= ' INNER JOIN ' . $wpdb->termmeta . ' AS ' . $table_alias . ' ON t.term_id = ' . $table_alias . '.term_id ';
-						$pieces['where'] .= ' AND ' . $table_alias . '.meta_key = "' . esc_attr( $field['name'] ) . '" ';
-
-						if ( $field['type'] === 'number' ) {
-							$pieces['orderby'] = ' ORDER BY CAST(' . $table_alias . '.meta_value AS SIGNED) ';
-						} else {
-							$pieces['orderby'] = ' ORDER BY ' . $table_alias . '.meta_value ';
-						}
+						/**
+						 * Fires when the term query is determined to be the one that populates the list table rows.
+						 *
+						 * @since 3.1.0
+						 *
+						 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+						 */
+						do_action( "wp_backstage_{$this->slug}_terms_list_table_query", $query );
 					}
 				}
 			}
 		}
+	}
 
-		return $pieces;
+	/**
+	 * Manage List Table Query Args
+	 *
+	 * This method is responsible for making the URL query fields available to the main `WP_Term_Query`.
+	 * This allows for similar behavior to the query vars filter that is only available for posts. This
+	 * method loops over the fields, and checks if the field key is a key of the URL query. If it is, it
+	 * then adds the key and value to the args array to be passed to the `WP_Term_Query` that runs the main
+	 * terms list table. This hooks to an action added by `WP_Backstage_Taxonomy::add_list_table_query_actions()`.
+	 *
+	 * @since 3.1.0
+	 * @param WP_Term_Query $query The incoming `WP_Term_Query` instance.
+	 * @return void
+	 */
+	public function manage_list_table_query( $query = null ) {
 
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				// phpcs:ignore WordPress.Security.NonceVerification
+				$url_params = wp_unslash( $_GET );
+
+				if ( isset( $url_params[ $field['name'] ] ) ) {
+					$query->query_vars[ $field['name'] ] = $url_params[ $field['name'] ];
+				}
+			}
+		}
+	}
+
+	/**
+	 * Manage Sorting
+	 *
+	 * The method is responsible for managing sorting on the query. If a field's
+	 * name is found in the `orderby` key, then its key is added as the `meta_key`
+	 * for the query, and the orderby is reset to either `meta_value` or `meta_value_num`
+	 * according to if the value is expected to be numeric or not. If no meta query is set,
+	 * this will add a meta query that filters for terms that either do or do not have the meta
+	 * value set for the field. By default, setting just `meta_key` is not sufficient if the
+	 * desire is to show terms that don't have a value as well.
+	 *
+	 * @since 3.1.0
+	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+	 * @return void
+	 */
+	public function manage_sorting( $query = null ) {
+
+		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+
+			$field = $this->get_field_by( 'name', $query->query_vars['orderby'] );
+
+			if ( is_array( $field ) && ! empty( $field ) ) {
+
+				if ( $field['is_sortable'] ) {
+
+					// phpcs:ignore WordPress.DB.SlowDBQuery
+					$query->query_vars['meta_key'] = $field['name'];
+
+					if ( ! isset( $query->query_vars['meta_query'] ) || empty( $query->query_vars['meta_query'] ) ) {
+
+						// phpcs:ignore WordPress.DB.SlowDBQuery
+						$query->query_vars['meta_query'] = array(
+							'relation' => 'OR',
+							array(
+								'key'     => $field['name'],
+								'compare' => 'EXISTS',
+							),
+							array(
+								'key'     => $field['name'],
+								'compare' => 'NOT EXISTS',
+							),
+						);
+					}
+
+					if ( $field['type'] === 'number' ) {
+
+						$query->query_vars['orderby'] = 'meta_value_num';
+
+					} else {
+
+						$query->query_vars['orderby'] = 'meta_value';
+
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Manage Filtering
+	 *
+	 * This method is responsible for filtering the query if a query var set to
+	 * a field's name is found. The fields are looped over and, if a field is
+	 * found with the matching query var, builds an array of meta query filters.
+	 * At the end of the loop, if there is a meta query to be set, the "AND" relation
+	 * is also added to the meta query, allowing for complex filtering to be accomplished.
+	 * See `WP_Backstage_Taxonomy::manage_list_table_query()` to see how the fields are made
+	 * available as public query vars.
+	 *
+	 * @since 3.1.0
+	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+	 * @return void
+	 */
+	public function manage_filtering( $query = null ) {
+
+		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+
+			$fields = $this->get_fields();
+
+			if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+				$meta_query = array();
+
+				foreach ( $fields as $field ) {
+
+					if ( isset( $query->query_vars[ $field['name'] ] ) ) {
+
+						$meta_query[] = array(
+							'key'     => $field['name'],
+							'value'   => $query->query_vars[ $field['name'] ],
+							'compare' => '=',
+						);
+					}
+				}
+
+				// If a non-empty meta query was prepared, add the "AND" relation
+				// to the meta query and set it.
+				if ( is_array( $meta_query ) && ! empty( $meta_query ) ) {
+					$meta_query = array_merge( array( 'relation' => 'AND' ), $meta_query );
+					// phpcs:ignore WordPress.DB.SlowDBQuery
+					$query->query_vars['meta_query'] = $meta_query;
+				}
+			}
+		}
 	}
 
 	/**

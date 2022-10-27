@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-27T15:45:18+00:00\n"
+"POT-Creation-Date: 2022-10-27T15:46:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1691,109 +1691,109 @@ msgid "[taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:507
+#: includes/class-wp-backstage-taxonomy.php:314
 msgctxt "taxonomy - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:512
+#: includes/class-wp-backstage-taxonomy.php:319
 msgctxt "taxonomy - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:517
+#: includes/class-wp-backstage-taxonomy.php:324
 msgctxt "taxonomy - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:522
+#: includes/class-wp-backstage-taxonomy.php:329
 msgctxt "taxonomy - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:527
+#: includes/class-wp-backstage-taxonomy.php:334
 msgctxt "taxonomy - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:532
+#: includes/class-wp-backstage-taxonomy.php:339
 msgctxt "taxonomy - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:537
+#: includes/class-wp-backstage-taxonomy.php:344
 msgctxt "taxonomy - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:542
+#: includes/class-wp-backstage-taxonomy.php:349
 msgctxt "taxonomy - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:547
+#: includes/class-wp-backstage-taxonomy.php:354
 msgctxt "taxonomy - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:552
+#: includes/class-wp-backstage-taxonomy.php:359
 msgctxt "taxonomy - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:557
+#: includes/class-wp-backstage-taxonomy.php:364
 msgctxt "taxonomy - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:562
+#: includes/class-wp-backstage-taxonomy.php:369
 msgctxt "taxonomy - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:567
+#: includes/class-wp-backstage-taxonomy.php:374
 msgctxt "taxonomy - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:572
+#: includes/class-wp-backstage-taxonomy.php:379
 msgctxt "taxonomy - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:577
+#: includes/class-wp-backstage-taxonomy.php:384
 msgctxt "taxonomy - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:582
+#: includes/class-wp-backstage-taxonomy.php:389
 msgctxt "taxonomy - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:587
+#: includes/class-wp-backstage-taxonomy.php:394
 msgctxt "taxonomy - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:592
+#: includes/class-wp-backstage-taxonomy.php:399
 msgctxt "taxonomy - back to items"
 msgid "Back to %1$s"
 msgstr ""

@@ -79,8 +79,9 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$this->default_field_args   = array_merge(
 			$this->default_field_args,
 			array(
-				'has_column'  => false,
-				'is_sortable' => false,
+				'has_column'    => false,
+				'is_sortable'   => false,
+				'is_filterable' => false,
 			)
 		);
 		$this->default_address_args = array_merge(
@@ -186,6 +187,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'pre_get_users', array( $this, 'manage_filtering' ), 10 );
 		add_filter( 'users_list_table_query_args', array( $this, 'manage_list_table_query_args' ), 10 );
+		add_action( 'manage_users_extra_tablenav', array( $this, 'render_table_filter_form' ), 10 );
 
 		parent::init();
 
@@ -427,8 +429,21 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			$value = get_user_meta( $user_id, $column, true );
 
-			// short circuit the column content and allow developer to add their own.
+			/**
+			 * Filters the post type custom field's admin column content.
+			 *
+			 * Returning any value here will short circuit the plugin's
+			 * output and render this content instead.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param string $content The current content string.
+			 * @param array $field an array of field arguments.
+			 * @param mixed $value the field's value.
+			 * @param int $user_id The user ID of the current user.
+			 */
 			$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", $content, $field, $value, $user_id );
+
 			if ( ! empty( $content ) ) {
 				return $content;
 			}
@@ -448,6 +463,37 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		return $content;
 
+	}
+
+	/**
+	 * Render Table Filter Form
+	 *
+	 * This method is responsible for rendering the filter form at the top of the admin user list table.
+	 * Because the user list table does not have filters, it is necessary to add the filter action submit
+	 * button here.
+	 *
+	 * @since 3.1.0
+	 * @param string $which whther the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @return void
+	 */
+	public function render_table_filter_form( $which = 'top' ) {
+
+		if ( $which === 'top' ) { ?>
+
+			<div class="align-left actions">
+
+				<?php $this->render_table_filter_controls(); ?>
+
+				<input 
+				type="submit" 
+				name="filter_action" 
+				id="post-query-submit" 
+				class="button" 
+				value="<?php echo esc_html( _x( 'Filter', 'users table filter - submit', 'wp_backstage' ) ); ?>" />
+
+			</div>
+
+		<?php }
 	}
 
 	/**
@@ -474,8 +520,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			if ( $field['is_sortable'] ) {
 
-				$query->set( 'meta_key', $field['name'] );
-
 				$meta_query = $query->get( 'meta_query' );
 				if ( empty( $meta_query ) ) {
 					$query->set(
@@ -492,6 +536,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 							),
 						)
 					);
+				} else {
+
+					$query->set( 'meta_key', $field['name'] );
+
 				}
 
 				if ( $field['type'] === 'number' ) {

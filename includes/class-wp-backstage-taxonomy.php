@@ -109,8 +109,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
 			array(
-				'has_column'  => false,
-				'is_sortable' => false,
+				'has_column'    => false,
+				'is_sortable'   => false,
+				'is_filterable' => false,
 			)
 		);
 		$this->new                = boolval( $new );
@@ -711,8 +712,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			 *
 			 * @since 0.0.1
 			 *
-			 * @param array $field an array of field arguments.
 			 * @param mixed $content the current content.
+			 * @param array $field an array of field arguments.
 			 * @param mixed $value the field's value.
 			 * @param int $term_id The term ID of the current term.
 			 */
@@ -756,7 +757,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function add_list_table_query_actions( $query = null ) {
 
-		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+		if ( is_admin() && in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
 
 			if ( $this->is_screen( 'id', $this->screen_id ) && $this->is_screen( 'base', 'edit-tags' ) ) {
 
@@ -851,9 +852,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 				if ( $field['is_sortable'] ) {
 
-					// phpcs:ignore WordPress.DB.SlowDBQuery
-					$query->query_vars['meta_key'] = $field['name'];
-
 					if ( ! isset( $query->query_vars['meta_query'] ) || empty( $query->query_vars['meta_query'] ) ) {
 
 						// phpcs:ignore WordPress.DB.SlowDBQuery
@@ -868,6 +866,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 								'compare' => 'NOT EXISTS',
 							),
 						);
+					} else {
+
+						// phpcs:ignore WordPress.DB.SlowDBQuery
+						$query->query_vars['meta_key'] = $field['name'];
+
 					}
 
 					if ( $field['type'] === 'number' ) {

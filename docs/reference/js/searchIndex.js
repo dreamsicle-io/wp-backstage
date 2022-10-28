@@ -146,6 +146,16 @@ Search.appendIndex(
             "summary": "Render\u0020Field\u0020By\u0020Type",
             "url": "classes/WP-Backstage-Component.html#method_render_field_by_type"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_table_filter_controls\u0028\u0029",
+            "name": "render_table_filter_controls",
+            "summary": "Render\u0020Table\u0020Filter\u0020Controls",
+            "url": "classes/WP-Backstage-Component.html#method_render_table_filter_controls"
+        },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_table_filter_control\u0028\u0029",
+            "name": "render_table_filter_control",
+            "summary": "Render\u0020Table\u0020Filter\u0020Control",
+            "url": "classes/WP-Backstage-Component.html#method_render_table_filter_control"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Aformat_field_value\u0028\u0029",
             "name": "format_field_value",
             "summary": "Format\u0020Field\u0020Value",
@@ -286,6 +296,11 @@ Search.appendIndex(
             "summary": "Default\u0020Field\u0020Args",
             "url": "classes/WP-Backstage-Component.html#property_default_field_args"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024default_filter_control_args",
+            "name": "default_filter_control_args",
+            "summary": "Default\u0020Filter\u0020Control\u0020Args",
+            "url": "classes/WP-Backstage-Component.html#property_default_filter_control_args"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024date_format",
             "name": "date_format",
             "summary": "Date\u0020Format",
@@ -340,6 +355,11 @@ Search.appendIndex(
             "name": "default_address_values",
             "summary": "Default\u0020Address\u0020Values",
             "url": "classes/WP-Backstage-Component.html#property_default_address_values"
+        },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024filterable_fields",
+            "name": "filterable_fields",
+            "summary": "Filterable\u0020Fields",
+            "url": "classes/WP-Backstage-Component.html#property_filterable_fields"
         },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024remove_label_for_fields",
             "name": "remove_label_for_fields",
@@ -651,6 +671,11 @@ Search.appendIndex(
             "summary": "Render\u0020Admin\u0020Column",
             "url": "classes/WP-Backstage-Post-Type.html#method_render_admin_column"
         },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Arender_table_filter_form\u0028\u0029",
+            "name": "render_table_filter_form",
+            "summary": "Render\u0020Table\u0020Filter\u0020Form",
+            "url": "classes/WP-Backstage-Post-Type.html#method_render_table_filter_form"
+        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Amanage_sorting\u0028\u0029",
             "name": "manage_sorting",
             "summary": "Manage\u0020Sorting",
@@ -886,6 +911,11 @@ Search.appendIndex(
             "summary": "Manage\u0020Admin\u0020Column\u0020Content",
             "url": "classes/WP-Backstage-User.html#method_manage_admin_column_content"
         },                {
+            "fqsen": "\\WP_Backstage_User\u003A\u003Arender_table_filter_form\u0028\u0029",
+            "name": "render_table_filter_form",
+            "summary": "Render\u0020Table\u0020Filter\u0020Form",
+            "url": "classes/WP-Backstage-User.html#method_render_table_filter_form"
+        },                {
             "fqsen": "\\WP_Backstage_User\u003A\u003Amanage_sorting\u0028\u0029",
             "name": "manage_sorting",
             "summary": "Manage\u0020Sorting",
@@ -1091,10 +1121,10 @@ Search.appendIndex(
             "summary": "Inline\u0020Thumbnail\u0020Column\u0020Style",
             "url": "classes/WP-Backstage.html#method_inline_thumbnail_column_style"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_field_style\u0028\u0029",
-            "name": "inline_field_style",
-            "summary": "Inline\u0020Field\u0020Style",
-            "url": "classes/WP-Backstage.html#method_inline_field_style"
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_global_style\u0028\u0029",
+            "name": "inline_global_style",
+            "summary": "Inline\u0020Global\u0020Style",
+            "url": "classes/WP-Backstage.html#method_inline_global_style"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_global_script\u0028\u0029",
             "name": "inline_global_script",

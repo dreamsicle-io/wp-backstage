@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-27T15:48:19+00:00\n"
+"POT-Creation-Date: 2022-10-28T15:50:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -34,1373 +34,1387 @@ msgstr ""
 msgid "https://www.dreamsicle.io"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:328
+#: includes/class-wp-backstage-component.php:356
 msgctxt "time field - hour"
 msgid "Hour"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:332
+#: includes/class-wp-backstage-component.php:360
 msgctxt "time field - minute"
 msgid "Minute"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:336
+#: includes/class-wp-backstage-component.php:364
 msgctxt "time field - second"
 msgid "Second"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:341
+#: includes/class-wp-backstage-component.php:369
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:342
+#: includes/class-wp-backstage-component.php:370
 msgid "Albania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:343
+#: includes/class-wp-backstage-component.php:371
 msgid "Algeria"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:344
+#: includes/class-wp-backstage-component.php:372
 msgid "American Samoa"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:345
+#: includes/class-wp-backstage-component.php:373
 msgid "Andorra"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:346
+#: includes/class-wp-backstage-component.php:374
 msgid "Angola"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:347
+#: includes/class-wp-backstage-component.php:375
 msgid "Anguilla"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:348
+#: includes/class-wp-backstage-component.php:376
 msgid "Antarctica"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:349
+#: includes/class-wp-backstage-component.php:377
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:350
+#: includes/class-wp-backstage-component.php:378
 msgid "Argentina"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:351
+#: includes/class-wp-backstage-component.php:379
 msgid "Armenia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:352
+#: includes/class-wp-backstage-component.php:380
 msgid "Aruba"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:353
+#: includes/class-wp-backstage-component.php:381
 msgid "Australia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:354
+#: includes/class-wp-backstage-component.php:382
 msgid "Austria"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:355
+#: includes/class-wp-backstage-component.php:383
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:356
+#: includes/class-wp-backstage-component.php:384
 msgid "Bahamas"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:357
+#: includes/class-wp-backstage-component.php:385
 msgid "Bahrain"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:358
+#: includes/class-wp-backstage-component.php:386
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:359
+#: includes/class-wp-backstage-component.php:387
 msgid "Barbados"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:360
+#: includes/class-wp-backstage-component.php:388
 msgid "Belarus"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:361
+#: includes/class-wp-backstage-component.php:389
 msgid "Belgium"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:362
+#: includes/class-wp-backstage-component.php:390
 msgid "Belize"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:363
+#: includes/class-wp-backstage-component.php:391
 msgid "Benin"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:364
+#: includes/class-wp-backstage-component.php:392
 msgid "Bermuda"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:365
+#: includes/class-wp-backstage-component.php:393
 msgid "Bhutan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:366
+#: includes/class-wp-backstage-component.php:394
 msgid "Bolivia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:367
+#: includes/class-wp-backstage-component.php:395
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:368
+#: includes/class-wp-backstage-component.php:396
 msgid "Botswana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:369
+#: includes/class-wp-backstage-component.php:397
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:370
+#: includes/class-wp-backstage-component.php:398
 msgid "Brazil"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:371
+#: includes/class-wp-backstage-component.php:399
 msgid "British Antarctic Territory"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:372
+#: includes/class-wp-backstage-component.php:400
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:373
+#: includes/class-wp-backstage-component.php:401
 msgid "British Virgin Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:374
+#: includes/class-wp-backstage-component.php:402
 msgid "Brunei"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:375
+#: includes/class-wp-backstage-component.php:403
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:376
+#: includes/class-wp-backstage-component.php:404
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:377
+#: includes/class-wp-backstage-component.php:405
 msgid "Burundi"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:378
+#: includes/class-wp-backstage-component.php:406
 msgid "Cambodia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:379
+#: includes/class-wp-backstage-component.php:407
 msgid "Cameroon"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:380
+#: includes/class-wp-backstage-component.php:408
 msgid "Canada"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:381
+#: includes/class-wp-backstage-component.php:409
 msgid "Canton and Enderbury Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:382
+#: includes/class-wp-backstage-component.php:410
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:383
+#: includes/class-wp-backstage-component.php:411
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:384
+#: includes/class-wp-backstage-component.php:412
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:385
+#: includes/class-wp-backstage-component.php:413
 msgid "Chad"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:386
+#: includes/class-wp-backstage-component.php:414
 msgid "Chile"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:387
+#: includes/class-wp-backstage-component.php:415
 msgid "China"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:388
+#: includes/class-wp-backstage-component.php:416
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:389
+#: includes/class-wp-backstage-component.php:417
 msgid "Cocos [Keeling] Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:390
+#: includes/class-wp-backstage-component.php:418
 msgid "Colombia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:391
+#: includes/class-wp-backstage-component.php:419
 msgid "Comoros"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:392
+#: includes/class-wp-backstage-component.php:420
 msgid "Congo - Brazzaville"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:393
+#: includes/class-wp-backstage-component.php:421
 msgid "Congo - Kinshasa"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:394
+#: includes/class-wp-backstage-component.php:422
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:395
+#: includes/class-wp-backstage-component.php:423
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:396
+#: includes/class-wp-backstage-component.php:424
 msgid "Croatia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:397
+#: includes/class-wp-backstage-component.php:425
 msgid "Cuba"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:398
+#: includes/class-wp-backstage-component.php:426
 msgid "Cyprus"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:399
+#: includes/class-wp-backstage-component.php:427
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:400
+#: includes/class-wp-backstage-component.php:428
 msgid "Côte d’Ivoire"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:401
+#: includes/class-wp-backstage-component.php:429
 msgid "Denmark"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:402
+#: includes/class-wp-backstage-component.php:430
 msgid "Djibouti"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:403
+#: includes/class-wp-backstage-component.php:431
 msgid "Dominica"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:404
+#: includes/class-wp-backstage-component.php:432
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:405
+#: includes/class-wp-backstage-component.php:433
 msgid "Dronning Maud Land"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:406
+#: includes/class-wp-backstage-component.php:434
 msgid "East Germany"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:407
+#: includes/class-wp-backstage-component.php:435
 msgid "Ecuador"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:408
+#: includes/class-wp-backstage-component.php:436
 msgid "Egypt"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:409
+#: includes/class-wp-backstage-component.php:437
 msgid "El Salvador"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:410
+#: includes/class-wp-backstage-component.php:438
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:411
+#: includes/class-wp-backstage-component.php:439
 msgid "Eritrea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:412
+#: includes/class-wp-backstage-component.php:440
 msgid "Estonia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:413
+#: includes/class-wp-backstage-component.php:441
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:414
+#: includes/class-wp-backstage-component.php:442
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:415
+#: includes/class-wp-backstage-component.php:443
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:416
+#: includes/class-wp-backstage-component.php:444
 msgid "Fiji"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:417
+#: includes/class-wp-backstage-component.php:445
 msgid "Finland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:418
+#: includes/class-wp-backstage-component.php:446
 msgid "France"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:419
+#: includes/class-wp-backstage-component.php:447
 msgid "French Guiana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:420
+#: includes/class-wp-backstage-component.php:448
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:421
+#: includes/class-wp-backstage-component.php:449
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:422
+#: includes/class-wp-backstage-component.php:450
 msgid "French Southern and Antarctic Territories"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:423
+#: includes/class-wp-backstage-component.php:451
 msgid "Gabon"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:424
+#: includes/class-wp-backstage-component.php:452
 msgid "Gambia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:425
-#: includes/class-wp-backstage-component.php:616
+#: includes/class-wp-backstage-component.php:453
+#: includes/class-wp-backstage-component.php:644
 msgid "Georgia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:426
+#: includes/class-wp-backstage-component.php:454
 msgid "Germany"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:427
+#: includes/class-wp-backstage-component.php:455
 msgid "Ghana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:428
+#: includes/class-wp-backstage-component.php:456
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:429
+#: includes/class-wp-backstage-component.php:457
 msgid "Greece"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:430
+#: includes/class-wp-backstage-component.php:458
 msgid "Greenland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:431
+#: includes/class-wp-backstage-component.php:459
 msgid "Grenada"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:432
+#: includes/class-wp-backstage-component.php:460
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:433
+#: includes/class-wp-backstage-component.php:461
 msgid "Guam"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:434
+#: includes/class-wp-backstage-component.php:462
 msgid "Guatemala"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:435
+#: includes/class-wp-backstage-component.php:463
 msgid "Guernsey"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:436
+#: includes/class-wp-backstage-component.php:464
 msgid "Guinea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:437
+#: includes/class-wp-backstage-component.php:465
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:438
+#: includes/class-wp-backstage-component.php:466
 msgid "Guyana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:439
+#: includes/class-wp-backstage-component.php:467
 msgid "Haiti"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:440
+#: includes/class-wp-backstage-component.php:468
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:441
+#: includes/class-wp-backstage-component.php:469
 msgid "Honduras"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:442
+#: includes/class-wp-backstage-component.php:470
 msgid "Hong Kong SAR China"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:443
+#: includes/class-wp-backstage-component.php:471
 msgid "Hungary"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:444
+#: includes/class-wp-backstage-component.php:472
 msgid "Iceland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:445
+#: includes/class-wp-backstage-component.php:473
 msgid "India"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:446
+#: includes/class-wp-backstage-component.php:474
 msgid "Indonesia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:447
+#: includes/class-wp-backstage-component.php:475
 msgid "Iran"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:448
+#: includes/class-wp-backstage-component.php:476
 msgid "Iraq"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:449
+#: includes/class-wp-backstage-component.php:477
 msgid "Ireland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:450
+#: includes/class-wp-backstage-component.php:478
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:451
+#: includes/class-wp-backstage-component.php:479
 msgid "Israel"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:452
+#: includes/class-wp-backstage-component.php:480
 msgid "Italy"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:453
+#: includes/class-wp-backstage-component.php:481
 msgid "Jamaica"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:454
+#: includes/class-wp-backstage-component.php:482
 msgid "Japan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:455
+#: includes/class-wp-backstage-component.php:483
 msgid "Jersey"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:456
+#: includes/class-wp-backstage-component.php:484
 msgid "Johnston Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:457
+#: includes/class-wp-backstage-component.php:485
 msgid "Jordan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:458
+#: includes/class-wp-backstage-component.php:486
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:459
+#: includes/class-wp-backstage-component.php:487
 msgid "Kenya"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:460
+#: includes/class-wp-backstage-component.php:488
 msgid "Kiribati"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:461
+#: includes/class-wp-backstage-component.php:489
 msgid "Kuwait"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:462
+#: includes/class-wp-backstage-component.php:490
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:463
+#: includes/class-wp-backstage-component.php:491
 msgid "Laos"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:464
+#: includes/class-wp-backstage-component.php:492
 msgid "Latvia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:465
+#: includes/class-wp-backstage-component.php:493
 msgid "Lebanon"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:466
+#: includes/class-wp-backstage-component.php:494
 msgid "Lesotho"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:467
+#: includes/class-wp-backstage-component.php:495
 msgid "Liberia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:468
+#: includes/class-wp-backstage-component.php:496
 msgid "Libya"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:469
+#: includes/class-wp-backstage-component.php:497
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:470
+#: includes/class-wp-backstage-component.php:498
 msgid "Lithuania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:471
+#: includes/class-wp-backstage-component.php:499
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:472
+#: includes/class-wp-backstage-component.php:500
 msgid "Macau SAR China"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:473
+#: includes/class-wp-backstage-component.php:501
 msgid "Macedonia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:474
+#: includes/class-wp-backstage-component.php:502
 msgid "Madagascar"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:475
+#: includes/class-wp-backstage-component.php:503
 msgid "Malawi"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:476
+#: includes/class-wp-backstage-component.php:504
 msgid "Malaysia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:477
+#: includes/class-wp-backstage-component.php:505
 msgid "Maldives"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:478
+#: includes/class-wp-backstage-component.php:506
 msgid "Mali"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:479
+#: includes/class-wp-backstage-component.php:507
 msgid "Malta"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:480
+#: includes/class-wp-backstage-component.php:508
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:481
+#: includes/class-wp-backstage-component.php:509
 msgid "Martinique"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:482
+#: includes/class-wp-backstage-component.php:510
 msgid "Mauritania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:483
+#: includes/class-wp-backstage-component.php:511
 msgid "Mauritius"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:484
+#: includes/class-wp-backstage-component.php:512
 msgid "Mayotte"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:485
+#: includes/class-wp-backstage-component.php:513
 msgid "Metropolitan France"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:486
+#: includes/class-wp-backstage-component.php:514
 msgid "Mexico"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:487
+#: includes/class-wp-backstage-component.php:515
 msgid "Micronesia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:488
+#: includes/class-wp-backstage-component.php:516
 msgid "Midway Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:489
+#: includes/class-wp-backstage-component.php:517
 msgid "Moldova"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:490
+#: includes/class-wp-backstage-component.php:518
 msgid "Monaco"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:491
+#: includes/class-wp-backstage-component.php:519
 msgid "Mongolia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:492
+#: includes/class-wp-backstage-component.php:520
 msgid "Montenegro"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:493
+#: includes/class-wp-backstage-component.php:521
 msgid "Montserrat"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:494
+#: includes/class-wp-backstage-component.php:522
 msgid "Morocco"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:495
+#: includes/class-wp-backstage-component.php:523
 msgid "Mozambique"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:496
+#: includes/class-wp-backstage-component.php:524
 msgid "Myanmar [Burma]"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:497
+#: includes/class-wp-backstage-component.php:525
 msgid "Namibia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:498
+#: includes/class-wp-backstage-component.php:526
 msgid "Nauru"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:499
+#: includes/class-wp-backstage-component.php:527
 msgid "Nepal"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:500
+#: includes/class-wp-backstage-component.php:528
 msgid "Netherlands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:501
+#: includes/class-wp-backstage-component.php:529
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:502
+#: includes/class-wp-backstage-component.php:530
 msgid "Neutral Zone"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:503
+#: includes/class-wp-backstage-component.php:531
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:504
+#: includes/class-wp-backstage-component.php:532
 msgid "New Zealand"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:505
+#: includes/class-wp-backstage-component.php:533
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:506
+#: includes/class-wp-backstage-component.php:534
 msgid "Niger"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:507
+#: includes/class-wp-backstage-component.php:535
 msgid "Nigeria"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:508
+#: includes/class-wp-backstage-component.php:536
 msgid "Niue"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:509
+#: includes/class-wp-backstage-component.php:537
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:510
+#: includes/class-wp-backstage-component.php:538
 msgid "North Korea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:511
+#: includes/class-wp-backstage-component.php:539
 msgid "North Vietnam"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:512
+#: includes/class-wp-backstage-component.php:540
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:513
+#: includes/class-wp-backstage-component.php:541
 msgid "Norway"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:514
+#: includes/class-wp-backstage-component.php:542
 msgid "Oman"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:515
+#: includes/class-wp-backstage-component.php:543
 msgid "Pacific Islands Trust Territory"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:516
+#: includes/class-wp-backstage-component.php:544
 msgid "Pakistan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:517
+#: includes/class-wp-backstage-component.php:545
 msgid "Palau"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:518
+#: includes/class-wp-backstage-component.php:546
 msgid "Palestinian Territories"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:519
+#: includes/class-wp-backstage-component.php:547
 msgid "Panama"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:520
+#: includes/class-wp-backstage-component.php:548
 msgid "Panama Canal Zone"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:521
+#: includes/class-wp-backstage-component.php:549
 msgid "Papua New Guinea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:522
+#: includes/class-wp-backstage-component.php:550
 msgid "Paraguay"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:523
+#: includes/class-wp-backstage-component.php:551
 msgid "People's Democratic Republic of Yemen"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:524
+#: includes/class-wp-backstage-component.php:552
 msgid "Peru"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:525
+#: includes/class-wp-backstage-component.php:553
 msgid "Philippines"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:526
+#: includes/class-wp-backstage-component.php:554
 msgid "Pitcairn Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:527
+#: includes/class-wp-backstage-component.php:555
 msgid "Poland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:528
+#: includes/class-wp-backstage-component.php:556
 msgid "Portugal"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:529
+#: includes/class-wp-backstage-component.php:557
 msgid "Puerto Rico"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:530
+#: includes/class-wp-backstage-component.php:558
 msgid "Qatar"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:531
+#: includes/class-wp-backstage-component.php:559
 msgid "Romania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:532
+#: includes/class-wp-backstage-component.php:560
 msgid "Russia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:533
+#: includes/class-wp-backstage-component.php:561
 msgid "Rwanda"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:534
+#: includes/class-wp-backstage-component.php:562
 msgid "Saint Barthélemy"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:535
+#: includes/class-wp-backstage-component.php:563
 msgid "Saint Helena"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:536
+#: includes/class-wp-backstage-component.php:564
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:537
+#: includes/class-wp-backstage-component.php:565
 msgid "Saint Lucia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:538
+#: includes/class-wp-backstage-component.php:566
 msgid "Saint Martin"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:539
+#: includes/class-wp-backstage-component.php:567
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:540
+#: includes/class-wp-backstage-component.php:568
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:541
+#: includes/class-wp-backstage-component.php:569
 msgid "Samoa"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:542
+#: includes/class-wp-backstage-component.php:570
 msgid "San Marino"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:543
+#: includes/class-wp-backstage-component.php:571
 msgid "Saudi Arabia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:544
+#: includes/class-wp-backstage-component.php:572
 msgid "Senegal"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:545
+#: includes/class-wp-backstage-component.php:573
 msgid "Serbia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:546
+#: includes/class-wp-backstage-component.php:574
 msgid "Serbia and Montenegro"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:547
+#: includes/class-wp-backstage-component.php:575
 msgid "Seychelles"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:548
+#: includes/class-wp-backstage-component.php:576
 msgid "Sierra Leone"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:549
+#: includes/class-wp-backstage-component.php:577
 msgid "Singapore"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:550
+#: includes/class-wp-backstage-component.php:578
 msgid "Slovakia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:551
+#: includes/class-wp-backstage-component.php:579
 msgid "Slovenia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:552
+#: includes/class-wp-backstage-component.php:580
 msgid "Solomon Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:553
+#: includes/class-wp-backstage-component.php:581
 msgid "Somalia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:554
+#: includes/class-wp-backstage-component.php:582
 msgid "South Africa"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:555
+#: includes/class-wp-backstage-component.php:583
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:556
+#: includes/class-wp-backstage-component.php:584
 msgid "South Korea"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:557
+#: includes/class-wp-backstage-component.php:585
 msgid "Spain"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:558
+#: includes/class-wp-backstage-component.php:586
 msgid "Sri Lanka"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:559
+#: includes/class-wp-backstage-component.php:587
 msgid "Sudan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:560
+#: includes/class-wp-backstage-component.php:588
 msgid "Suriname"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:561
+#: includes/class-wp-backstage-component.php:589
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:562
+#: includes/class-wp-backstage-component.php:590
 msgid "Swaziland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:563
+#: includes/class-wp-backstage-component.php:591
 msgid "Sweden"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:564
+#: includes/class-wp-backstage-component.php:592
 msgid "Switzerland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:565
+#: includes/class-wp-backstage-component.php:593
 msgid "Syria"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:566
+#: includes/class-wp-backstage-component.php:594
 msgid "São Tomé and Príncipe"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:567
+#: includes/class-wp-backstage-component.php:595
 msgid "Taiwan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:568
+#: includes/class-wp-backstage-component.php:596
 msgid "Tajikistan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:569
+#: includes/class-wp-backstage-component.php:597
 msgid "Tanzania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:570
+#: includes/class-wp-backstage-component.php:598
 msgid "Thailand"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:571
+#: includes/class-wp-backstage-component.php:599
 msgid "Timor-Leste"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:572
+#: includes/class-wp-backstage-component.php:600
 msgid "Togo"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:573
+#: includes/class-wp-backstage-component.php:601
 msgid "Tokelau"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:574
+#: includes/class-wp-backstage-component.php:602
 msgid "Tonga"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:575
+#: includes/class-wp-backstage-component.php:603
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:576
+#: includes/class-wp-backstage-component.php:604
 msgid "Tunisia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:577
+#: includes/class-wp-backstage-component.php:605
 msgid "Turkey"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:578
+#: includes/class-wp-backstage-component.php:606
 msgid "Turkmenistan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:579
+#: includes/class-wp-backstage-component.php:607
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:580
+#: includes/class-wp-backstage-component.php:608
 msgid "Tuvalu"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:581
+#: includes/class-wp-backstage-component.php:609
 msgid "U.S. Minor Outlying Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:582
+#: includes/class-wp-backstage-component.php:610
 msgid "U.S. Miscellaneous Pacific Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:583
+#: includes/class-wp-backstage-component.php:611
 msgid "U.S. Virgin Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:584
+#: includes/class-wp-backstage-component.php:612
 msgid "Uganda"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:585
+#: includes/class-wp-backstage-component.php:613
 msgid "Ukraine"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:586
+#: includes/class-wp-backstage-component.php:614
 msgid "Union of Soviet Socialist Republics"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:587
+#: includes/class-wp-backstage-component.php:615
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:588
+#: includes/class-wp-backstage-component.php:616
 msgid "United Kingdom"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:589
+#: includes/class-wp-backstage-component.php:617
 msgid "United States"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:590
+#: includes/class-wp-backstage-component.php:618
 msgid "Unknown or Invalid Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:591
+#: includes/class-wp-backstage-component.php:619
 msgid "Uruguay"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:592
+#: includes/class-wp-backstage-component.php:620
 msgid "Uzbekistan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:593
+#: includes/class-wp-backstage-component.php:621
 msgid "Vanuatu"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:594
+#: includes/class-wp-backstage-component.php:622
 msgid "Vatican City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:595
+#: includes/class-wp-backstage-component.php:623
 msgid "Venezuela"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:596
+#: includes/class-wp-backstage-component.php:624
 msgid "Vietnam"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:597
+#: includes/class-wp-backstage-component.php:625
 msgid "Wake Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:598
+#: includes/class-wp-backstage-component.php:626
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:599
+#: includes/class-wp-backstage-component.php:627
 msgid "Western Sahara"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:600
+#: includes/class-wp-backstage-component.php:628
 msgid "Yemen"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:601
+#: includes/class-wp-backstage-component.php:629
 msgid "Zambia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:602
+#: includes/class-wp-backstage-component.php:630
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:603
+#: includes/class-wp-backstage-component.php:631
 msgid "Åland Islands"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:606
+#: includes/class-wp-backstage-component.php:634
 msgid "Alabama"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:607
+#: includes/class-wp-backstage-component.php:635
 msgid "Alaska"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:608
+#: includes/class-wp-backstage-component.php:636
 msgid "Arizona"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:609
+#: includes/class-wp-backstage-component.php:637
 msgid "Arkansas"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:610
+#: includes/class-wp-backstage-component.php:638
 msgid "California"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:611
+#: includes/class-wp-backstage-component.php:639
 msgid "Colorado"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:612
+#: includes/class-wp-backstage-component.php:640
 msgid "Connecticut"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:613
+#: includes/class-wp-backstage-component.php:641
 msgid "Delaware"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:614
+#: includes/class-wp-backstage-component.php:642
 msgid "District Of Columbia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:615
+#: includes/class-wp-backstage-component.php:643
 msgid "Florida"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:617
+#: includes/class-wp-backstage-component.php:645
 msgid "Hawaii"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:618
+#: includes/class-wp-backstage-component.php:646
 msgid "Idaho"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:619
+#: includes/class-wp-backstage-component.php:647
 msgid "Illinois"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:620
+#: includes/class-wp-backstage-component.php:648
 msgid "Indiana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:621
+#: includes/class-wp-backstage-component.php:649
 msgid "Iowa"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:622
+#: includes/class-wp-backstage-component.php:650
 msgid "Kansas"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:623
+#: includes/class-wp-backstage-component.php:651
 msgid "Kentucky"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:624
+#: includes/class-wp-backstage-component.php:652
 msgid "Louisiana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:625
+#: includes/class-wp-backstage-component.php:653
 msgid "Maine"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:626
+#: includes/class-wp-backstage-component.php:654
 msgid "Maryland"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:627
+#: includes/class-wp-backstage-component.php:655
 msgid "Massachusetts"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:628
+#: includes/class-wp-backstage-component.php:656
 msgid "Michigan"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:629
+#: includes/class-wp-backstage-component.php:657
 msgid "Minnesota"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:630
+#: includes/class-wp-backstage-component.php:658
 msgid "Mississippi"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:631
+#: includes/class-wp-backstage-component.php:659
 msgid "Missouri"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:632
+#: includes/class-wp-backstage-component.php:660
 msgid "Montana"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:633
+#: includes/class-wp-backstage-component.php:661
 msgid "Nebraska"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:634
+#: includes/class-wp-backstage-component.php:662
 msgid "Nevada"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:635
+#: includes/class-wp-backstage-component.php:663
 msgid "New Hampshire"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:636
+#: includes/class-wp-backstage-component.php:664
 msgid "New Jersey"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:637
+#: includes/class-wp-backstage-component.php:665
 msgid "New Mexico"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:638
+#: includes/class-wp-backstage-component.php:666
 msgid "New York"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:639
+#: includes/class-wp-backstage-component.php:667
 msgid "North Carolina"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:640
+#: includes/class-wp-backstage-component.php:668
 msgid "North Dakota"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:641
+#: includes/class-wp-backstage-component.php:669
 msgid "Ohio"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:642
+#: includes/class-wp-backstage-component.php:670
 msgid "Oklahoma"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:643
+#: includes/class-wp-backstage-component.php:671
 msgid "Oregon"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:644
+#: includes/class-wp-backstage-component.php:672
 msgid "Pennsylvania"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:645
+#: includes/class-wp-backstage-component.php:673
 msgid "Rhode Island"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:646
+#: includes/class-wp-backstage-component.php:674
 msgid "South Carolina"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:647
+#: includes/class-wp-backstage-component.php:675
 msgid "South Dakota"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:648
+#: includes/class-wp-backstage-component.php:676
 msgid "Tennessee"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:649
+#: includes/class-wp-backstage-component.php:677
 msgid "Texas"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:650
+#: includes/class-wp-backstage-component.php:678
 msgid "Utah"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:651
+#: includes/class-wp-backstage-component.php:679
 msgid "Vermont"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:652
+#: includes/class-wp-backstage-component.php:680
 msgid "Virginia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:653
+#: includes/class-wp-backstage-component.php:681
 msgid "Washington"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:654
+#: includes/class-wp-backstage-component.php:682
 msgid "West Virginia"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:655
+#: includes/class-wp-backstage-component.php:683
 msgid "Wisconsin"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:656
+#: includes/class-wp-backstage-component.php:684
 msgid "Wyoming"
 msgstr ""
 
 #. translators: 1: error message.
-#: includes/class-wp-backstage-component.php:690
+#: includes/class-wp-backstage-component.php:718
 msgctxt "component error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1373
+#. translators: 1: user display name, 2: user username
+#: includes/class-wp-backstage-component.php:1441
+msgctxt "select users filter - option label"
+msgid "%1$s (%2$s)"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:1454
+msgid "All Users"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:1470
+msgid "All options"
+msgstr ""
+
+#: includes/class-wp-backstage-component.php:1587
 msgctxt "checkbox column - true"
 msgid "True"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2649
+#: includes/class-wp-backstage-component.php:2863
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2654
+#: includes/class-wp-backstage-component.php:2868
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2659
+#: includes/class-wp-backstage-component.php:2873
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2664
+#: includes/class-wp-backstage-component.php:2878
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2669
+#: includes/class-wp-backstage-component.php:2883
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2674
+#: includes/class-wp-backstage-component.php:2888
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2716
+#: includes/class-wp-backstage-component.php:2930
 msgctxt "media uploader field - remove"
 msgid "Remove"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2845
+#: includes/class-wp-backstage-component.php:3059
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2889
+#: includes/class-wp-backstage-component.php:3103
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2922
+#: includes/class-wp-backstage-component.php:3136
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2955
+#: includes/class-wp-backstage-component.php:3169
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2988
+#: includes/class-wp-backstage-component.php:3202
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3020
+#: includes/class-wp-backstage-component.php:3234
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3064
+#: includes/class-wp-backstage-component.php:3278
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3130
+#: includes/class-wp-backstage-component.php:3344
 msgctxt "select posts field - default option none label"
 msgid "Select"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3229
+#: includes/class-wp-backstage-component.php:3443
 msgctxt "select users field - default option none label"
 msgid "Select"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:3276
+#: includes/class-wp-backstage-component.php:3490
 msgctxt "select users field - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
@@ -1470,338 +1484,343 @@ msgid "[post type: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: post type, 2: post title.
-#: includes/class-wp-backstage-post-type.php:380
+#: includes/class-wp-backstage-post-type.php:381
 msgctxt "dashboard activity post link title"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:435
+#: includes/class-wp-backstage-post-type.php:436
 msgctxt "post type - add new"
 msgid "Add New"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:438
+#: includes/class-wp-backstage-post-type.php:439
 msgctxt "post type - archives"
 msgid "%1$s Archives"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:443
+#: includes/class-wp-backstage-post-type.php:444
 msgctxt "post type - attributes"
 msgid "%1$s Attributes"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:448
+#: includes/class-wp-backstage-post-type.php:449
 msgctxt "post type - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:453
+#: includes/class-wp-backstage-post-type.php:454
 msgctxt "post type - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:458
+#: includes/class-wp-backstage-post-type.php:459
 msgctxt "post type - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:463
+#: includes/class-wp-backstage-post-type.php:464
 msgctxt "post type - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:468
+#: includes/class-wp-backstage-post-type.php:469
 msgctxt "post type - new item"
 msgid "New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:473
+#: includes/class-wp-backstage-post-type.php:474
 msgctxt "post type - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:478
+#: includes/class-wp-backstage-post-type.php:479
 msgctxt "post type - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:483
+#: includes/class-wp-backstage-post-type.php:484
 msgctxt "post type - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:488
+#: includes/class-wp-backstage-post-type.php:489
 msgctxt "post type - view items"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:493
+#: includes/class-wp-backstage-post-type.php:494
 msgctxt "post type - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:498
+#: includes/class-wp-backstage-post-type.php:499
 msgctxt "post type - not found"
 msgid "No %1$s found"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:503
+#: includes/class-wp-backstage-post-type.php:504
 msgctxt "post type - not found in trash"
 msgid "No %1$s found in trash"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:508
+#: includes/class-wp-backstage-post-type.php:509
 msgctxt "post type - set featured image"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:513
+#: includes/class-wp-backstage-post-type.php:514
 msgctxt "post type - remove featured image"
 msgid "Remove %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:518
+#: includes/class-wp-backstage-post-type.php:519
 msgctxt "post type - use featured image"
 msgid "Use as %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:523
+#: includes/class-wp-backstage-post-type.php:524
 msgctxt "post type - insert into item"
 msgid "Insert into %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:528
+#: includes/class-wp-backstage-post-type.php:529
 msgctxt "post type - uploaded to this item"
 msgid "Uploaded to this %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:533
+#: includes/class-wp-backstage-post-type.php:534
 msgctxt "post type - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:538
+#: includes/class-wp-backstage-post-type.php:539
 msgctxt "post type - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:543
+#: includes/class-wp-backstage-post-type.php:544
 msgctxt "post type - filter items list"
 msgid "Filter %1$s list"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:548
+#: includes/class-wp-backstage-post-type.php:549
 msgctxt "post type - item published"
 msgid "%1$s published."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:553
+#: includes/class-wp-backstage-post-type.php:554
 msgctxt "post type - item published privately"
 msgid "%1$s published privately."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:558
+#: includes/class-wp-backstage-post-type.php:559
 msgctxt "post type - item reverted to draft"
 msgid "%1$s reverted to draft."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:563
+#: includes/class-wp-backstage-post-type.php:564
 msgctxt "post type - item scheduled"
 msgid "%1$s scheduled."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:568
+#: includes/class-wp-backstage-post-type.php:569
 msgctxt "post type - item updated"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:573
+#: includes/class-wp-backstage-post-type.php:574
 msgctxt "post type - item link"
 msgid "%1$s Link"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:578
+#: includes/class-wp-backstage-post-type.php:579
 msgctxt "post type - item link description"
 msgid "A link to a %1$s"
 msgstr ""
 
 #. translators: 1: published count, 2: post type label
-#: includes/class-wp-backstage-post-type.php:1288
+#: includes/class-wp-backstage-post-type.php:1315
 msgctxt "dashboard glance item"
 msgid "%1$d %2$s"
 msgstr ""
 
 #. translators: 1: taxonomy slug.
-#: includes/class-wp-backstage-taxonomy.php:183
+#: includes/class-wp-backstage-taxonomy.php:184
 msgctxt "taxonomy - required slug error"
 msgid "[taxonomy: %1$s] A slug is required when adding a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug.
-#: includes/class-wp-backstage-taxonomy.php:194
+#: includes/class-wp-backstage-taxonomy.php:195
 msgctxt "taxonomy - slug length error"
 msgid "[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
-#: includes/class-wp-backstage-taxonomy.php:205
+#: includes/class-wp-backstage-taxonomy.php:206
 msgctxt "taxonomy - existing slug error"
 msgid "[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
-#: includes/class-wp-backstage-taxonomy.php:217
+#: includes/class-wp-backstage-taxonomy.php:218
 msgctxt "taxonomy - nonexisting slug error"
 msgid "[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2:required arg key.
-#: includes/class-wp-backstage-taxonomy.php:237
+#: includes/class-wp-backstage-taxonomy.php:238
 msgctxt "taxonomy - required arg error"
 msgid "[taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:314
+#: includes/class-wp-backstage-taxonomy.php:315
 msgctxt "taxonomy - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:319
+#: includes/class-wp-backstage-taxonomy.php:320
 msgctxt "taxonomy - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:324
+#: includes/class-wp-backstage-taxonomy.php:325
 msgctxt "taxonomy - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:329
+#: includes/class-wp-backstage-taxonomy.php:330
 msgctxt "taxonomy - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:334
+#: includes/class-wp-backstage-taxonomy.php:335
 msgctxt "taxonomy - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:339
+#: includes/class-wp-backstage-taxonomy.php:340
 msgctxt "taxonomy - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:344
+#: includes/class-wp-backstage-taxonomy.php:345
 msgctxt "taxonomy - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:349
+#: includes/class-wp-backstage-taxonomy.php:350
 msgctxt "taxonomy - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:354
+#: includes/class-wp-backstage-taxonomy.php:355
 msgctxt "taxonomy - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:359
+#: includes/class-wp-backstage-taxonomy.php:360
 msgctxt "taxonomy - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:364
+#: includes/class-wp-backstage-taxonomy.php:365
 msgctxt "taxonomy - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:369
+#: includes/class-wp-backstage-taxonomy.php:370
 msgctxt "taxonomy - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:374
+#: includes/class-wp-backstage-taxonomy.php:375
 msgctxt "taxonomy - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:379
+#: includes/class-wp-backstage-taxonomy.php:380
 msgctxt "taxonomy - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:384
+#: includes/class-wp-backstage-taxonomy.php:385
 msgctxt "taxonomy - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:389
+#: includes/class-wp-backstage-taxonomy.php:390
 msgctxt "taxonomy - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:394
+#: includes/class-wp-backstage-taxonomy.php:395
 msgctxt "taxonomy - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:399
+#: includes/class-wp-backstage-taxonomy.php:400
 msgctxt "taxonomy - back to items"
 msgid "Back to %1$s"
 msgstr ""
 
 #. translators: 1:required arg key.
-#: includes/class-wp-backstage-user.php:143
+#: includes/class-wp-backstage-user.php:144
 msgctxt "user - required arg error"
 msgid "[user] The %1$s key is required."
+msgstr ""
+
+#: includes/class-wp-backstage-user.php:492
+msgctxt "users table filter - submit"
+msgid "Filter"
 msgstr ""
 
 #. translators: 1:required arg key.

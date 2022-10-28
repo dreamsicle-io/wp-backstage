@@ -620,7 +620,7 @@ class WP_Backstage {
 	public function inline_global_style() { ?>
 
 		<style 
-		id="wp_backstage_post_type_style"
+		id="wp_backstage_global_style"
 		type="text/css">
 
 			/* Meta box fields */
@@ -631,6 +631,11 @@ class WP_Backstage {
 			/* Widget fields */
 			#widgets-right .widget .wp-backstage-field .description {
 				padding: 0;
+			}
+
+			/* Table filters */
+			.tablenav .actions input[type="submit"]:first-child {
+				display: none;
 			}
 
 		</style>

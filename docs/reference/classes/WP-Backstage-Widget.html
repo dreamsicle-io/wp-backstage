@@ -2847,9 +2847,9 @@ the code editor scripts when initializing code editor fields.</p>
                     <span class="phpdocumentor-signature__name">manage_sortable_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$columns</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>This will set which columns are sortable. This method is hooked by object
-screens that have tables, like <code class="prettyprint">WP_Backstage_User</code>,
-<code class="prettyprint">WP_Backstage_Post_Type</code>, and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only
-be made sortable if the field's <code class="prettyprint">is_sortable</code> argument is set to <code class="prettyprint">true</code>.</p>
+screens that have tables, like <code class="prettyprint">WP_Backstage_User</code>, <code class="prettyprint">WP_Backstage_Post_Type</code>,
+and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only be made sortable if the field's
+<code class="prettyprint">has_column</code> and <code class="prettyprint">is_sortable</code> arguments are set to <code class="prettyprint">true</code>.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>

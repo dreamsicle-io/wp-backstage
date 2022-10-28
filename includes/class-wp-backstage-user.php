@@ -250,6 +250,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Edit Fields
 	 *
 	 * @since   0.0.1
+	 * @since   3.1.0 Sends null to `render_fields` instead of user instance if this is the new user screen.
 	 * @param   WP_User|string $user  An instance of `WP_User` or the string `add-new-user` if on the add new user form.
 	 * @return  void
 	 */
@@ -296,6 +297,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Fields
 	 *
 	 * @since   0.0.1
+	 * @since   3.1.0 Checks if there is a user before getting the value as this is also run on the add new user form where there is no user yet.
 	 * @param   array        $field_group  An array of field group arguments.
 	 * @param   WP_User|null $user  An instance of `WP_User` or null if on the add user form.
 	 * @return  void

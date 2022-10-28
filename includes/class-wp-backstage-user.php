@@ -250,7 +250,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Edit Fields
 	 *
 	 * @since   0.0.1
-	 * @param   WP_User $user  An instance of `WP_User`.
+	 * @param   WP_User|string $user  An instance of `WP_User` or the string `add-new-user` if on the add new user form.
 	 * @return  void
 	 */
 	public function render_field_groups( $user = null ) {
@@ -281,7 +281,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 					<tbody><?php
 
-						$this->render_fields( $field_group, $user );
+						$this->render_fields( $field_group, $user instanceof WP_User ? $user : null );
 
 					?></tbody>
 
@@ -296,8 +296,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Fields
 	 *
 	 * @since   0.0.1
-	 * @param   array   $field_group  An array of field group arguments.
-	 * @param   WP_User $user         An instance of `WP_User`.
+	 * @param   array        $field_group  An array of field group arguments.
+	 * @param   WP_User|null $user  An instance of `WP_User` or null if on the add user form.
 	 * @return  void
 	 */
 	protected function render_fields( $field_group = array(), $user = null ) {
@@ -306,7 +306,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			foreach ( $field_group['fields'] as $field ) {
 
-				$field['value']      = get_user_meta( $user->ID, $field['name'], true );
+				$field['value']      = $user instanceof WP_User ? get_user_meta( $user->ID, $field['name'], true ) : null;
 				$field['show_label'] = false;
 				$input_class         = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 

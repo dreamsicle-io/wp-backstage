@@ -103,6 +103,21 @@ class WP_Backstage_Component {
 	);
 
 	/**
+	 * Default Filter Control Args
+	 *
+	 * @since  0.0.1
+	 * @var    array  $default_filter_control_args  The default filter control args for this instance.
+	 */
+	protected $default_filter_control_args = array(
+		'id'                => '',
+		'name'              => '',
+		'value'             => null,
+		'label'             => '',
+		'option_none_label' => '',
+		'options'           => array(), // Array of options or string of formatted HTML options.
+	);
+
+	/**
 	 * Date Format
 	 *
 	 * @since  0.0.1
@@ -226,6 +241,19 @@ class WP_Backstage_Component {
 		'city'      => '',
 		'state'     => 'AL',
 		'zip'       => '',
+	);
+
+	/**
+	 * Filterable Fields
+	 *
+	 * @since  0.0.1
+	 * @var    array  $filterable_fields  Field types that should have the `for` attribute removed labels.
+	 */
+	protected $filterable_fields = array(
+		'select',
+		'radio',
+		'select_posts',
+		'select_users',
 	);
 
 	/**
@@ -1331,6 +1359,192 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Render Table Filter Controls
+	 *
+	 * This method is responsible for rendering the filter controls for fields. The fields will
+	 * get their value from the parsed URL query parameters and set up arguments for the filter
+	 * select as defined in `WP_Backstage_Component::render_table_filter_control()`.
+	 *
+	 * @since 3.1.0
+	 * @return void
+	 */
+	public function render_table_filter_controls() {
+
+		$fields = $this->get_fields();
+
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$url_params = wp_unslash( $_GET );
+
+		foreach ( $fields as $field ) {
+
+			$field = wp_parse_args( $field, $this->default_field_args );
+
+			if ( $field['is_filterable'] && in_array( $field['type'], $this->filterable_fields ) ) {
+
+				$args = array();
+
+				$value = isset( $url_params[ $field['name'] ] ) ? $url_params[ $field['name'] ] : null;
+
+				switch ( $field['type'] ) {
+					case 'select_posts':
+						$field_args = wp_parse_args( $field['args'], $this->default_select_posts_args );
+						$query      = wp_parse_args(
+							$field_args['query'],
+							array(
+								'posts_per_page' => -1,
+								'post_type'      => 'page',
+								'post_status'    => 'any',
+							)
+						);
+
+						$post_type_object = get_post_type_object( $query['post_type'] );
+
+						$posts = get_posts( $query );
+
+						$options = walk_page_dropdown_tree(
+							$posts,
+							0,
+							array(
+								'value_field' => 'ID',
+								'selected'    => absint( $value ),
+							)
+						);
+
+						$args = array(
+							'id'                => $field['name'],
+							'name'              => $field['name'],
+							'label'             => $field['label'],
+							'value'             => absint( $value ),
+							'options'           => $options,
+							'option_none_label' => $post_type_object->labels->all_items,
+						);
+						break;
+					case 'select_users':
+						$field_args = wp_parse_args( $field['args'], $this->default_select_users_args );
+						$query      = wp_parse_args(
+							$field_args['query'],
+							array(
+								'number' => -1,
+								'count'  => false,
+							)
+						);
+
+						$users = get_users( $query );
+
+						$options = array();
+
+						foreach ( $users as $user ) {
+							$options[] = array(
+								'value' => $user->ID,
+								'label' => sprintf(
+									/* translators: 1: user display name, 2: user username */
+									_x( '%1$s (%2$s)', 'select users filter - option label', 'wp_backstage' ),
+									esc_html( $user->display_name ),
+									esc_html( $user->user_login )
+								),
+							);
+						}
+
+						$args = array(
+							'id'                => $field['name'],
+							'name'              => $field['name'],
+							'label'             => $field['label'],
+							'value'             => absint( $value ),
+							'options'           => $options,
+							'option_none_label' => __( 'All Users', 'wp_backstage' ),
+						);
+						break;
+					default:
+						$options = array_filter(
+							$field['options'],
+							function( $option ) {
+								return ! empty( $option['value'] );
+							}
+						);
+						$args    = array(
+							'id'                => $field['name'],
+							'name'              => $field['name'],
+							'label'             => $field['label'],
+							'value'             => $value,
+							'options'           => $options,
+							'option_none_label' => __( 'All options', 'wp_backstage' ),
+						);
+						break;
+				}
+
+				$this->render_table_filter_control( $args );
+
+			}
+		}
+	}
+
+	/**
+	 * Render Table Filter Control
+	 *
+	 * This method is responsible for rendering a single filter control according to the
+	 * array of arguments passed in. This will always render an HTML `<select>` element
+	 * and is constructed in the same way that the existing table filter controls are
+	 * rendered in core WordPress table fitlers. Note that the options key can either be
+	 * an array of option arguments, or a string of fully built HTML `<options>`, to be able
+	 * to support the drop down walkers for `select_users` and `select_posts`.
+	 *
+	 * @since 3.1.0
+	 * @param array $args The incoming args for this control.
+	 * @return void
+	 */
+	public function render_table_filter_control( $args = array() ) {
+
+		$args = wp_parse_args( $args, $this->default_filter_control_args ); ?>
+
+		<label 
+		id="<?php printf( '%1$s_label', esc_attr( $args['id'] ) ); ?>"
+		for="<?php echo esc_attr( $args['id'] ); ?>"
+		class="screen-reader-text"><?php
+
+			echo wp_kses( $args['label'], WP_Backstage::$kses_label );
+
+		?></label>
+
+		<select 
+		name="<?php echo esc_attr( $args['name'] ); ?>" 
+		id="<?php echo esc_attr( $args['id'] ); ?>"
+		title="<?php echo esc_attr( $args['label'] ); ?>">
+
+			<option value=""><?php
+
+				echo esc_html( $args['option_none_label'] );
+
+			?></option>
+
+			<?php if ( is_array( $args['options'] ) && ! empty( $args['options'] ) ) { ?>
+
+				<?php foreach ( $args['options'] as $option ) {
+
+					$option       = wp_parse_args( $option, $this->default_option_args );
+					$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+
+					<option 
+					value="<?php echo esc_attr( $option['value'] ); ?>"
+					<?php selected( $option['value'], $args['value'] ); ?>><?php
+
+						echo esc_html( $option_label );
+
+					?></option>
+
+				<?php } ?>
+
+			<?php } elseif ( is_string( $args['options'] ) ) {
+
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo $args['options'];
+
+			} ?>
+
+		</select>
+
+	<?php }
+
+	/**
 	 * Format Field Value
 	 *
 	 * This will format a fields value based on a given array of field args.
@@ -1591,9 +1805,9 @@ class WP_Backstage_Component {
 	 * Manage Sortable Columns
 	 *
 	 * This will set which columns are sortable. This method is hooked by object
-	 * screens that have tables, like `WP_Backstage_User`,
-	 * `WP_Backstage_Post_Type`, and `WP_Backstage_Taxonomy`. Columns will only
-	 * be made sortable if the field's `is_sortable` argument is set to `true`.
+	 * screens that have tables, like `WP_Backstage_User`, `WP_Backstage_Post_Type`,
+	 * and `WP_Backstage_Taxonomy`. Columns will only be made sortable if the field's
+	 * `has_column` and `is_sortable` arguments are set to `true`.
 	 *
 	 * @link    https://developer.wordpress.org/reference/hooks/manage_this-screen-id_sortable_columns/ hook: manage_{$screen_id}_sortable_columns
 	 *

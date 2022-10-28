@@ -160,12 +160,18 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
 			array(
-				'has_column'  => false,
-				'is_sortable' => false,
+				'has_column'    => false,
+				'is_sortable'   => false,
+				'is_filterable' => false,
 			)
 		);
-		$this->new                = boolval( $new );
-		$this->slug               = sanitize_key( $slug );
+
+		if ( current_theme_supports( 'post-formats' ) ) {
+			$this->default_args['supports'][] = 'post-formats';
+		}
+
+		$this->new  = boolval( $new );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
 		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
@@ -183,12 +189,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @return  void
 	 */
 	protected function set_args( $args = array() ) {
-
-		if ( current_theme_supports( 'post-formats' ) ) {
-
-			$this->default_args['supports'][] = 'post-formats';
-
-		}
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -353,6 +353,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		add_action( 'query_vars', array( $this, 'manage_query_vars' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_filtering' ), 10 );
+		add_action( 'restrict_manage_posts', array( $this, 'render_table_filter_form' ), 10, 2 );
 
 		parent::init();
 
@@ -939,6 +940,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
+				 * @param array $content The existing column content.
 				 * @param array $field an array of field arguments.
 				 * @param mixed $value the field's value.
 				 * @param int $post_id The post ID of the current post.
@@ -946,7 +948,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", '', $field, $value, $post_id );
 
 				if ( ! empty( $content ) ) {
-					echo wp_kses_post( $content );
+					// phpcs:ignore WordPress.Security.EscapeOutput
+					echo $content;
 					return;
 				}
 
@@ -962,6 +965,28 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 				}
 			}
+		}
+
+	}
+
+	/**
+	 * Render Table Filter Form
+	 *
+	 * This method is responsible for rendering additional filters at the top of the admin post type list table.
+	 * Because the user list table already has filters, it is not necessary to add the filter action submit
+	 * button here.
+	 *
+	 * @since 3.1.0
+	 * @param string $post_type The post type of the current screen.
+	 * @param string $which whther the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @return void
+	 */
+	public function render_table_filter_form( $post_type = '', $which = 'top' ) {
+
+		if ( $post_type === $this->slug ) {
+
+			$this->render_table_filter_controls();
+
 		}
 
 	}
@@ -995,8 +1020,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 				if ( $field['is_sortable'] ) {
 
-					$query->set( 'meta_key', $field['name'] );
-
 					// If there is currently no meta query, get all items whether
 					// they have the meta key or not by setting a meta query.
 					$meta_query = $query->get( 'meta_query' );
@@ -1008,14 +1031,18 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 								'relation' => 'OR',
 								array(
 									'key'     => $field['name'],
-									'compare' => 'EXISTS',
+									'compare' => 'NOT EXISTS',
 								),
 								array(
 									'key'     => $field['name'],
-									'compare' => 'NOT EXISTS',
+									'compare' => 'EXISTS',
 								),
 							)
 						);
+
+					} else {
+
+						$query->set( 'meta_key', $field['name'] );
 
 					}
 

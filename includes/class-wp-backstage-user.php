@@ -475,7 +475,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * button here.
 	 *
 	 * @since 3.1.0
-	 * @param string $which whther the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @param string $which whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
 	 * @return void
 	 */
 	public function render_table_filter_form( $which = 'top' ) {
@@ -486,12 +486,17 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 				<?php $this->render_table_filter_controls(); ?>
 
-				<input 
-				type="submit" 
-				name="filter_action" 
-				id="post-query-submit" 
-				class="button" 
-				value="<?php echo esc_html( _x( 'Filter', 'users table filter - submit', 'wp_backstage' ) ); ?>" />
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo get_submit_button(
+					_x( 'Filter', 'users table filter - submit', 'wp_backstage' ),
+					'',
+					'filter_action',
+					false,
+					array(
+						'id' => 'user-query-submit',
+					)
+				); ?>
 
 			</div>
 

@@ -67,7 +67,7 @@ register_deactivation_hook( __FILE__, 'wp_backstage_deactivation' );
 /**
  * WP Backstage Uninstall
  *
- * @since   3.1.0
+ * @since   3.1.1
  * @return  void
  */
 function wp_backstage_uninstall() {

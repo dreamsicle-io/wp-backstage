@@ -79,8 +79,9 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$this->default_field_args   = array_merge(
 			$this->default_field_args,
 			array(
-				'has_column'  => false,
-				'is_sortable' => false,
+				'has_column'    => false,
+				'is_sortable'   => false,
+				'is_filterable' => false,
 			)
 		);
 		$this->default_address_args = array_merge(
@@ -182,8 +183,11 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		add_filter( 'manage_users_columns', array( $this, 'add_field_columns' ), 10 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
-		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
+		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
+		add_action( 'pre_get_users', array( $this, 'manage_filtering' ), 10 );
+		add_filter( 'users_list_table_query_args', array( $this, 'manage_list_table_query_args' ), 10 );
+		add_action( 'manage_users_extra_tablenav', array( $this, 'render_table_filter_form' ), 10 );
 
 		parent::init();
 
@@ -246,7 +250,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Edit Fields
 	 *
 	 * @since   0.0.1
-	 * @param   WP_User $user  An instance of `WP_User`.
+	 * @since   3.1.0 Sends null to `render_fields` instead of user instance if this is the new user screen.
+	 * @param   WP_User|string $user  An instance of `WP_User` or the string `add-new-user` if on the add new user form.
 	 * @return  void
 	 */
 	public function render_field_groups( $user = null ) {
@@ -277,7 +282,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 					<tbody><?php
 
-						$this->render_fields( $field_group, $user );
+						$this->render_fields( $field_group, $user instanceof WP_User ? $user : null );
 
 					?></tbody>
 
@@ -292,8 +297,9 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Render Fields
 	 *
 	 * @since   0.0.1
-	 * @param   array   $field_group  An array of field group arguments.
-	 * @param   WP_User $user         An instance of `WP_User`.
+	 * @since   3.1.0 Checks if there is a user before getting the value as this is also run on the add new user form where there is no user yet.
+	 * @param   array        $field_group  An array of field group arguments.
+	 * @param   WP_User|null $user  An instance of `WP_User` or null if on the add user form.
 	 * @return  void
 	 */
 	protected function render_fields( $field_group = array(), $user = null ) {
@@ -302,7 +308,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			foreach ( $field_group['fields'] as $field ) {
 
-				$field['value']      = get_user_meta( $user->ID, $field['name'], true );
+				$field['value']      = $user instanceof WP_User ? get_user_meta( $user->ID, $field['name'], true ) : null;
 				$field['show_label'] = false;
 				$input_class         = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
@@ -425,8 +431,21 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			$value = get_user_meta( $user_id, $column, true );
 
-			// short circuit the column content and allow developer to add their own.
+			/**
+			 * Filters the post type custom field's admin column content.
+			 *
+			 * Returning any value here will short circuit the plugin's
+			 * output and render this content instead.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param string $content The current content string.
+			 * @param array $field an array of field arguments.
+			 * @param mixed $value the field's value.
+			 * @param int $user_id The user ID of the current user.
+			 */
 			$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", $content, $field, $value, $user_id );
+
 			if ( ! empty( $content ) ) {
 				return $content;
 			}
@@ -449,9 +468,54 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Render Table Filter Form
+	 *
+	 * This method is responsible for rendering the filter form at the top of the admin user list table.
+	 * Because the user list table does not have filters, it is necessary to add the filter action submit
+	 * button here.
+	 *
+	 * @since 3.1.0
+	 * @param string $which whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @return void
+	 */
+	public function render_table_filter_form( $which = 'top' ) {
+
+		if ( $which === 'top' ) { ?>
+
+			<div id="wp-backstage-user-table-filters" class="align-left actions">
+
+				<?php $this->render_table_filter_controls(); ?>
+
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo get_submit_button(
+					_x( 'Filter', 'users table filter - submit', 'wp_backstage' ),
+					'',
+					'filter_action',
+					false,
+					array(
+						'id' => 'user-query-submit',
+					)
+				); ?>
+
+			</div>
+
+		<?php }
+	}
+
+	/**
 	 * Manage Sorting
 	 *
+	 * The method is responsible for managing sorting on the query. If a field's
+	 * name is found in the `orderby` key, then its key is added as the meta key
+	 * for the query, and the orderby is reset to either `meta_value` or `meta_value_num`
+	 * according to if the value is expected to be numeric or not. If no meta query is set,
+	 * this will add a meta query that filters for users that either do or do not have the meta
+	 * value set for the field. By default, setting just `meta_key` is not sufficient if the
+	 * desire is to show users that don't have a value as well.
+	 *
 	 * @since   0.0.1
+	 * @since   3.1.0  Added a check to see if there is already a meta query before setting the meta query that is added in order to get users both with or without a value set for the field.
 	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
 	 * @return  void
 	 */
@@ -463,20 +527,27 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			if ( $field['is_sortable'] ) {
 
-				$query->set(
-					'meta_query',
-					array(
-						'relation' => 'OR',
+				$meta_query = $query->get( 'meta_query' );
+				if ( empty( $meta_query ) ) {
+					$query->set(
+						'meta_query',
 						array(
-							'key'     => $field['name'],
-							'compare' => 'EXISTS',
-						),
-						array(
-							'key'     => $field['name'],
-							'compare' => 'NOT EXISTS',
-						),
-					)
-				);
+							'relation' => 'OR',
+							array(
+								'key'     => $field['name'],
+								'compare' => 'EXISTS',
+							),
+							array(
+								'key'     => $field['name'],
+								'compare' => 'NOT EXISTS',
+							),
+						)
+					);
+				} else {
+
+					$query->set( 'meta_key', $field['name'] );
+
+				}
 
 				if ( $field['type'] === 'number' ) {
 
@@ -489,14 +560,92 @@ class WP_Backstage_User extends WP_Backstage_Component {
 				}
 			}
 		}
+	}
 
+	/**
+	 * Manage Filtering
+	 *
+	 * This method is responsible for filtering the query if a query var set to
+	 * a field's name is found. The fields are looped over and, if a field is
+	 * found with the matching query var, builds an array of meta query filters.
+	 * At the end of the loop, if there is a meta query to be set, the "AND" relation
+	 * is also added to the meta query, allowing for complex filtering to be accomplished.
+	 * See `WP_Backstage_Post_Type::manage_list_table_query_args()` to see how the fields
+	 * are made available as public query vars.
+	 *
+	 * @since   3.1.0
+	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
+	 * @return  void
+	 */
+	public function manage_filtering( $query = null ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			$meta_query = array();
+
+			foreach ( $fields as $field ) {
+
+				$value = $query->get( $field['name'] );
+
+				if ( ! empty( $value ) ) {
+
+					$meta_query[] = array(
+						'key'     => $field['name'],
+						'value'   => $value,
+						'compare' => '=',
+					);
+				}
+			}
+
+			// If we have a non-empty meta query set, add the "AND" relation
+			// to the meta query and set it.
+			if ( is_array( $meta_query ) && ! empty( $meta_query ) ) {
+				$meta_query = array_merge( array( 'relation' => 'AND' ), $meta_query );
+				$query->set( 'meta_query', $meta_query );
+			}
+		}
+	}
+
+	/**
+	 * Manage List Table Query Args
+	 *
+	 * This method is responsible for making the URL query fields available to the main `WP User Query`.
+	 * This allows for similar behavior to the query vars filter that is only available for posts. This
+	 * method loops over the fields, and checks if the field key is a key of the URL query. If it is, it
+	 * then adds the key and value to the args array to be passed to the `WP_User_Query` that runs the main
+	 * users table.
+	 *
+	 * @since 3.1.0
+	 * @param array $args The incoming array of arguments.
+	 * @return array The filtered array of arguments.
+	 */
+	public function manage_list_table_query_args( $args = array() ) {
+
+		$fields = $this->get_fields();
+
+		if ( is_array( $fields ) && ! empty( $fields ) ) {
+
+			foreach ( $fields as $field ) {
+
+				// phpcs:ignore WordPress.Security.NonceVerification
+				$url_params = wp_unslash( $_GET );
+
+				if ( isset( $url_params[ $field['name'] ] ) ) {
+					$args[ $field['name'] ] = $url_params[ $field['name'] ];
+				}
+			}
+		}
+
+		return $args;
 	}
 
 	/**
 	 * Manage Default Hidden Columns
 	 *
 	 * Adds all generated fields to the hidden columns array by default, so as
-	 * to not choke up the UI. Note that this will only work if this post type's
+	 * to not choke up the UI. Note that this will only work if user's
 	 * columns UI has never been modified by the user. Hooked to
 	 * `default_hidden_columns`.
 	 *

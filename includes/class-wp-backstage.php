@@ -163,7 +163,7 @@ class WP_Backstage {
 		}
 
 		add_action( 'current_screen', array( $this, 'add_help_tab' ), 10 );
-		add_action( 'admin_print_styles', array( $this, 'inline_field_style' ), 10 );
+		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
@@ -612,15 +612,15 @@ class WP_Backstage {
 	<?php }
 
 	/**
-	 * Inline Field Style
+	 * Inline Global Style
 	 *
-	 * @since   3.0.0
+	 * @since   3.1.0
 	 * @return  void
 	 */
-	public function inline_field_style() { ?>
+	public function inline_global_style() { ?>
 
 		<style 
-		id="wp_backstage_post_type_style"
+		id="wp_backstage_global_style"
 		type="text/css">
 
 			/* Meta box fields */
@@ -631,6 +631,11 @@ class WP_Backstage {
 			/* Widget fields */
 			#widgets-right .widget .wp-backstage-field .description {
 				padding: 0;
+			}
+
+			/* Table filters */
+			.tablenav .actions input[type="submit"]:first-child {
+				display: none;
 			}
 
 		</style>
@@ -1943,6 +1948,11 @@ class WP_Backstage {
 							select.val(value.toString() || select.find('option:first-child').val());
 							break;
 						}
+						case 'select_users': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.val(value.toString() || select.find('option:first-child').val());
+							break;
+						}
 						default: {
 							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							input.val(value);
@@ -2038,6 +2048,13 @@ class WP_Backstage {
 							break;
 						}
 						case 'select_posts': {
+							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							select.on('change', function(e) {
+								handleSettingChange(setting, fieldName, e.target.value );
+							});
+							break;
+						}
+						case 'select_users': {
 							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
 							select.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value );

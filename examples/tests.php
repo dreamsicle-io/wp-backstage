@@ -95,13 +95,14 @@ function wp_backstage_init() {
 			),
 		),
 		array(
-			'type'        => 'select',
-			'name'        => 'wp_backstage_select_field',
-			'label'       => __( 'Select', 'wp_backstage_examples' ),
-			'description' => __( 'Please select an option.', 'wp_backstage_examples' ),
-			'has_column'  => true,
-			'is_sortable' => true,
-			'options'     => array(
+			'type'          => 'select',
+			'name'          => 'wp_backstage_select_field',
+			'label'         => __( 'Select', 'wp_backstage_examples' ),
+			'description'   => __( 'Please select an option.', 'wp_backstage_examples' ),
+			'has_column'    => true,
+			'is_sortable'   => true,
+			'is_filterable' => true,
+			'options'       => array(
 				array(
 					'value' => '',
 					'label' => __( '― Select an Option ―', 'wp_backstage_examples' ),
@@ -126,13 +127,14 @@ function wp_backstage_init() {
 			),
 		),
 		array(
-			'type'        => 'radio',
-			'name'        => 'wp_backstage_radio_field',
-			'label'       => __( 'Radio', 'wp_backstage_examples' ),
-			'description' => __( 'Please select an option.', 'wp_backstage_examples' ),
-			'has_column'  => true,
-			'is_sortable' => true,
-			'options'     => array(
+			'type'          => 'radio',
+			'name'          => 'wp_backstage_radio_field',
+			'label'         => __( 'Radio', 'wp_backstage_examples' ),
+			'description'   => __( 'Please select an option.', 'wp_backstage_examples' ),
+			'has_column'    => true,
+			'is_sortable'   => true,
+			'is_filterable' => true,
+			'options'       => array(
 				array(
 					'value' => 'option_1',
 					'label' => __( 'Option 1', 'wp_backstage_examples' ),
@@ -379,23 +381,51 @@ function wp_backstage_init() {
 			'has_column'  => true,
 		),
 		array(
-			'type'        => 'select_posts',
-			'name'        => 'wp_backstage_select_page_field',
-			'label'       => __( 'Page', 'wp_backstage_examples' ),
-			'description' => __( 'Please select a page.', 'wp_backstage_examples' ),
-			'has_column'  => true,
-			'args'        => array(
-				'post_type' => 'page',
+			'type'          => 'select_posts',
+			'name'          => 'wp_backstage_select_page_field',
+			'label'         => __( 'Page', 'wp_backstage_examples' ),
+			'description'   => __( 'Please select a page.', 'wp_backstage_examples' ),
+			'has_column'    => true,
+			'is_filterable' => true,
+			'args'          => array(
+				'option_none_label' => __( 'Select a page', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'page',
+					'orderby'   => 'title',
+					'order'     => 'ASC',
+				),
 			),
 		),
 		array(
-			'type'        => 'select_posts',
-			'name'        => 'wp_backstage_select_post_field',
-			'label'       => __( 'Post', 'wp_backstage_examples' ),
-			'description' => __( 'Please select a post.', 'wp_backstage_examples' ),
-			'has_column'  => true,
-			'args'        => array(
-				'post_type' => 'post',
+			'type'          => 'select_posts',
+			'name'          => 'wp_backstage_select_post_field',
+			'label'         => __( 'Post', 'wp_backstage_examples' ),
+			'description'   => __( 'Please select a post.', 'wp_backstage_examples' ),
+			'has_column'    => true,
+			'is_filterable' => true,
+			'args'          => array(
+				'option_none_label' => __( 'Select a post', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'post',
+					'orderby'   => 'date',
+					'order'     => 'DESC',
+				),
+			),
+		),
+		array(
+			'type'          => 'select_users',
+			'name'          => 'wp_backstage_select_user_field',
+			'label'         => __( 'User', 'wp_backstage_examples' ),
+			'description'   => __( 'Please select a user.', 'wp_backstage_examples' ),
+			'has_column'    => true,
+			'is_filterable' => true,
+			'args'          => array(
+				'option_none_label' => __( 'Select a user', 'wp_backstage_examples' ),
+				'query'             => array(
+					'post_type' => 'post',
+					'orderby'   => 'date',
+					'order'     => 'DESC',
+				),
 			),
 		),
 	);

@@ -284,11 +284,86 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10, 2 );
+		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
 		parent::init();
 
 	}
+
+	/**
+	 * Render Table Filter Form
+	 *
+	 * This method is responsible for rendering the filter form at the top of the admin taxonomy list table.
+	 * Because the taxonomy list table does not have filters, it is necessary to add the filter action submit
+	 * button here. The taxonomy table class provides no hooks to render the filters into the form. The class
+	 * also renders a form with the method of "post", unlike all the other table forms which use "get". Because
+	 * of these caveats, it is necessary to both render the fields underneath the table, which is outside the form,
+	 * and to add some javascript to both move the form into the proper area; as well as add some javascript that
+	 * will handle submit.
+	 *
+	 * @since 3.1.0
+	 * @param string $taxonomy The taxonomy of the current screen.
+	 * @return void
+	 */
+	public function render_table_filter_form( $taxonomy = '' ) { ?>
+
+		<div id="wp-backstage-taxonomy-table-filters" class="align-left actions">
+
+			<?php $this->render_table_filter_controls(); ?>
+
+			<?php
+			// phpcs:ignore WordPress.Security.EscapeOutput
+			echo get_submit_button(
+				_x( 'Filter', 'taxonomy table filter - submit', 'wp_backstage' ),
+				'',
+				'filter_action',
+				false,
+				array(
+					'id' => 'taxonomy-query-submit',
+				)
+			); ?>
+
+		</div>
+
+		<script type="text/javascript">
+			(function() {
+
+				function moveForm() {
+					var extraActions = document.getElementById('wp-backstage-taxonomy-table-filters');
+					var tableNavTop = document.querySelector('.tablenav.top');
+					var tableCountTop = tableNavTop.querySelector('.tablenav-pages');
+					tableNavTop.insertBefore(extraActions, tableCountTop);
+				}
+
+				function handleSubmitButtonClick(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					var params = new URLSearchParams(window.location.search);
+					var formData = new FormData(e.target.form);
+					formData.forEach(function(value, key) {
+						params.set(key, value);
+					});
+					params.set('paged', '1');
+					params.delete('_wpnonce');
+					params.delete('_wp_http_referer');
+					params.delete('action');
+					params.delete('action2');
+					window.location.search = params.toString();
+				}
+
+				function initSubmitButton() {
+					var submitButton = document.getElementById('taxonomy-query-submit');
+					submitButton.addEventListener('click', handleSubmitButtonClick);
+				}
+
+				initSubmitButton();
+				moveForm();
+
+			}());
+		</script>
+
+	<?php }
 
 	/**
 	 * Register
@@ -914,7 +989,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 				foreach ( $fields as $field ) {
 
-					if ( isset( $query->query_vars[ $field['name'] ] ) ) {
+					if ( isset( $query->query_vars[ $field['name'] ] ) && ! empty( $query->query_vars[ $field['name'] ] ) ) {
 
 						$meta_query[] = array(
 							'key'     => $field['name'],

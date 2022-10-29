@@ -781,6 +781,11 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Taxonomy.html#method_init"
         },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_table_filter_form\u0028\u0029",
+            "name": "render_table_filter_form",
+            "summary": "Render\u0020Table\u0020Filter\u0020Form",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_render_table_filter_form"
+        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aregister\u0028\u0029",
             "name": "register",
             "summary": "Register",

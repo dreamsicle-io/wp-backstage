@@ -978,7 +978,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param string $post_type The post type of the current screen.
-	 * @param string $which whther the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @param string $which whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
 	 * @return void
 	 */
 	public function render_table_filter_form( $post_type = '', $which = 'top' ) {
@@ -1093,7 +1093,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 					$value = $query->get( $field['name'] );
 
-					if ( isset( $value ) && ! empty( $value ) ) {
+					if ( ! empty( $value ) ) {
 
 						$meta_query[] = array(
 							'key'     => $field['name'],

@@ -482,7 +482,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		if ( $which === 'top' ) { ?>
 
-			<div class="align-left actions">
+			<div id="wp-backstage-user-table-filters" class="align-left actions">
 
 				<?php $this->render_table_filter_controls(); ?>
 

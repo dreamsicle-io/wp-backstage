@@ -1498,7 +1498,7 @@ class WP_Backstage_Component {
 
 		<label 
 		id="<?php printf( '%1$s_label', esc_attr( $args['id'] ) ); ?>"
-		for="<?php echo esc_attr( $args['id'] ); ?>"
+		for="<?php printf( '%1$s_filter', esc_attr( $args['id'] ) ); ?>"
 		class="screen-reader-text"><?php
 
 			echo wp_kses( $args['label'], WP_Backstage::$kses_label );
@@ -1507,7 +1507,7 @@ class WP_Backstage_Component {
 
 		<select 
 		name="<?php echo esc_attr( $args['name'] ); ?>" 
-		id="<?php echo esc_attr( $args['id'] ); ?>"
+		id="<?php printf( '%1$s_filter', esc_attr( $args['id'] ) ); ?>"
 		title="<?php echo esc_attr( $args['label'] ); ?>">
 
 			<option value=""><?php

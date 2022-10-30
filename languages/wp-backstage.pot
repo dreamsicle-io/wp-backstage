@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-30T14:10:58+00:00\n"
+"POT-Creation-Date: 2022-10-30T14:11:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1454,228 +1454,228 @@ msgctxt "options - tool card link"
 msgid "Go to tool"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:194
+#: includes/class-wp-backstage-post-type.php:195
 msgctxt "post type - default thumbnail label"
 msgid "Featured Image"
 msgstr ""
 
 #. translators: 1: post type slug.
-#: includes/class-wp-backstage-post-type.php:243
+#: includes/class-wp-backstage-post-type.php:244
 msgctxt "post type - required slug error"
 msgid "[post type: %1$s] A slug is required when adding a new post type."
 msgstr ""
 
 #. translators: 1: post type slug.
-#: includes/class-wp-backstage-post-type.php:254
+#: includes/class-wp-backstage-post-type.php:255
 msgctxt "post type - slug length error"
 msgid "[post type: %1$s] A post type slug must be between 1 and 20 characters."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
-#: includes/class-wp-backstage-post-type.php:265
+#: includes/class-wp-backstage-post-type.php:266
 msgctxt "post type - existing slug error"
 msgid "[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
-#: includes/class-wp-backstage-post-type.php:277
+#: includes/class-wp-backstage-post-type.php:278
 msgctxt "post type - nonexisting slug error"
 msgid "[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: required arg key.
-#: includes/class-wp-backstage-post-type.php:297
+#: includes/class-wp-backstage-post-type.php:298
 msgctxt "post type - required arg error"
 msgid "[post type: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: post type, 2: post title.
-#: includes/class-wp-backstage-post-type.php:383
+#: includes/class-wp-backstage-post-type.php:384
 msgctxt "dashboard activity post link title"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:438
+#: includes/class-wp-backstage-post-type.php:439
 msgctxt "post type - add new"
 msgid "Add New"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:441
+#: includes/class-wp-backstage-post-type.php:442
 msgctxt "post type - archives"
 msgid "%1$s Archives"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:446
+#: includes/class-wp-backstage-post-type.php:447
 msgctxt "post type - attributes"
 msgid "%1$s Attributes"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:451
+#: includes/class-wp-backstage-post-type.php:452
 msgctxt "post type - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:456
+#: includes/class-wp-backstage-post-type.php:457
 msgctxt "post type - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:461
+#: includes/class-wp-backstage-post-type.php:462
 msgctxt "post type - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:466
+#: includes/class-wp-backstage-post-type.php:467
 msgctxt "post type - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:471
+#: includes/class-wp-backstage-post-type.php:472
 msgctxt "post type - new item"
 msgid "New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:476
+#: includes/class-wp-backstage-post-type.php:477
 msgctxt "post type - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:481
+#: includes/class-wp-backstage-post-type.php:482
 msgctxt "post type - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:486
+#: includes/class-wp-backstage-post-type.php:487
 msgctxt "post type - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:491
+#: includes/class-wp-backstage-post-type.php:492
 msgctxt "post type - view items"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:496
+#: includes/class-wp-backstage-post-type.php:497
 msgctxt "post type - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:501
+#: includes/class-wp-backstage-post-type.php:502
 msgctxt "post type - not found"
 msgid "No %1$s found"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:506
+#: includes/class-wp-backstage-post-type.php:507
 msgctxt "post type - not found in trash"
 msgid "No %1$s found in trash"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:511
+#: includes/class-wp-backstage-post-type.php:512
 msgctxt "post type - set featured image"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:516
+#: includes/class-wp-backstage-post-type.php:517
 msgctxt "post type - remove featured image"
 msgid "Remove %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:521
+#: includes/class-wp-backstage-post-type.php:522
 msgctxt "post type - use featured image"
 msgid "Use as %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:526
+#: includes/class-wp-backstage-post-type.php:527
 msgctxt "post type - insert into item"
 msgid "Insert into %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:531
+#: includes/class-wp-backstage-post-type.php:532
 msgctxt "post type - uploaded to this item"
 msgid "Uploaded to this %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:536
+#: includes/class-wp-backstage-post-type.php:537
 msgctxt "post type - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:541
+#: includes/class-wp-backstage-post-type.php:542
 msgctxt "post type - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:546
+#: includes/class-wp-backstage-post-type.php:547
 msgctxt "post type - filter items list"
 msgid "Filter %1$s list"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:551
+#: includes/class-wp-backstage-post-type.php:552
 msgctxt "post type - item published"
 msgid "%1$s published."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:556
+#: includes/class-wp-backstage-post-type.php:557
 msgctxt "post type - item published privately"
 msgid "%1$s published privately."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:561
+#: includes/class-wp-backstage-post-type.php:562
 msgctxt "post type - item reverted to draft"
 msgid "%1$s reverted to draft."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:566
+#: includes/class-wp-backstage-post-type.php:567
 msgctxt "post type - item scheduled"
 msgid "%1$s scheduled."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:571
+#: includes/class-wp-backstage-post-type.php:572
 msgctxt "post type - item updated"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:576
+#: includes/class-wp-backstage-post-type.php:577
 msgctxt "post type - item link"
 msgid "%1$s Link"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:581
+#: includes/class-wp-backstage-post-type.php:582
 msgctxt "post type - item link description"
 msgid "A link to a %1$s"
 msgstr ""
 
 #. translators: 1: published count, 2: post type label
-#: includes/class-wp-backstage-post-type.php:1317
+#: includes/class-wp-backstage-post-type.php:1318
 msgctxt "dashboard glance item"
 msgid "%1$d %2$s"
 msgstr ""

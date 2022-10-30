@@ -69,6 +69,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			'revisions',
 			'custom-fields',
 			'page-attributes',
+			'post-formats',
 		),
 		'taxonomies'      => array(),
 		'meta_boxes'      => array(),
@@ -165,10 +166,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'is_filterable' => false,
 			)
 		);
-
-		if ( current_theme_supports( 'post-formats' ) ) {
-			$this->default_args['supports'][] = 'post-formats';
-		}
 
 		$this->new  = boolval( $new );
 		$this->slug = sanitize_key( $slug );

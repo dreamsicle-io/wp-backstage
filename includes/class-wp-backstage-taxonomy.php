@@ -934,11 +934,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 							'relation' => 'OR',
 							array(
 								'key'     => $field['name'],
-								'compare' => 'EXISTS',
+								'compare' => 'NOT EXISTS',
 							),
 							array(
 								'key'     => $field['name'],
-								'compare' => 'NOT EXISTS',
+								'compare' => 'EXISTS',
 							),
 						);
 					} else {

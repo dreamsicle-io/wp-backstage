@@ -1577,11 +1577,13 @@ class WP_Backstage_Component {
 					break;
 				case 'radio':
 					$labels  = $this->get_option_labels( $field );
-					$content = esc_html( isset( $labels[ $value ] ) ? $labels[ $value ] : $value );
+					$label   = isset( $labels[ $value ] ) ? $labels[ $value ] : $value;
+					$content = $this->format_filterable_value( $value, $label, $field['name'] );
 					break;
 				case 'select':
 					$labels  = $this->get_option_labels( $field );
-					$content = esc_html( isset( $labels[ $value ] ) ? $labels[ $value ] : $value );
+					$label   = isset( $labels[ $value ] ) ? $labels[ $value ] : $value;
+					$content = $this->format_filterable_value( $value, $label, $field['name'] );
 					break;
 				case 'checkbox':
 					$content = '<i class="dashicons dashicons-yes"></i><span class="screen-reader-text">' . esc_html_x( 'True', 'checkbox column - true', 'wp_backstage' ) . '</span>';
@@ -1596,8 +1598,8 @@ class WP_Backstage_Component {
 					$content = '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>';
 					break;
 				case 'color':
-					$icon_style = 'display:block;width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';';
-					$content    = '<i style="' . $icon_style . '" title="' . esc_attr( $value ) . '" aria-hidden="true"></i>';
+					$icon_style = 'width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';';
+					$content    = '<div style="' . $icon_style . '" title="' . esc_attr( $value ) . '" aria-hidden="true"></div><span class="screen-reader-text">' . esc_html( $value ) . '</span>';
 					break;
 				case 'date':
 					$content = gmdate( $this->date_format, strtotime( $value ) );
@@ -1668,61 +1670,13 @@ class WP_Backstage_Component {
 					$content = implode( '', $attachments );
 					break;
 				case 'select_posts':
-					$value      = absint( $value );
-					$url_base   = admin_url( '/' );
-					$query_args = array();
-
-					if ( $this instanceof WP_Backstage_Taxonomy ) {
-						$url_base   = admin_url( '/edit-tags.php' );
-						$query_args = array( 'taxonomy' => $this->slug );
-						// phpcs:ignore WordPress.Security.NonceVerification
-						$url_params = wp_unslash( $_GET );
-						if ( isset( $url_params['post_type'] ) && ! empty( $url_params['post_type'] ) ) {
-							$query_args['post_type'] = $url_params['post_type'];
-						}
-					} elseif ( $this instanceof WP_Backstage_Post_type ) {
-						$url_base   = admin_url( '/edit.php' );
-						$query_args = array( 'post_type' => $this->slug );
-					} elseif ( $this instanceof WP_Backstage_User ) {
-						$url_base = admin_url( '/users.php' );
-					}
-
-					$query_args[ $field['name'] ] = $value;
-
-					$content = sprintf(
-						'<a href="%1$s">%2$s</a>',
-						esc_url( add_query_arg( $query_args, $url_base ) ),
-						wp_strip_all_tags( get_the_title( $value ) )
-					);
+					$value   = absint( $value );
+					$content = $this->format_filterable_value( $value, get_the_title( $value ), $field['name'] );
 					break;
 				case 'select_users':
-					$value      = absint( $value );
-					$user       = get_user_by( 'ID', $value );
-					$url_base   = admin_url( '/' );
-					$query_args = array();
-
-					if ( $this instanceof WP_Backstage_Taxonomy ) {
-						$url_base   = admin_url( '/edit-tags.php' );
-						$query_args = array( 'taxonomy' => $this->slug );
-						// phpcs:ignore WordPress.Security.NonceVerification
-						$url_params = wp_unslash( $_GET );
-						if ( isset( $url_params['post_type'] ) && ! empty( $url_params['post_type'] ) ) {
-							$query_args['post_type'] = $url_params['post_type'];
-						}
-					} elseif ( $this instanceof WP_Backstage_Post_type ) {
-						$url_base   = admin_url( '/edit.php' );
-						$query_args = array( 'post_type' => $this->slug );
-					} elseif ( $this instanceof WP_Backstage_User ) {
-						$url_base = admin_url( '/users.php' );
-					}
-
-					$query_args[ $field['name'] ] = $value;
-
-					$content = sprintf(
-						'<a href="%1$s">%2$s</a>',
-						esc_url( add_query_arg( $query_args, $url_base ) ),
-						esc_html( $user->display_name )
-					);
+					$value   = absint( $value );
+					$user    = get_user_by( 'ID', $value );
+					$content = $this->format_filterable_value( $value, $user->display_name, $field['name'] );
 					break;
 				default:
 					$content = $value;
@@ -1732,6 +1686,52 @@ class WP_Backstage_Component {
 
 		return $content;
 
+	}
+
+	/**
+	 * Format Filterable Value
+	 *
+	 * This method is responsible for formatting filterable values. It accepts a value, a label,
+	 * and a query arg and will determine what the link should be based on what component is
+	 * currently being called.
+	 *
+	 * @param mixed  $value The query arg's value.
+	 * @param string $label The label that will be printed.
+	 * @param string $query_arg The key of the query arg that will be added to the URL.
+	 */
+	protected function format_filterable_value( $value = null, $label = '', $query_arg = '' ) {
+		$url_base   = admin_url( '/' );
+		$query_args = array();
+
+		if ( $this instanceof WP_Backstage_Taxonomy ) {
+			$url_base   = admin_url( '/edit-tags.php' );
+			$query_args = array( 'taxonomy' => $this->slug );
+			// phpcs:ignore WordPress.Security.NonceVerification
+			$url_params = wp_unslash( $_GET );
+			if ( isset( $url_params['post_type'] ) && ! empty( $url_params['post_type'] ) ) {
+				$query_args['post_type'] = $url_params['post_type'];
+			}
+		} elseif ( $this instanceof WP_Backstage_Post_type ) {
+			$url_base   = admin_url( '/edit.php' );
+			$query_args = array( 'post_type' => $this->slug );
+		} elseif ( $this instanceof WP_Backstage_User ) {
+			$url_base = admin_url( '/users.php' );
+		}
+
+		$query_args[ $query_arg ] = $value;
+
+		$link_title = sprintf(
+			/* translators: 1: value label. */
+			_x( 'Filter by %1$s', 'filterable value link title', 'wp_backstage' ),
+			$label
+		);
+
+		return sprintf(
+			'<a href="%1$s" title="%2$s">%3$s</a>',
+			esc_url( add_query_arg( $query_args, $url_base ) ),
+			esc_attr( $link_title ),
+			wp_strip_all_tags( $label )
+		);
 	}
 
 	/**

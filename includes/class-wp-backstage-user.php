@@ -184,8 +184,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'pre_get_users', array( $this, 'manage_filtering' ), 10 );
+		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 		add_filter( 'users_list_table_query_args', array( $this, 'manage_list_table_query_args' ), 10 );
 		add_action( 'manage_users_extra_tablenav', array( $this, 'render_table_filter_form' ), 10 );
 

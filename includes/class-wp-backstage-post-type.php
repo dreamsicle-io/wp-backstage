@@ -354,8 +354,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
 		add_action( 'query_vars', array( $this, 'manage_query_vars' ), 10 );
-		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_filtering' ), 10 );
+		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'restrict_manage_posts', array( $this, 'render_table_filter_form' ), 10, 2 );
 
 		parent::init();

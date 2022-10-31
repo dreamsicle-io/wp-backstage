@@ -2,7 +2,7 @@
 /**
  * WP Backstage
  *
- * @package wp-backstage
+ * @package WPBackstage
  *
  * @wordpress-plugin
  * Plugin Name:       WP Backstage

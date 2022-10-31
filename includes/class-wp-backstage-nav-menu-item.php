@@ -4,8 +4,8 @@
  *
  * @since       2.0.0
  * @since       3.0.0  linted and formatted with phpcs
- * @package     wp-backstage
- * @subpackage  includes
+ * @package     WPBackstage
+ * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WP Backstage Nav Menu Item
  *
  * @since       2.0.0
- * @package     wp-backstage
- * @subpackage  includes
  */
 class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 

@@ -4,8 +4,8 @@
  *
  * @since       2.0.0
  * @since       3.0.0  linted and formatted with phpcs
- * @package     wp-backstage
- * @subpackage  includes
+ * @package     WPBackstage
+ * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since       2.0.0
  * @since       2.2.0  Added `before_widget` and `after_widget` args to `widget` method.
- * @package     wp-backstage
- * @subpackage  includes
  */
 class WP_Backstage_Widget_Base extends WP_Widget {
 

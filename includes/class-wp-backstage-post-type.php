@@ -37,7 +37,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Default Args
 	 *
 	 * @since  0.0.1
-	 * @since  3.1.1 Adds support for post formats.
+	 * @since  3.2.0 Adds support for post formats.
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
@@ -309,7 +309,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   0.0.1
-	 * @since   3.1.1 Added more specific hooks for attachments.
+	 * @since   3.2.0 Added more specific hooks for attachments.
 	 * @return  void
 	 */
 	public function init() {

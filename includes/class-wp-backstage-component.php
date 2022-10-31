@@ -1553,7 +1553,7 @@ class WP_Backstage_Component {
 	 * @since   2.4.0   Renders the actual value if no label is found on fields like select, radio, and checkbox set.
 	 * @since   3.0.0   Adds case for select_posts.
 	 * @since   3.1.0   Adds case for select_users.
-	 * @since   3.1.1   Abstracts filterable value rendering to the `format_filterable_value()` method and fixes issue where the color `<i>` elements were having "display:block" stripped from the inline CSS.
+	 * @since   3.2.0   Abstracts filterable value rendering to the `format_filterable_value()` method and fixes issue where the color `<i>` elements were having "display:block" stripped from the inline CSS.
 	 * @param mixed $value  The value to format.
 	 * @param array $field  An array of field arguments.
 	 * @return string  The value of the field as a string
@@ -1694,7 +1694,7 @@ class WP_Backstage_Component {
 	 * and a query arg and will determine what the link should be based on what component is
 	 * currently being called.
 	 *
-	 * @since 3.1.1
+	 * @since 3.2.0
 	 * @param mixed  $value The query arg's value.
 	 * @param string $label The label that will be printed.
 	 * @param string $query_arg The key of the query arg that will be added to the URL.

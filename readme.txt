@@ -2,7 +2,7 @@
 
 Contributors: noahmason
 Tags: post-types, taxonomies, attachments, nav-menus, options, settings, widgets, meta-boxes, custom-fields
-Stable tag: 3.1.1
+Stable tag: 3.2.0
 Requires PHP: 7.0.0
 Requires at least: 5.0.0
 Tested up to: 6.0.0
@@ -42,7 +42,8 @@ This plugin is not hosted on the WordPress plugin directory, so it will have to 
 
 == Frequently Asked Questions ==
 
-FAQ
+Coming Soon
 
 == Changelog ==
+
 View the [changelog](https://github.com/dreamsicle-io/wp-backstage/releases) on GitHub.

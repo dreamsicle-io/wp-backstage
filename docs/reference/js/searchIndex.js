@@ -161,6 +161,11 @@ Search.appendIndex(
             "summary": "Format\u0020Field\u0020Value",
             "url": "classes/WP-Backstage-Component.html#method_format_field_value"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Aformat_filterable_value\u0028\u0029",
+            "name": "format_filterable_value",
+            "summary": "Format\u0020Filterable\u0020Value",
+            "url": "classes/WP-Backstage-Component.html#method_format_filterable_value"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Aadd_field_columns\u0028\u0029",
             "name": "add_field_columns",
             "summary": "Add\u0020Field\u0020Columns",

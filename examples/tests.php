@@ -4,8 +4,8 @@
  *
  * @since       0.0.1
  * @since       3.0.0 linted and formatted with phpcs
- * @package     wp-backstage
- * @subpackage  examples
+ * @package     WPBackstage
+ * @subpackage  Examples
  */
 
  // phpcs:disable WordPress.WP.I18n.TextDomainMismatch

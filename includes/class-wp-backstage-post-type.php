@@ -4,8 +4,8 @@
  *
  * @since       0.0.1
  * @since       3.0.0  linted and formatted with phpcs
- * @package     wp-backstage
- * @subpackage  includes
+ * @package     WPBackstage
+ * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WP Backstage Post Type
  *
  * @since       0.0.1
- * @package     wp-backstage
- * @subpackage  includes
  */
 class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
@@ -39,6 +37,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Default Args
 	 *
 	 * @since  0.0.1
+	 * @since  3.2.0 Adds support for post formats.
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected $default_args = array(
@@ -69,6 +68,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			'revisions',
 			'custom-fields',
 			'page-attributes',
+			'post-formats',
 		),
 		'taxonomies'      => array(),
 		'meta_boxes'      => array(),
@@ -165,10 +165,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'is_filterable' => false,
 			)
 		);
-
-		if ( current_theme_supports( 'post-formats' ) ) {
-			$this->default_args['supports'][] = 'post-formats';
-		}
 
 		$this->new  = boolval( $new );
 		$this->slug = sanitize_key( $slug );
@@ -313,6 +309,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   0.0.1
+	 * @since   3.2.0 Added more specific hooks for attachments.
 	 * @return  void
 	 */
 	public function init() {
@@ -337,22 +334,26 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			add_filter( 'the_title', array( $this, 'manage_post_title' ), 10, 2 );
 		}
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
-		// If the post type is an attachment, there is a different hook used to attach the `save` method.
+		// If the post type is an attachment, there are several different hooks and filters
+		// to use that don't align with the dynamic hooks of other post types.
 		if ( $this->slug === 'attachment' ) {
 			add_action( 'edit_attachment', array( $this, 'save' ), 10 );
+			add_filter( sprintf( 'manage_media_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
+			add_action( sprintf( 'manage_media_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
+			add_filter( sprintf( 'manage_upload_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		} else {
 			add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
+			add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
+			add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
+			add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		}
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'edit_form_top', array( $this, 'render_edit_nonce' ), 10 );
 		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-		add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
-		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
 		add_action( 'query_vars', array( $this, 'manage_query_vars' ), 10 );
-		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_filtering' ), 10 );
+		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
 		add_action( 'restrict_manage_posts', array( $this, 'render_table_filter_form' ), 10, 2 );
 
 		parent::init();

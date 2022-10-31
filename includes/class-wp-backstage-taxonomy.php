@@ -4,8 +4,8 @@
  *
  * @since       0.0.1
  * @since       3.0.0  linted and formatted with phpcs
- * @package     wp-backstage
- * @subpackage  includes
+ * @package     WPBackstage
+ * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WP Backstage Taxonomy
  *
  * @since       0.0.1
- * @package     wp-backstage
- * @subpackage  includes
  */
 class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
@@ -282,8 +280,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_filter( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );
+		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10 );
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
-		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10, 2 );
 		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 
@@ -934,11 +932,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 							'relation' => 'OR',
 							array(
 								'key'     => $field['name'],
-								'compare' => 'EXISTS',
+								'compare' => 'NOT EXISTS',
 							),
 							array(
 								'key'     => $field['name'],
-								'compare' => 'NOT EXISTS',
+								'compare' => 'EXISTS',
 							),
 						);
 					} else {

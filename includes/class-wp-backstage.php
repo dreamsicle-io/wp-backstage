@@ -473,18 +473,20 @@ class WP_Backstage {
 				display: block;
 			}
 
-			.wp-backstage-media-uploader__attachment-single-file > img {
-				max-width: 100%;
-				height: auto;
-				display: inline-block;
-				vertical-align: top;
+			.wp-backstage-media-uploader__attachment-single-file::before,
+			.wp-backstage-media-uploader__attachment-single-file::after {
+				content: '';
+				width: 100%;
+				display: table;
+				clear: both;
 			}
 
-			.wp-backstage-media-uploader__attachment-single-file-info {
-				display: inline-block;
-				vertical-align: top;
-				padding: 0 0.5em;
-				font-size: 1rem;
+			.wp-backstage-media-uploader__attachment-single-file > img {
+				max-width: 100px;
+				height: auto;
+				display: block;
+				float: left;
+				margin-right: 12px;
 			}
 
 			.wp-backstage-media-uploader__attachment-single-file-filename {
@@ -2885,14 +2887,12 @@ class WP_Backstage {
 						)
 					); ?>
 
-					<span class="wp-backstage-media-uploader__attachment-single-file-info">
-						<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
-							echo esc_html( $attachment['filename'] );
-						?></span>
-						<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
-							printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
-						?></span>
-					</span>
+					<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
+						echo esc_html( $attachment['filename'] );
+					?></span>
+					<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
+						printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
+					?></span>
 
 				</span>
 

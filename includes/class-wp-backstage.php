@@ -512,6 +512,13 @@ class WP_Backstage {
 				max-width: 100%;
 				height: auto;
 				display: block;
+				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+				background-color: #ffffff;
+				background-position: 0 0, 10px 10px;
+				background-size: 20px 20px;
+				background-image:
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7),
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7);
 			}
 
 			.wp-backstage-media-uploader__attachment-single-image[data-attachment-subtype="svg+xml"] > img {

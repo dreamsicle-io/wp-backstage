@@ -425,6 +425,13 @@ class WP_Backstage {
 				cursor: move;
 			}
 
+			#addtag .wp-backstage-media-uploader__attachment,
+			.widget .wp-backstage-media-uploader__attachment,
+			.menu-item .wp-backstage-media-uploader__attachment {
+				width: 115px;
+				height: 115px;
+			}
+
 			.wp-backstage-media-uploader__attachment > img {
 				display: block;
 				width: 100%;
@@ -457,8 +464,11 @@ class WP_Backstage {
 				text-align: center;
 				padding: 5px 10px;
 				font-weight: 600;
+				max-height: calc(100% - 32px);
 				background: rgba(255, 255, 255, 0.8);
 				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+				overflow-y: auto;
+				box-sizing: border-box;
 			}
 
 			.wp-backstage-media-uploader__attachment:not([data-attachment-type="image"]) .wp-backstage-media-uploader__attachment-filename {
@@ -806,6 +816,14 @@ class WP_Backstage {
 			/* Table filters */
 			.tablenav .actions input[type="submit"]:first-child {
 				display: none;
+			}
+
+			/* Form Tables */
+			@media screen and (max-width: 782px) {
+				.form-table {
+					table-layout: fixed;
+					max-width: 100%;
+				}
 			}
 
 		</style>

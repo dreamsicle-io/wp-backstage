@@ -315,8 +315,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				$field_name     = $field['name'];
 				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
-				$field['name']  = sprintf( 'menu-item-%1$s', $field_name );
-				$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+				$field['name']  = sprintf( 'menu-item-%1$s[{{ data.instanceNumber }}]', $field_name );
+				$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.instanceNumber }}', $field_name );
 				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -384,8 +384,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		$fields = $this->get_fields();
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			$values = array();
 
 			foreach ( $fields as $field ) {
 

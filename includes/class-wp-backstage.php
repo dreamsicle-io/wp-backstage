@@ -167,6 +167,7 @@ class WP_Backstage {
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_mixin_overrides_script' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_date_picker_script' ), 10 );
@@ -187,6 +188,7 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_widget_customizer_script' ), 10 );
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
+		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
 	}
 
 	/**
@@ -358,6 +360,7 @@ class WP_Backstage {
 	 * Inlines the media uploader field style.
 	 *
 	 * @since   2.0.0
+	 * @since   3.3.0 Adds styles for new media uploader preview rendering.
 	 * @return  void
 	 */
 	public function inline_media_uploader_style() { ?>
@@ -411,27 +414,175 @@ class WP_Backstage {
 				display: block;
 				position: relative;
 				padding: 0;
-				max-width: 100%;
+				width: 150px;
+				height: 150px;
 				margin: 0 12px 12px 0;
 				float: left;
-				background-color: #ffffff;
+				color: #3c434a;
+				background: #f0f0f1;
+				font-size: 12px;
+				box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.10), inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+				cursor: move;
 			}
 
-			.wp-backstage-media-uploader__attachment[data-attachment-id="0"] {
-				display: none !important;
+			#addtag .wp-backstage-media-uploader__attachment,
+			.widget .wp-backstage-media-uploader__attachment,
+			.menu-item .wp-backstage-media-uploader__attachment {
+				width: 115px;
+				height: 115px;
 			}
 
-			.wp-backstage-media-uploader__attachment-image {
+			.wp-backstage-media-uploader__attachment > img {
 				display: block;
 				width: 100%;
+				height: 100%;
+				object-fit: scale-down;
 				margin: 0;
 				padding: 0;
+				box-shadow: inset 0 0 0 1px #dcdcde;
+			}
+
+			.wp-backstage-media-uploader__attachment[data-attachment-type="image"] > img {
+				object-fit: contain;
+				background-color: #ffffff;
+				background-position: 0 0, 10px 10px;
+				background-size: 20px 20px;
 				background-image:
 					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7),
 					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7);
+			}
+
+			.wp-backstage-media-uploader__attachment-filename {
+				display: none;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				overflow: hidden;
+				max-height: 100%;
+				word-wrap: break-word;
+				text-align: center;
+				padding: 5px 10px;
+				font-weight: 600;
+				max-height: calc(100% - 32px);
+				background: rgba(255, 255, 255, 0.8);
+				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+				overflow-y: auto;
+				box-sizing: border-box;
+			}
+
+			.wp-backstage-media-uploader__attachment:not([data-attachment-type="image"]) .wp-backstage-media-uploader__attachment-filename {
+				display: block;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-file {
+				width: 100%;
+				height: auto;
+				max-width: 500px;
+				margin-bottom: 12px;
+				display: block;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-file::before,
+			.wp-backstage-media-uploader__attachment-single-file::after {
+				content: '';
+				width: 100%;
+				display: table;
+				clear: both;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-file > img {
+				max-width: 100px;
+				height: auto;
+				display: block;
+				float: left;
+				margin-right: 12px;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-file-filename {
+				display: block;
+				font-weight: 600;
+				margin-bottom: 0.125em;
+				word-wrap: break-word;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-file-meta {
+				display: block;
+				font-size: 0.875em;
+				opacity: 0.75;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-image {
+				width: 100%;
+				height: auto;
+				max-width: 350px;
+				margin-bottom: 12px;
+				display: block;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-image > img {
+				max-width: 100%;
+				height: auto;
+				display: block;
+				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+				background-color: #ffffff;
 				background-position: 0 0, 10px 10px;
-				box-shadow: inset 0 0 0 1px #dcdcde;
 				background-size: 20px 20px;
+				background-image:
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7),
+					linear-gradient(45deg,#c3c4c7 25%,transparent 25%,transparent 75%,#c3c4c7 75%,#c3c4c7);
+			}
+
+			.wp-backstage-media-uploader__attachment-single-image[data-attachment-subtype="svg+xml"] > img {
+				width: 100%;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-video {
+				width: 100%;
+				height: auto;
+				max-width: 500px;
+				margin-bottom: 12px;
+				display: block;
+			}
+
+			.wp-backstage-media-uploader__attachment-single-audio {
+				width: 100%;
+				height: auto;
+				max-width: 500px;
+				margin-bottom: 12px;
+				display: block;
+			}
+
+			.wp-backstage-media-uploader__error {
+				display: none;
+			}
+
+			.wp-backstage-media-uploader__error > span{
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0.5em 0;
+				padding: 2px;
+			}
+
+			.wp-backstage-media-uploader__loader {
+				display: none;
+			}
+
+			.wp-backstage-media-uploader__loader > span {
+				display: inline-block;
+				vertical-align: middle;
+				font-style: italic;
+				opacity: 0.75;
+				padding: 0.5em 0;
+			}
+
+			.wp-backstage-media-uploader__loader > img {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			.wp-backstage-media-uploader__try-again {
+				line-height: inherit;
 			}
 
 		</style>
@@ -568,6 +719,12 @@ class WP_Backstage {
 		if ( ! did_action( 'wp_enqueue_media' ) ) {
 			wp_enqueue_media();
 		}
+		if ( ! wp_style_is( 'wp-mediaelement', 'enqueued' ) ) {
+			wp_enqueue_style( 'wp-mediaelement' );
+		}
+		if ( ! wp_script_is( 'wp-mediaelement', 'enqueued' ) ) {
+			wp_enqueue_script( 'wp-mediaelement' );
+		}
 		// color picker.
 		if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 			wp_enqueue_script( 'wp-color-picker' );
@@ -577,6 +734,41 @@ class WP_Backstage {
 		}
 
 	}
+
+	/**
+	 * Inline Media Mixin Overrides Script
+	 *
+	 * This method is responsible for outputting a script that makes a small override to the native
+	 * WordPress `wp.media.mixin.removeAllPlayers()` mixin. By default, WordPress kills all media
+	 * elements when one is rendered in the WordPress media modal, with no way to ignore that behavior.
+	 * The side effect of this is that media elements in the WP Admin are killed when selecting an audio
+	 * or video attachment in the media uploader. Because WP Backstage uses WordPress media elements on
+	 * audio and video previews in the media uploader fields, it is necessary to provide a way to ignore
+	 * these in this function. This function was copied from `/wp-includes/js/media-audiovideo.js`, and
+	 * adds a simple check for a `wp-mediaelement-keep` class to ignore removal.
+	 *
+	 * @since 3.3.0
+	 * @return void
+	 */
+	public function inline_media_mixin_overrides_script() { ?>
+		<script id="wp_backstage_media_mixin_overrides_script">
+			(function() {
+				function removeAllPlayersOverride() {
+					var p;
+					if ( window.mejs && window.mejs.players ) {
+						for ( p in window.mejs.players ) {
+							window.mejs.players[p].pause();
+							playerElement = document.getElementById(p);
+							if (playerElement instanceof HTMLElement && ! playerElement.classList.contains('wp-mediaelement-keep')) {
+								window.wp.media.mixin.removePlayer( window.mejs.players[p] );
+							}
+						}
+					}
+				};
+				window.wp.media.mixin.removeAllPlayers = removeAllPlayersOverride;
+			})();
+		</script>
+	<?php }
 
 	/**
 	 * Inline Thumbnail Column Style
@@ -636,6 +828,14 @@ class WP_Backstage {
 				display: none;
 			}
 
+			/* Form Tables */
+			@media screen and (max-width: 782px) {
+				.form-table {
+					table-layout: fixed;
+					max-width: 100%;
+				}
+			}
+
 		</style>
 
 	<?php }
@@ -678,6 +878,7 @@ class WP_Backstage {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Full rewrite of the media uploader script.
+	 * @since   3.3.0  Renders previews via ajax instead of clone functionality.
 	 * @return  void
 	 */
 	public function inline_media_uploader_script() { ?>
@@ -687,6 +888,69 @@ class WP_Backstage {
 		type="text/javascript">
 
 			(function($) {
+
+				function renderMedia(uploader = null, attachmentIDs = []) {
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					hideError(uploader);
+					hideButtons(uploader);
+					showLoader(uploader);
+					$.ajax({
+						url: window.ajaxurl,
+						type: 'post',
+						data: {
+							action: 'wp_backstage_render_media',
+							attachment_ids: attachmentIDs,
+							is_multiple: isMultiple,
+						},
+						success: function(result) {
+							const previewList = uploader.wpBackstage.ui.previewList;
+							hideLoader(uploader);
+							showButtons(uploader);
+							$(previewList).append($(result));	
+							if (isMultiple)	{
+								initClones(uploader);
+								refreshSortable(uploader);
+							} else {
+								window.wp.mediaelement.initialize();
+							}
+						},
+						error: function() {
+							hideLoader(uploader);
+							showButtons(uploader);
+							showError(uploader);
+						},
+					});
+				}
+
+				function showButtons(uploader = null) {
+					const buttons = uploader.wpBackstage.ui.buttons;
+					buttons.style.display = 'block';
+				}
+
+				function hideButtons(uploader = null) {
+					const buttons = uploader.wpBackstage.ui.buttons;
+					buttons.style.display = 'none';
+				}
+
+				function showLoader(uploader = null) {
+					const loader = uploader.wpBackstage.ui.loader;
+					loader.style.display = 'inline-block';
+				}
+
+				function hideLoader(uploader = null) {
+					const loader = uploader.wpBackstage.ui.loader;
+					loader.style.display = 'none';
+				}
+
+				function showError(uploader = null) {
+					const error = uploader.wpBackstage.ui.error;
+					error.style.display = 'inline-block';
+				}
+
+				function hideError(uploader = null) {
+					const error = uploader.wpBackstage.ui.error;
+					error.style.display = 'none';
+				}
 
 				function findParentUploader(element = null) {
 					var parentNode = element.parentNode;
@@ -702,11 +966,6 @@ class WP_Backstage {
 						parentNode = parentNode.parentNode;
 					}
 					return parentNode;
-				}
-
-				function handleCloneClick(e = null) {
-					const uploader = findParentUploader(e.target);
-					uploader.wpBackstage.modal.open();
 				}
 
 				function handleLegendClick(e = null) {
@@ -732,6 +991,14 @@ class WP_Backstage {
 				function handleRemoveButtonClick(e = null) {
 					const uploader = findParentUploader(e.target);
 					reset(uploader);
+				}
+
+				function handleTryAgainButtonClick(e = null) {
+					const uploader = findParentUploader(e.target);
+					const attachmentIDs = getInputValue(uploader);
+					if (attachmentIDs.length > 0) {
+						appendClones(uploader, attachmentIDs, true);
+					}
 				}
 
 				function enableButton(button = null) {
@@ -785,7 +1052,7 @@ class WP_Backstage {
 					});
 					setInputValue(uploader, newAttachmentIDs);
 					removeClone(uploader, attachmentID);
-					if (newAttachmentIDs.length <= 0) {
+					if (newAttachmentIDs.length < 1) {
 						reset(uploader);
 					}
 					if (isMultiple) {
@@ -793,42 +1060,35 @@ class WP_Backstage {
 					}
 				}
 
-				function getAttachmentURL(attachment = null, size = 'medium') {
-					let url = attachment.icon;
-					if (attachment.mime.includes('image')) {
-						url = (attachment.sizes && attachment.sizes[size]) ? attachment.sizes[size].url : attachment.url;
-					}
-					return url;
+				function initClones(uploader = null) {
+					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
+					const previewList = uploader.wpBackstage.ui.previewList;
+					const clones = previewList.querySelectorAll('[data-attachment-id]') || [];
+					return Array.from(clones).map(function(clone) {
+						if (! clone.hasAttribute('data-wp-backstage-initialized')) {
+							const removeButton = clone.querySelector('.wp-backstage-media-uploader__attachment-remove');
+							removeButton.addEventListener('click', handleAttachmentRemoveButtonClick);
+							clone.setAttribute('data-wp-backstage-initialized', true);
+						}
+					});
 				}
 
-				function appendClones(uploader = null, newAttachments = [], replace = false) {
+				function appendClones(uploader = null, attachmentIDs = [], replace = false) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const template = uploader.wpBackstage.ui.template;
 					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
 					const cloneIDs = getCloneIDs(uploader);
 					const size = isMultiple ? 'thumbnail' : 'medium';
-					const attachments = newAttachments.filter(function(attachment) {
-						return ! cloneIDs.includes(attachment.id);
-					});
 					if (replace) {
 						removeClones(uploader);
 					}
-					for (var i = 0; i < attachments.length; i++) {
-						const clone = template.cloneNode(true);
-						const image = clone.querySelector('img');
-						const caption = clone.querySelector('.wp-backstage-media-uploader__attachment-caption');
-						const removeButton = clone.querySelector('.wp-backstage-media-uploader__attachment-remove');
-						const url = getAttachmentURL(attachments[i], size);
-						clone.setAttribute('data-attachment-id', attachments[i].id);
-						clone.style.cursor = isMultiple ? 'move' : 'pointer';
-						image.setAttribute('src', url);
-						image.setAttribute('alt', attachments[i].alt);
-						image.setAttribute('title', attachments[i].title);
-						caption.setAttribute('title', attachments[i].caption);
-						removeButton.addEventListener('click', handleAttachmentRemoveButtonClick);
-						clone.addEventListener('click', handleCloneClick);
-						previewList.appendChild(clone);
+					if ( isMultiple ) {
+						attachmentIDs = attachmentIDs.filter(function(attachmentID) {
+							return ! cloneIDs.includes(attachmentID);
+						});
 					}
+
+					renderMedia(uploader, attachmentIDs);
 				}
 
 				function removeClone(uploader = null, attachmentID = 0) {
@@ -877,13 +1137,12 @@ class WP_Backstage {
 					});
 					const attachmentIDs = isMultiple ? concatAttachmentIDs(uploader, newAttachmentIDs) : newAttachmentIDs;
 					setInputValue(uploader, attachmentIDs);
-					appendClones(uploader, attachments, ! isMultiple);
+					appendClones(uploader, attachmentIDs, ! isMultiple);
 					disableButton(addButton);
 					enableButton(removeButton);
 					if (isMultiple) {
 						enableButton(addToButton);
 						disableButton(replaceButton);
-						refreshSortable(uploader);
 					} else {
 						disableButton(addToButton);
 						enableButton(replaceButton);
@@ -895,11 +1154,16 @@ class WP_Backstage {
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;
 					const removeButton = uploader.wpBackstage.ui.removeButton;
+					const tryAgainButton = uploader.wpBackstage.ui.tryAgainButton;
 					const legend = uploader.wpBackstage.ui.legend;
 					addButton.removeEventListener('click', handleAddButtonClick);
 					addToButton.removeEventListener('click', handleAddToButtonClick);
 					replaceButton.removeEventListener('click', handleReplaceButtonClick);
 					removeButton.removeEventListener('click', handleRemoveButtonClick);
+					tryAgainButton.removeEventListener('click', handleTryAgainButtonClick);
+					hideLoader(uploader);
+					hideError(uploader);
+					showButtons(uploader);
 					removeClones(uploader);
 					if (legend) {
 						legend.removeEventListener('click', handleLegendClick);
@@ -921,22 +1185,7 @@ class WP_Backstage {
 					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
 					const attachmentIDs = getInputValue(uploader);
 					if (attachmentIDs.length > 0) {
-						const query = wp.media.query({
-							order: 'ASC',
-							orderby: 'post__in',
-							perPage: -1,
-							post__in: attachmentIDs,
-							query: true,
-						});
-						query.more().done(function() {
-							const attachments = this.models.map(function(model) {
-								return model.attributes;
-							});
-							appendClones(uploader, attachments);
-							if (isMultiple) {
-								refreshSortable(uploader);
-							}
-						});
+						appendClones(uploader, attachmentIDs);
 					}
 					if (isMultiple) {
 						initSortable(uploader);
@@ -947,13 +1196,16 @@ class WP_Backstage {
 					const fieldId = uploader.getAttribute('data-media-uploader-id');
 					const input = uploader.querySelector('#' + fieldId);
 					const legend = uploader.querySelector('#' + fieldId + '_legend');
+					const buttons = uploader.querySelector('#' + fieldId + '_buttons');
 					const addButton = uploader.querySelector('#' + fieldId + '_button_add');
 					const addToButton = uploader.querySelector('#' + fieldId + '_button_add_to');
 					const replaceButton = uploader.querySelector('#' + fieldId + '_button_replace');
 					const removeButton = uploader.querySelector('#' + fieldId + '_button_remove');
 					const preview = uploader.querySelector('#' + fieldId + '_preview');
-					const previewList = preview.querySelector('#' + fieldId + '_preview_list');
-					const template = preview.querySelector('[data-attachment-id="0"]');
+					const previewList = uploader.querySelector('#' + fieldId + '_preview_list');
+					const loader = uploader.querySelector('#' + fieldId + '_loader');
+					const error = uploader.querySelector('#' + fieldId + '_error');
+					const tryAgainButton = uploader.querySelector('#' + fieldId + '_button_try_again');
 					const title = uploader.getAttribute('data-media-uploader-title');
 					const buttonText = uploader.getAttribute('data-media-uploader-button');
 					const type = uploader.getAttribute('data-media-uploader-type');
@@ -972,6 +1224,7 @@ class WP_Backstage {
 					addToButton.addEventListener('click', handleAddToButtonClick);
 					replaceButton.addEventListener('click', handleReplaceButtonClick);
 					removeButton.addEventListener('click', handleRemoveButtonClick);
+					tryAgainButton.addEventListener('click', handleTryAgainButtonClick);
 					if (legend) {
 						legend.addEventListener('click', handleLegendClick);
 					}
@@ -980,13 +1233,16 @@ class WP_Backstage {
 						ui: {
 							input: input,
 							legend: legend,
+							buttons: buttons,
 							addButton: addButton,
 							addToButton: addToButton,
 							replaceButton: replaceButton,
 							removeButton: removeButton,
 							preview: preview,
 							previewList: previewList,
-							template: template,
+							loader: loader,
+							error: error,
+							tryAgainButton: tryAgainButton,
 						},
 					};
 					initPreview(uploader);
@@ -1022,6 +1278,9 @@ class WP_Backstage {
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;
 					const removeButton = uploader.wpBackstage.ui.removeButton;
+					hideLoader(uploader);
+					hideError(uploader);
+					showButtons(uploader);
 					enableButton(addButton);
 					disableButton(addToButton);
 					disableButton(replaceButton);
@@ -1881,17 +2140,18 @@ class WP_Backstage {
 
 				var controlExpandTimer = null;
 
-				function setControlElementValue(controlElement = null, value = undefined) {
+				function setControlElementValue(controlElement = null, value = undefined, instanceNumber = 0) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
+					const elementName = 'menu-item-' + fieldName + '[' + instanceNumber + ']';
 					switch (fieldType) {
 						case 'checkbox': {
-							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const input = controlElement.element.find('[name="' + elementName + '"]');
 							input.attr('checked', Boolean(value));
 							break;
 						}
 						case 'radio': {
-							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const radios = controlElement.element.find('[name="' + elementName + '"]');
 							if (! value && (radios.length > 0)) {
 								value = $(radios[0]).val();
 							}
@@ -1902,7 +2162,7 @@ class WP_Backstage {
 							break;
 						}
 						case 'checkbox_set': {
-							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
+							const checkboxes = controlElement.element.find('[name="' + elementName + '[]"]');
 							checkboxes.each(function() {
 								const checkbox = $(this);
 								checkbox.attr('checked', (Array.isArray(value) && value.includes(checkbox.val())));
@@ -1911,22 +2171,22 @@ class WP_Backstage {
 						}
 						case 'time': {
 							const timePieces = (value && ! Array.isArray(value)) ? value.split(':') : value;
-							const hourSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[hour]"]');
-							const minuteSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[minute]"]');
-							const secondSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[second]"]');
+							const hourSelect = controlElement.element.find('[name="' + elementName + '[hour]"]');
+							const minuteSelect = controlElement.element.find('[name="' + elementName + '[minute]"]');
+							const secondSelect = controlElement.element.find('[name="' + elementName + '[second]"]');
 							hourSelect.val((timePieces && timePieces[0]) ? timePieces[0] : hourSelect.find('option:first-child').val());
 							minuteSelect.val((timePieces && timePieces[1]) ? timePieces[1] : minuteSelect.find('option:first-child').val());
 							secondSelect.val((timePieces && timePieces[2]) ? timePieces[2] : secondSelect.find('option:first-child').val());
 							break;
 						}
 						case 'address': {
-							const countrySelect = controlElement.element.find('[name="menu-item-' + fieldName + '[country]"]');
-							const address1Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_1]"]');
-							const address2Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_2]"]');
-							const cityInput = controlElement.element.find('[name="menu-item-' + fieldName + '[city]"]');
-							const stateSelect = controlElement.element.find('select[name="menu-item-' + fieldName + '[state]"]');
-							const stateInput = controlElement.element.find('input[name="menu-item-' + fieldName + '[state]"]');
-							const zipInput = controlElement.element.find('[name="menu-item-' + fieldName + '[zip]"]');
+							const countrySelect = controlElement.element.find('[name="' + elementName + '[country]"]');
+							const address1Input = controlElement.element.find('[name="' + elementName + '[address_1]"]');
+							const address2Input = controlElement.element.find('[name="' + elementName + '[address_2]"]');
+							const cityInput = controlElement.element.find('[name="' + elementName + '[city]"]');
+							const stateSelect = controlElement.element.find('select[name="' + elementName + '[state]"]');
+							const stateInput = controlElement.element.find('input[name="' + elementName + '[state]"]');
+							const zipInput = controlElement.element.find('[name="' + elementName + '[zip]"]');
 							countrySelect.val((value && value.country) ? value.country : 'US');
 							address1Input.val((value && value.address_1) ? value.address_1 : '');
 							address2Input.val((value && value.address_2) ? value.address_2 : '');
@@ -1937,41 +2197,46 @@ class WP_Backstage {
 							break;
 						}
 						case 'select': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const select = controlElement.element.find('[name="' + elementName + '"]');
 							select.val(value || select.find('option:first-child').val());
 							break;
 						}
 						case 'select_posts': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
-							select.val(value.toString() || select.find('option:first-child').val());
+							const select = controlElement.element.find('[name="' + elementName + '"]');
+							value = parseInt(value, 10);
+							value = value ? value.toString() : undefined;
+							select.val(value || select.find('option:first-child').val());
 							break;
 						}
 						case 'select_users': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
-							select.val(value.toString() || select.find('option:first-child').val());
+							const select = controlElement.element.find('[name="' + elementName + '"]');
+							value = parseInt(value, 10);
+							value = value ? value.toString() : undefined;
+							select.val(value || select.find('option:first-child').val());
 							break;
 						}
 						default: {
-							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const input = controlElement.element.find('[name="' + elementName + '"]');
 							input.val(value);
 							break;
 						}
 					}
 				}
 
-				function initControlElementChangeHandler(controlElement = null, setting = null) {
+				function initControlElementChangeHandler(controlElement = null, setting = null, instanceNumber = 0) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
+					const elementName = 'menu-item-' + fieldName + '[' + instanceNumber + ']';
 					switch (fieldType) {
 						case 'checkbox': {
-							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const input = controlElement.element.find('[name="' + elementName + '"]');
 							input.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.checked ? e.target.value : undefined);
 							});
 							break;
 						}
 						case 'radio': {
-							const radios = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const radios = controlElement.element.find('[name="' + elementName + '"]');
 							radios.each(function() {
 								const radio = $(this);
 								radio.on('change', function(e) {
@@ -1983,7 +2248,7 @@ class WP_Backstage {
 							break;
 						}
 						case 'checkbox_set': {
-							const checkboxes = controlElement.element.find('[name="menu-item-' + fieldName + '[]"]');
+							const checkboxes = controlElement.element.find('[name="' + elementName + '[]"]');
 							checkboxes.each(function() {
 								const checkbox = $(this);
 								checkbox.on('change', function(e) {
@@ -1993,9 +2258,9 @@ class WP_Backstage {
 							break;
 						}
 						case 'time': {
-							const hourSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[hour]"]');
-							const minuteSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[minute]"]');
-							const secondSelect = controlElement.element.find('[name="menu-item-' + fieldName + '[second]"]');
+							const hourSelect = controlElement.element.find('[name="' + elementName + '[hour]"]');
+							const minuteSelect = controlElement.element.find('[name="' + elementName + '[minute]"]');
+							const secondSelect = controlElement.element.find('[name="' + elementName + '[second]"]');
 							hourSelect.on('change', function(e) {
 								handleTimeSettingChange(setting, fieldName, 0, e.target.value);
 							});
@@ -2008,13 +2273,13 @@ class WP_Backstage {
 							break;
 						}
 						case 'address': {
-							const countrySelect = controlElement.element.find('[name="menu-item-' + fieldName + '[country]"]');
-							const address1Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_1]"]');
-							const address2Input = controlElement.element.find('[name="menu-item-' + fieldName + '[address_2]"]');
-							const cityInput = controlElement.element.find('[name="menu-item-' + fieldName + '[city]"]');
-							const stateSelect = controlElement.element.find('select[name="menu-item-' + fieldName + '[state]"]');
-							const stateInput = controlElement.element.find('input[name="menu-item-' + fieldName + '[state]"]');
-							const zipInput = controlElement.element.find('[name="menu-item-' + fieldName + '[zip]"]');
+							const countrySelect = controlElement.element.find('[name="' + elementName + '[country]"]');
+							const address1Input = controlElement.element.find('[name="' + elementName + '[address_1]"]');
+							const address2Input = controlElement.element.find('[name="' + elementName + '[address_2]"]');
+							const cityInput = controlElement.element.find('[name="' + elementName + '[city]"]');
+							const stateSelect = controlElement.element.find('select[name="' + elementName + '[state]"]');
+							const stateInput = controlElement.element.find('input[name="' + elementName + '[state]"]');
+							const zipInput = controlElement.element.find('[name="' + elementName + '[zip]"]');
 							countrySelect.on('change', function(e) {
 								handleAddressSettingChange(setting, fieldName, 'country', e.target.value);
 							});
@@ -2039,28 +2304,28 @@ class WP_Backstage {
 							break;
 						}
 						case 'select': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const select = controlElement.element.find('[name="' + elementName + '"]');
 							select.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value );
 							});
 							break;
 						}
 						case 'select_posts': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const select = controlElement.element.find('[name="' + elementName + '"]');
 							select.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value );
 							});
 							break;
 						}
 						case 'select_users': {
-							const select = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const select = controlElement.element.find('[name="' + elementName + '"]');
 							select.on('change', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value );
 							});
 							break;
 						}
 						default: {
-							const input = controlElement.element.find('[name="menu-item-' + fieldName + '"]');
+							const input = controlElement.element.find('[name="' + elementName + '"]');
 							input.on('change input propertychange paste', function(e) {
 								handleSettingChange(setting, fieldName, e.target.value);
 							});
@@ -2073,7 +2338,7 @@ class WP_Backstage {
 					const values = control.setting();
 					const elements = control.wpBackstageElements;
 					for (var fieldName in elements) {
-						setControlElementValue(elements[fieldName], values[fieldName]);
+						setControlElementValue(elements[fieldName], values[fieldName], control.params.instanceNumber);
 					}
 				}
 
@@ -2115,7 +2380,6 @@ class WP_Backstage {
 				}
 
 				function handleSettingChange(setting = null, fieldName = '', value = undefined) {
-					console.log(value);
 					const currentValues = setting();
 					if (currentValues[fieldName] !== value) {
 						setting.set(Object.assign(
@@ -2163,7 +2427,7 @@ class WP_Backstage {
 				function initChangeHandlers(control = null) {
 					const elements = control.wpBackstageElements;
 					for (var fieldName in elements) {
-						initControlElementChangeHandler(elements[fieldName], control.setting);
+						initControlElementChangeHandler(elements[fieldName], control.setting, control.params.instanceNumber);
 					}
 				}
 
@@ -2549,5 +2813,162 @@ class WP_Backstage {
 		</script>
 
 	<?php }
+
+	/**
+	 * Render Media Item
+	 *
+	 * This method is responsible for rendering a single media item for use in the media uploader
+	 * field. Taking into account whether the media uploader is rendering multiple items or not,
+	 * and then taking into account the mime type of the attachment, render a media element. If
+	 *
+	 * @since 3.3.0
+	 * @param int  $attachment_id The ID of the attachment to render.
+	 * @param bool $is_multiple Whether the media uploader allows multiple attachments or not.
+	 * @return void
+	 */
+	public function render_media_item( $attachment_id = 0, $is_multiple = false ) {
+
+			$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
+
+			<?php if ( $is_multiple ) {
+
+				$remove_label = _x( 'Remove', 'media item - remove', 'wp_backstage' ); ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<button 
+					title="<?php echo esc_attr( $remove_label ); ?>"
+					type="button" 
+					class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+						<span class="screen-reader-text"><?php
+							echo esc_html( $remove_label );
+						?></span>
+					</button>
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'thumbnail',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+					<span class="wp-backstage-media-uploader__attachment-filename">
+						<span><?php echo esc_html( $attachment['filename'] ); ?></span>
+					</span>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'video' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-video"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput
+					echo wp_video_shortcode(
+						array(
+							'src'     => esc_url( $attachment['url'] ),
+							'preload' => 'metadata',
+							'class'   => 'wp-video-shortcode wp-mediaelement-keep',
+						),
+					); ?>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'audio' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-audio"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput
+					echo wp_audio_shortcode(
+						array(
+							'src'     => esc_url( $attachment['url'] ),
+							'preload' => 'metadata',
+							'class'   => 'wp-audio-shortcode wp-mediaelement-keep',
+						),
+					); ?>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'image' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-image"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'medium',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+
+				</span>
+
+			<?php } else { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-file"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'medium',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+
+					<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
+						echo esc_html( $attachment['filename'] );
+					?></span>
+					<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
+						printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
+					?></span>
+
+				</span>
+
+			<?php } ?>
+
+		</span>
+
+	<?php }
+
+	/**
+	 * Ajax Render Media
+	 *
+	 * This method is responsible for providing the ajax response for the media uploader
+	 * preview.
+	 *
+	 * @since 3.3.0
+	 * @return void
+	 */
+	public function ajax_render_media() {
+
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$posted_values = wp_unslash( $_POST );
+
+		$attachment_ids = ( isset( $posted_values['attachment_ids'] ) && is_array( $posted_values['attachment_ids'] ) ) ? $posted_values['attachment_ids'] : array();
+		$is_multiple    = ( isset( $posted_values['attachment_ids'] ) && ( $posted_values['is_multiple'] === 'true' ) );
+
+		foreach ( $attachment_ids as $attachment_id ) {
+			$this->render_media_item( $attachment_id, $is_multiple );
+		}
+
+		wp_die();
+	}
 
 }

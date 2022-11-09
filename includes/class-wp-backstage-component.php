@@ -2847,6 +2847,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Full rewrite of the media uploader markup.
+	 * @since   3.3.0  Adds error and loader elements and removes the `clone` methodology in favor of ajax rendering.
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
 	 */
@@ -2887,7 +2888,10 @@ class WP_Backstage_Component {
 			/* translators: 1: field label */
 			_x( 'Remove %1$s', 'media uploader field - remove button', 'wp_backstage' ),
 			$field['label']
-		); ?>
+		);
+		$loader_text           = _x( 'Loading preview...', 'media uploader field - loader', 'wp_backstage' );
+		$error_text            = _x( 'There was an error rendering the preview.', 'media uploader field - error', 'wp_backstage' );
+		$try_again_button_text = _x( 'Try again', 'media uploader field - try again button', 'wp_backstage' ) ?>
 
 		<span 
 		class="wp-backstage-field wp-backstage-field--type-media wp-backstage-media-uploader"
@@ -2922,19 +2926,31 @@ class WP_Backstage_Component {
 			<span 
 			class="wp-backstage-media-uploader__preview"
 			id="<?php printf( '%1$s_preview', esc_attr( $id ) ); ?>">
+
 				<span 
-				class="wp-backstage-media-uploader__attachment"
-				data-attachment-id="0">
-					<button type="button" class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
-						<span class="screen-reader-text"><?php
-							echo esc_html( _x( 'Remove', 'media uploader field - remove', 'wp_backstage' ) );
-						?></span>
-					</button>
+				id="<?php printf( '%1$s_loader', esc_attr( $id ) ); ?>"
+				class="wp-backstage-media-uploader__loader notice inline notice-info">
 					<img 
-					class="wp-backstage-media-uploader__attachment-image"
-					src="" alt="" title="" />
-					<span class="wp-backstage-media-uploader__attachment-caption screen-reader-text"></span>
+					src="/wp-admin/images/spinner.gif" 
+					alt="<?php echo esc_attr( $loader_text ); ?>" />
+					&nbsp;
+					<span><?php echo wp_kses( $loader_text, WP_Backstage::$kses_p ); ?></span>
 				</span>
+
+				<span 
+				id="<?php printf( '%1$s_error', esc_attr( $id ) ); ?>"
+				class="wp-backstage-media-uploader__error notice inline notice-error">
+					<span>
+						<?php echo wp_kses( $error_text, WP_Backstage::$kses_p ); ?>
+						<button 
+						type="button"
+						id="<?php printf( '%1$s_button_try_again', esc_attr( $id ) ); ?>" 
+						class="wp-backstage-media-uploader__try-again button-link"><?php
+							echo esc_html( $try_again_button_text );
+						?></button>
+					</span>
+				</span>
+
 				<span 
 				class="wp-backstage-media-uploader__preview-list"
 				id="<?php printf( '%1$s_preview_list', esc_attr( $id ) ); ?>">

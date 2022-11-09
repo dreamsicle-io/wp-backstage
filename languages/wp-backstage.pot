@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-09T12:57:05+00:00\n"
+"POT-Creation-Date: 2022-11-09T13:02:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1860,54 +1860,54 @@ msgctxt "plugin dependency - classic widgets"
 msgid "Classic Widgets"
 msgstr ""
 
-#: includes/class-wp-backstage.php:212
-msgctxt "media item - remove"
-msgid "Remove"
-msgstr ""
-
 #. translators: 1: plugin name link.
-#: includes/class-wp-backstage.php:373
+#: includes/class-wp-backstage.php:214
 msgctxt "plugin dependency message"
 msgid "[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated."
 msgstr ""
 
 #. translators: 1: error message.
-#: includes/class-wp-backstage.php:440
+#: includes/class-wp-backstage.php:281
 msgctxt "plugin error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage.php:472
+#: includes/class-wp-backstage.php:313
 msgctxt "help tab - debug title"
 msgid "Debug"
 msgstr ""
 
-#: includes/class-wp-backstage.php:473
+#: includes/class-wp-backstage.php:314
 msgctxt "help tab - debug description"
 msgid "The following is useful debug information for WP Backstage development."
 msgstr ""
 
-#: includes/class-wp-backstage.php:474
+#: includes/class-wp-backstage.php:315
 msgctxt "help tab - debug current screen"
 msgid "Current Screen"
 msgstr ""
 
-#: includes/class-wp-backstage.php:477
+#: includes/class-wp-backstage.php:318
 msgctxt "help tab - debug current screen parent base label"
 msgid "Parent Base:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:482
+#: includes/class-wp-backstage.php:323
 msgctxt "help tab - debug current screen base"
 msgid "Base:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:487
+#: includes/class-wp-backstage.php:328
 msgctxt "help tab - debug current screen id"
 msgid "ID:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:509
+#: includes/class-wp-backstage.php:350
 msgctxt "help tab title"
 msgid "WP Backstage"
+msgstr ""
+
+#: includes/class-wp-backstage.php:2781
+msgctxt "media item - remove"
+msgid "Remove"
 msgstr ""

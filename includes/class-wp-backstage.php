@@ -192,165 +192,6 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Render Media Item
-	 *
-	 * This method is responsible for rendering a single media item for use in the media uploader
-	 * field. Taking into account whether the media uploader is rendering multiple items or not,
-	 * and then taking into account the mime type of the attachment, render a media element. If
-	 *
-	 * @since 3.3.0
-	 * @param int  $attachment_id The ID of the attachment to render.
-	 * @param bool $is_multiple Whether the media uploader allows multiple attachments or not.
-	 * @return void
-	 */
-	public function render_media_item( $attachment_id = 0, $is_multiple = false ) {
-
-			$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
-
-			<?php if ( $is_multiple ) {
-
-				$remove_label = _x( 'Remove', 'media item - remove', 'wp_backstage' ); ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<button 
-					title="<?php echo esc_attr( $remove_label ); ?>"
-					type="button" 
-					class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
-						<span class="screen-reader-text"><?php
-							echo esc_html( $remove_label );
-						?></span>
-					</button>
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'thumbnail',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-					<span class="wp-backstage-media-uploader__attachment-filename">
-						<span><?php echo esc_html( $attachment['filename'] ); ?></span>
-					</span>
-				</span>
-
-			<?php } elseif ( $attachment['type'] === 'video' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-video"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput
-					echo wp_video_shortcode(
-						array(
-							'src'     => esc_url( $attachment['url'] ),
-							'preload' => 'metadata',
-							'class'   => 'wp-video-shortcode wp-mediaelement-keep',
-						),
-					); ?>
-				</span>
-
-			<?php } elseif ( $attachment['type'] === 'audio' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-audio"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput
-					echo wp_audio_shortcode(
-						array(
-							'src'     => esc_url( $attachment['url'] ),
-							'preload' => 'metadata',
-							'class'   => 'wp-audio-shortcode wp-mediaelement-keep',
-						),
-					); ?>
-				</span>
-
-			<?php } elseif ( $attachment['type'] === 'image' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-image"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'medium',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-
-				</span>
-
-			<?php } else { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-file"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'medium',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-
-					<span class="wp-backstage-media-uploader__attachment-single-file-info">
-						<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
-							echo esc_html( $attachment['filename'] );
-						?></span>
-						<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
-							printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
-						?></span>
-					</span>
-
-				</span>
-
-			<?php } ?>
-
-		</span>
-
-	<?php }
-
-	/**
-	 * Ajax Render Media
-	 *
-	 * This method is responsible for providing the ajax response for the media uploader
-	 * preview.
-	 *
-	 * @since 3.3.0
-	 * @return void
-	 */
-	public function ajax_render_media() {
-
-		// phpcs:ignore WordPress.Security.NonceVerification
-		$posted_values = wp_unslash( $_POST );
-
-		$attachment_ids = ( isset( $posted_values['attachment_ids'] ) && is_array( $posted_values['attachment_ids'] ) ) ? $posted_values['attachment_ids'] : array();
-		$is_multiple    = ( isset( $posted_values['attachment_ids'] ) && ( $posted_values['is_multiple'] === 'true' ) );
-
-		foreach ( $attachment_ids as $attachment_id ) {
-			$this->render_media_item( $attachment_id, $is_multiple );
-		}
-
-		wp_die();
-	}
-
-	/**
 	 * Set Errors
 	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
@@ -2918,5 +2759,164 @@ class WP_Backstage {
 		</script>
 
 	<?php }
+
+	/**
+	 * Render Media Item
+	 *
+	 * This method is responsible for rendering a single media item for use in the media uploader
+	 * field. Taking into account whether the media uploader is rendering multiple items or not,
+	 * and then taking into account the mime type of the attachment, render a media element. If
+	 *
+	 * @since 3.3.0
+	 * @param int  $attachment_id The ID of the attachment to render.
+	 * @param bool $is_multiple Whether the media uploader allows multiple attachments or not.
+	 * @return void
+	 */
+	public function render_media_item( $attachment_id = 0, $is_multiple = false ) {
+
+			$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
+
+			<?php if ( $is_multiple ) {
+
+				$remove_label = _x( 'Remove', 'media item - remove', 'wp_backstage' ); ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<button 
+					title="<?php echo esc_attr( $remove_label ); ?>"
+					type="button" 
+					class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+						<span class="screen-reader-text"><?php
+							echo esc_html( $remove_label );
+						?></span>
+					</button>
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'thumbnail',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+					<span class="wp-backstage-media-uploader__attachment-filename">
+						<span><?php echo esc_html( $attachment['filename'] ); ?></span>
+					</span>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'video' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-video"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput
+					echo wp_video_shortcode(
+						array(
+							'src'     => esc_url( $attachment['url'] ),
+							'preload' => 'metadata',
+							'class'   => 'wp-video-shortcode wp-mediaelement-keep',
+						),
+					); ?>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'audio' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-audio"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput
+					echo wp_audio_shortcode(
+						array(
+							'src'     => esc_url( $attachment['url'] ),
+							'preload' => 'metadata',
+							'class'   => 'wp-audio-shortcode wp-mediaelement-keep',
+						),
+					); ?>
+				</span>
+
+			<?php } elseif ( $attachment['type'] === 'image' ) { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-image"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'medium',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+
+				</span>
+
+			<?php } else { ?>
+
+				<span 
+				class="wp-backstage-media-uploader__attachment-single-file"
+				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+					<?php echo wp_get_attachment_image(
+						absint( $attachment['id'] ),
+						'medium',
+						true,
+						array(
+							'title' => $attachment['filename'],
+						)
+					); ?>
+
+					<span class="wp-backstage-media-uploader__attachment-single-file-info">
+						<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
+							echo esc_html( $attachment['filename'] );
+						?></span>
+						<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
+							printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
+						?></span>
+					</span>
+
+				</span>
+
+			<?php } ?>
+
+		</span>
+
+	<?php }
+
+	/**
+	 * Ajax Render Media
+	 *
+	 * This method is responsible for providing the ajax response for the media uploader
+	 * preview.
+	 *
+	 * @since 3.3.0
+	 * @return void
+	 */
+	public function ajax_render_media() {
+
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$posted_values = wp_unslash( $_POST );
+
+		$attachment_ids = ( isset( $posted_values['attachment_ids'] ) && is_array( $posted_values['attachment_ids'] ) ) ? $posted_values['attachment_ids'] : array();
+		$is_multiple    = ( isset( $posted_values['attachment_ids'] ) && ( $posted_values['is_multiple'] === 'true' ) );
+
+		foreach ( $attachment_ids as $attachment_id ) {
+			$this->render_media_item( $attachment_id, $is_multiple );
+		}
+
+		wp_die();
+	}
 
 }

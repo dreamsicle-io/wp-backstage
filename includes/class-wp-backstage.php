@@ -553,17 +553,27 @@ class WP_Backstage {
 				display: block;
 			}
 
-			.wp-backstage-media-uploader__error,
-			.wp-backstage-media-uploader__loader {
+			.wp-backstage-media-uploader__error {
 				display: none;
 			}
 
-			.wp-backstage-media-uploader__error > span,
-			.wp-backstage-media-uploader__loader > span {
+			.wp-backstage-media-uploader__error > span{
 				display: inline-block;
 				vertical-align: middle;
 				margin: 0.5em 0;
 				padding: 2px;
+			}
+
+			.wp-backstage-media-uploader__loader {
+				display: none;
+			}
+
+			.wp-backstage-media-uploader__loader > span {
+				display: inline-block;
+				vertical-align: middle;
+				font-style: italic;
+				opacity: 0.75;
+				padding: 0.5em 0;
 			}
 
 			.wp-backstage-media-uploader__loader > img {
@@ -882,6 +892,7 @@ class WP_Backstage {
 				function renderMedia(uploader = null, attachmentIDs = []) {
 					const isMultiple = (uploader.getAttribute('data-media-uploader-multiple') === 'true');
 					hideError(uploader);
+					hideButtons(uploader);
 					showLoader(uploader);
 					$.ajax({
 						url: window.ajaxurl,
@@ -894,6 +905,7 @@ class WP_Backstage {
 						success: function(result) {
 							const previewList = uploader.wpBackstage.ui.previewList;
 							hideLoader(uploader);
+							showButtons(uploader);
 							$(previewList).append($(result));	
 							if (isMultiple)	{
 								initClones(uploader);
@@ -904,9 +916,20 @@ class WP_Backstage {
 						},
 						error: function() {
 							hideLoader(uploader);
+							showButtons(uploader);
 							showError(uploader);
 						},
 					});
+				}
+
+				function showButtons(uploader = null) {
+					const buttons = uploader.wpBackstage.ui.buttons;
+					buttons.style.display = 'block';
+				}
+
+				function hideButtons(uploader = null) {
+					const buttons = uploader.wpBackstage.ui.buttons;
+					buttons.style.display = 'none';
 				}
 
 				function showLoader(uploader = null) {
@@ -1140,6 +1163,7 @@ class WP_Backstage {
 					tryAgainButton.removeEventListener('click', handleTryAgainButtonClick);
 					hideLoader(uploader);
 					hideError(uploader);
+					showButtons(uploader);
 					removeClones(uploader);
 					if (legend) {
 						legend.removeEventListener('click', handleLegendClick);
@@ -1172,6 +1196,7 @@ class WP_Backstage {
 					const fieldId = uploader.getAttribute('data-media-uploader-id');
 					const input = uploader.querySelector('#' + fieldId);
 					const legend = uploader.querySelector('#' + fieldId + '_legend');
+					const buttons = uploader.querySelector('#' + fieldId + '_buttons');
 					const addButton = uploader.querySelector('#' + fieldId + '_button_add');
 					const addToButton = uploader.querySelector('#' + fieldId + '_button_add_to');
 					const replaceButton = uploader.querySelector('#' + fieldId + '_button_replace');
@@ -1208,6 +1233,7 @@ class WP_Backstage {
 						ui: {
 							input: input,
 							legend: legend,
+							buttons: buttons,
 							addButton: addButton,
 							addToButton: addToButton,
 							replaceButton: replaceButton,
@@ -1254,6 +1280,7 @@ class WP_Backstage {
 					const removeButton = uploader.wpBackstage.ui.removeButton;
 					hideLoader(uploader);
 					hideError(uploader);
+					showButtons(uploader);
 					enableButton(addButton);
 					disableButton(addToButton);
 					disableButton(replaceButton);

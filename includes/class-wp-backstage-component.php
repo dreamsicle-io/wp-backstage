@@ -2928,16 +2928,6 @@ class WP_Backstage_Component {
 			id="<?php printf( '%1$s_preview', esc_attr( $id ) ); ?>">
 
 				<span 
-				id="<?php printf( '%1$s_loader', esc_attr( $id ) ); ?>"
-				class="wp-backstage-media-uploader__loader notice inline notice-info">
-					<img 
-					src="/wp-admin/images/spinner.gif" 
-					alt="<?php echo esc_attr( $loader_text ); ?>" />
-					&nbsp;
-					<span><?php echo wp_kses( $loader_text, WP_Backstage::$kses_p ); ?></span>
-				</span>
-
-				<span 
 				id="<?php printf( '%1$s_error', esc_attr( $id ) ); ?>"
 				class="wp-backstage-media-uploader__error notice inline notice-error">
 					<span>
@@ -2997,6 +2987,16 @@ class WP_Backstage_Component {
 					echo esc_html( $remove_button_text );
 				?></button>
 
+			</span>
+
+			<span 
+			id="<?php printf( '%1$s_loader', esc_attr( $id ) ); ?>"
+			class="wp-backstage-media-uploader__loader">
+				<img 
+				src="/wp-admin/images/spinner.gif" 
+				alt="<?php echo esc_attr( $loader_text ); ?>" />
+				&nbsp;
+				<span><?php echo wp_kses( $loader_text, WP_Backstage::$kses_p ); ?></span>
 			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>

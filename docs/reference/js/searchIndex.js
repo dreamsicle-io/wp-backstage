@@ -1126,6 +1126,11 @@ Search.appendIndex(
             "summary": "Enqueue\u0020Admin\u0020Scripts",
             "url": "classes/WP-Backstage.html#method_enqueue_admin_scripts"
         },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_media_mixin_overrides_script\u0028\u0029",
+            "name": "inline_media_mixin_overrides_script",
+            "summary": "Inline\u0020Media\u0020Mixin\u0020Overrides\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_media_mixin_overrides_script"
+        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_thumbnail_column_style\u0028\u0029",
             "name": "inline_thumbnail_column_style",
             "summary": "Inline\u0020Thumbnail\u0020Column\u0020Style",
@@ -1210,6 +1215,16 @@ Search.appendIndex(
             "name": "inline_user_script",
             "summary": "Inline\u0020User\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_user_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Arender_media_item\u0028\u0029",
+            "name": "render_media_item",
+            "summary": "Render\u0020Media\u0020Item",
+            "url": "classes/WP-Backstage.html#method_render_media_item"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Aajax_render_media\u0028\u0029",
+            "name": "ajax_render_media",
+            "summary": "Ajax\u0020Render\u0020Media",
+            "url": "classes/WP-Backstage.html#method_ajax_render_media"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003A\u0024errors",
             "name": "errors",

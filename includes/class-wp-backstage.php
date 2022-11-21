@@ -43,41 +43,47 @@ class WP_Backstage {
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
 	 * @since  0.0.1
+	 * @since  3.4.0  Added support for `<span>` elements.
 	 * @var    array  $kses_p  KSES configuration for paragraph tags.
 	 */
 	public static $kses_p = array(
+		'span'   => array(
+			'id'    => array(),
+			'class' => array(),
+			'style' => array(),
+		),
 		'a'      => array(
-			'class'  => array(),
 			'id'     => array(),
+			'class'  => array(),
 			'style'  => array(),
 			'href'   => array(),
 			'title'  => array(),
 			'target' => array(),
 			'rel'    => array(),
 		),
-		'br'     => array(
-			'class' => array(),
-			'id'    => array(),
-			'style' => array(),
-		),
 		'em'     => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'strong' => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'code'   => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'i'      => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
+			'style' => array(),
+		),
+		'br'     => array(
+			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 	);
@@ -88,27 +94,38 @@ class WP_Backstage {
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
 	 * @since  0.0.1
+	 * @since  3.4.0  Added support for `<br>` and `<span>` elements.
 	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
 	public static $kses_label = array(
-		'em'     => array(
-			'class' => array(),
+		'span'   => array(
 			'id'    => array(),
+			'class' => array(),
+			'style' => array(),
+		),
+		'em'     => array(
+			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'strong' => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'code'   => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 		'i'      => array(
-			'class' => array(),
 			'id'    => array(),
+			'class' => array(),
+			'style' => array(),
+		),
+		'br'     => array(
+			'id'    => array(),
+			'class' => array(),
 			'style' => array(),
 		),
 	);
@@ -125,11 +142,6 @@ class WP_Backstage {
 				'key'  => 'classic-editor/classic-editor.php',
 				'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
 				'url'  => 'https://wordpress.org/plugins/classic-editor/',
-			),
-			array(
-				'key'  => 'classic-widgets/classic-widgets.php',
-				'name' => _x( 'Classic Widgets', 'plugin dependency - classic widgets', 'wp_backstage' ),
-				'url'  => 'https://wordpress.org/plugins/classic-widgets/',
 			),
 		);
 		$this->set_errors();
@@ -151,6 +163,7 @@ class WP_Backstage {
 	 * @link    https://developer.wordpress.org/plugins/hooks/filters/ WP Filters
 	 *
 	 * @since   0.0.1
+	 * @since   3.4.0 Adds filter to disable block editor for widgets.
 	 * @return  void
 	 */
 	public function init() {
@@ -160,13 +173,13 @@ class WP_Backstage {
 			return;
 		}
 
-		add_action( 'current_screen', array( $this, 'add_help_tab' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
+		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_mixin_overrides_script' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
@@ -189,6 +202,40 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
+		add_filter( 'use_widgets_block_editor', '__return_false' );
+	}
+
+	/**
+	 * Inline REST API Preview Code Editor Script
+	 *
+	 * This method inlines the CodeMirror settings for the RESP API preview, so that
+	 * it is available when the REST API preview script needs it.
+	 *
+	 * @since 3.4.0
+	 * @return void
+	 */
+	public function inline_rest_api_preview_code_editor_script() {
+
+		$rest_api_preview_code_editor_settings = wp_enqueue_code_editor(
+			array(
+				'type'       => 'text/json',
+				'codemirror' => array(
+					'lineWrapping' => false,
+					'readOnly'     => true,
+				),
+			)
+		);
+
+		if ( $rest_api_preview_code_editor_settings ) {
+
+			wp_add_inline_script(
+				'code-editor',
+				sprintf(
+					'window.wpBackstage.restAPIPreview.settings = %1$s;',
+					wp_json_encode( $rest_api_preview_code_editor_settings )
+				)
+			);
+		}
 	}
 
 	/**
@@ -296,62 +343,6 @@ class WP_Backstage {
 			}
 		}
 
-	}
-
-	/**
-	 * Render Help Tab
-	 *
-	 * Renders the WP Backstage help tab on all screens. See `WP_Backstage::add_help_tab`.
-	 *
-	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
-	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
-	 * @since   2.0.0
-	 * @return  void
-	 */
-	public function render_help_tab() {
-		$screen = get_current_screen(); ?>
-		<h3><?php echo esc_html( _x( 'Debug', 'help tab - debug title', 'wp_backstage' ) ); ?></h3>
-		<p><?php echo esc_html( _x( 'The following is useful debug information for WP Backstage development.', 'help tab - debug description', 'wp_backstage' ) ); ?></p>
-		<p><strong><?php echo esc_html( _x( 'Current Screen', 'help tab - debug current screen', 'wp_backstage' ) ); ?></strong></p>
-		<ul>
-			<li>
-				<strong><?php echo esc_html( _x( 'Parent Base:', 'help tab - debug current screen parent base label', 'wp_backstage' ) ); ?></strong>
-				&nbsp;
-				<code><?php echo esc_html( $screen->parent_base ); ?></code>
-			</li>
-			<li>
-				<strong><?php echo esc_html( _x( 'Base:', 'help tab - debug current screen base', 'wp_backstage' ) ); ?></strong>
-				&nbsp;
-				<code><?php echo esc_html( $screen->base ); ?></code>
-			</li>
-			<li>
-				<strong><?php echo esc_html( _x( 'ID:', 'help tab - debug current screen id', 'wp_backstage' ) ); ?></strong>
-				&nbsp;
-				<code><?php echo esc_html( $screen->id ); ?></code>
-			</li>
-		</ul>
-	<?php }
-
-	/**
-	 * Add Help Tab
-	 *
-	 * Registers the WP Backstage help tab. See `WP_Backstage::render_help_tab`.
-	 *
-	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
-	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
-	 * @since   2.0.0
-	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
-	 * @return  void
-	 */
-	public function add_help_tab( $screen = null ) {
-		$screen->add_help_tab(
-			array(
-				'id'       => 'wp_backstage',
-				'title'    => _x( 'WP Backstage', 'help tab title', 'wp_backstage' ),
-				'callback' => array( $this, 'render_help_tab' ),
-				'priority' => 50,
-			)
-		);
 	}
 
 	/**
@@ -859,6 +850,9 @@ class WP_Backstage {
 				mediaUploader: {},
 				editor: {},
 				codeEditor: {
+					settings: {},
+				},
+				restAPIPreview: {
 					settings: {},
 				},
 			};
@@ -1840,6 +1834,7 @@ class WP_Backstage {
 	 * Inline Post Type Script
 	 *
 	 * @since   2.0.0
+	 * @since   3.4.0  Adds support for block editor.
 	 * @return  void
 	 */
 	public function inline_post_type_script() { ?>
@@ -1932,6 +1927,16 @@ class WP_Backstage {
 					initAllMetaBoxes();
 					initAllMetaBoxSortables();
 					initAllScreenOptions();
+					if (window._wpLoadBlockEditor) {
+						window._wpLoadBlockEditor.then(handleBlockEditorLoad);
+					}
+				}
+
+				function handleBlockEditorLoad() {
+					setTimeout(function() {
+						window.wpBackstage.editor.refreshAll();
+						window.wpBackstage.codeEditor.refreshAll();
+					}, 500); 
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {

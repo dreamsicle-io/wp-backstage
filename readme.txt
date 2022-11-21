@@ -2,9 +2,9 @@
 
 Contributors: noahmason
 Tags: post-types, taxonomies, attachments, nav-menus, options, settings, widgets, meta-boxes, custom-fields
-Stable tag: 3.3.0
-Requires PHP: 7.0.0
-Requires at least: 5.0.0
+Stable tag: 3.4.0
+Requires PHP: 7.4.0
+Requires at least: 5.8.0
 Tested up to: 6.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

@@ -100,7 +100,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 				'max_width' => '50em',
 			)
 		);
-		$this->slug                 = 'user';
+
+		$this->slug = 'user';
 		$this->set_args( $args );
 		$this->screen_id = array( 'user-edit', 'profile', 'user' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
@@ -186,9 +187,155 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		add_action( 'pre_get_users', array( $this, 'manage_sorting' ), 10 );
 		add_filter( 'users_list_table_query_args', array( $this, 'manage_list_table_query_args' ), 10 );
 		add_action( 'manage_users_extra_tablenav', array( $this, 'render_table_filter_form' ), 10 );
+		add_action( 'rest_api_init', array( $this, 'register_api_meta' ), 10 );
+		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
+		add_filter( 'rest_prepare_user', array( $this, 'prepare_rest_user' ), 10, 3 );
 
 		parent::init();
 
+	}
+
+	/**
+	 * Prepare Rest User
+	 *
+	 * This method is responsible for preparing the REST API response for the user before it is
+	 * sent out to the consumer. "Links" are added for the fields that reference another content
+	 * type (posts, attachments, users, etc.), allowing for the content to be embedded if requested.
+	 *
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/ Extending the REST API
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/ Modifying Responses
+	 * @link https://developer.wordpress.org/reference/classes/wp_rest_response/add_link/ WP_REST_Response::add_link()
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The current API response.
+	 * @param WP_User          $user The user being requested.
+	 * @param WP_REST_Request  $request The current API request.
+	 * @return WP_REST_Response The filtered API response.
+	 */
+	public function prepare_rest_user( $response = null, $user = null, $request = null ) {
+
+		$fields = $this->get_fields_by( 'show_in_rest', true );
+
+		foreach ( $fields as $field ) {
+
+			$value = get_user_meta( $user->ID, $field['name'], true );
+
+			$response = $this->add_rest_api_field_link( $response, $field, $value );
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Register API Meta
+	 *
+	 * This method is responsible for registering the user meta fields with the REST API,
+	 * and generating the schema for each.
+	 *
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/ Extending the REST API
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/ Modifying Responses
+	 * @link https://developer.wordpress.org/reference/functions/register_post_meta/ register_post_meta()
+	 *
+	 * @since 3.4.0
+	 * @return void
+	 */
+	public function register_api_meta() {
+
+		$fields = $this->get_fields();
+
+		foreach ( $fields as $field ) {
+
+			$schema = $this->get_field_schema( $field );
+
+			$show_in_rest = false;
+			if ( $field['show_in_rest'] ) {
+				$show_in_rest = array(
+					'schema' => $schema,
+				);
+			}
+
+			register_meta(
+				$this->slug,
+				$field['name'],
+				array(
+					'description'       => $field['label'],
+					'type'              => $schema['type'],
+					'single'            => true,
+					'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+					'show_in_rest'      => $show_in_rest,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Add Help Tabs
+	 *
+	 * Registers user help tabs.
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 *
+	 * @since   3.4.0
+	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
+	 * @return  void
+	 */
+	public function add_help_tabs( $screen = null ) {
+
+		if ( $screen->id === 'user-edit' || $screen->id === 'profile' ) {
+
+			// REST API preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'user rest api preview help tab - title', 'wp_backstage' ),
+					'callback' => array( $this, 'render_rest_api_preview_help_tab' ),
+					'priority' => 90,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Render API Preview Help Tab
+	 *
+	 * @since 3.4.0
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_preview_help_tab( $screen = null, $args = array() ) {
+		//phpcs:ignore WordPress.Security.NonceVerification
+		$params         = wp_unslash( $_GET );
+		$user_id        = isset( $params['user_id'] ) ? absint( $params['user_id'] ) : 0;
+		$rest_namespace = 'wp/v2';
+		$rest_base      = 'users';
+
+		$path = sprintf( '/%1$s/%2$s/%3$d', $rest_namespace, $rest_base, $user_id );
+		if ( $screen->id === 'profile' ) {
+			$path = sprintf( '/%1$s/%2$s/me', $rest_namespace, $rest_base );
+		}
+
+		/**
+		 * Fires before the user REST API preview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_user_rest_api_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( _x( '<strong>REST API</strong> ― Preview the WordPress REST API response for this user. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records.', 'user rest api preview help tab - title', 'wp_backstage' ) ) );
+		$this->render_rest_api_preview( $path );
+
+		/**
+		 * Fires after the user REST API preview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_user_rest_api_preview_help_tab_after', $screen, $args );
 	}
 
 	/**
@@ -391,8 +538,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$fields = $this->get_fields();
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			$values = array();
 
 			foreach ( $fields as $field ) {
 

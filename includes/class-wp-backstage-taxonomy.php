@@ -250,6 +250,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Ensures a new taxonomy is only registered if adding a new one.
+	 * @since   3.4.0  Adds help tabs, term update messages, and registers meta with the REST API.
 	 * @return  void
 	 */
 	public function init() {
@@ -265,8 +266,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			return;
 		}
 
+		// Only perform these hooks and filters if the taxonomy is new.
 		if ( $this->new ) {
 			add_action( 'init', array( $this, 'register' ), 0 );
+			add_filter( 'term_updated_messages', array( $this, 'manage_term_updated_messages' ), 10 );
 		}
 		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
 		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
@@ -284,9 +287,390 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
 		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
+		add_action( 'rest_api_init', array( $this, 'register_api_meta' ), 10 );
+		add_filter( "rest_prepare_{$this->slug}", array( $this, 'prepare_rest_term' ), 10, 3 );
+		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
 
 		parent::init();
 
+	}
+
+	/**
+	 * Prepare Rest Term
+	 *
+	 * This method is responsible for preparing the REST API response for the term before it is
+	 * sent out to the consumer. "Links" are added for the fields that reference another content
+	 * type (posts, attachments, users, etc.), allowing for the content to be embedded if requested.
+	 *
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/ Extending the REST API
+	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/ Modifying Responses
+	 * @link https://developer.wordpress.org/reference/classes/wp_rest_response/add_link/ WP_REST_Response::add_link()
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The current API response.
+	 * @param WP_Term          $term The requested term.
+	 * @param WP_REST_Request  $request The current API request.
+	 * @return WP_REST_Response The filtered API response.
+	 */
+	public function prepare_rest_term( $response = null, $term = null, $request = null ) {
+
+		$fields = $this->get_fields_by( 'show_in_rest', true );
+
+		foreach ( $fields as $field ) {
+
+			$value = get_term_meta( $term->term_id, $field['name'], true );
+
+			$response = $this->add_rest_api_field_link( $response, $field, $value );
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Manage Term Updated Messages
+	 *
+	 * @since 3.4.0
+	 * @param array $messages An arry of currently set messages.
+	 * @return array $messages An array of filtered messages.
+	 */
+	public function manage_term_updated_messages( $messages = array() ) {
+		global $taxonomy;
+		$taxonomy_obj = get_taxonomy( $taxonomy );
+
+		$term_added = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( '%1$s added.', 'term updated messages - added', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+		$term_deleted = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( '%1$s deleted.', 'term updated messages - deleted', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+		$term_updated = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( '%1$s updated.', 'term updated messages - updated', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+		$term_not_added = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( '%1$s not added.', 'term updated messages - not added', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+		$term_not_updated = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( '%1$s not updated.', 'term updated messages - not updated', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+		$terms_deleted = sprintf(
+			/* translators: 1: taxonomy plural name. */
+			_x( '%1$s deleted.', 'term updated messages - deleted', 'wp_backstage' ),
+			$taxonomy_obj->labels->name
+		);
+
+		$messages[ $this->slug ] = array(
+			0 => $messages['_item'][0], // unused, messages start at index 1.
+			1 => $term_added,
+			2 => $term_deleted,
+			3 => $term_updated,
+			4 => $term_not_added,
+			5 => $term_not_updated,
+			6 => $terms_deleted,
+		);
+
+		return $messages;
+	}
+
+	/**
+	 * Add Help Tabs
+	 *
+	 * Registers the help tabs.
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 * @since   3.4.0
+	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
+	 * @return  void
+	 */
+	public function add_help_tabs( $screen = null ) {
+
+		if ( $screen->base === 'edit-tags' && $screen->taxonomy === $this->slug ) {
+
+			if ( $this->new ) {
+
+				$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+
+				// Overview help tab.
+				$screen->add_help_tab(
+					array(
+						'id'       => 'wp_backstage_overview',
+						'title'    => _x( 'Overview', 'taxonomy overview help tab - title', 'wp_backstage' ),
+						'priority' => 90,
+						'callback' => array( $this, 'render_overview_help_tab' ),
+					)
+				);
+				// Adding terms help tab.
+				$screen->add_help_tab(
+					array(
+						'id'       => 'wp_backstage_adding_terms',
+						'title'    => sprintf(
+							/* translators: 1: taxonomy plural name. */
+							_x( 'Adding %1$s', 'taxonomy adding terms help tab - title', 'wp_backstage' ),
+							$taxonomy_obj->labels->name
+						),
+						'priority' => 90,
+						'callback' => array( $this, 'render_adding_terms_help_tab' ),
+					)
+				);
+
+			}
+		} elseif ( $screen->base === 'term' && $screen->taxonomy === $this->slug ) {
+
+			// REST API preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'taxonomy rest api help tab - title', 'wp_backstage' ),
+					'priority' => 90,
+					'callback' => array( $this, 'render_rest_api_preview_help_tab' ),
+				)
+			);
+		}
+	}
+
+	/**
+	 * Render Adding Terms Help Tab
+	 *
+	 * @since 3.4.0
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_adding_terms_help_tab( $screen = null, $args = array() ) {
+		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+		$bullets      = array();
+
+		// Explain the name field.
+		$bullets[] = _x( '<strong>Name</strong> — The name is how it appears on your site.', '', 'wp_backstage' );
+		// Explain the slug field.
+		$bullets[] = _x( '<strong>Slug</strong> — The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', '', 'wp_backstage' );
+		// If the taxonomy is hierarchical, explain parent selection.
+		if ( $taxonomy_obj->hierarchical ) {
+			$bullets[] = sprintf(
+				/* translators: 1: taxonomy plural name, 2: taxonomy singular name. */
+				_x( '<strong>Parent</strong> — %1$s can have a hierarchy. You can create a more general parent %2$s, and under that optional child %1$s for more refinement. To create a child %2$s, just choose another %2$s from the Parent dropdown.', '', 'wp_backstage' ),
+				$taxonomy_obj->labels->name,
+				$taxonomy_obj->labels->singular_name
+			);
+		}
+		// Explain the description.
+		$bullets[] = _x( '<strong>Description</strong> — The description is not prominent by default; however, some themes may display it.', '', 'wp_backstage' );
+		// field bullets.
+		$fields = $this->get_fields();
+		foreach ( $fields as $field ) {
+			$field     = wp_parse_args( $field, $this->default_field_args );
+			$bullets[] = sprintf(
+				'<strong>%1$s</strong> — %2$s',
+				$field['label'],
+				! empty( $field['help'] ) ? $field['help'] : $field['description']
+			);
+		}
+
+		$content = sprintf(
+			/* translators: 1: taxonomy singular name. */
+			_x( 'When adding a new %1$s on this screen, you\'ll fill in the following fields:', 'taxonomy adding terms help tab - overview', 'wp_backstage' ),
+			$taxonomy_obj->labels->singular_name
+		);
+
+		$screen_options = sprintf(
+			/* translators: 1: taxonomy plural name. */
+			_x( 'You can change the display of this screen using the Screen Options tab to set how many %1$s are displayed per screen and to display/hide columns in the table.', 'taxonomy adding terms help tab - screen options', 'wp_backstage' ),
+			$taxonomy_obj->labels->name
+		);
+
+		/**
+		 * Fires before the taxonomy adding terms help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_adding_terms_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( $content ) );
+
+		/**
+		 * Filters the bullets printed in the taxonomy adding terms help tab.
+		 *
+		 * @since   3.4.0
+		 * @param   array      $bullets  An array of bullet strings.
+		 * @param   WP_Screen  $screen   the current instance of the WP_Screen object.
+		 * @param   array      $args     An array of help tab arguments.
+		 * @return  array      The filtered array of bullet strings.
+		 */
+		$bullets = apply_filters( 'wp_backstage_taxonomy_adding_terms_help_tab_bullets', $bullets, $screen, $args );
+
+		if ( ! empty( $bullets ) ) { ?>
+			<ul>
+				<?php foreach ( $bullets as $bullet ) { ?>
+					<li><?php echo wp_kses( $bullet, WP_Backstage::$kses_p ); ?></li>
+				<?php } ?>
+			</ul>
+		<?php }
+
+		echo wp_kses_post( wpautop( $screen_options ) );
+
+		/**
+		 * Fires after the taxonomy adding terms help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_adding_terms_help_tab_after', $screen, $args );
+	}
+
+	/**
+	 * Render Overview Help Tab
+	 *
+	 * @since 3.4.0
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_overview_help_tab( $screen = null, $args = array() ) {
+		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+
+		$post_type_links = array();
+		if ( isset( $taxonomy_obj->object_type ) && ! empty( $taxonomy_obj->object_type ) ) {
+			foreach ( $taxonomy_obj->object_type as $post_type ) {
+				$post_type_obj      = get_post_type_object( $post_type );
+				$edit_post_type_url = add_query_arg(
+					array(
+						'post_type' => $post_type_obj->name,
+					),
+					admin_url( '/edit.php' )
+				);
+				$post_type_links[]  = sprintf(
+					'<a href="%1$s">%2$s</a>',
+					$edit_post_type_url,
+					$post_type_obj->labels->name,
+				);
+			}
+		}
+
+		$content = sprintf(
+			/* translators: 1: taxonomy plural name. */
+			_x( 'You can use %1$s to define sections of your site and group related content.', 'taxonomy overview help tab - overview', 'wp_backstage' ),
+			$taxonomy_obj->labels->name
+		);
+
+		if ( ! empty( $post_type_links ) ) {
+			if ( ! empty( $content ) ) {
+				$content .= '<br/><br/>';
+			}
+			$content .= sprintf(
+				/* translators: 1: taxonomy plural name, 2: post type links. */
+				_x( '%1$s can be used to organize items from their related post types: %2$s', 'taxonomy overview help tab - post types', 'wp_backstage' ),
+				$taxonomy_obj->labels->name,
+				implode( ', ', $post_type_links )
+			);
+		}
+
+		/**
+		 * Fires before the taxonomy overview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_overview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( $content ) );
+
+		/**
+		 * Fires after the taxonomy overview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_overview_help_tab_after', $screen, $args );
+	}
+
+	/**
+	 * Render REST API Preview Help Tab
+	 *
+	 * @since 3.4.0
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_preview_help_tab( $screen = null, $args = array() ) {
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$params       = wp_unslash( $_GET );
+		$term_id      = isset( $params['tag_ID'] ) ? absint( $params['tag_ID'] ) : 0;
+		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+		$path         = sprintf( '/%1$s/%2$s/%3$d', $taxonomy_obj->rest_namespace, $taxonomy_obj->rest_base, $term_id );
+
+		/**
+		 * Fires before the taxonomy REST API preview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_rest_api_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( _x( '<strong>REST API</strong> ― Preview the WordPress REST API response for this term. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records.', 'taxonomy rest api preview help tab - title', 'wp_backstage' ) ) );
+		$this->render_rest_api_preview( $path );
+
+		/**
+		 * Fires after the taxonomy REST API preview help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_rest_api_preview_help_tab_after', $screen, $args );
+	}
+
+	/**
+	 * Register API Meta
+	 *
+	 * This method is responsible for registering the term meta fields with the REST API,
+	 * and generating the schema for each.
+	 *
+	 * @since 3.4.0
+	 * @return void
+	 */
+	public function register_api_meta() {
+
+		$fields = $this->get_fields();
+
+		foreach ( $fields as $field ) {
+
+			$schema = $this->get_field_schema( $field );
+
+			$show_in_rest = false;
+			if ( $field['show_in_rest'] ) {
+				$show_in_rest = array(
+					'schema' => $schema,
+				);
+			}
+
+			register_term_meta(
+				$this->slug,
+				$field['name'],
+				array(
+					'description'       => $field['label'],
+					'type'              => $schema['type'],
+					'single'            => true,
+					'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+					'show_in_rest'      => $show_in_rest,
+				)
+			);
+		}
 	}
 
 	/**
@@ -385,92 +769,92 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			'menu_name'                  => $this->args['plural_name'],
 			'all_items'                  => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'All %1$s', 'taxonomy - all items', 'wp_backstage' ),
+				_x( 'All %1$s', 'taxonomy labels - all items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'parent_item'                => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'Parent %1$s', 'taxonomy - parent item', 'wp_backstage' ),
+				_x( 'Parent %1$s', 'taxonomy labels - parent item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'parent_item_colon'          => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'Parent %1$s:', 'taxonomy - parent item colon', 'wp_backstage' ),
+				_x( 'Parent %1$s:', 'taxonomy labels - parent item colon', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'new_item_name'              => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'New %1$s Name', 'taxonomy - new item name', 'wp_backstage' ),
+				_x( 'New %1$s Name', 'taxonomy labels - new item name', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'add_new_item'               => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'Add New %1$s', 'taxonomy - add new item', 'wp_backstage' ),
+				_x( 'Add New %1$s', 'taxonomy labels - add new item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'edit_item'                  => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'Edit %1$s', 'taxonomy - edit item', 'wp_backstage' ),
+				_x( 'Edit %1$s', 'taxonomy labels - edit item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'update_item'                => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'Update %1$s', 'taxonomy - update item', 'wp_backstage' ),
+				_x( 'Update %1$s', 'taxonomy labels - update item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'view_item'                  => sprintf(
 				/* translators: 1: Taxonomy singular name. */
-				_x( 'View %1$s', 'taxonomy - view item', 'wp_backstage' ),
+				_x( 'View %1$s', 'taxonomy labels - view item', 'wp_backstage' ),
 				$this->args['singular_name']
 			),
 			'separate_items_with_commas' => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Separate %1$s with commas', 'taxonomy - separate items with commas', 'wp_backstage' ),
+				_x( 'Separate %1$s with commas', 'taxonomy labels - separate items with commas', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'add_or_remove_items'        => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Add or remove %1$s', 'taxonomy - add or remove items', 'wp_backstage' ),
+				_x( 'Add or remove %1$s', 'taxonomy labels - add or remove items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'choose_from_most_used'      => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Choose from the most used %1$s', 'taxonomy - choose from most used', 'wp_backstage' ),
+				_x( 'Choose from the most used %1$s', 'taxonomy labels - choose from most used', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'popular_items'              => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Popular %1$s', 'taxonomy - popular items', 'wp_backstage' ),
+				_x( 'Popular %1$s', 'taxonomy labels - popular items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'search_items'               => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Search %1$s', 'taxonomy - search items', 'wp_backstage' ),
+				_x( 'Search %1$s', 'taxonomy labels - search items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'not_found'                  => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'No %1$s Found', 'taxonomy - not found', 'wp_backstage' ),
+				_x( 'No %1$s Found', 'taxonomy labels - not found', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'no_terms'                   => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'No %1$s', 'taxonomy - no terms', 'wp_backstage' ),
+				_x( 'No %1$s', 'taxonomy labels - no terms', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'items_list'                 => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( '%1$s list', 'taxonomy - items list', 'wp_backstage' ),
+				_x( '%1$s list', 'taxonomy labels - items list', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'items_list_navigation'      => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( '%1$s list navigation', 'taxonomy - items list navigation', 'wp_backstage' ),
+				_x( '%1$s list navigation', 'taxonomy labels - items list navigation', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 			'back_to_items'              => sprintf(
 				/* translators: 1: Taxonomy plural name. */
-				_x( 'Back to %1$s', 'taxonomy - back to items', 'wp_backstage' ),
+				_x( '&larr; Go to %1$s', 'taxonomy labels - back to items', 'wp_backstage' ),
 				$this->args['plural_name']
 			),
 		);
@@ -739,8 +1123,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$fields = $this->get_fields();
 
 		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			$values = array();
 
 			foreach ( $fields as $field ) {
 

@@ -56,14 +56,6 @@ class WP_Backstage_Component {
 	protected $screen_id = '';
 
 	/**
-	 * Code Editors
-	 *
-	 * @since  0.0.1
-	 * @var    array  $code_editors  An array of this instance's code editors.
-	 */
-	protected $code_editors = array();
-
-	/**
 	 * Countries
 	 *
 	 * @since  0.0.1
@@ -83,21 +75,24 @@ class WP_Backstage_Component {
 	 * Default Field Args
 	 *
 	 * @since  0.0.1
+	 * @since  3.4.0  Added `show_in_rest` argument.
 	 * @var    array  $default_field_args  An array of default field args.
 	 */
 	protected $default_field_args = array(
-		'id'          => '',
-		'type'        => 'text',
-		'name'        => '',
-		'label'       => '',
-		'title'       => '',
-		'value'       => null,
-		'disabled'    => false,
-		'description' => '',
-		'show_label'  => true,
-		'options'     => array(),
-		'input_attrs' => array(),
-		'args'        => array(),
+		'id'           => '',
+		'type'         => 'text',
+		'name'         => '',
+		'label'        => '',
+		'title'        => '',
+		'value'        => null,
+		'disabled'     => false,
+		'description'  => '',
+		'help'         => '',
+		'show_label'   => true,
+		'show_in_rest' => false,
+		'options'      => array(),
+		'input_attrs'  => array(),
+		'args'         => array(),
 	);
 
 	/**
@@ -212,7 +207,11 @@ class WP_Backstage_Component {
 	 */
 	protected $default_select_posts_args = array(
 		'option_none_label' => '',
-		'query'             => array(),
+		'query'             => array(
+			'posts_per_page' => -1,
+			'post_type'      => 'page',
+			'post_status'    => 'any',
+		),
 	);
 
 	/**
@@ -223,7 +222,10 @@ class WP_Backstage_Component {
 	 */
 	protected $default_select_users_args = array(
 		'option_none_label' => '',
-		'query'             => array(),
+		'query'             => array(
+			'number' => -1,
+			'count'  => false,
+		),
 	);
 
 	/**
@@ -881,7 +883,6 @@ class WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1000,6 +1001,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Sanitizes more strictly to support strange behavior on menu items.
+	 * @since   3.4.0  Maps using `sanitize_text_field()` instead of `esc_attr()`.
 	 * @param   array $values  The values to sanitize. Expects an array of strings.
 	 * @return  array  An array of values.
 	 */
@@ -1008,7 +1010,7 @@ class WP_Backstage_Component {
 		if ( is_array( $values ) && ! empty( $values ) ) {
 			foreach ( $values as $key => $value ) {
 				if ( is_numeric( $key ) ) {
-					$new_values[] = esc_attr( $value );
+					$new_values[] = sanitize_text_field( $value );
 				}
 			}
 		}
@@ -1023,12 +1025,13 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Parses against default address values.
+	 * @since   3.4.0  Maps values with `sanitize_text_field()` instead of `esc_attr()`.
 	 * @param   array $value  The value to sanitize. Expects an array of address `key => value` pairs.
 	 * @return  array  An array of address key => value pairs.
 	 */
 	public function sanitize_address( $value = array() ) {
 		$value = wp_parse_args( $value, $this->default_address_values );
-		return array_map( 'esc_attr', $value );
+		return array_map( 'sanitize_text_field', $value );
 	}
 
 	/**
@@ -1219,6 +1222,79 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Get Field Schema
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/register_meta/ register_meta()
+	 * @link https://make.wordpress.org/core/2019/10/03/wp-5-3-supports-object-and-array-meta-types-in-the-rest-api/
+	 *
+	 * @since 3.4.0
+	 * @param array $field An array of field arguments.
+	 * @return array An array of schema arguments.
+	 */
+	protected function get_field_schema( $field = array() ) {
+		switch ( $field['type'] ) {
+			case 'checkbox_set':
+				return array(
+					'type'  => 'array',
+					'items' => array(
+						'type' => 'string',
+					),
+				);
+			case 'address':
+				return array(
+					'type'       => 'object',
+					'properties' => array(
+						'country'   => array(
+							'type' => 'string',
+						),
+						'address_1' => array(
+							'type' => 'string',
+						),
+						'address_2' => array(
+							'type' => 'string',
+						),
+						'city'      => array(
+							'type' => 'string',
+						),
+						'state'     => array(
+							'type' => 'string',
+						),
+						'zip'       => array(
+							'type' => 'string',
+						),
+					),
+				);
+			case 'media':
+				return array(
+					'type'  => 'array',
+					'items' => array(
+						'type' => 'integer',
+					),
+				);
+			case 'number':
+				return array(
+					'type' => 'integer',
+				);
+			case 'select_posts':
+				return array(
+					'type' => 'integer',
+				);
+			case 'select_users':
+				return array(
+					'type' => 'integer',
+				);
+			case 'checkbox':
+				return array(
+					'type' => 'boolean',
+				);
+			default:
+				return array(
+					'type' => 'string',
+				);
+		}
+	}
+
+	/**
 	 * Get Fields
 	 *
 	 * @since   0.0.1
@@ -1269,6 +1345,49 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Get Fields By Query
+	 *
+	 * Get all fields that matches the passed query array.
+	 *
+	 * @since   3.4.0
+	 * @param   array $query  An array of key values to check against.
+	 * @param   int   $number  the number of fields to return.
+	 * @return  array   an array of field arg arrays if found, or an empty array.
+	 */
+	protected function get_fields_by_query( $query = array(), $number = 0 ) {
+
+		$fields = $this->get_fields();
+		$result = array();
+
+		$i = 0;
+
+		foreach ( $fields as $field ) {
+
+			$matches_query = true;
+
+			foreach ( $query as $key => $value ) {
+				if ( ! isset( $field[ $key ] ) || ( $field[ $key ] !== $value ) ) {
+					$matches_query = false;
+					break;
+				}
+			}
+
+			if ( $matches_query ) {
+				$result[] = $field;
+			}
+
+			if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
+				break;
+			}
+
+			$i++;
+		}
+
+		return $result;
+
+	}
+
+	/**
 	 * Get Field By
 	 *
 	 * Get the first field that matches the passed `$key` and `$value`.
@@ -1291,6 +1410,75 @@ class WP_Backstage_Component {
 
 		return $result;
 
+	}
+
+	/**
+	 * Add REST API Field Link
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The response object to manipulate.
+	 * @param array            $field An array of field arguments.
+	 * @param mixed            $value The field's value.
+	 * @return WP_REST_Response The augmented response object.
+	 */
+	public function add_rest_api_field_link( $response = null, $field = array(), $value = null ) {
+
+		$link_base = 'wpBackstage';
+		$link_key  = "{$link_base}:{$field['name']}";
+
+		switch ( $field['type'] ) {
+			case 'media':
+				$attachment_post_type_obj = get_post_type_object( 'attachment' );
+				$attachment_ids           = is_array( $value ) ? array_map( 'absint', $value ) : array();
+				if ( is_array( $attachment_ids ) && ! empty( $attachment_ids ) ) {
+					foreach ( $attachment_ids as $attachment_id ) {
+						if ( $attachment_id > 0 ) {
+							$attachment_path = sprintf( '/%1$s/%2$s/%3$d', $attachment_post_type_obj->rest_namespace, $attachment_post_type_obj->rest_base, $attachment_id );
+							$response->add_link(
+								$link_key,
+								rest_url( $attachment_path ),
+								array(
+									'embeddable' => true,
+								)
+							);
+						}
+					}
+				}
+				break;
+			case 'select_posts':
+				$post_id = absint( $value );
+				if ( $post_id > 0 ) {
+					$post_type     = get_post_type( $post_id );
+					$post_type_obj = get_post_type_object( $post_type );
+					$post_path     = sprintf( '/%1$s/%2$s/%3$d', $post_type_obj->rest_namespace, $post_type_obj->rest_base, $post_id );
+					$response->add_link(
+						$link_key,
+						rest_url( $post_path ),
+						array(
+							'postType'   => $post_type,
+							'embeddable' => true,
+						)
+					);
+				}
+				break;
+			case 'select_users':
+				$user_id = absint( $value );
+				if ( $user_id > 0 ) {
+					$user_namespace = 'wp/v2';
+					$user_base      = 'users';
+					$user_path      = sprintf( '/%1$s/%2$s/%3$d', $user_namespace, $user_base, $user_id );
+					$response->add_link(
+						$link_key,
+						rest_url( $user_path ),
+						array(
+							'embeddable' => true,
+						)
+					);
+				}
+				break;
+		}
+
+		return $response;
 	}
 
 	/**
@@ -1386,14 +1574,7 @@ class WP_Backstage_Component {
 				switch ( $field['type'] ) {
 					case 'select_posts':
 						$field_args = wp_parse_args( $field['args'], $this->default_select_posts_args );
-						$query      = wp_parse_args(
-							$field_args['query'],
-							array(
-								'posts_per_page' => -1,
-								'post_type'      => 'page',
-								'post_status'    => 'any',
-							)
-						);
+						$query      = wp_parse_args( $field_args['query'], $this->default_select_posts_args['query'] );
 
 						$post_type_object = get_post_type_object( $query['post_type'] );
 
@@ -1419,13 +1600,7 @@ class WP_Backstage_Component {
 						break;
 					case 'select_users':
 						$field_args = wp_parse_args( $field['args'], $this->default_select_users_args );
-						$query      = wp_parse_args(
-							$field_args['query'],
-							array(
-								'number' => -1,
-								'count'  => false,
-							)
-						);
+						$query      = wp_parse_args( $field_args['query'], $this->default_select_users_args['query'] );
 
 						$users = get_users( $query );
 
@@ -2066,7 +2241,7 @@ class WP_Backstage_Component {
 			}
 			printf(
 				'<option value="%1$s" %2$s>%1$s</option>',
-				esc_attr( $option ),
+				esc_html( $option ),
 				selected( $option, $selected )
 			);
 		}
@@ -2136,23 +2311,27 @@ class WP_Backstage_Component {
 
 						<br/>
 
-						<select 
-						name="<?php echo esc_attr( $select_name ); ?>" 
-						id="<?php echo esc_attr( $select_id ); ?>" 
-						aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
-						<?php disabled( true, $field['disabled'] ); ?>
-						<?php
-						// phpcs:ignore WordPress.Security.EscapeOutput
-						echo $this->format_attrs( $field['input_attrs'] );
-						?>>
+						<span>
 
-							<?php $this->render_time_options( $piece['number_options'], $selected ); ?>
+							<select 
+							name="<?php echo esc_attr( $select_name ); ?>" 
+							id="<?php echo esc_attr( $select_id ); ?>" 
+							aria-describedby="<?php printf( '%1$s_description', esc_attr( $id ) ); ?>"
+							<?php disabled( true, $field['disabled'] ); ?>
+							<?php
+							// phpcs:ignore WordPress.Security.EscapeOutput
+							echo $this->format_attrs( $field['input_attrs'] );
+							?>>
 
-						</select>
+								<?php $this->render_time_options( $piece['number_options'], $selected ); ?>
 
-						<?php if ( ( $i + 1 ) < count( $this->time_pieces ) ) { ?>
-							<span class="sep" style="display:inline-block">:</span>
-						<?php } ?>
+							</select>
+
+							<?php if ( ( $i + 1 ) < count( $this->time_pieces ) ) { ?>
+								<span class="sep" style="display:inline-block;vertical-align:middle;">:</span>
+							<?php } ?>
+
+						</span>
 
 					</span>
 
@@ -3348,14 +3527,7 @@ class WP_Backstage_Component {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args  = wp_parse_args( $field['args'], $this->default_select_posts_args );
-		$query = wp_parse_args(
-			$args['query'],
-			array(
-				'posts_per_page' => -1,
-				'post_type'      => 'page',
-				'post_status'    => 'any',
-			)
-		);
+		$query = wp_parse_args( $args['query'], $this->default_select_posts_args['query'] );
 
 		$default_option_none_label = _x( 'Select', 'select posts field - default option none label', 'wp_backstage' );
 		$option_none_label         = ! empty( $args['option_none_label'] ) ? $args['option_none_label'] : $default_option_none_label;
@@ -3448,13 +3620,7 @@ class WP_Backstage_Component {
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
 		$args  = wp_parse_args( $field['args'], $this->default_select_users_args );
-		$query = wp_parse_args(
-			$args['query'],
-			array(
-				'number' => -1,
-				'count'  => false,
-			)
-		);
+		$query = wp_parse_args( $args['query'], $this->default_select_users_args['query'] );
 
 		$default_option_none_label = _x( 'Select', 'select users field - default option none label', 'wp_backstage' );
 		$option_none_label         = ! empty( $args['option_none_label'] ) ? $args['option_none_label'] : $default_option_none_label;
@@ -3535,6 +3701,189 @@ class WP_Backstage_Component {
 
 		</span>
 
+	<?php }
+
+	/**
+	 * Render REST API Preview
+	 *
+	 * This method renders a REST API preview for a given path. Code mirror is used to initialize a
+	 * json editor area that is read only. Filters for `context` and `_embed` are provided for
+	 * through api response checks.
+	 *
+	 * @since 3.4.0
+	 * @param string $path An API path to fetch.
+	 * @return void
+	 */
+	public function render_rest_api_preview( $path = '' ) {
+		$loader_text       = _x( 'Loading...', 'rest api preview - loading', 'wp_backstage' );
+		$instructions_text = _x( '<strong>No data fetched yet</strong> ― Click the fetch button to get started.', 'rest api preview - instructions', 'wp_backstage' );
+		$full_url          = get_rest_url( null, $path ); ?>
+		<div 
+		id="wp_backstage_rest_api_preview"
+		data-api-path="<?php echo esc_url( $path ); ?>">
+			<form id="wp_backstage_rest_api_preview_form" style="margin-bottom: 1em;">
+				<select name="wp_backstage_rest_api_preview_context" title="context" style="margin-right:15px;">
+					<option value="view" selected>view</option>
+					<option value="embed">embed</option>
+					<option value="edit">edit</option>
+				</select>
+				<label>
+					<input type="checkbox" name="wp_backstage_rest_api_preview_embed" value="true" />
+					<span>_embed</span>
+				</label>
+				<button type="sumbit" class="button"><?php
+					echo esc_html( _x( 'Fetch', 'rest api preview - form submit', 'wp_backstage' ) );
+				?></button>
+			</form>
+			<input 
+			readonly 
+			type="url" 
+			value="<?php echo esc_url( $full_url ); ?>" 
+			style="background-color:#ffffff;display:block;width:100%;border-radius:4px 4px 0 0;margin:0;border:1px solid #c3c4c7;border-bottom:none;box-sizing:border-box;" />
+			<div style="position:relative;">
+				<textarea readonly id="wp_backstage_rest_api_preview_code"></textarea>
+				<div id="wp_backstage_rest_api_preview_loader" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;border:1px solid #c3c4c7;box-sizing:border-box;z-index:10;">
+					<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+						<img 
+						src="/wp-admin/images/spinner.gif" 
+						alt="<?php echo esc_attr( $loader_text ); ?>"
+						style="display:inline-block;vertical-align:middle" />
+						&nbsp;
+						<span style="display:inline-block;vertical-align:middle;"><?php
+							echo wp_kses( $loader_text, WP_Backstage::$kses_p );
+						?></span>
+					</div>
+				</div>
+				<div id="wp_backstage_rest_api_preview_instructions" style="position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;border:1px solid #c3c4c7;box-sizing:border-box;z-index:10;">
+					<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+						<span style="display:inline-block;vertical-align:middle;"><?php
+							echo wp_kses( $instructions_text, WP_Backstage::$kses_p );
+						?></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function() {
+
+				var refreshTriggerTimer = null;
+
+				function init() {
+					const form = document.getElementById('wp_backstage_rest_api_preview_form');
+					const helpButton = document.getElementById('contextual-help-link');
+					const panelButton = document.querySelector('#tab-link-wp_backstage_rest_api_preview > a');
+					const settings = window.wpBackstage.restAPIPreview.settings;
+					// Add event listeners.
+					panelButton.addEventListener('click', handleRefreshtrigger);
+					helpButton.addEventListener('click', handleRefreshtrigger);
+					form.addEventListener('submit', handleFormSubmit);
+					// Init CodeMirror.
+					window.wp.codeEditor.initialize('wp_backstage_rest_api_preview_code', settings);
+				}
+
+				function handleRefreshtrigger(e = null) {
+					if (refreshTriggerTimer) window.clearTimeout(refreshTriggerTimer);
+					refreshTriggerTimer = setTimeout(function() {
+						const panel = document.getElementById('tab-panel-wp_backstage_rest_api_preview');
+						if (panel.classList.contains('active')) {
+							refresh();
+						}
+					}, 250);
+				}
+
+				function setValue(value = '') {
+					codeMirrorInst = getCodeMirrorInstance();
+					codeMirrorInst.setValue(value);
+					codeMirrorInst.clearHistory();
+				}
+
+				function showInstructions() {
+					const instructions = document.getElementById('wp_backstage_rest_api_preview_instructions');
+					instructions.style.display = 'block';
+				}
+
+				function hideInstructions() {
+					const instructions = document.getElementById('wp_backstage_rest_api_preview_instructions');
+					instructions.style.display = 'none';
+				}
+
+				function showLoader() {
+					const loader = document.getElementById('wp_backstage_rest_api_preview_loader');
+					loader.style.display = 'block';
+				}
+
+				function hideLoader() {
+					const loader = document.getElementById('wp_backstage_rest_api_preview_loader');
+					loader.style.display = 'none';
+				}
+
+				function refresh() {
+					codeMirrorInst = getCodeMirrorInstance();
+					codeMirrorInst.refresh();
+				}
+
+				function handleFormSubmit(e = null) {
+					e.preventDefault();
+					fetchData();
+				}
+
+				function getCodeMirrorInstance() {
+					const preview = document.getElementById('wp_backstage_rest_api_preview');
+					const codeMirrorEl = preview.querySelector('.CodeMirror');
+					return codeMirrorEl.CodeMirror;
+				}
+
+				function destroy() {
+					const form = document.getElementById('wp_backstage_rest_api_preview_form');
+					const code = document.getElementById('wp_backstage_rest_api_preview_code');
+					const helpButton = document.getElementById('contextual-help-link');
+					const panelButton = document.querySelector('#tab-link-wp_backstage_rest_api_preview_help > a');
+					// Clear the value.
+					setValue('');
+					// Remove event listeners.
+					panelButton.addEventListener('click', handleRefreshtrigger);
+					helpButton.addEventListener('click', handleRefreshtrigger);
+					form.removeEventListener('submit', handleFormSubmit);
+					// Destory CodeMirror.
+					const codeMirrorInst = getCodeMirrorInstance();
+					codeMirrorInst.destroy();
+				}
+
+				function fetchData() {
+					const preview = document.getElementById('wp_backstage_rest_api_preview');
+					const form = document.getElementById('wp_backstage_rest_api_preview_form');
+					const path = preview.getAttribute('data-api-path');
+					formData = new FormData(form);
+					hideInstructions();
+					showLoader();
+					window.wp.apiRequest({
+						path: path,
+						type: 'GET',
+						data: {
+							context: formData.get('wp_backstage_rest_api_preview_context'),
+							_embed: (formData.get('wp_backstage_rest_api_preview_embed') === 'true'),
+						},
+					})
+					.then(function(data = null) {
+						setValue(JSON.stringify(data, null, 2));
+						hideLoader();
+					})
+					.fail(function(request = null, statusText = '') {
+						var message = statusText;
+						if (request.responseJSON && request.responseJSON.message) {
+							message = request.responseJSON.message;
+						}
+						console.error(message);
+						setValue(JSON.stringify(request.responseJSON, null, 2));
+						hideLoader();
+					});
+				}
+
+				document.addEventListener('DOMContentLoaded', function() {
+					init();
+				});
+			})();
+		</script>
 	<?php }
 
 }

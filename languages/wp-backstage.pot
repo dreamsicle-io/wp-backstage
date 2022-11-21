@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-21T17:53:57+00:00\n"
+"POT-Creation-Date: 2022-11-21T17:55:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -2353,18 +2353,18 @@ msgid "Classic Editor"
 msgstr ""
 
 #. translators: 1: plugin name link.
-#: includes/class-wp-backstage.php:260
+#: includes/class-wp-backstage.php:261
 msgctxt "plugin dependency message"
 msgid "[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated."
 msgstr ""
 
 #. translators: 1: error message.
-#: includes/class-wp-backstage.php:327
+#: includes/class-wp-backstage.php:328
 msgctxt "plugin error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage.php:2839
+#: includes/class-wp-backstage.php:2840
 msgctxt "media item - remove"
 msgid "Remove"
 msgstr ""

@@ -3711,6 +3711,7 @@ class WP_Backstage_Component {
 	 * through api response checks.
 	 *
 	 * @since 3.4.0
+	 * @since 3.4.2 Fixes bug where event listeners were being added instead of removed on destroy.
 	 * @param string $path An API path to fetch.
 	 * @return void
 	 */
@@ -3841,8 +3842,8 @@ class WP_Backstage_Component {
 					// Clear the value.
 					setValue('');
 					// Remove event listeners.
-					panelButton.addEventListener('click', handleRefreshtrigger);
-					helpButton.addEventListener('click', handleRefreshtrigger);
+					panelButton.removeEventListener('click', handleRefreshtrigger);
+					helpButton.removeEventListener('click', handleRefreshtrigger);
 					form.removeEventListener('submit', handleFormSubmit);
 					// Destory CodeMirror.
 					const codeMirrorInst = getCodeMirrorInstance();

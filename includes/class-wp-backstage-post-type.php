@@ -241,7 +241,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'required_post_type_slug',
 				sprintf(
 					/* translators: 1: post type slug. */
-					_x( '[post type: %1$s] A slug is required when adding a new post type.', 'post type - required slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A slug is required when adding a new post type.', 'post type - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -252,7 +252,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_slug_length',
 				sprintf(
 					/* translators: 1: post type slug. */
-					_x( '[post type: %1$s] A post type slug must be between 1 and 20 characters.', 'post type - slug length error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type slug must be between 1 and 20 characters.', 'post type - slug length error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -263,7 +263,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					_x( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'post type - existing slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'post type - existing slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::modify()</code>'
 				)
@@ -275,7 +275,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_not_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					_x( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'post type - nonexisting slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'post type - nonexisting slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::add()</code>'
 				)
@@ -295,7 +295,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 						'required_post_type_arg',
 						sprintf(
 							/* translators: 1: post type slug, 2: required arg key. */
-							_x( '[post type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
+							_x( '[Post Type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -448,7 +448,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		);
 		if ( $counts['untrashed'] === 1 ) {
 			$posts_untrashed = sprintf(
-				/* translators: 1: post type singular nam. */
+				/* translators: 1: post type singular name. */
 				_x( '1 %1$s restored from the Trash.', 'post bulk updated message - untrashed singular', 'wp_backstage' ),
 				$post_type_object->labels->singular_name
 			);
@@ -1883,6 +1883,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * Attaches all media used in media uploader fields to the post being saved.
 	 *
+	 * @since   0.0.1
+	 * @since   3.4.1     Refactored to make sure the value is always an array.
 	 * @param   int       $post_id  The ID of the post being saved.
 	 * @param   int|array $value    The attachment ID or array of attachment IDs to attach.
 	 * @param   array     $field    An array of field arguments.
@@ -1890,60 +1892,43 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	protected function handle_attachments( $post_id = null, $value = null, $field = array() ) {
 
+		$field = wp_parse_args( $field, $this->default_field_args );
+
 		if ( $field['type'] !== 'media' ) {
 			return;
 		}
 
-		$media_uploader_args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
 
-		if ( ! $media_uploader_args['attach'] ) {
+		if ( ! $args['attach'] ) {
 			return;
 		}
 
 		if ( ! empty( $value ) ) {
 
-			if ( $media_uploader_args['multiple'] ) {
+			// ensure this is always an array.
+			$value = is_array( $value ) ? $value : array( $value );
 
-				if ( is_array( $value ) && ! empty( $value ) ) {
+			foreach ( $value as $attachment_id ) {
 
-					foreach ( $value as $attachment_id ) {
+				// ensure the id references an attachment.
+				if ( get_post_type( $attachment_id ) === 'attachment' ) {
 
-						if ( get_post_type( $attachment_id ) === 'attachment' ) {
+					// check if the attachment is already attached.
+					$parent_id = absint( wp_get_post_parent_id( $attachment_id ) );
 
-							$parent_id = wp_get_post_parent_id( $attachment_id );
-
-							if ( ! $parent_id > 0 ) {
-								wp_update_post(
-									array(
-										'ID'          => $attachment_id,
-										'post_parent' => $post_id,
-									)
-								);
-							}
-						}
-					}
-				}
-			} else {
-
-				if ( ! empty( $value ) ) {
-
-					if ( get_post_type( $value ) === 'attachment' ) {
-
-						$parent_id = wp_get_post_parent_id( $value );
-
-						if ( ! $parent_id > 0 ) {
-							wp_update_post(
-								array(
-									'ID'          => $value,
-									'post_parent' => $post_id,
-								)
-							);
-						}
+					// only attach if the attachment has no parent.
+					if ( $parent_id === 0 ) {
+						wp_update_post(
+							array(
+								'ID'          => $attachment_id,
+								'post_parent' => $post_id,
+							)
+						);
 					}
 				}
 			}
 		}
-
 	}
 
 	/**

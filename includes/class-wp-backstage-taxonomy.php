@@ -179,7 +179,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'required_taxonomy_slug',
 				sprintf(
 					/* translators: 1: taxonomy slug. */
-					_x( '[taxonomy: %1$s] A slug is required when adding a new taxonomy.', 'taxonomy - required slug error', 'wp_backstage' ),
+					_x( '[Taxonomy: %1$s] A slug is required when adding a new taxonomy.', 'taxonomy - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -190,7 +190,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_slug_length',
 				sprintf(
 					/* translators: 1: taxonomy slug. */
-					_x( '[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters.', 'taxonomy - slug length error', 'wp_backstage' ),
+					_x( '[Taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters.', 'taxonomy - slug length error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -201,7 +201,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_exists',
 				sprintf(
 					/* translators: 1: taxonomy slug, 2: method suggestion */
-					_x( '[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'taxonomy - existing slug error', 'wp_backstage' ),
+					_x( '[Taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy.', 'taxonomy - existing slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Taxonomy::modify()</code>'
 				)
@@ -213,7 +213,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'taxonomy_not_exists',
 				sprintf(
 					/* translators: 1: taxonomy slug, 2: method suggestion */
-					_x( '[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'taxonomy - nonexisting slug error', 'wp_backstage' ),
+					_x( '[Taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy.', 'taxonomy - nonexisting slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Taxonomy::add()</code>'
 				)
@@ -233,7 +233,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 						'required_taxonomy_arg',
 						sprintf(
 							/* translators: 1: taxonomy slug, 2:required arg key. */
-							_x( '[taxonomy: %1$s] The %2$s key is required.', 'taxonomy - required arg error', 'wp_backstage' ),
+							_x( '[Taxonomy: %1$s] The %2$s key is required.', 'taxonomy - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -339,32 +339,32 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$term_added = sprintf(
 			/* translators: 1: taxonomy singular name. */
-			_x( '%1$s added.', 'term updated messages - added', 'wp_backstage' ),
+			_x( '%1$s added.', 'term updated messages - added singular', 'wp_backstage' ),
 			$taxonomy_obj->labels->singular_name
 		);
 		$term_deleted = sprintf(
 			/* translators: 1: taxonomy singular name. */
-			_x( '%1$s deleted.', 'term updated messages - deleted', 'wp_backstage' ),
+			_x( '%1$s deleted.', 'term updated messages - deleted singular', 'wp_backstage' ),
 			$taxonomy_obj->labels->singular_name
 		);
 		$term_updated = sprintf(
 			/* translators: 1: taxonomy singular name. */
-			_x( '%1$s updated.', 'term updated messages - updated', 'wp_backstage' ),
+			_x( '%1$s updated.', 'term updated messages - updated singular', 'wp_backstage' ),
 			$taxonomy_obj->labels->singular_name
 		);
 		$term_not_added = sprintf(
 			/* translators: 1: taxonomy singular name. */
-			_x( '%1$s not added.', 'term updated messages - not added', 'wp_backstage' ),
+			_x( '%1$s not added.', 'term updated messages - not added singular', 'wp_backstage' ),
 			$taxonomy_obj->labels->singular_name
 		);
 		$term_not_updated = sprintf(
 			/* translators: 1: taxonomy singular name. */
-			_x( '%1$s not updated.', 'term updated messages - not updated', 'wp_backstage' ),
+			_x( '%1$s not updated.', 'term updated messages - not updated singular', 'wp_backstage' ),
 			$taxonomy_obj->labels->singular_name
 		);
 		$terms_deleted = sprintf(
 			/* translators: 1: taxonomy plural name. */
-			_x( '%1$s deleted.', 'term updated messages - deleted', 'wp_backstage' ),
+			_x( '%1$s deleted.', 'term updated messages - deleted plural', 'wp_backstage' ),
 			$taxonomy_obj->labels->name
 		);
 

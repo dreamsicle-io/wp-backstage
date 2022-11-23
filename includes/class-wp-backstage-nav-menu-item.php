@@ -99,8 +99,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 					$this->errors[] = new WP_Error(
 						'required_nav_menu_item_arg',
 						sprintf(
-							/* translators: 1:required arg key. */
-							_x( '[nav_menu_item] The %1$s key is required.', 'nav menu item - required arg error', 'wp_backstage' ),
+							/* translators: 1: required arg key. */
+							_x( '[Nav Menu Item] The %1$s key is required.', 'nav menu item - required arg error', 'wp_backstage' ),
 							'<code>' . $required_arg . '</code>'
 						)
 					);

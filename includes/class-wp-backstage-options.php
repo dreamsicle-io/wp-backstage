@@ -160,8 +160,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			$this->errors[] = new WP_Error(
 				'required_options_slug',
 				sprintf(
-					/* translators: 1: post type slug. */
-					_x( '[options: %1$s] A slug is required when adding a new options page.', 'options - required slug error', 'wp_backstage' ),
+					/* translators: 1: options page slug. */
+					_x( '[Options: %1$s] A slug is required when adding a new options page.', 'options - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -178,7 +178,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 						'required_options_arg',
 						sprintf(
 							/* translators: 1: options page slug, 2:required arg key. */
-							_x( '[options: %1$s] The %2$s key is required.', 'options - required arg error', 'wp_backstage' ),
+							_x( '[Options: %1$s] The %2$s key is required.', 'options - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -200,7 +200,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 						'duplicate_options_key',
 						sprintf(
 							/* translators: 1: options page slug, 2: setting key. */
-							_x( '[options: %1$s] There is already an option with the %2$s key.', 'options - setting exists error', 'wp_backstage' ),
+							_x( '[Options: %1$s] There is already an option with the %2$s key.', 'options - setting exists error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $field['name'] . '</code>'
 						)

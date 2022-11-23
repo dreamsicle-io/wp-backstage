@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-21T17:58:41+00:00\n"
+"POT-Creation-Date: 2022-11-23T14:03:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1315,10 +1315,12 @@ msgid "%1$s (%2$s)"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:1627
+msgctxt "select users filter - option none label"
 msgid "All Users"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:1643
+msgctxt "filter - option none label"
 msgid "All options"
 msgstr ""
 
@@ -1450,28 +1452,28 @@ msgctxt "rest api preview - form submit"
 msgid "Fetch"
 msgstr ""
 
-#. translators: 1:required arg key.
+#. translators: 1: required arg key.
 #: includes/class-wp-backstage-nav-menu-item.php:103
 msgctxt "nav menu item - required arg error"
-msgid "[nav_menu_item] The %1$s key is required."
+msgid "[Nav Menu Item] The %1$s key is required."
 msgstr ""
 
-#. translators: 1: post type slug.
+#. translators: 1: options page slug.
 #: includes/class-wp-backstage-options.php:164
 msgctxt "options - required slug error"
-msgid "[options: %1$s] A slug is required when adding a new options page."
+msgid "[Options: %1$s] A slug is required when adding a new options page."
 msgstr ""
 
 #. translators: 1: options page slug, 2:required arg key.
 #: includes/class-wp-backstage-options.php:181
 msgctxt "options - required arg error"
-msgid "[options: %1$s] The %2$s key is required."
+msgid "[Options: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: options page slug, 2: setting key.
 #: includes/class-wp-backstage-options.php:203
 msgctxt "options - setting exists error"
-msgid "[options: %1$s] There is already an option with the %2$s key."
+msgid "[Options: %1$s] There is already an option with the %2$s key."
 msgstr ""
 
 #: includes/class-wp-backstage-options.php:289
@@ -1487,31 +1489,31 @@ msgstr ""
 #. translators: 1: post type slug.
 #: includes/class-wp-backstage-post-type.php:244
 msgctxt "post type - required slug error"
-msgid "[post type: %1$s] A slug is required when adding a new post type."
+msgid "[Post Type: %1$s] A slug is required when adding a new post type."
 msgstr ""
 
 #. translators: 1: post type slug.
 #: includes/class-wp-backstage-post-type.php:255
 msgctxt "post type - slug length error"
-msgid "[post type: %1$s] A post type slug must be between 1 and 20 characters."
+msgid "[Post Type: %1$s] A post type slug must be between 1 and 20 characters."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
 #: includes/class-wp-backstage-post-type.php:266
 msgctxt "post type - existing slug error"
-msgid "[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type."
+msgid "[Post Type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
 #: includes/class-wp-backstage-post-type.php:278
 msgctxt "post type - nonexisting slug error"
-msgid "[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type."
+msgid "[Post Type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: required arg key.
 #: includes/class-wp-backstage-post-type.php:298
 msgctxt "post type - required arg error"
-msgid "[post type: %1$s] The %2$s key is required."
+msgid "[Post Type: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: updated count.
@@ -1568,7 +1570,7 @@ msgctxt "post bulk updated message - untrashed plural"
 msgid "%2$d %1$s restored from the Trash."
 msgstr ""
 
-#. translators: 1: post type singular nam.
+#. translators: 1: post type singular name.
 #: includes/class-wp-backstage-post-type.php:452
 msgctxt "post bulk updated message - untrashed singular"
 msgid "1 %1$s restored from the Trash."
@@ -2086,63 +2088,67 @@ msgstr ""
 #. translators: 1: taxonomy slug.
 #: includes/class-wp-backstage-taxonomy.php:182
 msgctxt "taxonomy - required slug error"
-msgid "[taxonomy: %1$s] A slug is required when adding a new taxonomy."
+msgid "[Taxonomy: %1$s] A slug is required when adding a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug.
 #: includes/class-wp-backstage-taxonomy.php:193
 msgctxt "taxonomy - slug length error"
-msgid "[taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters."
+msgid "[Taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
 #: includes/class-wp-backstage-taxonomy.php:204
 msgctxt "taxonomy - existing slug error"
-msgid "[taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy."
+msgid "[Taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
 #: includes/class-wp-backstage-taxonomy.php:216
 msgctxt "taxonomy - nonexisting slug error"
-msgid "[taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy."
+msgid "[Taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2:required arg key.
 #: includes/class-wp-backstage-taxonomy.php:236
 msgctxt "taxonomy - required arg error"
-msgid "[taxonomy: %1$s] The %2$s key is required."
+msgid "[Taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
 #: includes/class-wp-backstage-taxonomy.php:342
-msgctxt "term updated messages - added"
+msgctxt "term updated messages - added singular"
 msgid "%1$s added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#. translators: 1: taxonomy plural name.
 #: includes/class-wp-backstage-taxonomy.php:347
-#: includes/class-wp-backstage-taxonomy.php:367
-msgctxt "term updated messages - deleted"
+msgctxt "term updated messages - deleted singular"
 msgid "%1$s deleted."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
 #: includes/class-wp-backstage-taxonomy.php:352
-msgctxt "term updated messages - updated"
+msgctxt "term updated messages - updated singular"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
 #: includes/class-wp-backstage-taxonomy.php:357
-msgctxt "term updated messages - not added"
+msgctxt "term updated messages - not added singular"
 msgid "%1$s not added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
 #: includes/class-wp-backstage-taxonomy.php:362
-msgctxt "term updated messages - not updated"
+msgctxt "term updated messages - not updated singular"
 msgid "%1$s not updated."
+msgstr ""
+
+#. translators: 1: taxonomy plural name.
+#: includes/class-wp-backstage-taxonomy.php:367
+msgctxt "term updated messages - deleted plural"
+msgid "%1$s deleted."
 msgstr ""
 
 #: includes/class-wp-backstage-taxonomy.php:407
@@ -2323,7 +2329,7 @@ msgstr ""
 #. translators: 1:required arg key.
 #: includes/class-wp-backstage-user.php:143
 msgctxt "user - required arg error"
-msgid "[user] The %1$s key is required."
+msgid "[User] The %1$s key is required."
 msgstr ""
 
 #: includes/class-wp-backstage-user.php:291
@@ -2344,7 +2350,7 @@ msgstr ""
 #. translators: 1:required arg key.
 #: includes/class-wp-backstage-widget.php:107
 msgctxt "widget - required arg error"
-msgid "[widget] The %1$s key is required."
+msgid "[Widget] The %1$s key is required."
 msgstr ""
 
 #: includes/class-wp-backstage.php:143

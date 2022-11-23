@@ -241,7 +241,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'required_post_type_slug',
 				sprintf(
 					/* translators: 1: post type slug. */
-					_x( '[post type: %1$s] A slug is required when adding a new post type.', 'post type - required slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A slug is required when adding a new post type.', 'post type - required slug error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -252,7 +252,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_slug_length',
 				sprintf(
 					/* translators: 1: post type slug. */
-					_x( '[post type: %1$s] A post type slug must be between 1 and 20 characters.', 'post type - slug length error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type slug must be between 1 and 20 characters.', 'post type - slug length error', 'wp_backstage' ),
 					$this->slug
 				)
 			);
@@ -263,7 +263,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					_x( '[post type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'post type - existing slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type.', 'post type - existing slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::modify()</code>'
 				)
@@ -275,7 +275,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'post_type_not_exists',
 				sprintf(
 					/* translators: 1: post type slug, 2: method suggestion */
-					_x( '[post type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'post type - nonexisting slug error', 'wp_backstage' ),
+					_x( '[Post Type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type.', 'post type - nonexisting slug error', 'wp_backstage' ),
 					$this->slug,
 					'<code>WP_Backstage_Post_type::add()</code>'
 				)
@@ -295,7 +295,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 						'required_post_type_arg',
 						sprintf(
 							/* translators: 1: post type slug, 2: required arg key. */
-							_x( '[post type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
+							_x( '[Post Type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
 							$this->slug,
 							'<code>' . $required_arg . '</code>'
 						)
@@ -448,7 +448,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		);
 		if ( $counts['untrashed'] === 1 ) {
 			$posts_untrashed = sprintf(
-				/* translators: 1: post type singular nam. */
+				/* translators: 1: post type singular name. */
 				_x( '1 %1$s restored from the Trash.', 'post bulk updated message - untrashed singular', 'wp_backstage' ),
 				$post_type_object->labels->singular_name
 			);

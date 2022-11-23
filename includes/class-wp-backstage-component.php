@@ -1624,7 +1624,7 @@ class WP_Backstage_Component {
 							'label'             => $field['label'],
 							'value'             => absint( $value ),
 							'options'           => $options,
-							'option_none_label' => __( 'All Users', 'wp_backstage' ),
+							'option_none_label' => _x( 'All Users', 'select users filter - option none label', 'wp_backstage' ),
 						);
 						break;
 					default:
@@ -1640,7 +1640,7 @@ class WP_Backstage_Component {
 							'label'             => $field['label'],
 							'value'             => $value,
 							'options'           => $options,
-							'option_none_label' => __( 'All options', 'wp_backstage' ),
+							'option_none_label' => _x( 'All options', 'filter - option none label', 'wp_backstage' ),
 						);
 						break;
 				}

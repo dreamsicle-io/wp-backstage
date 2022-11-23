@@ -104,7 +104,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 						'required_widget_arg',
 						sprintf(
 							/* translators: 1:required arg key. */
-							_x( '[widget] The %1$s key is required.', 'widget - required arg error', 'wp_backstage' ),
+							_x( '[Widget] The %1$s key is required.', 'widget - required arg error', 'wp_backstage' ),
 							'<code>' . $required_arg . '</code>'
 						)
 					);

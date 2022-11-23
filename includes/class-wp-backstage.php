@@ -1953,9 +1953,21 @@ class WP_Backstage {
 	 * Inline Nav Menu Item Script
 	 *
 	 * @since   2.0.0
+	 * @since   3.4.1  Only renders the script on the "Edit Menus" page and bails on the "Manage Locations" and "Add New" page.
 	 * @return  void
 	 */
-	public function inline_nav_menu_item_script() { ?>
+	public function inline_nav_menu_item_script() {
+
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$params = wp_unslash( $_GET );
+
+		$add_new_screen   = ( isset( $params['menu'] ) && 0 === (int) $params['menu'] ) ? true : false;
+		$locations_screen = ( isset( $params['action'] ) && 'locations' === $params['action'] ) ? true : false;
+
+		// If the screen is the "Manage Locations" or "Add New" screen, bail.
+		if ( $add_new_screen || $locations_screen ) {
+			return;
+		} ?>
 
 		<script 
 		id="wp_backstage_nav_menu_item_script"

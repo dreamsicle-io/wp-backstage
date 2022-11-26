@@ -299,6 +299,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	/**
 	 * Validate Term
 	 *
+	 * @since 3.5.1
 	 * @param string|WP_Error $term     The term name to add, or a WP_Error object if there's an error.
 	 * @param string          $taxonomy Taxonomy slug.
 	 * @param array|string    $args     Array or query string of arguments passed to wp_insert_term().

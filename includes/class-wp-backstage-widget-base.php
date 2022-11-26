@@ -65,6 +65,13 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 		// phpcs:ignore WordPress.Security.EscapeOutput
 		echo $args['before_widget'];
 
+		/**
+		 * Fires when the widget "front end" is rendered.
+		 *
+		 * @since  2.0.0
+		 * @param  array $args      The arguments of the widget as configured when registering the widget area.
+		 * @param  array $instance  The stored settings of this widget instance.
+		 */
 		do_action( "wp_backstage_widget_output_{$this->slug}", $args, $instance );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput
@@ -82,6 +89,15 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @param  array $instance  The stored settings of this widget instance.
 	 */
 	public function form( $instance ) {
+
+		/**
+		 * Fires when the widget "back end" is rendered.
+		 *
+		 * @since  2.0.0
+		 * @param  array $instance  The stored settings of this widget instance.
+		 * @param  array $id_base  The ID base of the widget.
+		 * @param  array $number  The instance number of the widget.
+		 */
 		do_action( "wp_backstage_widget_form_{$this->slug}", $instance, $this->id_base, $this->number );
 	}
 
@@ -97,6 +113,14 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @param  array $old_instance  The currentylu stored settings.
 	 */
 	public function update( $new_instance, $old_instance ) {
+
+		/**
+		 * Filters the instance for saving.
+		 *
+		 * @since  2.0.0
+		 * @param  array $new_instance  The new settings to store.
+		 * @param  array $old_instance  The currentylu stored settings.
+		 */
 		return apply_filters( "wp_backstage_widget_save_{$this->slug}", $new_instance, $old_instance );
 	}
 

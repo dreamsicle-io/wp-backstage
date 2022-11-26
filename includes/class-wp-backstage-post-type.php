@@ -313,6 +313,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   3.2.0 Added more specific hooks for attachments.
 	 * @since   3.4.0 Hooks nonces to `edit_form_after_title` instead of `edit_form_top` to support the Block Editor.
+	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @return  void
 	 */
 	public function init() {
@@ -343,19 +344,19 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		// to use that don't align with the dynamic hooks of other post types.
 		if ( $this->slug === 'attachment' ) {
 			add_action( 'edit_attachment', array( $this, 'save' ), 10 );
-			add_filter( sprintf( 'manage_media_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-			add_action( sprintf( 'manage_media_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
-			add_filter( sprintf( 'manage_upload_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+			add_filter( 'manage_media_columns', array( $this, 'add_field_columns' ), 10 );
+			add_action( 'manage_media_custom_column', array( $this, 'render_admin_column' ), 10, 2 );
+			add_filter( 'manage_upload_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		} else {
-			add_action( sprintf( 'save_post_%1$s', $this->slug ), array( $this, 'save' ), 10, 3 );
-			add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-			add_action( sprintf( 'manage_%1$s_posts_custom_column', $this->slug ), array( $this, 'render_admin_column' ), 10, 2 );
-			add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
+			add_action( "save_post_{$this->slug}", array( $this, 'save' ), 10, 3 );
+			add_filter( "manage_{$this->slug}_posts_columns", array( $this, 'add_thumbnail_column' ), 10 );
+			add_filter( "manage_{$this->slug}_posts_columns", array( $this, 'add_field_columns' ), 10 );
+			add_filter( "manage_edit-{$this->slug}_sortable_columns", array( $this, 'manage_sortable_columns' ), 10 );
+			add_action( "manage_{$this->slug}_posts_custom_column", array( $this, 'render_admin_column' ), 10, 2 );
 		}
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'edit_form_after_title', array( $this, 'render_edit_nonce' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_posts_columns', $this->slug ), array( $this, 'add_thumbnail_column' ), 10 );
 		add_action( 'query_vars', array( $this, 'manage_query_vars' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_filtering' ), 10 );
 		add_action( 'pre_get_posts', array( $this, 'manage_sorting' ), 10 );
@@ -1211,7 +1212,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		<?php }
 
 		/**
-		 * Fires agyer the post type available actions help tab content.
+		 * Fires after the post type available actions help tab content.
 		 *
 		 * @since  3.4.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.

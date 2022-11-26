@@ -119,6 +119,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   2.0.0
+	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @return  void
 	 */
 	public function init() {
@@ -135,8 +136,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 		}
 
 		add_action( 'widgets_init', array( $this, 'register' ), 10 );
-		add_action( sprintf( 'wp_backstage_widget_form_%1$s', $this->slug ), array( $this, 'render_fields' ), 10, 3 );
-		add_filter( sprintf( 'wp_backstage_widget_save_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
+		add_action( "wp_backstage_widget_form_{$this->slug}", array( $this, 'render_fields' ), 10, 3 );
+		add_filter( "wp_backstage_widget_save_{$this->slug}", array( $this, 'save' ), 10, 2 );
 
 		parent::init();
 

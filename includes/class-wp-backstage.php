@@ -2536,7 +2536,10 @@ class WP_Backstage {
 						const params = new URLSearchParams(settings.data);
 						const action = params.get('action');
 						if (action === 'add-tag') {
-							resetForm();
+							const hasError = ($('wp_error', request.responseXML).length > 0);
+							if (! hasError) {
+								resetForm();
+							}
 						}
 					}
 				}

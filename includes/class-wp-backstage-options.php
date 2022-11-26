@@ -265,9 +265,9 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
 		add_action( 'tool_box', array( $this, 'add_tool_card' ), 10 );
-		add_action( sprintf( 'admin_print_footer_scripts-settings_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
-		add_action( sprintf( 'admin_print_footer_scripts-appearance_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
-		add_action( sprintf( 'admin_print_footer_scripts-tools_page_%1$s', $this->slug ), array( $this, 'hook_script_action' ), 10 );
+		add_action( "admin_print_footer_scripts-settings_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		add_action( "admin_print_footer_scripts-appearance_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		add_action( "admin_print_footer_scripts-tools_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
 
 		parent::init();
 

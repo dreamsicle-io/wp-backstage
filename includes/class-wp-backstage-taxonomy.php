@@ -287,12 +287,101 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
 		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
+		add_filter( 'pre_insert_term', array( $this, 'validate_term' ), 10, 3 );
 		add_action( 'rest_api_init', array( $this, 'register_api_meta' ), 10 );
 		add_filter( "rest_prepare_{$this->slug}", array( $this, 'prepare_rest_term' ), 10, 3 );
 		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
 
 		parent::init();
 
+	}
+
+	/**
+	 * Validate Term
+	 *
+	 * @since 3.5.1
+	 * @param string|WP_Error $term     The term name to add, or a WP_Error object if there's an error.
+	 * @param string          $taxonomy Taxonomy slug.
+	 * @param array|string    $args     Array or query string of arguments passed to wp_insert_term().
+	 * @return string|WP_Error The original term name or a new WP_Error.
+	 */
+	public function validate_term( $term = '', $taxonomy = '', $args = array() ) {
+
+		if ( $taxonomy === $this->slug ) {
+
+			$fields = $this->get_fields();
+
+			foreach ( $fields as $field ) {
+
+				$field = wp_parse_args( $field, $this->default_field_args );
+
+				if ( isset( $args[ $field['name'] ] ) && ! empty( $args[ $field['name'] ] ) ) {
+
+					$unsanitized_value = $args[ $field['name'] ];
+
+					switch ( $field['type'] ) {
+						case 'email':
+							// validate email.
+							if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_EMAIL ) ) {
+								return new WP_Error(
+									'wp_backstage_term_validation',
+									sprintf(
+										/* translators: 1: field label. */
+										_x( 'The value for %1$s is not a valid email address.', 'taxonomy term validation - email', 'wp_backstage' ),
+										$field['label']
+									)
+								);
+							}
+							break;
+						case 'url':
+							// validate url.
+							if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_URL ) ) {
+								return new WP_Error(
+									'wp_backstage_term_validation',
+									sprintf(
+										/* translators: 1: field label. */
+										_x( 'The value for %1$s is not a valid URL.', 'taxonomy term validation - url', 'wp_backstage' ),
+										$field['label']
+									)
+								);
+							}
+							break;
+						default:
+							// validate minimum.
+							if ( isset( $field['input_attrs']['min'] ) ) {
+								if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_FLOAT, array( 'options' => array( 'min_range' => $field['input_attrs']['min'] ) ) ) ) {
+									return new WP_Error(
+										'wp_backstage_term_validation',
+										sprintf(
+											/* translators: 1: field label, 2: field minimum. */
+											_x( 'The value for %1$s must be greater than or equal to %2$d.', 'taxonomy term validation - minimum', 'wp_backstage' ),
+											$field['label'],
+											$field['input_attrs']['min']
+										)
+									);
+								}
+							}
+							// validate maximum.
+							if ( isset( $field['input_attrs']['max'] ) ) {
+								if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_FLOAT, array( 'options' => array( 'max_range' => $field['input_attrs']['max'] ) ) ) ) {
+									return new WP_Error(
+										'wp_backstage_term_validation',
+										sprintf(
+											/* translators: 1: field label, 2: field maximum. */
+											_x( 'The value for %1$s must be less than or equal to %2$d.', 'taxonomy term validation - maximum', 'wp_backstage' ),
+											$field['label'],
+											$field['input_attrs']['max']
+										)
+									);
+								}
+							}
+							break;
+					}
+				}
+			}
+		}
+
+		return $term;
 	}
 
 	/**

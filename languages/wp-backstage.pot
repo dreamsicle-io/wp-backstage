@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Backstage 3.4.2\n"
+"Project-Id-Version: WP Backstage 3.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-backstage\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-23T16:58:56+00:00\n"
+"POT-Creation-Date: 2022-11-26T16:21:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -2370,7 +2370,7 @@ msgctxt "plugin error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage.php:2852
+#: includes/class-wp-backstage.php:2853
 msgctxt "media item - remove"
 msgid "Remove"
 msgstr ""

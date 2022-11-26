@@ -876,6 +876,11 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Taxonomy.html#method_init"
         },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Avalidate_term\u0028\u0029",
+            "name": "validate_term",
+            "summary": "Validate\u0020Term",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_validate_term"
+        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aprepare_rest_term\u0028\u0029",
             "name": "prepare_rest_term",
             "summary": "Prepare\u0020Rest\u0020Term",

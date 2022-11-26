@@ -615,7 +615,6 @@ class WP_Backstage_Component {
 			'AE' => __( 'United Arab Emirates', 'wp_backstage' ),
 			'GB' => __( 'United Kingdom', 'wp_backstage' ),
 			'US' => __( 'United States', 'wp_backstage' ),
-			'ZZ' => __( 'Unknown or Invalid Region', 'wp_backstage' ),
 			'UY' => __( 'Uruguay', 'wp_backstage' ),
 			'UZ' => __( 'Uzbekistan', 'wp_backstage' ),
 			'VU' => __( 'Vanuatu', 'wp_backstage' ),

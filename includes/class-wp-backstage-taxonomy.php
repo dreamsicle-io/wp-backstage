@@ -315,21 +315,67 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 				$field = wp_parse_args( $field, $this->default_field_args );
 
-				if ( isset( $args[ $field['name'] ] ) ) {
+				if ( isset( $args[ $field['name'] ] ) && ! empty( $args[ $field['name'] ] ) ) {
 
-					$value = $this->sanitize_field( $field, $args[ $field['name'] ] );
+					$unsanitized_value = $args[ $field['name'] ];
 
-					// validate minimum.
-					if ( isset( $field['input_attrs']['min'] ) ) {
-						if ( floatval( $value ) < $field['input_attrs']['min'] ) {
-							return new WP_Error( 'wp_backstage_term_validation', 'The value is less than the minimum' );
-						}
-					}
-					// validate maximum.
-					if ( isset( $field['input_attrs']['max'] ) ) {
-						if ( floatval( $value ) > $field['input_attrs']['max'] ) {
-							return new WP_Error( 'wp_backstage_term_validation', 'The value is greater than the maximum' );
-						}
+					switch ( $field['type'] ) {
+						case 'email':
+							// validate email.
+							if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_EMAIL ) ) {
+								return new WP_Error(
+									'wp_backstage_term_validation',
+									sprintf(
+										/* translators: 1: field label. */
+										_x( 'The value for %1$s is not a valid email address.', 'taxonomy term validation - email', 'wp_backstage' ),
+										$field['label']
+									)
+								);
+							}
+							break;
+						case 'url':
+							// validate url.
+							if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_URL ) ) {
+								return new WP_Error(
+									'wp_backstage_term_validation',
+									sprintf(
+										/* translators: 1: field label. */
+										_x( 'The value for %1$s is not a valid URL.', 'taxonomy term validation - url', 'wp_backstage' ),
+										$field['label']
+									)
+								);
+							}
+							break;
+						default:
+							// validate minimum.
+							if ( isset( $field['input_attrs']['min'] ) ) {
+								if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_FLOAT, array( 'options' => array( 'min_range' => $field['input_attrs']['min'] ) ) ) ) {
+									return new WP_Error(
+										'wp_backstage_term_validation',
+										sprintf(
+											/* translators: 1: field label, 2: field minimum. */
+											_x( 'The value for %1$s must be greater than or equal to %2$d.', 'taxonomy term validation - minimum', 'wp_backstage' ),
+											$field['label'],
+											$field['input_attrs']['min']
+										)
+									);
+								}
+							}
+							// validate maximum.
+							if ( isset( $field['input_attrs']['max'] ) ) {
+								if ( ! filter_var( $unsanitized_value, FILTER_VALIDATE_FLOAT, array( 'options' => array( 'max_range' => $field['input_attrs']['max'] ) ) ) ) {
+									return new WP_Error(
+										'wp_backstage_term_validation',
+										sprintf(
+											/* translators: 1: field label, 2: field maximum. */
+											_x( 'The value for %1$s must be less than or equal to %2$d.', 'taxonomy term validation - maximum', 'wp_backstage' ),
+											$field['label'],
+											$field['input_attrs']['max']
+										)
+									);
+								}
+							}
+							break;
 					}
 				}
 			}

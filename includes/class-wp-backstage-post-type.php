@@ -313,6 +313,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   3.2.0 Added more specific hooks for attachments.
 	 * @since   3.4.0 Hooks nonces to `edit_form_after_title` instead of `edit_form_top` to support the Block Editor.
+	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @return  void
 	 */
 	public function init() {

@@ -119,6 +119,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   2.0.0
+	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @return  void
 	 */
 	public function init() {

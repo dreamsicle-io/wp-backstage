@@ -1211,7 +1211,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		<?php }
 
 		/**
-		 * Fires agyer the post type available actions help tab content.
+		 * Fires after the post type available actions help tab content.
 		 *
 		 * @since  3.4.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.

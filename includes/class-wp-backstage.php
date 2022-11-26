@@ -202,7 +202,7 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
-		add_filter( 'use_widgets_block_editor', '__return_false' );
+		add_filter( 'use_widgets_block_editor', '__return_false', 10 );
 	}
 
 	/**
@@ -2145,6 +2145,7 @@ class WP_Backstage {
 	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
 	 *
 	 * @since   2.0.0
+	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
 	 * @return  void
 	 */
 	public function inline_nav_menu_item_customizer_script() { ?>
@@ -2157,10 +2158,10 @@ class WP_Backstage {
 
 				var controlExpandTimer = null;
 
-				function setControlElementValue(controlElement = null, value = undefined, instanceNumber = 0) {
+				function setControlElementValue(controlElement = null, value = undefined, menuItemID = 0) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
-					const elementName = 'menu-item-' + fieldName + '[' + instanceNumber + ']';
+					const elementName = 'menu-item-' + fieldName + '[' + menuItemID + ']';
 					switch (fieldType) {
 						case 'checkbox': {
 							const input = controlElement.element.find('[name="' + elementName + '"]');
@@ -2240,10 +2241,10 @@ class WP_Backstage {
 					}
 				}
 
-				function initControlElementChangeHandler(controlElement = null, setting = null, instanceNumber = 0) {
+				function initControlElementChangeHandler(controlElement = null, setting = null, menuItemID = 0) {
 					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
 					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
-					const elementName = 'menu-item-' + fieldName + '[' + instanceNumber + ']';
+					const elementName = 'menu-item-' + fieldName + '[' + menuItemID + ']';
 					switch (fieldType) {
 						case 'checkbox': {
 							const input = controlElement.element.find('[name="' + elementName + '"]');
@@ -2355,7 +2356,7 @@ class WP_Backstage {
 					const values = control.setting();
 					const elements = control.wpBackstageElements;
 					for (var fieldName in elements) {
-						setControlElementValue(elements[fieldName], values[fieldName], control.params.instanceNumber);
+						setControlElementValue(elements[fieldName], values[fieldName], control.params.menu_item_id);
 					}
 				}
 
@@ -2444,7 +2445,7 @@ class WP_Backstage {
 				function initChangeHandlers(control = null) {
 					const elements = control.wpBackstageElements;
 					for (var fieldName in elements) {
-						initControlElementChangeHandler(elements[fieldName], control.setting, control.params.instanceNumber);
+						initControlElementChangeHandler(elements[fieldName], control.setting, control.params.menu_item_id);
 					}
 				}
 

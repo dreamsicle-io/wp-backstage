@@ -2496,7 +2496,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -2521,6 +2521,16 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                              
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Hooks the <code class="prettyprint">manage_customizer_meta_preview</code> method at a much later priority.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -2657,7 +2667,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -2706,7 +2716,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">507</span>
+    <span class="phpdocumentor-element-found-in__line">515</span>
 
     </aside>
 
@@ -2719,7 +2729,10 @@ the code editor scripts when initializing code editor fields.</p>
         <section class="phpdocumentor-description"><p>Preview changes to the nav menu item roles. Note the unimplemented
 to-do in the doc block for the setting's preview method. This will only
 work for existing menu items. New menu items have a dynamically generated ID
-and do not exist in the database yet.</p>
+and do not exist in the database yet. Note that this is a &quot;short-circuit&quot; filter,
+which means if a non-null value is returned, it will be used instead of the DB or
+cache value. This filter always receives <code class="prettyprint">null</code> as the <code class="prettyprint">$value</code>. The return value
+must always be an array, even if it is a single value.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -2745,6 +2758,14 @@ and do not exist in the database yet.</p>
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/hooks/get_meta_type_metadata/"> <p>Filter: get_{$meta_type}_metadata</p>
+ </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer"> <p>Stack Overflow Discussion on Nav Menu Items in the Customizer</p>
  </a>
                     
@@ -2756,6 +2777,24 @@ and do not exist in the database yet.</p>
                                                                                                         <a class="phpdocumentor-tag-link" href="https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb"> <p>Customizer Roles Plugin Example by Weston Ruter</p>
  </a>
                     
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Always cast value to array, more strict checks of value existence, upped the priority so this always runs last.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -2778,7 +2817,7 @@ and do not exist in the database yet.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">473</span>
+    <span class="phpdocumentor-element-found-in__line">475</span>
 
     </aside>
 
@@ -3111,7 +3150,7 @@ and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only be
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -3140,6 +3179,16 @@ are different in this case and are passed different values.</p>
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                              
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.5.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Uses the menu item ID as the dynamic portion of the name/id instead of the instance number.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3214,7 +3263,7 @@ are different in this case and are passed different values.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -4699,7 +4748,7 @@ select as defined in <code class="prettyprint">WP_Backstage_Component::render_ta
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">367</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -4776,7 +4825,7 @@ select as defined in <code class="prettyprint">WP_Backstage_Component::render_ta
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">417</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 
     </aside>
 
@@ -4846,7 +4895,7 @@ select as defined in <code class="prettyprint">WP_Backstage_Component::render_ta
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">221</span>
 
     </aside>
 
@@ -5316,7 +5365,7 @@ currently being called.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-nav-menu-item.php"><a href="files/includes-class-wp-backstage-nav-menu-item.html"><abbr title="includes/class-wp-backstage-nav-menu-item.php">class-wp-backstage-nav-menu-item.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 

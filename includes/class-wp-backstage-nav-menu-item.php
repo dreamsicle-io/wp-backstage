@@ -115,6 +115,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   2.0.0
+	 * @since   3.5.0 Hooks the `manage_customizer_meta_preview` method at a much later priority.
 	 * @return  void
 	 */
 	public function init() {
@@ -138,7 +139,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		add_action( 'wp_setup_nav_menu_item', array( $this, 'setup_nav_menu_item' ), 10 );
 		add_filter( 'manage_nav-menus_columns', array( $this, 'add_field_columns' ), 20 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
-		add_action( 'customize_register', array( $this, 'manage_customizer_meta_preview' ), 10 );
+		add_action( 'customize_register', array( $this, 'manage_customizer_meta_preview' ), 9999 );
 		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
 
 		parent::init();
@@ -303,6 +304,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * are different in this case and are passed different values.
 	 *
 	 * @since   2.0.0
+	 * @since   3.5.0 Uses the menu item ID as the dynamic portion of the name/id instead of the instance number.
 	 * @return  void
 	 */
 	public function render_customizer_fields() {
@@ -315,8 +317,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				$field_name     = $field['name'];
 				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
-				$field['name']  = sprintf( 'menu-item-%1$s[{{ data.instanceNumber }}]', $field_name );
-				$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.instanceNumber }}', $field_name );
+				$field['name']  = sprintf( 'menu-item-%1$s[{{ data.menu_item_id }}]', $field_name );
+				$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
 				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
 
 				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
@@ -496,11 +498,17 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Preview changes to the nav menu item roles. Note the unimplemented
 	 * to-do in the doc block for the setting's preview method. This will only
 	 * work for existing menu items. New menu items have a dynamically generated ID
-	 * and do not exist in the database yet.
+	 * and do not exist in the database yet. Note that this is a "short-circuit" filter,
+	 * which means if a non-null value is returned, it will be used instead of the DB or
+	 * cache value. This filter always receives `null` as the `$value`. The return value
+	 * must always be an array, even if it is a single value.
 	 *
+	 * @link    https://developer.wordpress.org/reference/hooks/get_meta_type_metadata/ Filter: get_{$meta_type}_metadata
 	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
 	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
 	 *
+	 * @since 2.0.0
+	 * @since 3.5.0 Always cast value to array, more strict checks of value existence, upped the priority so this always runs last.
 	 * @param   WP_Customize_Manager $wp_customize  The WP Customize instance.
 	 * @return  void
 	 */
@@ -516,20 +524,27 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 						'get_post_metadata',
 						function( $value, $object_id, $meta_key, $single ) use ( $setting ) {
 							if ( $object_id === $setting->post_id ) {
-								$field         = $this->get_field_by( 'name', $meta_key );
-								$posted_values = $setting->manager->unsanitized_post_values()[ $setting->id ];
-								$value         = $this->sanitize_field( $field, $posted_values[ $field['name'] ] );
+								$field = $this->get_field_by( 'name', $meta_key );
+								if ( ! empty( $field ) ) {
+									$unsanitized_values = $setting->manager->unsanitized_post_values();
+									if ( ! empty( $unsanitized_values ) && isset( $unsanitized_values[ $setting->id ] ) ) {
+										$setting_values = $unsanitized_values[ $setting->id ];
+										if ( ! empty( $setting_values ) && isset( $setting_values[ $meta_key ] ) ) {
+											$value = $this->sanitize_field( $field, $setting_values[ $meta_key ] );
+											// Cast this to an array, or array values will have their first index plucked.
+											$value = array( $value );
+										}
+									}
+								}
 							}
 							return $value;
 						},
-						10,
+						9999,
 						4
 					);
-
 				}
 			}
 		}
-
 	}
 
 }

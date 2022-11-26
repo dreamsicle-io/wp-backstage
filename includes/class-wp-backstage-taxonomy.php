@@ -271,15 +271,15 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			add_action( 'init', array( $this, 'register' ), 0 );
 			add_filter( 'term_updated_messages', array( $this, 'manage_term_updated_messages' ), 10 );
 		}
-		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_nonce' ), 10 );
-		add_action( sprintf( '%1$s_term_edit_form_top', $this->slug ), array( $this, 'render_edit_nonce' ), 10 );
-		add_action( sprintf( '%1$s_add_form_fields', $this->slug ), array( $this, 'render_add_fields' ), 10 );
-		add_action( sprintf( '%1$s_edit_form_fields', $this->slug ), array( $this, 'render_edit_fields' ), 10, 2 );
-		add_action( sprintf( 'edited_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
-		add_action( sprintf( 'created_%1$s', $this->slug ), array( $this, 'save' ), 10, 2 );
-		add_filter( sprintf( 'manage_edit-%1$s_columns', $this->slug ), array( $this, 'add_field_columns' ), 10 );
-		add_filter( sprintf( 'manage_edit-%1$s_sortable_columns', $this->slug ), array( $this, 'manage_sortable_columns' ), 10 );
-		add_filter( sprintf( 'manage_%1$s_custom_column', $this->slug ), array( $this, 'manage_admin_column_content' ), 10, 3 );
+		add_action( "{$this->slug}_add_form_fields", array( $this, 'render_add_nonce' ), 10 );
+		add_action( "{$this->slug}_term_edit_form_top", array( $this, 'render_edit_nonce' ), 10 );
+		add_action( "{$this->slug}_add_form_fields", array( $this, 'render_add_fields' ), 10 );
+		add_action( "{$this->slug}_edit_form_fields", array( $this, 'render_edit_fields' ), 10, 2 );
+		add_action( "edited_{$this->slug}", array( $this, 'save' ), 10, 2 );
+		add_action( "created_{$this->slug}", array( $this, 'save' ), 10, 2 );
+		add_filter( "manage_edit-{$this->slug}_columns", array( $this, 'add_field_columns' ), 10 );
+		add_filter( "manage_edit-{$this->slug}_sortable_columns", array( $this, 'manage_sortable_columns' ), 10 );
+		add_filter( "manage_{$this->slug}_custom_column", array( $this, 'manage_admin_column_content' ), 10, 3 );
 		add_filter( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );

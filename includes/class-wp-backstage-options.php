@@ -247,6 +247,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   2.0.0  Added `hook_script_action` actions to all types of options pages.
+	 * @since   3.6.0  Removes `sprintf` templates from hook names.
 	 * @return  void
 	 */
 	public function init() {

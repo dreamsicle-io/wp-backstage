@@ -2600,6 +2600,7 @@ class WP_Backstage {
 	 * Inline Widget Script
 	 *
 	 * @since   2.0.0
+	 * @since   3.7.0 Refactors to use the jQuery events for `widget-added` and `widget-updated` for support accross legacy, customizer, and block editing screens.
 	 * @return  void
 	 */
 	public function inline_widget_script() { ?>

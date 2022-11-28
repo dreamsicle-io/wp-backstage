@@ -141,6 +141,7 @@ class WP_Backstage {
 	 * Construct
 	 *
 	 * @since   2.0.0
+	 * @since   3.7.0 Removes plugin dependencies.
 	 * @return  void
 	 */
 	public function __construct() {
@@ -164,6 +165,7 @@ class WP_Backstage {
 	 *
 	 * @since   0.0.1
 	 * @since   3.4.0 Adds filter to disable block editor for widgets.
+	 * @since   3.7.0 Removes filter to disable block editor for widgets.
 	 * @return  void
 	 */
 	public function init() {
@@ -628,10 +630,6 @@ class WP_Backstage {
 
 			.wp-picker-clear {
 				width: auto !important;
-			}
-
-			.wp-block-legacy-widget__edit-preview-iframe {
-				display: block;
 			}
 
 		</style>

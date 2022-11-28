@@ -1351,11 +1351,6 @@ Search.appendIndex(
             "summary": "Inline\u0020Widget\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_widget_script"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_widget_customizer_script\u0028\u0029",
-            "name": "inline_widget_customizer_script",
-            "summary": "Inline\u0020Widget\u0020Customizer\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_widget_customizer_script"
-        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_user_script\u0028\u0029",
             "name": "inline_user_script",
             "summary": "Inline\u0020User\u0020Script",

@@ -30,6 +30,13 @@ class WP_Backstage {
 	/**
 	 * Plugin Dependencies
 	 *
+	 * Example:
+	 * array(
+	 *     'key'  => 'classic-editor/classic-editor.php', // The key will be passed to `is_plugin_active()` to check.
+	 *     'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
+	 *     'url'  => 'https://wordpress.org/plugins/classic-editor/',
+	 * )
+	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
 	 *
 	 * @since  2.0.0
@@ -137,13 +144,6 @@ class WP_Backstage {
 	 * @return  void
 	 */
 	public function __construct() {
-		$this->plugin_dependencies = array(
-			array(
-				'key'  => 'classic-editor/classic-editor.php',
-				'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
-				'url'  => 'https://wordpress.org/plugins/classic-editor/',
-			),
-		);
 		$this->set_errors();
 		$GLOBALS['wp_backstage'] = $this;
 	}

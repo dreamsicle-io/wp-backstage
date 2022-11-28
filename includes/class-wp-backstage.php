@@ -201,7 +201,6 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
-		add_filter( 'use_widgets_block_editor', '__return_false', 10 );
 	}
 
 	/**
@@ -631,6 +630,10 @@ class WP_Backstage {
 				width: auto !important;
 			}
 
+			.wp-block-legacy-widget__edit-preview-iframe {
+				display: block;
+			}
+
 		</style>
 
 	<?php }
@@ -947,18 +950,18 @@ class WP_Backstage {
 
 				function findParentUploader(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-media-uploader-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-media-uploader-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function findParentAttachment(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-attachment-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-attachment-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleLegendClick(e = null) {
@@ -1697,10 +1700,10 @@ class WP_Backstage {
 
 				function findParentEditor(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-editor-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-editor-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function destroy(editor = null) {
@@ -1846,10 +1849,10 @@ class WP_Backstage {
 
 				function findParentMetaBox(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('postbox')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('postbox')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleMetaBoxHandleClick(e = null) {
@@ -1991,10 +1994,10 @@ class WP_Backstage {
 
 				function findParentNavMenuItem(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('menu-item')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('menu-item')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleSuccess(e = null, request = null, settings = null) {
@@ -2611,9 +2614,6 @@ class WP_Backstage {
 
 			(function($) {
 
-				var widgetAddedTimer = null;
-				var widgetHandleTimer = null;
-
 				function findWidget(id = '') {
 					const input = document.querySelector('.widget-id[value="' + id + '"]');
 					const widget = findParentWidget(input);
@@ -2622,23 +2622,47 @@ class WP_Backstage {
 
 				function findParentWidget(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('widget')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('widget')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
+				}
+
+				function findParentBlock(element = null) {
+					var parentNode = element.parentNode;
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-block-legacy-widget')) {
+						parentNode = parentNode.parentNode;
+					}
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleWidgetAdded(e = null, $widget = null) {
-					if (widgetAddedTimer) {
-						clearTimeout(widgetAddedTimer);
-					}
-					widgetAddedTimer = setTimeout(function() {
+					setTimeout(function() {
 						initWidget($widget[0]);
 					}, 500);
 				}
 
 				function handleWidgetUpdated(e = null, $widget = null) {
 					refreshWidget($widget[0]);
+				}
+
+				function handleWidgetSynced(e = null, $widget = null) {
+					console.log('synced');
+				}
+
+				function initWidgetBlock(widget = null) {
+					const block = findParentBlock(widget);
+					block.addEventListener('click', handleBlockClick);
+				}
+
+				function handleBlockClick(e = null) {
+					const parentWidget = findParentWidget(e.target);
+					if (! parentWidget) {
+						const block = e.target.classList.contains('wp-block-legacy-widget') ? e.target : findParentBlock(e.target);
+						const widget = block.querySelector('.widget');
+						window.wpBackstage.editor.refreshAll(widget);
+						window.wpBackstage.codeEditor.refreshAll(widget);
+					}
 				}
 
 				function initWidgetArea(container = null) {
@@ -2659,6 +2683,7 @@ class WP_Backstage {
 					window.wpBackstage.codeEditor.initAll(widget);
 					window.wpBackstage.editor.initAll(widget);
 					initAllWidgetHandles(widget);
+					initWidgetBlock(widget);
 				}
 
 				function refreshWidget(widget = null) {
@@ -2675,10 +2700,7 @@ class WP_Backstage {
 
 				function handleWidgetHandleClick(e = null) {
 					const widget = findParentWidget(e.target);
-					if (widgetHandleTimer) {
-						clearTimeout(widgetHandleTimer);
-					}
-					widgetHandleTimer = setTimeout(function() {
+					setTimeout(function() {
 						if (widget.classList.contains('open')) {
 							window.wpBackstage.editor.refreshAll(widget);
 							window.wpBackstage.codeEditor.refreshAll(widget);
@@ -2727,6 +2749,7 @@ class WP_Backstage {
 					initInactiveWidgetsArea();
 					$(document).on('widget-added', handleWidgetAdded);
 					$(document).on('widget-updated', handleWidgetUpdated);
+					$(document).on('widget-synced', handleWidgetSynced);
 					$(document).on('sortstop', handleWidgetSorted);
 				}
 

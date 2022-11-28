@@ -30,6 +30,13 @@ class WP_Backstage {
 	/**
 	 * Plugin Dependencies
 	 *
+	 * Example:
+	 * array(
+	 *     'key'  => 'classic-editor/classic-editor.php', // The key will be passed to `is_plugin_active()` to check.
+	 *     'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
+	 *     'url'  => 'https://wordpress.org/plugins/classic-editor/',
+	 * )
+	 *
 	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
 	 *
 	 * @since  2.0.0
@@ -134,16 +141,10 @@ class WP_Backstage {
 	 * Construct
 	 *
 	 * @since   2.0.0
+	 * @since   3.7.0 Removes plugin dependencies.
 	 * @return  void
 	 */
 	public function __construct() {
-		$this->plugin_dependencies = array(
-			array(
-				'key'  => 'classic-editor/classic-editor.php',
-				'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
-				'url'  => 'https://wordpress.org/plugins/classic-editor/',
-			),
-		);
 		$this->set_errors();
 		$GLOBALS['wp_backstage'] = $this;
 	}
@@ -164,6 +165,7 @@ class WP_Backstage {
 	 *
 	 * @since   0.0.1
 	 * @since   3.4.0 Adds filter to disable block editor for widgets.
+	 * @since   3.7.0 Removes filter to disable block editor for widgets.
 	 * @return  void
 	 */
 	public function init() {
@@ -198,11 +200,9 @@ class WP_Backstage {
 		add_action( 'admin_print_footer_scripts-user-edit.php', array( $this, 'inline_user_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-widgets.php', array( $this, 'inline_widget_script' ), 10 );
 		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
-		add_action( 'customize_controls_print_scripts', array( $this, 'inline_widget_customizer_script' ), 10 );
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
-		add_filter( 'use_widgets_block_editor', '__return_false', 10 );
 	}
 
 	/**
@@ -948,18 +948,18 @@ class WP_Backstage {
 
 				function findParentUploader(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-media-uploader-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-media-uploader-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function findParentAttachment(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-attachment-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-attachment-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleLegendClick(e = null) {
@@ -1698,10 +1698,10 @@ class WP_Backstage {
 
 				function findParentEditor(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.hasAttribute('data-editor-id')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-editor-id')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function destroy(editor = null) {
@@ -1847,10 +1847,10 @@ class WP_Backstage {
 
 				function findParentMetaBox(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('postbox')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('postbox')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleMetaBoxHandleClick(e = null) {
@@ -1992,10 +1992,10 @@ class WP_Backstage {
 
 				function findParentNavMenuItem(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('menu-item')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('menu-item')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
 				function handleSuccess(e = null, request = null, settings = null) {
@@ -2601,6 +2601,7 @@ class WP_Backstage {
 	 * Inline Widget Script
 	 *
 	 * @since   2.0.0
+	 * @since   3.7.0 Refactors to use the jQuery events for `widget-added` and `widget-updated` for support accross legacy, customizer, and block editing screens.
 	 * @return  void
 	 */
 	public function inline_widget_script() { ?>
@@ -2611,8 +2612,6 @@ class WP_Backstage {
 
 			(function($) {
 
-				var widgetHandleTimer = null;
-
 				function findWidget(id = '') {
 					const input = document.querySelector('.widget-id[value="' + id + '"]');
 					const widget = findParentWidget(input);
@@ -2621,13 +2620,60 @@ class WP_Backstage {
 
 				function findParentWidget(element = null) {
 					var parentNode = element.parentNode;
-					while (! parentNode.classList.contains('widget')) {
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('widget')) {
 						parentNode = parentNode.parentNode;
 					}
-					return parentNode;
+					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function handleWidgetAdded(widget = null) {
+				function findParentBlock(element = null) {
+					var parentNode = element.parentNode;
+					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-block-legacy-widget')) {
+						parentNode = parentNode.parentNode;
+					}
+					return parentNode instanceof HTMLElement ? parentNode : null;
+				}
+
+				function handleWidgetAdded(e = null, $widget = null) {
+					setTimeout(function() {
+						initWidget($widget[0]);
+					}, 500);
+				}
+
+				function handleWidgetUpdated(e = null, $widget = null) {
+					refreshWidget($widget[0]);
+				}
+
+				function handleWidgetSynced(e = null, $widget = null) {
+					console.log('synced');
+				}
+
+				function initWidgetBlock(widget = null) {
+					const block = findParentBlock(widget);
+					block.addEventListener('click', handleBlockClick);
+				}
+
+				function handleBlockClick(e = null) {
+					const parentWidget = findParentWidget(e.target);
+					if (! parentWidget) {
+						const block = e.target.classList.contains('wp-block-legacy-widget') ? e.target : findParentBlock(e.target);
+						const widget = block.querySelector('.widget');
+						window.wpBackstage.editor.refreshAll(widget);
+						window.wpBackstage.codeEditor.refreshAll(widget);
+					}
+				}
+
+				function initWidgetArea(container = null) {
+					window.wpBackstage.colorPicker.initAll(container);
+					window.wpBackstage.datePicker.initAll(container);
+					window.wpBackstage.address.initAll(container);
+					window.wpBackstage.mediaUploader.initAll(container);
+					window.wpBackstage.codeEditor.initAll(container);
+					window.wpBackstage.editor.initAll(container);
+					initAllWidgetHandles(container);
+				}
+
+				function initWidget(widget = null) {
 					window.wpBackstage.colorPicker.initAll(widget);
 					window.wpBackstage.datePicker.initAll(widget);
 					window.wpBackstage.address.initAll(widget);
@@ -2635,9 +2681,10 @@ class WP_Backstage {
 					window.wpBackstage.codeEditor.initAll(widget);
 					window.wpBackstage.editor.initAll(widget);
 					initAllWidgetHandles(widget);
+					initWidgetBlock(widget);
 				}
 
-				function handleWidgetUpdated(widget = null) {
+				function refreshWidget(widget = null) {
 					window.wpBackstage.colorPicker.initAll(widget);
 					window.wpBackstage.datePicker.initAll(widget);
 					window.wpBackstage.address.initAll(widget);
@@ -2649,35 +2696,9 @@ class WP_Backstage {
 					window.wpBackstage.editor.refreshAll(widget);
 				}
 
-				function handleSuccess(e = null, request = null, settings = null) {
-					if (settings && settings.data) {
-						const params = new URLSearchParams(settings.data);
-						const action = params.get('action');
-						if (action === 'save-widget') {
-							const widget = findWidget(params.get('widget-id'));
-							if (Boolean(params.get('add_new'))) {
-								handleWidgetAdded(widget);
-							} else if (Boolean(params.get('delete_widget'))) {
-								// This is fired when widgets are deleted.
-							} else {
-								handleWidgetUpdated(widget);
-							}
-						} else if (action === 'widgets-order') {
-							// This is fired when widgets are reordered.
-							// Because WP closes the widget when reordering, 
-							// and because WP Backstage refreshes the fields
-							// when the widget handle is toggled, nothing needs
-							// to be done here currently.
-						}
-					}
-				}
-
 				function handleWidgetHandleClick(e = null) {
 					const widget = findParentWidget(e.target);
-					if (widgetHandleTimer) {
-						clearTimeout(widgetHandleTimer);
-					}
-					widgetHandleTimer = setTimeout(function() {
+					setTimeout(function() {
 						if (widget.classList.contains('open')) {
 							window.wpBackstage.editor.refreshAll(widget);
 							window.wpBackstage.codeEditor.refreshAll(widget);
@@ -2699,16 +2720,35 @@ class WP_Backstage {
 					}
 				}
 
-				function init() {
+				function handleWidgetSorted(e = null, $sortable = null) {
+					const $widget = $sortable.item.find('.widget.open');
+					if ($widget && $widget[0]) {
+						window.wpBackstage.editor.refreshAll($widget[0]);
+						window.wpBackstage.codeEditor.refreshAll($widget[0]);
+					}
+				}
+
+				function initActiveWidgetsArea() {
 					const container = document.getElementById('widgets-right');
-					window.wpBackstage.colorPicker.initAll(container);
-					window.wpBackstage.datePicker.initAll(container);
-					window.wpBackstage.address.initAll(container);
-					window.wpBackstage.mediaUploader.initAll(container);
-					window.wpBackstage.codeEditor.initAll(container);
-					window.wpBackstage.editor.initAll(container);
-					initAllWidgetHandles(container);
-					$(document).ajaxSuccess(handleSuccess);
+					if (container) {
+						initWidgetArea(container);
+					}
+				}
+
+				function initInactiveWidgetsArea() {
+					const container = document.getElementById('wp_inactive_widgets');
+					if (container) {
+						initWidgetArea(container);
+					}
+				}
+
+				function init() {
+					initActiveWidgetsArea();
+					initInactiveWidgetsArea();
+					$(document).on('widget-added', handleWidgetAdded);
+					$(document).on('widget-updated', handleWidgetUpdated);
+					$(document).on('widget-synced', handleWidgetSynced);
+					$(document).on('sortstop', handleWidgetSorted);
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {
@@ -2716,87 +2756,6 @@ class WP_Backstage {
 				});
 
 			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Widget Customizer Script
-	 *
-	 * @since   2.0.0
-	 * @return  void
-	 */
-	public function inline_widget_customizer_script() { ?>
-
-		<script 
-		id="wp_backstage_widget_customizer_script"
-		type="text/javascript">
-
-			(function($) {
-
-				var controlExpandTimer = null;
-
-				function initOrRefreshAll(widget = null) {
-					if ( ! widget.hasAttribute('data-wp-backstage-initialized') ) {
-						window.wpBackstage.colorPicker.initAll(widget);
-						window.wpBackstage.datePicker.initAll(widget);
-						window.wpBackstage.address.initAll(widget);
-						window.wpBackstage.mediaUploader.initAll(widget);
-						window.wpBackstage.codeEditor.initAll(widget);
-						window.wpBackstage.editor.initAll(widget);
-						widget.setAttribute('data-wp-backstage-initialized', true);
-					} else {
-						window.wpBackstage.editor.refreshAll(widget);
-						window.wpBackstage.codeEditor.refreshAll(widget);
-					}
-				}
-
-				function handleWidgetsSortStop(e = null, ui = null) {
-					const widget = ui.item.find('.widget');
-					initOrRefreshAll(widget[0]);
-				}
-
-				function handleControlExpanded(control = null) {
-					const widget = control.container.find('.widget');
-					initOrRefreshAll(widget[0]);
-				}
-
-				function initSectionSortables(section = null) {
-					section.contentContainer.on('sortstop', handleWidgetsSortStop);
-				}
-
-				function init() {
-					wp.customize.bind( 'ready', function() {
-						wp.customize.section.each( function (section) { 
-							if (section.id.startsWith('sidebar-widgets')) {
-								section.deferred.embedded.done(function() {
-									initSectionSortables(section);
-								});
-							}
-						});
-					});
-					wp.customize.control.bind('add', function(control) {
-						if (control.id.startsWith('widget_wp_backstage_widget')) {
-							control.expanded.bind(function(isExpanded) {
-								if (controlExpandTimer) {
-									clearTimeout(controlExpandTimer);
-								}
-								controlExpandTimer = setTimeout(function() {
-									if (isExpanded) {
-										handleControlExpanded(control);
-									}
-								}, 500);
-							});
-						}
-					});
-				}
-
-				document.addEventListener('DOMContentLoaded', function() {
-					init();
-				});
-
-			})();
 
 		</script>
 

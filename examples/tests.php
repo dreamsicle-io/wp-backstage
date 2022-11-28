@@ -841,3 +841,20 @@ function wp_backstage_init() {
 }
 
 add_action( 'after_setup_theme', 'wp_backstage_init', 10 );
+
+/**
+ * WP Backstage Test Widget
+ *
+ * @since 3.7.0
+ * @param array $args The widget arguments.
+ * @param array $instance The widget's saved instance settings.
+ * @return void
+ */
+function wp_backstage_test_widget( $args = array(), $instance = array() ) { ?>
+	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions
+		print_r( $instance );
+	?></textarea>
+<?php }
+
+add_action( 'wp_backstage_widget_output_wp_backstage_widget', 'wp_backstage_test_widget', 10, 2 );

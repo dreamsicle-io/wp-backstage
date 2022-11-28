@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Backstage 3.6.0\n"
+"Project-Id-Version: WP Backstage 3.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-backstage\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-26T21:23:08+00:00\n"
+"POT-Creation-Date: 2022-11-28T17:19:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -2373,11 +2373,6 @@ msgctxt "widget - required arg error"
 msgid "[Widget] The %1$s key is required."
 msgstr ""
 
-#: includes/class-wp-backstage.php:143
-msgctxt "plugin dependency - classic editor"
-msgid "Classic Editor"
-msgstr ""
-
 #. translators: 1: plugin name link.
 #: includes/class-wp-backstage.php:261
 msgctxt "plugin dependency message"
@@ -2390,7 +2385,7 @@ msgctxt "plugin error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage.php:2856
+#: includes/class-wp-backstage.php:2815
 msgctxt "media item - remove"
 msgid "Remove"
 msgstr ""

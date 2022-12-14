@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Backstage 3.7.0\n"
+"Project-Id-Version: WP Backstage 3.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-backstage\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-28T17:19:07+00:00\n"
+"POT-Creation-Date: 2022-12-14T19:15:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1305,145 +1305,145 @@ msgid "Error: %1$s"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:1613
+#: includes/class-wp-backstage-component.php:1621
 msgctxt "select users filter - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1626
+#: includes/class-wp-backstage-component.php:1634
 msgctxt "select users filter - option none label"
 msgid "All Users"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1642
+#: includes/class-wp-backstage-component.php:1650
 msgctxt "filter - option none label"
 msgid "All options"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1762
+#: includes/class-wp-backstage-component.php:1770
 msgctxt "checkbox column - true"
 msgid "True"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/class-wp-backstage-component.php:1899
+#: includes/class-wp-backstage-component.php:1907
 msgctxt "filterable value link title"
 msgid "Filter by %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3042
+#: includes/class-wp-backstage-component.php:3050
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3047
+#: includes/class-wp-backstage-component.php:3055
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3052
+#: includes/class-wp-backstage-component.php:3060
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3057
+#: includes/class-wp-backstage-component.php:3065
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3062
+#: includes/class-wp-backstage-component.php:3070
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:3067
+#: includes/class-wp-backstage-component.php:3075
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3070
+#: includes/class-wp-backstage-component.php:3078
 msgctxt "media uploader field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3071
+#: includes/class-wp-backstage-component.php:3079
 msgctxt "media uploader field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3072
+#: includes/class-wp-backstage-component.php:3080
 msgctxt "media uploader field - try again button"
 msgid "Try again"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3253
+#: includes/class-wp-backstage-component.php:3261
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3297
+#: includes/class-wp-backstage-component.php:3305
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3330
+#: includes/class-wp-backstage-component.php:3338
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3363
+#: includes/class-wp-backstage-component.php:3371
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3396
+#: includes/class-wp-backstage-component.php:3404
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3428
+#: includes/class-wp-backstage-component.php:3436
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3472
+#: includes/class-wp-backstage-component.php:3480
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3531
+#: includes/class-wp-backstage-component.php:3539
 msgctxt "select posts field - default option none label"
 msgid "Select"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3624
+#: includes/class-wp-backstage-component.php:3632
 msgctxt "select users field - default option none label"
 msgid "Select"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:3671
+#: includes/class-wp-backstage-component.php:3679
 msgctxt "select users field - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3718
+#: includes/class-wp-backstage-component.php:3726
 msgctxt "rest api preview - loading"
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3719
+#: includes/class-wp-backstage-component.php:3727
 msgctxt "rest api preview - instructions"
 msgid "<strong>No data fetched yet</strong> ― Click the fetch button to get started."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3735
+#: includes/class-wp-backstage-component.php:3743
 msgctxt "rest api preview - form submit"
 msgid "Fetch"
 msgstr ""

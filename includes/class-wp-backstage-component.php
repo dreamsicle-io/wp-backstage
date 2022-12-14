@@ -742,21 +742,29 @@ class WP_Backstage_Component {
 	 * @link     https://developer.wordpress.org/reference/functions/get_current_screen/ get_current_screen()
 	 *
 	 * @since   0.0.1
+	 * @since   3.7.1 Returns false if `get_current_screen()` is not defined.
 	 * @param   string       $key    The key of the `WP_Screen` object to check.
 	 * @param   string|array $value  The value or array of values to check.
-	 * @return  bool          If the match was successful or not.
+	 * @return  bool If the match was successful or not.
 	 */
 	protected function is_screen( $key = '', $value = '' ) {
 
-		$screen = get_current_screen();
+		$is_screen = false;
 
-		if ( empty( $screen ) ) {
-			return false;
-		} elseif ( is_array( $value ) ) {
-			return in_array( $screen->$key, $value );
-		} else {
-			return ( $value === $screen->$key );
+		if ( function_exists( 'get_current_screen' ) ) {
+
+			$screen = get_current_screen();
+
+			if ( empty( $screen ) ) {
+				$is_screen = false;
+			} elseif ( is_array( $value ) ) {
+				$is_screen = in_array( $screen->$key, $value );
+			} else {
+				$is_screen = ( $value === $screen->$key );
+			}
 		}
+
+		return $is_screen;
 
 	}
 

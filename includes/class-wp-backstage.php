@@ -166,6 +166,7 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   3.4.0 Adds filter to disable block editor for widgets.
 	 * @since   3.7.0 Removes filter to disable block editor for widgets.
+	 * @since   3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
 	 * @return  void
 	 */
 	public function init() {
@@ -175,15 +176,15 @@ class WP_Backstage {
 			return;
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
-		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 10 );
+		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 20 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_mixin_overrides_script' ), 20 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_date_picker_script' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_color_picker_script' ), 10 );

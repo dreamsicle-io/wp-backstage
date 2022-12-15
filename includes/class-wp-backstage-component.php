@@ -781,8 +781,9 @@ class WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/plugins/hooks/actions/ WP Actions
 	 * @link    https://developer.wordpress.org/plugins/hooks/filters/ WP Filters
 	 *
-	 * @since   0.0.1
-	 * @return  void
+	 * @since 0.0.1
+	 * @since 3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
+	 * @return void
 	 */
 	public function init() {
 
@@ -797,7 +798,7 @@ class WP_Backstage_Component {
 			return;
 		}
 
-		add_action( 'admin_print_scripts', array( $this, 'inline_code_editor_script' ), 0 );
+		add_action( 'admin_print_scripts', array( $this, 'inline_code_editor_script' ), 20 );
 
 	}
 

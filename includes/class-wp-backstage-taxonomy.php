@@ -252,20 +252,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   2.0.0  Ensures a new taxonomy is only registered if adding a new one.
 	 * @since   3.4.0  Adds help tabs, term update messages, and registers meta with the REST API.
 	 * @since   3.6.0  Removes `sprintf` templates from hook names.
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
 
 		// Only perform these hooks and filters if the taxonomy is new.
 		if ( $this->new ) {

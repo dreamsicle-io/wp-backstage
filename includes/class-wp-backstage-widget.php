@@ -120,20 +120,10 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @since   3.6.0 Removes `sprintf` templates from hook names.
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
 
 		add_action( 'widgets_init', array( $this, 'register' ), 10 );
 		add_action( "wp_backstage_widget_form_{$this->slug}", array( $this, 'render_fields' ), 10, 3 );

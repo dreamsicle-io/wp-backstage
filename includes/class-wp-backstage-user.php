@@ -155,20 +155,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   0.0.1
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
 
 		add_action( 'show_user_profile', array( $this, 'render_edit_nonce' ), 10 );
 		add_action( 'edit_user_profile', array( $this, 'render_edit_nonce' ), 10 );

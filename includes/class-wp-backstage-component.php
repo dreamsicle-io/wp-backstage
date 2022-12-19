@@ -783,15 +783,10 @@ class WP_Backstage_Component {
 	 *
 	 * @since 0.0.1
 	 * @since 3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
+	 * @since 4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );

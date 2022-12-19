@@ -248,20 +248,10 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added `hook_script_action` actions to all types of options pages.
 	 * @since   3.6.0  Removes `sprintf` templates from hook names.
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
 
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );

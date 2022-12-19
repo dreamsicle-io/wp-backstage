@@ -116,20 +116,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @since   3.5.0 Hooks the `manage_customizer_meta_preview` method at a much later priority.
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		global $wp_backstage;
-
-		if ( $wp_backstage->has_errors() ) {
-			return;
-		}
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
 
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_edit_nonce' ), 10, 5 );
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'render_fields' ), 10, 5 );

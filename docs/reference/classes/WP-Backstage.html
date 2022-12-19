@@ -63,6 +63,10 @@
                 <a href="packages/WPBackstage-Includes.html" class="">Includes</a>
                 
             </li>
+                    <li>
+                <a href="packages/WPBackstage-IncludesFields.html" class="">IncludesFields</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -152,18 +156,11 @@
 <dd>KSES P</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage.html#property_errors">$errors</a>
+    <a href="classes/WP-Backstage.html#property_fields">$fields</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&gt;            </span>
 </dt>
-<dd>Errors</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/WP-Backstage.html#property_plugin_dependencies">$plugin_dependencies</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>Plugin Dependencies</dd>
+<dd>Fields</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method___construct">__construct()</a>
@@ -187,11 +184,18 @@
 <dd>Enqueue Admin Scripts</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage.html#method_has_errors">has_errors()</a>
+    <a href="classes/WP-Backstage.html#method_get_field_class">get_field_class()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>    </span>
 </dt>
-<dd>Has Errors</dd>
+<dd>Get Field Class</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage.html#method_get_field_classes">get_field_classes()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&gt;    </span>
+</dt>
+<dd>Get Field Classes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_init">init()</a>
@@ -355,11 +359,18 @@
 <dd>Inline Widget Script</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/WP-Backstage.html#method_print_errors">print_errors()</a>
+    <a href="classes/WP-Backstage.html#method_register_field_class">register_field_class()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Print Errors</dd>
+<dd>Register Field Class</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage.html#method_register_field_classes">register_field_classes()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Register Field Classes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage.html#method_render_media_item">render_media_item()</a>
@@ -367,20 +378,6 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Render Media Item</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage.html#method_is_plugin_active">is_plugin_active()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Is Plugin Active</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/WP-Backstage.html#method_set_errors">set_errors()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Set Errors</dd>
 
         </dl>
 
@@ -410,7 +407,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -477,7 +474,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -535,9 +532,9 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_errors">
-        $errors
-        <a href="classes/WP-Backstage.html#property_errors" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_fields">
+        $fields
+        <a href="classes/WP-Backstage.html#property_fields" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -548,16 +545,16 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">Errors</p>
+        <p class="phpdocumentor-summary">Fields</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$errors</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$fields</span>
      = <span class="phpdocumentor-signature__default-value">array()</span></code>
 
     
-        <section class="phpdocumentor-description"><p>The array of all errors on the instance.</p>
+        <section class="phpdocumentor-description"><p>An array of field classes.</p>
 </section>
 
     
@@ -570,71 +567,7 @@
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_plugin_dependencies">
-        $plugin_dependencies
-        <a href="classes/WP-Backstage.html#property_plugin_dependencies" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">45</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Plugin Dependencies</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$plugin_dependencies</span>
-     = <span class="phpdocumentor-signature__default-value">array()</span></code>
-
-        <section class="phpdocumentor-description"><p>Example:
-array(
-'key'  =&gt; 'classic-editor/classic-editor.php', // The key will be passed to <code class="prettyprint">is_plugin_active()</code> to check.
-'name' =&gt; _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
-'url'  =&gt; 'https://wordpress.org/plugins/classic-editor/',
-)</p>
-</section>
-
-        <section class="phpdocumentor-description"><p>The array of all errors on the instance.</p>
-</section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/is_plugin_active/"> <p>is_plugin_active()</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -661,7 +594,7 @@ array(
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -683,19 +616,9 @@ array(
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
                                              
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">3.7.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Removes plugin dependencies.</p>
-</section>
-
                                     </dd>
                         </dl>
 
@@ -718,7 +641,7 @@ array(
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2940</span>
+    <span class="phpdocumentor-element-found-in__line">2865</span>
 
     </aside>
 
@@ -768,7 +691,7 @@ preview.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">682</span>
+    <span class="phpdocumentor-element-found-in__line">607</span>
 
     </aside>
 
@@ -877,26 +800,83 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_has_errors">
-        has_errors()
-        <a href="classes/WP-Backstage.html#method_has_errors" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_get_field_class">
+        get_field_class()
+        <a href="classes/WP-Backstage.html#method_get_field_class" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Has Errors</p>
+        <p class="phpdocumentor-summary">Get Field Class</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">has_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">get_field_class</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"><p>A utility method to easily check if the instance has errors or not.</p>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The field type identidier.</p>
 </section>
 
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_get_field_classes">
+        get_field_classes()
+        <a href="classes/WP-Backstage.html#method_get_field_classes" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">226</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get Field Classes</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">get_field_classes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&gt;</span></code>
+
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -908,18 +888,16 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
                                              
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>Whether the instance has errors or not.</p>
-</section>
-
+        
     
 </article>
                     <article
@@ -935,7 +913,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">172</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -1057,6 +1035,16 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
 </section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Removes error checking of the <code class="prettyprint">WP_Backstage</code> class as it no longer reports errors.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -1078,7 +1066,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1606</span>
+    <span class="phpdocumentor-element-found-in__line">1531</span>
 
     </aside>
 
@@ -1137,7 +1125,7 @@ picker and sortable. Finally, this will initialize all code editor instances.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1498</span>
+    <span class="phpdocumentor-element-found-in__line">1423</span>
 
     </aside>
 
@@ -1237,7 +1225,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">648</span>
+    <span class="phpdocumentor-element-found-in__line">573</span>
 
     </aside>
 
@@ -1286,7 +1274,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1386</span>
+    <span class="phpdocumentor-element-found-in__line">1311</span>
 
     </aside>
 
@@ -1377,7 +1365,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">622</span>
+    <span class="phpdocumentor-element-found-in__line">547</span>
 
     </aside>
 
@@ -1426,7 +1414,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1328</span>
+    <span class="phpdocumentor-element-found-in__line">1253</span>
 
     </aside>
 
@@ -1517,7 +1505,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1690</span>
+    <span class="phpdocumentor-element-found-in__line">1615</span>
 
     </aside>
 
@@ -1625,7 +1613,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">592</span>
+    <span class="phpdocumentor-element-found-in__line">517</span>
 
     </aside>
 
@@ -1674,7 +1662,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">843</span>
+    <span class="phpdocumentor-element-found-in__line">768</span>
 
     </aside>
 
@@ -1723,7 +1711,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">802</span>
+    <span class="phpdocumentor-element-found-in__line">727</span>
 
     </aside>
 
@@ -1770,7 +1758,7 @@ to ensure that all CodeMirror instances have finished initializing first.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">745</span>
+    <span class="phpdocumentor-element-found-in__line">670</span>
 
     </aside>
 
@@ -1826,7 +1814,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">879</span>
+    <span class="phpdocumentor-element-found-in__line">804</span>
 
     </aside>
 
@@ -1935,7 +1923,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -1994,7 +1982,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2152</span>
+    <span class="phpdocumentor-element-found-in__line">2077</span>
 
     </aside>
 
@@ -2067,7 +2055,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1960</span>
+    <span class="phpdocumentor-element-found-in__line">1885</span>
 
     </aside>
 
@@ -2124,7 +2112,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2574</span>
+    <span class="phpdocumentor-element-found-in__line">2499</span>
 
     </aside>
 
@@ -2171,7 +2159,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1841</span>
+    <span class="phpdocumentor-element-found-in__line">1766</span>
 
     </aside>
 
@@ -2228,7 +2216,7 @@ adds a simple check for a <code class="prettyprint">wp-mediaelement-keep</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -2278,7 +2266,7 @@ it is available when the REST API preview script needs it.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2519</span>
+    <span class="phpdocumentor-element-found-in__line">2444</span>
 
     </aside>
 
@@ -2325,7 +2313,7 @@ it is available when the REST API preview script needs it.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">771</span>
+    <span class="phpdocumentor-element-found-in__line">696</span>
 
     </aside>
 
@@ -2372,7 +2360,7 @@ it is available when the REST API preview script needs it.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2771</span>
+    <span class="phpdocumentor-element-found-in__line">2696</span>
 
     </aside>
 
@@ -2419,7 +2407,7 @@ it is available when the REST API preview script needs it.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2608</span>
+    <span class="phpdocumentor-element-found-in__line">2533</span>
 
     </aside>
 
@@ -2469,22 +2457,90 @@ it is available when the REST API preview script needs it.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_print_errors">
-        print_errors()
-        <a href="classes/WP-Backstage.html#method_print_errors" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_register_field_class">
+        register_field_class()
+        <a href="classes/WP-Backstage.html#method_register_field_class" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">319</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Print Errors</p>
+        <p class="phpdocumentor-summary">Register Field Class</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">print_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">register_field_class</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$instance</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The field type identifier.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$instance</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/WP-Backstage-Field.html"><abbr title="\WP_Backstage_Field">WP_Backstage_Field</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The field class instance.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_register_field_classes">
+        register_field_classes()
+        <a href="classes/WP-Backstage.html#method_register_field_classes" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">193</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Register Field Classes</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">register_field_classes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
     
@@ -2495,18 +2551,10 @@ it is available when the REST API preview script needs it.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/classes/wp_error/"> <p>WP_Error()</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -2531,7 +2579,7 @@ it is available when the REST API preview script needs it.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2810</span>
+    <span class="phpdocumentor-element-found-in__line">2735</span>
 
     </aside>
 
@@ -2579,132 +2627,6 @@ and then taking into account the mime type of the attachment, render a media ele
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">3.3.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_is_plugin_active">
-        is_plugin_active()
-        <a href="classes/WP-Backstage.html#method_is_plugin_active" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">290</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Is Plugin Active</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">is_plugin_active</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$plugin</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-        <section class="phpdocumentor-description"><p>The native is_plugin_active() function in WordPress does not exist
-at the time this class is constructed. This function checks against
-the <code class="prettyprint">active_plugins</code> option in the database.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$plugin</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The plugin file name as <code class="prettyprint">classic-editor/classic-editor.php</code>.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/is_plugin_active/"> <p>is_plugin_active()</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_set_errors">
-        set_errors()
-        <a href="classes/WP-Backstage.html#method_set_errors" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage.php"><a href="files/includes-class-wp-backstage.html"><abbr title="includes/class-wp-backstage.php">class-wp-backstage.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">250</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set Errors</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">set_errors</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/is_plugin_active/"> <p>is_plugin_active()</p>
- </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                              
                                     </dd>

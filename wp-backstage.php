@@ -34,6 +34,9 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget-base.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-number-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-range-field.php';
 require WP_BACKSTAGE . '/examples/tests.php';
 
 add_action( 'plugins_loaded', array( new WP_Backstage(), 'init' ), 10 );

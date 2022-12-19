@@ -20,29 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage {
 
 	/**
-	 * Errors
+	 * Fields
 	 *
-	 * @since  2.0.0
-	 * @var    array  $errors  The array of all errors on the instance.
+	 * @since 4.0.0
+	 * @var WP_Backstage_Field[] $fields An array of field classes.
 	 */
-	protected $errors = array();
-
-	/**
-	 * Plugin Dependencies
-	 *
-	 * Example:
-	 * array(
-	 *     'key'  => 'classic-editor/classic-editor.php', // The key will be passed to `is_plugin_active()` to check.
-	 *     'name' => _x( 'Classic Editor', 'plugin dependency - classic editor', 'wp_backstage' ),
-	 *     'url'  => 'https://wordpress.org/plugins/classic-editor/',
-	 * )
-	 *
-	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 *
-	 * @since  2.0.0
-	 * @var    array  $errors  The array of all errors on the instance.
-	 */
-	protected $plugin_dependencies = array();
+	protected $fields = array();
 
 	/**
 	 * KSES P
@@ -140,13 +123,14 @@ class WP_Backstage {
 	/**
 	 * Construct
 	 *
-	 * @since   2.0.0
-	 * @since   3.7.0 Removes plugin dependencies.
-	 * @return  void
+	 * @since 2.0.0
+	 * @since 3.7.0 Removes plugin dependencies.
+	 * @since 4.0.0 Removes error construction and refactors setting of global instance.
+	 * @return void
 	 */
 	public function __construct() {
-		$this->set_errors();
-		$GLOBALS['wp_backstage'] = $this;
+		global $wp_backstage;
+		$wp_backstage = $this;
 	}
 
 	/**
@@ -167,15 +151,11 @@ class WP_Backstage {
 	 * @since   3.4.0 Adds filter to disable block editor for widgets.
 	 * @since   3.7.0 Removes filter to disable block editor for widgets.
 	 * @since   3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
+	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
-
-		if ( $this->has_errors() ) {
-			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
-		}
-
+		add_action( 'after_setup_theme', array( $this, 'register_field_classes' ), 0 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
@@ -204,6 +184,62 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
+	}
+
+	/**
+	 * Register Field Classes
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function register_field_classes() {
+		// Register the default field classes.
+		$this->register_field_class( 'default', new WP_Backstage_Field() );
+		$this->register_field_class( 'number', new WP_Backstage_Number_Field() );
+		$this->register_field_class( 'range', new WP_Backstage_Range_Field() );
+
+		/**
+		 * Fires after the default field classes are registered. This hook should be
+		 * used when themes or plugins add their own field classes to WP Backstage.
+		 *
+		 * @since 4.0.0
+		 * @param WP_Backstage $wp_backstage The instance of WP Backstage's main class.
+		 */
+		do_action( 'wp_backstage_register_field_classes', $this );
+	}
+
+	/**
+	 * Register Field Class
+	 *
+	 * @since 4.0.0
+	 * @param string             $type The field type identifier.
+	 * @param WP_Backstage_Field $instance The field class instance.
+	 * @return void
+	 */
+	public function register_field_class( $type, $instance ) {
+		$instance->init();
+		$this->fields[ sanitize_key( $type ) ] = $instance;
+	}
+
+	/**
+	 * Get Field Classes
+	 *
+	 * @since 4.0.0
+	 * @return WP_Backstage_Field[]
+	 */
+	public function get_field_classes() {
+		return $this->fields;
+	}
+
+	/**
+	 * Get Field Class
+	 *
+	 * @since 4.0.0
+	 * @param string $type The field type identidier.
+	 * @return WP_Backstage_Field
+	 */
+	public function get_field_class( $type ) {
+		return isset( $this->fields[ $type ] ) ? $this->fields[ $type ] : $this->fields['default'];
 	}
 
 	/**
@@ -237,113 +273,6 @@ class WP_Backstage {
 				)
 			);
 		}
-	}
-
-	/**
-	 * Set Errors
-	 *
-	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 *
-	 * @since   2.0.0
-	 * @return  void
-	 */
-	protected function set_errors() {
-
-		if ( is_array( $this->plugin_dependencies ) && ! empty( $this->plugin_dependencies ) ) {
-
-			foreach ( $this->plugin_dependencies as $plugin_dependency ) {
-
-				if ( ! $this->is_plugin_active( $plugin_dependency['key'] ) ) {
-
-					$this->errors[] = new WP_Error(
-						'plugin_dependency',
-						sprintf(
-							/* translators: 1: plugin name link. */
-							_x( '[WP Backstage Plugin Dependency] The %1$s plugin must be installed and activated.', 'plugin dependency message', 'wp_backstage' ),
-							sprintf(
-								'<a href="%1$s">%2$s</a>',
-								esc_url( $plugin_dependency['url'] ),
-								esc_html( $plugin_dependency['name'] )
-							)
-						)
-					);
-
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * Is Plugin Active
-	 *
-	 * The native is_plugin_active() function in WordPress does not exist
-	 * at the time this class is constructed. This function checks against
-	 * the `active_plugins` option in the database.
-	 *
-	 * @link   https://developer.wordpress.org/reference/functions/is_plugin_active/  is_plugin_active()
-	 *
-	 * @since   2.0.0
-	 * @param   string $plugin  The plugin file name as `classic-editor/classic-editor.php`.
-	 * @return  boolean
-	 */
-	protected function is_plugin_active( $plugin ) {
-		$active_plugins = get_option( 'active_plugins' );
-		$is_active      = false;
-		if ( is_array( $active_plugins ) && in_array( $plugin, $active_plugins ) ) {
-			$is_active = true;
-		}
-		return $is_active;
-	}
-
-	/**
-	 * Has Errors
-	 *
-	 * A utility method to easily check if the instance has errors or not.
-	 *
-	 * @since   2.0.0
-	 * @return  bool  Whether the instance has errors or not.
-	 */
-	public function has_errors() {
-		return is_array( $this->errors ) && ! empty( $this->errors );
-	}
-
-	/**
-	 * Print Errors
-	 *
-	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
-	 *
-	 * @since   2.0.0
-	 * @return  void
-	 */
-	public function print_errors() {
-
-		if ( $this->has_errors() ) {
-
-			foreach ( $this->errors as $error ) {
-
-				if ( is_wp_error( $error ) ) {
-
-					$message = sprintf(
-						/* translators: 1: error message. */
-						_x( 'Error: %1$s', 'plugin error message', 'wp_backstage' ),
-						$error->get_error_message()
-					); ?>
-
-					<div class="notice notice-error">
-
-						<p><?php
-
-							echo wp_kses( $message, self::$kses_p );
-
-						?></p>
-
-					</div>
-
-				<?php }
-			}
-		}
-
 	}
 
 	/**

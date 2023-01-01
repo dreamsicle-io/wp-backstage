@@ -112,8 +112,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'is_filterable' => false,
 			)
 		);
-		$this->new                = boolval( $new );
-		$this->slug               = sanitize_key( $slug );
+
+		$this->new  = boolval( $new );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
 		$this->nonce_key = sprintf( '_wp_backstage_taxonomy_%1$s_nonce', $this->slug );
@@ -161,6 +162,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				$this->args['menu_name'] = $this->slug;
 
 			}
+		}
+
+		foreach ( $this->args['fields'] as $i => $field ) {
+			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
 		}
 
 	}
@@ -593,7 +598,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		if ( ! empty( $bullets ) ) { ?>
 			<ul>
 				<?php foreach ( $bullets as $bullet ) { ?>
-					<li><?php echo wp_kses( $bullet, WP_Backstage::$kses_p ); ?></li>
+					<li><?php echo wp_kses( $bullet, 'wp_backstage_help_list_item' ); ?></li>
 				<?php } ?>
 			</ul>
 		<?php }
@@ -730,7 +735,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$schema = $this->get_field_schema( $field );
+			$field_class = $this->get_field_class( $field['type'] );
+			$schema      = $field_class->get_schema();
 
 			$show_in_rest = false;
 			if ( $field['show_in_rest'] ) {
@@ -743,10 +749,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				$this->slug,
 				$field['name'],
 				array(
-					'description'       => $field['label'],
+					'description'       => wp_strip_all_tags( $field['description'], true ),
 					'type'              => $schema['type'],
 					'single'            => true,
-					'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+					'sanitize_callback' => array( $field_class, 'sanitize' ),
 					'show_in_rest'      => $show_in_rest,
 				)
 			);
@@ -969,20 +975,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @return  array  An array of field arguments if there are any, or an empty array.
 	 */
 	protected function get_fields() {
-
-		$fields = array();
-
-		if ( is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ) {
-
-			foreach ( $this->args['fields'] as $field ) {
-
-				$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-			}
-		}
-
-		return $fields;
-
+		return $this->args['fields'];
 	}
 
 	/**
@@ -1003,19 +996,40 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			/**
+			 * Filters the field arguments just before the field is rendered on the "Add" form.
+			 *
+			 * For consistency, this filter passes null as the last argument,
+			 * in place of the taxonomy term object that would be passed on the
+			 * "Edit" form.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
+			 */
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null );
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                 = ( $field['type'] === 'textarea' ) ? 5 : 10;
-					$default_cols                 = 40;
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-				}
+			$field_class = $this->get_field_class( $field['type'] );
+
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->set_field_input_size( $field, 40 );
+			}
+
+			if ( $field_class->has_tag( 'select_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'postform' ) );
+			}
+
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->set_field_textarea_dimensions( $field, 5, 40 );
+			} ?>
+
+			<div class="<?php printf( 'form-field term-%1$s-wrap', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
 
 				/**
-				 * Filters the field arguments just before the field is rendered on the "Add" form.
+				 * Fires before the field is rendered on the "Add" form.
 				 *
 				 * For consistency, this filter passes null as the last argument,
 				 * in place of the taxonomy term object that would be passed on the
@@ -1026,45 +1040,31 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				 * @param array $field an array of field arguments.
 				 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
 				 */
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null ); ?>
+				do_action( "wp_backstage_{$this->slug}_field_add_before", $field, null );
 
-				<div class="form-field"><?php
+				$this->render_field_label( $field );
 
-					/**
-					 * Fires before the field is rendered on the "Add" form.
-					 *
-					 * For consistency, this filter passes null as the last argument,
-					 * in place of the taxonomy term object that would be passed on the
-					 * "Edit" form.
-					 *
-					 * @since 0.0.1
-					 *
-					 * @param array $field an array of field arguments.
-					 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
-					 */
-					do_action( "wp_backstage_{$this->slug}_field_add_before", $field, null );
+				$field_class->render( $field );
 
-					$this->render_field_by_type( $field );
+				/**
+				 * Fires after the field is rendered on the "Add" form.
+				 *
+				 * For consistency, this filter passes null as the last argument,
+				 * in place of the taxonomy term object that would be passed on the
+				 * "Edit" form.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
+				 */
+				do_action( "wp_backstage_{$this->slug}_field_add_after", $field, null );
 
-					/**
-					 * Fires after the field is rendered on the "Add" form.
-					 *
-					 * For consistency, this filter passes null as the last argument,
-					 * in place of the taxonomy term object that would be passed on the
-					 * "Edit" form.
-					 *
-					 * @since 0.0.1
-					 *
-					 * @param array $field an array of field arguments.
-					 * @param null $term a placeholder for the term object, since there is none on the "Add" form.
-					 */
-					do_action( "wp_backstage_{$this->slug}_field_add_after", $field, null );
+				$this->render_add_field_description( $field );
 
-				?></div>
+			?></div>
 
-			<?php }
-		}
-
+		<?php }
 	}
 
 	/**
@@ -1088,86 +1088,129 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			$field['value'] = get_term_meta( $term->term_id, $field['name'], true );
 
-				$field['value']      = get_term_meta( $term->term_id, $field['name'], true );
-				$field['show_label'] = false;
-				$input_class         = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			/**
+			 * Filters the field arguments just before the field is rendered on the "Edit" form.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param WP_Term $term The current taxonomy term.
+			 */
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $term );
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                  = ( $field['type'] === 'textarea' ) ? 5 : 10;
-					$default_cols                  = 40;
-					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols']  = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-					$field['input_attrs']['class'] = sprintf( 'large-text %1$s', $input_class );
-				}
+			$field_class = $this->get_field_class( $field['type'] );
 
-				/**
-				 * Filters the field arguments just before the field is rendered on the "Edit" form.
-				 *
-				 * @since 0.0.1
-				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Term $term The current taxonomy term.
-				 */
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $term ); ?>
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->set_field_input_size( $field, 40 );
+			}
 
-				<tr class="form-field">
+			if ( $field_class->has_tag( 'select_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'postform' ) );
+			}
 
-					<th scope="row">
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'large-text' ) );
+				$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
+			} ?>
 
-						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
+			<tr class="<?php printf( 'form-field term-%1$s-wrap', esc_attr( $field_class->get_id( $field ) ) ); ?>">
 
-							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php
+				<th scope="row">
 
-								echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					<?php if ( $field_class->has_tag( 'remove_label_for' ) ) { ?>
 
-							?></label>
+						<legend><?php
+							$field_class->label( $field );
+						?></legend>
 
-						<?php } else { ?>
+					<?php } else { ?>
 
-							<span><?php
+						<label for="<?php $field_class->element_id( $field ); ?>"><?php
+							$field_class->label( $field );
+						?></label>
 
-								echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					<?php } ?>
 
-							?></span>
+				</th>
 
-						<?php } ?>
+				<td><?php
 
-					</th>
+					/**
+					 * Fires before the field is rendered on the "Edit" form.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param WP_Term $term The current taxonomy term.
+					 */
+					do_action( "wp_backstage_{$this->slug}_field_edit_before", $field, $term );
 
-					<td><?php
+					$field_class->render( $field );
 
-						/**
-						 * Fires before the field is rendered on the "Edit" form.
-						 *
-						 * @since 0.0.1
-						 *
-						 * @param array $field an array of field arguments.
-						 * @param WP_Term $term The current taxonomy term.
-						 */
-						do_action( "wp_backstage_{$this->slug}_field_edit_before", $field, $term );
+					/**
+					 * Fires after the field is rendered on the "Edit" form.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param WP_Term $term The current taxonomy term.
+					 */
+					do_action( "wp_backstage_{$this->slug}_field_edit_after", $field, $term );
 
-						$this->render_field_by_type( $field, $term );
+					$this->render_edit_field_description( $field );
 
-						/**
-						 * Fires after the field is rendered on the "Edit" form.
-						 *
-						 * @since 0.0.1
-						 *
-						 * @param array $field an array of field arguments.
-						 * @param WP_Term $term The current taxonomy term.
-						 */
-						do_action( "wp_backstage_{$this->slug}_field_edit_after", $field, $term );
+				?></td>
 
-					?></td>
+			</tr>
 
-				</tr>
+		<?php }
+	}
 
-			<?php }
-		}
+	/**
+	 * Render Add Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_add_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
+
+	}
+
+	/**
+	 * Render Edit Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_edit_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p 
+			class="description"
+			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
 
 	}
 
@@ -1202,24 +1245,21 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			if ( isset( $post_data[ $field['name'] ] ) ) {
 
-				if ( isset( $post_data[ $field['name'] ] ) ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ] );
 
-					$value = $this->sanitize_field( $field, $post_data[ $field['name'] ] );
+				update_term_meta( $term_id, $field['name'], $value );
 
-					update_term_meta( $term_id, $field['name'], $value );
+			} else {
 
-				} else {
+				delete_term_meta( $term_id, $field['name'] );
 
-					delete_term_meta( $term_id, $field['name'] );
-
-				}
 			}
 		}
-
 	}
 
 	/**
@@ -1258,11 +1298,12 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				return $content;
 			}
 
-			$formatted_value = $this->format_field_value( $value, $field );
+			if ( ! empty( $value ) ) {
 
-			if ( ! empty( $formatted_value ) ) {
-
-				$content = $formatted_value;
+				ob_start();
+				$field_class = $this->get_field_class( $field['type'] );
+				$field_class->render_column( $field, $value );
+				$content = ob_get_clean();
 
 			} else {
 
@@ -1348,16 +1389,13 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			// phpcs:ignore WordPress.Security.NonceVerification
+			$url_params = wp_unslash( $_GET );
 
-				// phpcs:ignore WordPress.Security.NonceVerification
-				$url_params = wp_unslash( $_GET );
-
-				if ( isset( $url_params[ $field['name'] ] ) ) {
-					$query->query_vars[ $field['name'] ] = $url_params[ $field['name'] ];
-				}
+			if ( isset( $url_params[ $field['name'] ] ) ) {
+				$query->query_vars[ $field['name'] ] = $url_params[ $field['name'] ];
 			}
 		}
 	}
@@ -1493,13 +1531,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 			$fields = $this->get_fields();
 
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-				foreach ( $fields as $field ) {
-
-					if ( $field['has_column'] ) {
-						$hidden[] = $field['name'];
-					}
+			foreach ( $fields as $field ) {
+				if ( $field['has_column'] ) {
+					$hidden[] = $field['name'];
 				}
 			}
 		}

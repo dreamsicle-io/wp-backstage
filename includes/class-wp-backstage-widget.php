@@ -82,6 +82,9 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 */
 	protected function set_args( $args = array() ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
+		foreach ( $this->args['fields'] as $i => $field ) {
+			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
+		}
 	}
 
 	/**
@@ -94,25 +97,21 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 */
 	protected function set_errors() {
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		foreach ( $this->required_args as $required_arg ) {
 
-			foreach ( $this->required_args as $required_arg ) {
+			if ( empty( $this->args[ $required_arg ] ) ) {
 
-				if ( empty( $this->args[ $required_arg ] ) ) {
+				$this->errors[] = new WP_Error(
+					'required_widget_arg',
+					sprintf(
+						/* translators: 1:required arg key. */
+						_x( '[Widget] The %1$s key is required.', 'widget - required arg error', 'wp_backstage' ),
+						'<code>' . $required_arg . '</code>'
+					)
+				);
 
-					$this->errors[] = new WP_Error(
-						'required_widget_arg',
-						sprintf(
-							/* translators: 1:required arg key. */
-							_x( '[Widget] The %1$s key is required.', 'widget - required arg error', 'wp_backstage' ),
-							'<code>' . $required_arg . '</code>'
-						)
-					);
-
-				}
 			}
 		}
-
 	}
 
 	/**
@@ -151,20 +150,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
-
-		$fields = array();
-
-		if ( is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ) {
-
-			foreach ( $this->args['fields'] as $field ) {
-
-				$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-			}
-		}
-
-		return $fields;
-
+		return $this->args['fields'];
 	}
 
 	/**
@@ -225,46 +211,95 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			$field_name     = $field['name'];
+			$field['name']  = $this->get_field_name( $field_name, $id_base, $number );
+			$field['id']    = $this->get_field_id( $field_name, $id_base, $number );
+			$field['value'] = isset( $instance[ $field_name ] ) ? $instance[ $field_name ] : null;
 
-				$field_name     = $field['name'];
-				$field['name']  = $this->get_field_name( $field_name, $id_base, $number );
-				$field['id']    = $this->get_field_id( $field_name, $id_base, $number );
-				$field['value'] = isset( $instance[ $field_name ] ) ? $instance[ $field_name ] : null;
-				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $instance );
 
-				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+			$field_class = $this->get_field_class( $field['type'] );
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                  = ( $field['type'] === 'textarea' ) ? 6 : 10;
-					$default_cols                  = 20;
-					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols']  = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+			}
 
-				if ( $field['type'] === 'code' ) {
-					$field['args']['settings_key'] = $field_name;
-				}
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+				$field = $this->set_field_textarea_dimensions( $field, 6, 50 );
+			} ?>
 
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $instance ); ?>
+			<p class="widget-field-control"><?php
 
-				<p><?php
+				$this->render_field_label( $field );
 
-					do_action( "wp_backstage_{$this->slug}_field_before", $field, $instance );
+				do_action( "wp_backstage_{$this->slug}_field_before", $field, $instance );
 
-					$this->render_field_by_type( $field );
+				$field_class->render( $field );
 
-					do_action( "wp_backstage_{$this->slug}_field_after", $field, $instance );
+				do_action( "wp_backstage_{$this->slug}_field_after", $field, $instance );
 
-				?></p>
+			?></p>
 
-			<?php }
-		}
+			<?php $this->render_field_description( $field ); ?>
+
+		<?php }
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_label( $field = array() ) {
+
+		$field_class = $this->get_field_class( $field['type'] );
+
+		$label = sprintf(
+			/* translators: 1: field name. */
+			_x( '%1$s:', 'widget - field label', 'wp_backstage' ),
+			$field['label']
+		);
+
+		if ( $field_class->has_tag( 'remove_label_for' ) ) { ?>
+
+			<legend class="<?php echo $field_class->has_tag( 'hide_label' ) ? 'screen-reader-text' : ''; ?>"><?php
+				echo wp_kses( $label, 'wp_backstage_field_label' );
+			?></legend>
+
+		<?php } else { ?>
+
+			<label 
+			for="<?php $field_class->element_id( $field ); ?>"
+			class="<?php echo $field_class->has_tag( 'hide_label' ) ? 'screen-reader-text' : ''; ?>"><?php
+				echo wp_kses( $label, 'wp_backstage_field_label' );
+			?></label>
+
+		<?php }
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p class="widget-field-description"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
 
 	}
 
@@ -282,20 +317,19 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			if ( isset( $new_instance[ $field['name'] ] ) ) {
 
-				if ( isset( $new_instance[ $field['name'] ] ) ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $field, $new_instance[ $field['name'] ] );
 
-					$value                          = $this->sanitize_field( $field, $new_instance[ $field['name'] ] );
-					$new_instance[ $field['name'] ] = $value;
+				$new_instance[ $field['name'] ] = $value;
 
-				} else {
+			} else {
 
-					unset( $new_instance[ $field['name'] ] );
+				unset( $new_instance[ $field['name'] ] );
 
-				}
 			}
 		}
 

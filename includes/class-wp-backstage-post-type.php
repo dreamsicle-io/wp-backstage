@@ -225,6 +225,13 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			}
 		}
 
+		foreach ( $this->args['meta_boxes'] as $i => $field_group ) {
+			$this->args['meta_boxes'][ $i ] = wp_parse_args( $field_group, $this->default_meta_box_args );
+			foreach ( $this->args['meta_boxes'][ $i ]['fields'] as $ii => $field ) {
+				$this->args['meta_boxes'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
+			}
+		}
+
 	}
 
 	/**
@@ -924,7 +931,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		if ( ! empty( $bullets ) ) { ?>
 			<ul>
 				<?php foreach ( $bullets as $bullet ) { ?>
-					<li><?php echo wp_kses( $bullet, WP_Backstage::$kses_p ); ?></li>
+					<li><?php echo wp_kses( $bullet, 'wp_backstage_help_list_item' ); ?></li>
 				<?php } ?>
 			</ul>
 		<?php }
@@ -1196,7 +1203,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		if ( ! empty( $bullets ) ) { ?>
 			<ul>
 				<?php foreach ( $bullets as $bullet ) { ?>
-					<li><?php echo wp_kses( $bullet, WP_Backstage::$kses_p ); ?></li>
+					<li><?php echo wp_kses( $bullet, 'wp_backstage_help_list_item' ); ?></li>
 				<?php } ?>
 			</ul>
 		<?php }
@@ -1297,7 +1304,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		if ( ! empty( $bullets ) ) { ?>
 			<ul>
 				<?php foreach ( $bullets as $bullet ) { ?>
-					<li><?php echo wp_kses( $bullet, WP_Backstage::$kses_p ); ?></li>
+					<li><?php echo wp_kses( $bullet, 'wp_backstage_help_list_item' ); ?></li>
 				<?php } ?>
 			</ul>
 		<?php }
@@ -1472,7 +1479,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$schema = $this->get_field_schema( $field );
+			$field_class = $this->get_field_class( $field['type'] );
+			$schema      = $field_class->get_schema();
 
 			$show_in_rest = false;
 			if ( $field['show_in_rest'] ) {
@@ -1485,10 +1493,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				$this->slug,
 				$field['name'],
 				array(
-					'description'       => $field['label'],
+					'description'       => wp_strip_all_tags( $field['description'], true ),
 					'type'              => $schema['type'],
 					'single'            => true,
-					'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+					'sanitize_callback' => array( $field_class, 'sanitize' ),
 					'show_in_rest'      => $show_in_rest,
 				)
 			);
@@ -1759,20 +1767,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @return  array  An array of meta box argument arrays.
 	 */
 	protected function get_meta_boxes() {
-
-		$meta_boxes = array();
-
-		if ( is_array( $this->args['meta_boxes'] ) && ! empty( $this->args['meta_boxes'] ) ) {
-
-			foreach ( $this->args['meta_boxes'] as $meta_box ) {
-
-				$meta_boxes[] = wp_parse_args( $meta_box, $this->default_meta_box_args );
-
-			}
-		}
-
-		return $meta_boxes;
-
+		return $this->args['meta_boxes'];
 	}
 
 	/**
@@ -1786,19 +1781,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$meta_boxes = $this->get_meta_boxes();
 		$fields     = array();
 
-		if ( is_array( $meta_boxes ) && ! empty( $meta_boxes ) ) {
-
-			foreach ( $meta_boxes as $meta_box ) {
-
-				if ( is_array( $meta_box['fields'] ) && ! empty( $meta_box['fields'] ) ) {
-
-					foreach ( $meta_box['fields'] as $field ) {
-
-						$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-					}
-				}
-			}
+		foreach ( $meta_boxes as $meta_box ) {
+			$fields = array_merge( $fields, $meta_box['fields'] );
 		}
 
 		return $fields;
@@ -1844,26 +1828,24 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			if ( isset( $post_data[ $field['name'] ] ) ) {
 
-				if ( isset( $post_data[ $field['name'] ] ) ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ] );
 
-					$value = $this->sanitize_field( $field, $post_data[ $field['name'] ] );
+				update_post_meta( $post_id, $field['name'], $value );
 
-					update_post_meta( $post_id, $field['name'], $value );
+				if ( $field['type'] === 'media' ) {
 
-					if ( $field['type'] === 'media' ) {
-
-						$this->handle_attachments( $post_id, $value, $field );
-
-					}
-				} else {
-
-					delete_post_meta( $post_id, $field['name'] );
+					$this->handle_attachments( $post_id, $value, $field );
 
 				}
+			} else {
+
+				delete_post_meta( $post_id, $field['name'] );
+
 			}
 		}
 
@@ -2059,10 +2041,11 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
-				 * @param array $content The existing column content.
+				 * @param string $content The existing column content.
 				 * @param array $field an array of field arguments.
 				 * @param mixed $value the field's value.
 				 * @param int $post_id The post ID of the current post.
+				 * @return string The filtered content
 				 */
 				$content = apply_filters( "wp_backstage_{$this->slug}_{$column}_column_content", '', $field, $value, $post_id );
 
@@ -2072,11 +2055,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 					return;
 				}
 
-				$formatted_value = $this->format_field_value( $value, $field );
+				if ( ! empty( $value ) ) {
 
-				if ( ! empty( $formatted_value ) ) {
-
-					echo wp_kses_post( $formatted_value );
+					$field_class = $this->get_field_class( $field['type'] );
+					$field_class->render_column( $field, $value );
 
 				} else {
 
@@ -2246,10 +2228,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	public function manage_query_vars( $query_vars = array() ) {
 
 		$fields = $this->get_fields();
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-			foreach ( $fields as $field ) {
-				$query_vars[] = $field['name'];
-			}
+		foreach ( $fields as $field ) {
+			$query_vars[] = $field['name'];
 		}
 
 		return $query_vars;
@@ -2309,57 +2289,57 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			)
 		);
 
-		if ( is_array( $meta_box['args']['fields'] ) && ! empty( $meta_box['args']['fields'] ) ) {
+		foreach ( $meta_box['args']['fields'] as $field ) {
 
-			foreach ( $meta_box['args']['fields'] as $field ) {
+			$field['value'] = get_post_meta( $post->ID, $field['name'], true );
 
-				$field['value'] = get_post_meta( $post->ID, $field['name'], true );
-				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			/**
+			 * Filters the field arguments just before the field is rendered.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param WP_Post $post an array of field arguments.
+			 */
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $post );
 
-				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+			$field_class = $this->get_field_class( $field['type'] );
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                  = ( $field['type'] === 'editor' ) ? 15 : 5;
-					$field['input_attrs']['class'] = ( $field['type'] === 'editor' ) ? $input_class : sprintf( 'large-text %1$s', $input_class );
-					$field['input_attrs']['cols']  = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
-					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-				}
-
-				/**
-				 * Filters the field arguments just before the field is rendered.
-				 *
-				 * @since 0.0.1
-				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Post $post an array of field arguments.
-				 */
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $post );
-
-				/**
-				 * Fires before the custom meta field is rendered.
-				 *
-				 * @since 0.0.1
-				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Post $post an array of field arguments.
-				 */
-				do_action( "wp_backstage_{$this->slug}_field_before", $field, $post );
-
-				$this->render_field_by_type( $field );
-
-				/**
-				 * Fires after the custom meta field is rendered.
-				 *
-				 * @since 0.0.1
-				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Post $post an array of field arguments.
-				 */
-				do_action( "wp_backstage_{$this->slug}_field_after", $field, $post );
-
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
 			}
+
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+				$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
+			}
+
+			/**
+			 * Fires before the custom meta field is rendered.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param WP_Post $post an array of field arguments.
+			 */
+			do_action( "wp_backstage_{$this->slug}_field_before", $field, $post );
+
+			$this->render_field_label( $field );
+
+			$field_class->render( $field );
+
+			/**
+			 * Fires after the custom meta field is rendered.
+			 *
+			 * @since 0.0.1
+			 *
+			 * @param array $field an array of field arguments.
+			 * @param WP_Post $post an array of field arguments.
+			 */
+			do_action( "wp_backstage_{$this->slug}_field_after", $field, $post );
+
+			$this->render_field_description( $field );
+
 		}
 
 		if ( ! empty( $meta_box['args']['description'] ) ) { ?>
@@ -2367,10 +2347,33 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			<div style="margin: 12px -12px -12px; padding: 12px; background: #f6f7f7; border-top: 1px solid #dcdcde;">
 
 				<p style="margin: 0;"><?php
-					echo wp_kses( $meta_box['args']['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $meta_box['args']['description'], 'wp_backstage_meta_box_description' );
 				?></p>
 
 			</div>
+
+		<?php }
+
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p 
+			class="howto"
+			id="<?php printf( '%1$s-desc', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
 
 		<?php }
 
@@ -2394,13 +2397,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			$fields = $this->get_fields();
 
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-				foreach ( $fields as $field ) {
-
-					if ( $field['has_column'] ) {
-						$hidden[] = $field['name'];
-					}
+			foreach ( $fields as $field ) {
+				if ( $field['has_column'] ) {
+					$hidden[] = $field['name'];
 				}
 			}
 		}

@@ -80,6 +80,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 */
 	protected function set_args( $args = array() ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
+
+		foreach ( $this->args['fields'] as $i => $field ) {
+			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
+		}
 	}
 
 	/**
@@ -90,25 +94,21 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 */
 	protected function set_errors() {
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		foreach ( $this->required_args as $required_arg ) {
 
-			foreach ( $this->required_args as $required_arg ) {
+			if ( empty( $this->args[ $required_arg ] ) ) {
 
-				if ( empty( $this->args[ $required_arg ] ) ) {
+				$this->errors[] = new WP_Error(
+					'required_nav_menu_item_arg',
+					sprintf(
+						/* translators: 1: required arg key. */
+						_x( '[Nav Menu Item] The %1$s key is required.', 'nav menu item - required arg error', 'wp_backstage' ),
+						'<code>' . $required_arg . '</code>'
+					)
+				);
 
-					$this->errors[] = new WP_Error(
-						'required_nav_menu_item_arg',
-						sprintf(
-							/* translators: 1: required arg key. */
-							_x( '[Nav Menu Item] The %1$s key is required.', 'nav menu item - required arg error', 'wp_backstage' ),
-							'<code>' . $required_arg . '</code>'
-						)
-					);
-
-				}
 			}
 		}
-
 	}
 
 	/**
@@ -156,14 +156,14 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 			$field = wp_parse_args( $field, $this->default_field_args );
 
-			echo esc_attr(
+			echo esc_html(
 				sprintf(
 					'.control-section-nav_menu .field-%1$s { display: none; }',
 					sanitize_key( $field['name'] )
 				)
 			);
 
-			echo esc_attr(
+			echo esc_html(
 				sprintf(
 					'.control-section-nav_menu.field-%1$s-active .field-%1$s { display: block; }',
 					sanitize_key( $field['name'] )
@@ -183,20 +183,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @return  array  An array of field argument arrays.
 	 */
 	protected function get_fields() {
-
-		$fields = array();
-
-		if ( is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ) {
-
-			foreach ( $this->args['fields'] as $field ) {
-
-				$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-			}
-		}
-
-		return $fields;
-
+		return $this->args['fields'];
 	}
 
 	/**
@@ -212,14 +199,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			foreach ( $fields as $field ) {
-
-				$field_name        = $field['name'];
-				$item->$field_name = get_post_meta( $item->ID, $field_name, true );
-
-			}
+		foreach ( $fields as $field ) {
+			$field_name        = $field['name'];
+			$item->$field_name = get_post_meta( $item->ID, $field_name, true );
 		}
 
 		return $item;
@@ -241,48 +223,29 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			$field_name     = $field['name'];
+			$field['name']  = sprintf( '%1$s[%2$d]', $field_name, $item->ID );
+			$field['id']    = sprintf( 'edit-menu-item-%1$s_%2$d', $field_name, $item->ID );
+			$field['value'] = get_post_meta( $item->ID, $field_name, true );
 
-				$field_name     = $field['name'];
-				$field['value'] = get_post_meta( $item->ID, $field_name, true );
-				$field['name']  = sprintf( '%1$s[%2$d]', $field_name, $item->ID );
-				$field['id']    = sprintf( '%1$s_%2$d', $field_name, $item->ID );
-				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $item ); ?>
 
-				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+			<p 
+			class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
+			data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                  = ( $field['type'] === 'textarea' ) ? 3 : 10;
-					$default_cols                  = 20;
-					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols']  = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+				do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
 
-				if ( $field['type'] === 'code' ) {
-					$field['args']['settings_key'] = $field_name;
-				}
+				$field_class = $this->get_field_class( $field['type'] );
+				$field_class->render( $field );
 
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $item ); ?>
+				do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
 
-				<p 
-				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
-				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php
+			?></p>
 
-					do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
-
-					$this->render_field_by_type( $field );
-
-					do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
-
-				?></p>
-
-			<?php }
-		}
+		<?php }
 
 	}
 
@@ -301,50 +264,30 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			$field_name     = $field['name'];
+			$field['name']  = sprintf( 'menu-item-%1$s[{{ data.menu_item_id }}]', $field_name );
+			$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+			$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
 
-				$field_name     = $field['name'];
-				$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
-				$field['name']  = sprintf( 'menu-item-%1$s[{{ data.menu_item_id }}]', $field_name );
-				$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
-				$input_class    = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field ); ?>
 
-				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+			<p 
+			class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
+			data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
+			data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                  = ( $field['type'] === 'textarea' ) ? 3 : 10;
-					$default_cols                  = 20;
-					$field['input_attrs']['rows']  = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols']  = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-					$field['input_attrs']['class'] = sprintf( 'widefat %1$s', $input_class );
-				}
+				do_action( "wp_backstage_{$this->slug}_field_customizer_before", $field, $field_name );
 
-				if ( $field['type'] === 'code' ) {
-					$field['args']['settings_key'] = $field_name;
-				}
+				$field_class = $this->get_field_class( $field['type'] );
+				$field_class->render( $field );
 
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field ); ?>
+				do_action( "wp_backstage_{$this->slug}_field_customizer_after", $field, $field_name );
 
-				<p 
-				class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-thin"
-				data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"
-				data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php
+			?></p>
 
-					do_action( "wp_backstage_{$this->slug}_field_customizer_before", $field, $field_name );
-
-					$this->render_field_by_type( $field );
-
-					do_action( "wp_backstage_{$this->slug}_field_customizer_after", $field, $field_name );
-
-				?></p>
-
-			<?php }
-		}
-
+		<?php }
 	}
 
 	/**
@@ -381,7 +324,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				if ( isset( $post_data[ $field['name'] ][ $item_id ] ) ) {
 
-					$value = $this->sanitize_field( $field, $post_data[ $field['name'] ][ $item_id ] );
+					$field_class = $this->get_field_class( $field['type'] );
+					$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ][ $item_id ] );
 
 					update_post_meta( $item_id, $field['name'], $value );
 
@@ -424,21 +368,19 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				$fields = $this->get_fields();
 
-				if ( is_array( $fields ) && ! empty( $fields ) ) {
+				foreach ( $fields as $field ) {
 
-					foreach ( $fields as $field ) {
+					if ( isset( $posted_values[ $field['name'] ] ) ) {
 
-						if ( isset( $posted_values[ $field['name'] ] ) ) {
+						$field_class = $this->get_field_class( $field['type'] );
+						$value       = $field_class->sanitize( $field, $posted_values[ $field['name'] ] );
 
-							$value = $this->sanitize_field( $field, $posted_values[ $field['name'] ] );
+						update_post_meta( $item_id, $field['name'], $value );
 
-							update_post_meta( $item_id, $field['name'], $value );
+					} else {
 
-						} else {
+						delete_post_meta( $item_id, $field['name'] );
 
-							delete_post_meta( $item_id, $field['name'] );
-
-						}
 					}
 				}
 			}
@@ -468,13 +410,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 			$fields = $this->get_fields();
 
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
+			foreach ( $fields as $field ) {
 
-				foreach ( $fields as $field ) {
+				$hidden[] = $field['name'];
 
-					$hidden[] = $field['name'];
-
-				}
 			}
 		}
 
@@ -513,20 +452,31 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 					add_filter(
 						'get_post_metadata',
 						function( $value, $object_id, $meta_key, $single ) use ( $setting ) {
+
 							if ( $object_id === $setting->post_id ) {
+
 								$field = $this->get_field_by( 'name', $meta_key );
+
 								if ( ! empty( $field ) ) {
+
 									$unsanitized_values = $setting->manager->unsanitized_post_values();
+
 									if ( ! empty( $unsanitized_values ) && isset( $unsanitized_values[ $setting->id ] ) ) {
+
 										$setting_values = $unsanitized_values[ $setting->id ];
+
 										if ( ! empty( $setting_values ) && isset( $setting_values[ $meta_key ] ) ) {
-											$value = $this->sanitize_field( $field, $setting_values[ $meta_key ] );
+
+											$field_class = $this->get_field_class( $field['type'] );
+											$value       = $field_class->sanitize( $field, $setting_values[ $meta_key ] );
+
 											// Cast this to an array, or array values will have their first index plucked.
 											$value = array( $value );
 										}
 									}
 								}
 							}
+
 							return $value;
 						},
 						9999,

@@ -60,6 +60,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $countries  An array of localized countries.
+	 * @deprecated 4.0.0
 	 */
 	protected $countries = array();
 
@@ -68,6 +69,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $us_states  An array of localized US states.
+	 * @deprecated 4.0.0
 	 */
 	protected $us_states = array();
 
@@ -115,6 +117,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    string  $date_format  The php date format.
+	 * @deprecated 4.0.0
 	 */
 	protected $date_format = '';
 
@@ -135,6 +138,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_media_uploader_args  An array of default media field arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_media_uploader_args = array(
 		'type'     => '',
@@ -147,6 +151,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_date_args  An array of default date field arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_date_args = array(
 		'format' => 'yy-mm-dd',
@@ -157,6 +162,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_color_args  An array of default color field arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_color_args = array(
 		'mode'     => '', // hsl, hsv.
@@ -168,6 +174,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_editor_args  An array of default editor field arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_editor_args = array(
 		'max_width'     => '100%',
@@ -181,6 +188,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_code_args  An array of default code editor arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_code_args = array(
 		'settings_key' => '',
@@ -193,6 +201,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_address_args  An array of default address arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_address_args = array(
 		'max_width' => '100%',
@@ -204,6 +213,7 @@ class WP_Backstage_Component {
 	 * @since  3.0.0
 	 * @since  3.1.0  Allows for full query args to be passed.
 	 * @var    array  $default_select_posts_args  An array of default select posts arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_select_posts_args = array(
 		'option_none_label' => '',
@@ -219,6 +229,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  3.0.0
 	 * @var    array  $default_select_users_args  An array of default select users arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_select_users_args = array(
 		'option_none_label' => '',
@@ -233,6 +244,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_address_values  An array of default address field arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected $default_address_values = array(
 		'country'   => 'US',
@@ -314,6 +326,7 @@ class WP_Backstage_Component {
 	 *
 	 * @since  0.0.1
 	 * @var    array  $time_pieces  The configuration for time fields.
+	 * @deprecated 4.0.0
 	 */
 	protected $time_pieces = array();
 
@@ -350,338 +363,6 @@ class WP_Backstage_Component {
 	 */
 	protected function __construct() {
 
-		$this->date_format = get_option( 'date_format' );
-		$this->time_pieces = array(
-			'hour'   => array(
-				'label'          => _x( 'Hour', 'time field - hour', 'wp_backstage' ),
-				'number_options' => 24,
-			),
-			'minute' => array(
-				'label'          => _x( 'Minute', 'time field - minute', 'wp_backstage' ),
-				'number_options' => 60,
-			),
-			'second' => array(
-				'label'          => _x( 'Second', 'time field - second', 'wp_backstage' ),
-				'number_options' => 60,
-			),
-		);
-		$this->countries   = array(
-			'AF' => __( 'Afghanistan', 'wp_backstage' ),
-			'AL' => __( 'Albania', 'wp_backstage' ),
-			'DZ' => __( 'Algeria', 'wp_backstage' ),
-			'AS' => __( 'American Samoa', 'wp_backstage' ),
-			'AD' => __( 'Andorra', 'wp_backstage' ),
-			'AO' => __( 'Angola', 'wp_backstage' ),
-			'AI' => __( 'Anguilla', 'wp_backstage' ),
-			'AQ' => __( 'Antarctica', 'wp_backstage' ),
-			'AG' => __( 'Antigua and Barbuda', 'wp_backstage' ),
-			'AR' => __( 'Argentina', 'wp_backstage' ),
-			'AM' => __( 'Armenia', 'wp_backstage' ),
-			'AW' => __( 'Aruba', 'wp_backstage' ),
-			'AU' => __( 'Australia', 'wp_backstage' ),
-			'AT' => __( 'Austria', 'wp_backstage' ),
-			'AZ' => __( 'Azerbaijan', 'wp_backstage' ),
-			'BS' => __( 'Bahamas', 'wp_backstage' ),
-			'BH' => __( 'Bahrain', 'wp_backstage' ),
-			'BD' => __( 'Bangladesh', 'wp_backstage' ),
-			'BB' => __( 'Barbados', 'wp_backstage' ),
-			'BY' => __( 'Belarus', 'wp_backstage' ),
-			'BE' => __( 'Belgium', 'wp_backstage' ),
-			'BZ' => __( 'Belize', 'wp_backstage' ),
-			'BJ' => __( 'Benin', 'wp_backstage' ),
-			'BM' => __( 'Bermuda', 'wp_backstage' ),
-			'BT' => __( 'Bhutan', 'wp_backstage' ),
-			'BO' => __( 'Bolivia', 'wp_backstage' ),
-			'BA' => __( 'Bosnia and Herzegovina', 'wp_backstage' ),
-			'BW' => __( 'Botswana', 'wp_backstage' ),
-			'BV' => __( 'Bouvet Island', 'wp_backstage' ),
-			'BR' => __( 'Brazil', 'wp_backstage' ),
-			'BQ' => __( 'British Antarctic Territory', 'wp_backstage' ),
-			'IO' => __( 'British Indian Ocean Territory', 'wp_backstage' ),
-			'VG' => __( 'British Virgin Islands', 'wp_backstage' ),
-			'BN' => __( 'Brunei', 'wp_backstage' ),
-			'BG' => __( 'Bulgaria', 'wp_backstage' ),
-			'BF' => __( 'Burkina Faso', 'wp_backstage' ),
-			'BI' => __( 'Burundi', 'wp_backstage' ),
-			'KH' => __( 'Cambodia', 'wp_backstage' ),
-			'CM' => __( 'Cameroon', 'wp_backstage' ),
-			'CA' => __( 'Canada', 'wp_backstage' ),
-			'CT' => __( 'Canton and Enderbury Islands', 'wp_backstage' ),
-			'CV' => __( 'Cape Verde', 'wp_backstage' ),
-			'KY' => __( 'Cayman Islands', 'wp_backstage' ),
-			'CF' => __( 'Central African Republic', 'wp_backstage' ),
-			'TD' => __( 'Chad', 'wp_backstage' ),
-			'CL' => __( 'Chile', 'wp_backstage' ),
-			'CN' => __( 'China', 'wp_backstage' ),
-			'CX' => __( 'Christmas Island', 'wp_backstage' ),
-			'CC' => __( 'Cocos [Keeling] Islands', 'wp_backstage' ),
-			'CO' => __( 'Colombia', 'wp_backstage' ),
-			'KM' => __( 'Comoros', 'wp_backstage' ),
-			'CG' => __( 'Congo - Brazzaville', 'wp_backstage' ),
-			'CD' => __( 'Congo - Kinshasa', 'wp_backstage' ),
-			'CK' => __( 'Cook Islands', 'wp_backstage' ),
-			'CR' => __( 'Costa Rica', 'wp_backstage' ),
-			'HR' => __( 'Croatia', 'wp_backstage' ),
-			'CU' => __( 'Cuba', 'wp_backstage' ),
-			'CY' => __( 'Cyprus', 'wp_backstage' ),
-			'CZ' => __( 'Czech Republic', 'wp_backstage' ),
-			'CI' => __( 'Côte d’Ivoire', 'wp_backstage' ),
-			'DK' => __( 'Denmark', 'wp_backstage' ),
-			'DJ' => __( 'Djibouti', 'wp_backstage' ),
-			'DM' => __( 'Dominica', 'wp_backstage' ),
-			'DO' => __( 'Dominican Republic', 'wp_backstage' ),
-			'NQ' => __( 'Dronning Maud Land', 'wp_backstage' ),
-			'DD' => __( 'East Germany', 'wp_backstage' ),
-			'EC' => __( 'Ecuador', 'wp_backstage' ),
-			'EG' => __( 'Egypt', 'wp_backstage' ),
-			'SV' => __( 'El Salvador', 'wp_backstage' ),
-			'GQ' => __( 'Equatorial Guinea', 'wp_backstage' ),
-			'ER' => __( 'Eritrea', 'wp_backstage' ),
-			'EE' => __( 'Estonia', 'wp_backstage' ),
-			'ET' => __( 'Ethiopia', 'wp_backstage' ),
-			'FK' => __( 'Falkland Islands', 'wp_backstage' ),
-			'FO' => __( 'Faroe Islands', 'wp_backstage' ),
-			'FJ' => __( 'Fiji', 'wp_backstage' ),
-			'FI' => __( 'Finland', 'wp_backstage' ),
-			'FR' => __( 'France', 'wp_backstage' ),
-			'GF' => __( 'French Guiana', 'wp_backstage' ),
-			'PF' => __( 'French Polynesia', 'wp_backstage' ),
-			'TF' => __( 'French Southern Territories', 'wp_backstage' ),
-			'FQ' => __( 'French Southern and Antarctic Territories', 'wp_backstage' ),
-			'GA' => __( 'Gabon', 'wp_backstage' ),
-			'GM' => __( 'Gambia', 'wp_backstage' ),
-			'GE' => __( 'Georgia', 'wp_backstage' ),
-			'DE' => __( 'Germany', 'wp_backstage' ),
-			'GH' => __( 'Ghana', 'wp_backstage' ),
-			'GI' => __( 'Gibraltar', 'wp_backstage' ),
-			'GR' => __( 'Greece', 'wp_backstage' ),
-			'GL' => __( 'Greenland', 'wp_backstage' ),
-			'GD' => __( 'Grenada', 'wp_backstage' ),
-			'GP' => __( 'Guadeloupe', 'wp_backstage' ),
-			'GU' => __( 'Guam', 'wp_backstage' ),
-			'GT' => __( 'Guatemala', 'wp_backstage' ),
-			'GG' => __( 'Guernsey', 'wp_backstage' ),
-			'GN' => __( 'Guinea', 'wp_backstage' ),
-			'GW' => __( 'Guinea-Bissau', 'wp_backstage' ),
-			'GY' => __( 'Guyana', 'wp_backstage' ),
-			'HT' => __( 'Haiti', 'wp_backstage' ),
-			'HM' => __( 'Heard Island and McDonald Islands', 'wp_backstage' ),
-			'HN' => __( 'Honduras', 'wp_backstage' ),
-			'HK' => __( 'Hong Kong SAR China', 'wp_backstage' ),
-			'HU' => __( 'Hungary', 'wp_backstage' ),
-			'IS' => __( 'Iceland', 'wp_backstage' ),
-			'IN' => __( 'India', 'wp_backstage' ),
-			'ID' => __( 'Indonesia', 'wp_backstage' ),
-			'IR' => __( 'Iran', 'wp_backstage' ),
-			'IQ' => __( 'Iraq', 'wp_backstage' ),
-			'IE' => __( 'Ireland', 'wp_backstage' ),
-			'IM' => __( 'Isle of Man', 'wp_backstage' ),
-			'IL' => __( 'Israel', 'wp_backstage' ),
-			'IT' => __( 'Italy', 'wp_backstage' ),
-			'JM' => __( 'Jamaica', 'wp_backstage' ),
-			'JP' => __( 'Japan', 'wp_backstage' ),
-			'JE' => __( 'Jersey', 'wp_backstage' ),
-			'JT' => __( 'Johnston Island', 'wp_backstage' ),
-			'JO' => __( 'Jordan', 'wp_backstage' ),
-			'KZ' => __( 'Kazakhstan', 'wp_backstage' ),
-			'KE' => __( 'Kenya', 'wp_backstage' ),
-			'KI' => __( 'Kiribati', 'wp_backstage' ),
-			'KW' => __( 'Kuwait', 'wp_backstage' ),
-			'KG' => __( 'Kyrgyzstan', 'wp_backstage' ),
-			'LA' => __( 'Laos', 'wp_backstage' ),
-			'LV' => __( 'Latvia', 'wp_backstage' ),
-			'LB' => __( 'Lebanon', 'wp_backstage' ),
-			'LS' => __( 'Lesotho', 'wp_backstage' ),
-			'LR' => __( 'Liberia', 'wp_backstage' ),
-			'LY' => __( 'Libya', 'wp_backstage' ),
-			'LI' => __( 'Liechtenstein', 'wp_backstage' ),
-			'LT' => __( 'Lithuania', 'wp_backstage' ),
-			'LU' => __( 'Luxembourg', 'wp_backstage' ),
-			'MO' => __( 'Macau SAR China', 'wp_backstage' ),
-			'MK' => __( 'Macedonia', 'wp_backstage' ),
-			'MG' => __( 'Madagascar', 'wp_backstage' ),
-			'MW' => __( 'Malawi', 'wp_backstage' ),
-			'MY' => __( 'Malaysia', 'wp_backstage' ),
-			'MV' => __( 'Maldives', 'wp_backstage' ),
-			'ML' => __( 'Mali', 'wp_backstage' ),
-			'MT' => __( 'Malta', 'wp_backstage' ),
-			'MH' => __( 'Marshall Islands', 'wp_backstage' ),
-			'MQ' => __( 'Martinique', 'wp_backstage' ),
-			'MR' => __( 'Mauritania', 'wp_backstage' ),
-			'MU' => __( 'Mauritius', 'wp_backstage' ),
-			'YT' => __( 'Mayotte', 'wp_backstage' ),
-			'FX' => __( 'Metropolitan France', 'wp_backstage' ),
-			'MX' => __( 'Mexico', 'wp_backstage' ),
-			'FM' => __( 'Micronesia', 'wp_backstage' ),
-			'MI' => __( 'Midway Islands', 'wp_backstage' ),
-			'MD' => __( 'Moldova', 'wp_backstage' ),
-			'MC' => __( 'Monaco', 'wp_backstage' ),
-			'MN' => __( 'Mongolia', 'wp_backstage' ),
-			'ME' => __( 'Montenegro', 'wp_backstage' ),
-			'MS' => __( 'Montserrat', 'wp_backstage' ),
-			'MA' => __( 'Morocco', 'wp_backstage' ),
-			'MZ' => __( 'Mozambique', 'wp_backstage' ),
-			'MM' => __( 'Myanmar [Burma]', 'wp_backstage' ),
-			'NA' => __( 'Namibia', 'wp_backstage' ),
-			'NR' => __( 'Nauru', 'wp_backstage' ),
-			'NP' => __( 'Nepal', 'wp_backstage' ),
-			'NL' => __( 'Netherlands', 'wp_backstage' ),
-			'AN' => __( 'Netherlands Antilles', 'wp_backstage' ),
-			'NT' => __( 'Neutral Zone', 'wp_backstage' ),
-			'NC' => __( 'New Caledonia', 'wp_backstage' ),
-			'NZ' => __( 'New Zealand', 'wp_backstage' ),
-			'NI' => __( 'Nicaragua', 'wp_backstage' ),
-			'NE' => __( 'Niger', 'wp_backstage' ),
-			'NG' => __( 'Nigeria', 'wp_backstage' ),
-			'NU' => __( 'Niue', 'wp_backstage' ),
-			'NF' => __( 'Norfolk Island', 'wp_backstage' ),
-			'KP' => __( 'North Korea', 'wp_backstage' ),
-			'VD' => __( 'North Vietnam', 'wp_backstage' ),
-			'MP' => __( 'Northern Mariana Islands', 'wp_backstage' ),
-			'NO' => __( 'Norway', 'wp_backstage' ),
-			'OM' => __( 'Oman', 'wp_backstage' ),
-			'PC' => __( 'Pacific Islands Trust Territory', 'wp_backstage' ),
-			'PK' => __( 'Pakistan', 'wp_backstage' ),
-			'PW' => __( 'Palau', 'wp_backstage' ),
-			'PS' => __( 'Palestinian Territories', 'wp_backstage' ),
-			'PA' => __( 'Panama', 'wp_backstage' ),
-			'PZ' => __( 'Panama Canal Zone', 'wp_backstage' ),
-			'PG' => __( 'Papua New Guinea', 'wp_backstage' ),
-			'PY' => __( 'Paraguay', 'wp_backstage' ),
-			'YD' => __( 'People\'s Democratic Republic of Yemen', 'wp_backstage' ),
-			'PE' => __( 'Peru', 'wp_backstage' ),
-			'PH' => __( 'Philippines', 'wp_backstage' ),
-			'PN' => __( 'Pitcairn Islands', 'wp_backstage' ),
-			'PL' => __( 'Poland', 'wp_backstage' ),
-			'PT' => __( 'Portugal', 'wp_backstage' ),
-			'PR' => __( 'Puerto Rico', 'wp_backstage' ),
-			'QA' => __( 'Qatar', 'wp_backstage' ),
-			'RO' => __( 'Romania', 'wp_backstage' ),
-			'RU' => __( 'Russia', 'wp_backstage' ),
-			'RW' => __( 'Rwanda', 'wp_backstage' ),
-			'BL' => __( 'Saint Barthélemy', 'wp_backstage' ),
-			'SH' => __( 'Saint Helena', 'wp_backstage' ),
-			'KN' => __( 'Saint Kitts and Nevis', 'wp_backstage' ),
-			'LC' => __( 'Saint Lucia', 'wp_backstage' ),
-			'MF' => __( 'Saint Martin', 'wp_backstage' ),
-			'PM' => __( 'Saint Pierre and Miquelon', 'wp_backstage' ),
-			'VC' => __( 'Saint Vincent and the Grenadines', 'wp_backstage' ),
-			'WS' => __( 'Samoa', 'wp_backstage' ),
-			'SM' => __( 'San Marino', 'wp_backstage' ),
-			'SA' => __( 'Saudi Arabia', 'wp_backstage' ),
-			'SN' => __( 'Senegal', 'wp_backstage' ),
-			'RS' => __( 'Serbia', 'wp_backstage' ),
-			'CS' => __( 'Serbia and Montenegro', 'wp_backstage' ),
-			'SC' => __( 'Seychelles', 'wp_backstage' ),
-			'SL' => __( 'Sierra Leone', 'wp_backstage' ),
-			'SG' => __( 'Singapore', 'wp_backstage' ),
-			'SK' => __( 'Slovakia', 'wp_backstage' ),
-			'SI' => __( 'Slovenia', 'wp_backstage' ),
-			'SB' => __( 'Solomon Islands', 'wp_backstage' ),
-			'SO' => __( 'Somalia', 'wp_backstage' ),
-			'ZA' => __( 'South Africa', 'wp_backstage' ),
-			'GS' => __( 'South Georgia and the South Sandwich Islands', 'wp_backstage' ),
-			'KR' => __( 'South Korea', 'wp_backstage' ),
-			'ES' => __( 'Spain', 'wp_backstage' ),
-			'LK' => __( 'Sri Lanka', 'wp_backstage' ),
-			'SD' => __( 'Sudan', 'wp_backstage' ),
-			'SR' => __( 'Suriname', 'wp_backstage' ),
-			'SJ' => __( 'Svalbard and Jan Mayen', 'wp_backstage' ),
-			'SZ' => __( 'Swaziland', 'wp_backstage' ),
-			'SE' => __( 'Sweden', 'wp_backstage' ),
-			'CH' => __( 'Switzerland', 'wp_backstage' ),
-			'SY' => __( 'Syria', 'wp_backstage' ),
-			'ST' => __( 'São Tomé and Príncipe', 'wp_backstage' ),
-			'TW' => __( 'Taiwan', 'wp_backstage' ),
-			'TJ' => __( 'Tajikistan', 'wp_backstage' ),
-			'TZ' => __( 'Tanzania', 'wp_backstage' ),
-			'TH' => __( 'Thailand', 'wp_backstage' ),
-			'TL' => __( 'Timor-Leste', 'wp_backstage' ),
-			'TG' => __( 'Togo', 'wp_backstage' ),
-			'TK' => __( 'Tokelau', 'wp_backstage' ),
-			'TO' => __( 'Tonga', 'wp_backstage' ),
-			'TT' => __( 'Trinidad and Tobago', 'wp_backstage' ),
-			'TN' => __( 'Tunisia', 'wp_backstage' ),
-			'TR' => __( 'Turkey', 'wp_backstage' ),
-			'TM' => __( 'Turkmenistan', 'wp_backstage' ),
-			'TC' => __( 'Turks and Caicos Islands', 'wp_backstage' ),
-			'TV' => __( 'Tuvalu', 'wp_backstage' ),
-			'UM' => __( 'U.S. Minor Outlying Islands', 'wp_backstage' ),
-			'PU' => __( 'U.S. Miscellaneous Pacific Islands', 'wp_backstage' ),
-			'VI' => __( 'U.S. Virgin Islands', 'wp_backstage' ),
-			'UG' => __( 'Uganda', 'wp_backstage' ),
-			'UA' => __( 'Ukraine', 'wp_backstage' ),
-			'SU' => __( 'Union of Soviet Socialist Republics', 'wp_backstage' ),
-			'AE' => __( 'United Arab Emirates', 'wp_backstage' ),
-			'GB' => __( 'United Kingdom', 'wp_backstage' ),
-			'US' => __( 'United States', 'wp_backstage' ),
-			'UY' => __( 'Uruguay', 'wp_backstage' ),
-			'UZ' => __( 'Uzbekistan', 'wp_backstage' ),
-			'VU' => __( 'Vanuatu', 'wp_backstage' ),
-			'VA' => __( 'Vatican City', 'wp_backstage' ),
-			'VE' => __( 'Venezuela', 'wp_backstage' ),
-			'VN' => __( 'Vietnam', 'wp_backstage' ),
-			'WK' => __( 'Wake Island', 'wp_backstage' ),
-			'WF' => __( 'Wallis and Futuna', 'wp_backstage' ),
-			'EH' => __( 'Western Sahara', 'wp_backstage' ),
-			'YE' => __( 'Yemen', 'wp_backstage' ),
-			'ZM' => __( 'Zambia', 'wp_backstage' ),
-			'ZW' => __( 'Zimbabwe', 'wp_backstage' ),
-			'AX' => __( 'Åland Islands', 'wp_backstage' ),
-		);
-		$this->us_states   = array(
-			'AL' => __( 'Alabama', 'wp_backstage' ),
-			'AK' => __( 'Alaska', 'wp_backstage' ),
-			'AZ' => __( 'Arizona', 'wp_backstage' ),
-			'AR' => __( 'Arkansas', 'wp_backstage' ),
-			'CA' => __( 'California', 'wp_backstage' ),
-			'CO' => __( 'Colorado', 'wp_backstage' ),
-			'CT' => __( 'Connecticut', 'wp_backstage' ),
-			'DE' => __( 'Delaware', 'wp_backstage' ),
-			'DC' => __( 'District Of Columbia', 'wp_backstage' ),
-			'FL' => __( 'Florida', 'wp_backstage' ),
-			'GA' => __( 'Georgia', 'wp_backstage' ),
-			'HI' => __( 'Hawaii', 'wp_backstage' ),
-			'ID' => __( 'Idaho', 'wp_backstage' ),
-			'IL' => __( 'Illinois', 'wp_backstage' ),
-			'IN' => __( 'Indiana', 'wp_backstage' ),
-			'IA' => __( 'Iowa', 'wp_backstage' ),
-			'KS' => __( 'Kansas', 'wp_backstage' ),
-			'KY' => __( 'Kentucky', 'wp_backstage' ),
-			'LA' => __( 'Louisiana', 'wp_backstage' ),
-			'ME' => __( 'Maine', 'wp_backstage' ),
-			'MD' => __( 'Maryland', 'wp_backstage' ),
-			'MA' => __( 'Massachusetts', 'wp_backstage' ),
-			'MI' => __( 'Michigan', 'wp_backstage' ),
-			'MN' => __( 'Minnesota', 'wp_backstage' ),
-			'MS' => __( 'Mississippi', 'wp_backstage' ),
-			'MO' => __( 'Missouri', 'wp_backstage' ),
-			'MT' => __( 'Montana', 'wp_backstage' ),
-			'NE' => __( 'Nebraska', 'wp_backstage' ),
-			'NV' => __( 'Nevada', 'wp_backstage' ),
-			'NH' => __( 'New Hampshire', 'wp_backstage' ),
-			'NJ' => __( 'New Jersey', 'wp_backstage' ),
-			'NM' => __( 'New Mexico', 'wp_backstage' ),
-			'NY' => __( 'New York', 'wp_backstage' ),
-			'NC' => __( 'North Carolina', 'wp_backstage' ),
-			'ND' => __( 'North Dakota', 'wp_backstage' ),
-			'OH' => __( 'Ohio', 'wp_backstage' ),
-			'OK' => __( 'Oklahoma', 'wp_backstage' ),
-			'OR' => __( 'Oregon', 'wp_backstage' ),
-			'PA' => __( 'Pennsylvania', 'wp_backstage' ),
-			'RI' => __( 'Rhode Island', 'wp_backstage' ),
-			'SC' => __( 'South Carolina', 'wp_backstage' ),
-			'SD' => __( 'South Dakota', 'wp_backstage' ),
-			'TN' => __( 'Tennessee', 'wp_backstage' ),
-			'TX' => __( 'Texas', 'wp_backstage' ),
-			'UT' => __( 'Utah', 'wp_backstage' ),
-			'VT' => __( 'Vermont', 'wp_backstage' ),
-			'VA' => __( 'Virginia', 'wp_backstage' ),
-			'WA' => __( 'Washington', 'wp_backstage' ),
-			'WV' => __( 'West Virginia', 'wp_backstage' ),
-			'WI' => __( 'Wisconsin', 'wp_backstage' ),
-			'WY' => __( 'Wyoming', 'wp_backstage' ),
-		);
 	}
 
 	/**
@@ -722,7 +403,7 @@ class WP_Backstage_Component {
 
 						<p><?php
 
-							echo wp_kses( $message, WP_Backstage::$kses_p );
+							echo wp_kses( $message, 'wp_backstage_error_message' );
 
 						?></p>
 
@@ -792,9 +473,6 @@ class WP_Backstage_Component {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
 			return;
 		}
-
-		add_action( 'admin_print_scripts', array( $this, 'inline_code_editor_script' ), 20 );
-
 	}
 
 	/**
@@ -836,6 +514,81 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Add Field Input Classes
+	 *
+	 * @since 4.0.0
+	 * @param array    $field An array of field arguments.
+	 * @param string[] $more An array of field arguments.
+	 * @return array A filtered list of field arguments.
+	 */
+	public function add_field_input_classes( array $field = array(), array $more = array() ): array {
+		$classes = ! empty( $field['input_attrs']['class'] ) ? explode( ' ', $field['input_attrs']['class'] ) : array();
+		foreach ( $more as $class ) {
+			if ( ! empty( $class ) && ! in_array( $class, $classes ) ) {
+				$classes[] = $class;
+			}
+		}
+		$field['input_attrs']['class'] = implode( ' ', array_map( 'sanitize_html_class', $classes ) );
+		return $field;
+	}
+
+	/**
+	 * Set Field Textarea Dimensions
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param int   $rows An array of field arguments.
+	 * @param int   $cols An array of field arguments.
+	 * @return array A filtered list of field arguments.
+	 */
+	public function set_field_textarea_dimensions( array $field = array(), int $rows, int $cols ): array {
+		$field['input_attrs']['rows'] = ! empty( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $rows;
+		$field['input_attrs']['cols'] = ! empty( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $cols;
+		return $field;
+	}
+
+	/**
+	 * Set Field Input Size
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param int   $size An array of field arguments.
+	 * @return array A filtered list of field arguments.
+	 */
+	public function set_field_input_size( array $field = array(), int $size ): array {
+		$field['input_attrs']['size'] = ! empty( $field['input_attrs']['size'] ) ? $field['input_attrs']['size'] : $size;
+		return $field;
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_label( $field = array() ) {
+
+		$field_class = $this->get_field_class( $field['type'] );
+
+		if ( $field_class->has_tag( 'remove_label_for' ) ) { ?>
+
+			<legend class="<?php echo $field_class->has_tag( 'hide_label' ) ? 'screen-reader-text' : ''; ?>"><?php
+				$field_class->label( $field );
+			?></legend>
+
+		<?php } else { ?>
+
+			<label 
+			for="<?php $field_class->element_id( $field ); ?>"
+			class="<?php echo $field_class->has_tag( 'hide_label' ) ? 'screen-reader-text' : ''; ?>"><?php
+				$field_class->label( $field );
+			?></label>
+
+		<?php }
+	}
+
+	/**
 	 * Inline Code Editor Script
 	 *
 	 * Inlines the code editor settings objects. This provides necessary context to
@@ -852,8 +605,11 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	public function inline_code_editor_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Code_Field::enqueue_settings()' );
 
 		$code_editors = $this->get_fields_by( 'type', 'code' );
 
@@ -897,8 +653,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects a string.
 	 * @return  string  a text field sanitized string.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_text( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::sanitize()' );
+
 		return sanitize_text_field( $value );
 	}
 
@@ -911,8 +671,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects a string.
 	 * @return  string  a textarea sanitized string.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_textarea( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Textarea_Field::sanitize()' );
+
 		return sanitize_textarea_field( $value );
 	}
 
@@ -925,8 +689,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects a string.
 	 * @return  string  the string sanitized as post content.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_editor( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Editor_Field::sanitize()' );
+
 		return wp_kses_post( $value );
 	}
 
@@ -938,8 +706,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects a string.
 	 * @return  string  An unsanitized string.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_code( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Code_Field::sanitize()' );
+
 		return is_string( $value ) ? $value : ''; // unsanitized.
 	}
 
@@ -951,8 +723,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   int|float $value  The value to sanitize. Expects a numeric value.
 	 * @return  float      a float, or null if empty.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_number( $value = null ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Number_Field::sanitize()' );
+
 		return ( $value !== '' ) ? floatval( $value ) : null;
 	}
 
@@ -965,8 +741,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects a URL.
 	 * @return  string  A URL.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_url( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_URL_Field::sanitize()' );
+
 		return esc_url_raw( $value );
 	}
 
@@ -979,8 +759,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $value  The value to sanitize. Expects an email address.
 	 * @return  string  An email address.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_email( $value = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Email_Field::sanitize()' );
+
 		return sanitize_email( $value );
 	}
 
@@ -992,8 +776,12 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   bool $value  The value to sanitize. Expects a value that can be cast to a boolean.
 	 * @return  bool  A boolean.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_checkbox( $value = false ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Checkbox_Field::sanitize()' );
+
 		return boolval( $value );
 	}
 
@@ -1007,8 +795,12 @@ class WP_Backstage_Component {
 	 * @since   3.4.0  Maps using `sanitize_text_field()` instead of `esc_attr()`.
 	 * @param   array $values  The values to sanitize. Expects an array of strings.
 	 * @return  array  An array of values.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_checkbox_set( $values = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Checkbox_Set_Field::sanitize()' );
+
 		$new_values = array();
 		if ( is_array( $values ) && ! empty( $values ) ) {
 			foreach ( $values as $key => $value ) {
@@ -1031,8 +823,12 @@ class WP_Backstage_Component {
 	 * @since   3.4.0  Maps values with `sanitize_text_field()` instead of `esc_attr()`.
 	 * @param   array $value  The value to sanitize. Expects an array of address `key => value` pairs.
 	 * @return  array  An array of address key => value pairs.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_address( $value = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Address_Field::sanitize()' );
+
 		$value = wp_parse_args( $value, $this->default_address_values );
 		return array_map( 'sanitize_text_field', $value );
 	}
@@ -1048,8 +844,12 @@ class WP_Backstage_Component {
 	 * @since   2.4.0   Fixes bug introduced at 2.0.0 that parsed the values incorrectly.
 	 * @param   mixed $value  The value to sanitize. Expects an array of 3 2-digit time values keyed as "hour", "minute", "second"; or a time string as hh:mm:ss.
 	 * @return  string  a string as `hh:mm:ss`.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_time( $value = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Time_Field::sanitize()' );
+
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
 			$pieces = explode( ':', $value );
 			$value  = array(
@@ -1075,8 +875,12 @@ class WP_Backstage_Component {
 	 * @since   2.0.0  Removed check for single vs. multiple and treats both as array.
 	 * @param   mixed $value  The value to sanitize. Expects a CSV string or array of attachment IDs.
 	 * @return  array   An array of integers.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_media( $value = null ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::sanitize()' );
+
 		if ( ! is_array( $value ) && ! empty( $value ) ) {
 			$value = explode( ',', $value );
 		}
@@ -1091,8 +895,12 @@ class WP_Backstage_Component {
 	 * @since   3.0.0
 	 * @param   mixed $value  The value to sanitize. Expects a post ID.
 	 * @return  array   A non-negative integer.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_select_posts( $value = 0 ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Select_Posts_Field::sanitize()' );
+
 		return absint( $value );
 	}
 
@@ -1104,8 +912,12 @@ class WP_Backstage_Component {
 	 * @since   3.1.0
 	 * @param   mixed $value  The value to sanitize. Expects a user ID.
 	 * @return  array   A non-negative integer.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_select_users( $value = 0 ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Select_Users_Field::sanitize()' );
+
 		return absint( $value );
 	}
 
@@ -1121,8 +933,11 @@ class WP_Backstage_Component {
 	 * @param   array $field  The field args.
 	 * @param   mixed $value  The field value.
 	 * @return  mixed  The sanitized value according to the field type.
+	 * @deprecated 4.0.0
 	 */
 	public function sanitize_field( $field = array(), $value = null ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::sanitize()' );
 
 		switch ( $field['type'] ) {
 			case 'textarea':
@@ -1190,8 +1005,12 @@ class WP_Backstage_Component {
 	 * @since   3.1.0   Added case for select_users.
 	 * @param   array $field  The field args.
 	 * @return  string  The sanitize callback function name as a string.
+	 * @deprecated 4.0.0
 	 */
 	protected function get_sanitize_callback( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::sanitize()' );
+
 		switch ( $field['type'] ) {
 			case 'textarea':
 				return 'sanitize_textarea';
@@ -1233,8 +1052,12 @@ class WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param array $field An array of field arguments.
 	 * @return array An array of schema arguments.
+	 * @deprecated 4.0.0
 	 */
 	protected function get_field_schema( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::get_schema()' );
+
 		switch ( $field['type'] ) {
 			case 'checkbox_set':
 				return array(
@@ -1496,8 +1319,12 @@ class WP_Backstage_Component {
 	 * @since   3.1.0 Added case for select_users.
 	 * @param   array $field  An array of field args.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_field_by_type( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
+
 		switch ( $field['type'] ) {
 			case 'textarea':
 				$this->render_textarea( $field );
@@ -1677,7 +1504,7 @@ class WP_Backstage_Component {
 		for="<?php printf( '%1$s_filter', esc_attr( $args['id'] ) ); ?>"
 		class="screen-reader-text"><?php
 
-			echo wp_kses( $args['label'], WP_Backstage::$kses_label );
+			echo wp_kses( $args['label'], 'wp_backstage_filter_label' );
 
 		?></label>
 
@@ -1721,6 +1548,23 @@ class WP_Backstage_Component {
 	<?php }
 
 	/**
+	 * Get Field Class
+	 *
+	 * @since 4.0.0
+	 * @param string $field_type The field type.
+	 * @return WP_Backstage_Field The found field class instance from the global WP_Backstage instance.
+	 */
+	protected function get_field_class( string $field_type ): WP_Backstage_Field {
+		/**
+		 * Global WP_Backstage instance
+		 *
+		 * @var WP_Backstage $wp_backstage
+		 */
+		global $wp_backstage;
+		return $wp_backstage->get_field_class( $field_type );
+	}
+
+	/**
 	 * Format Field Value
 	 *
 	 * This will format a fields value based on a given array of field args.
@@ -1735,8 +1579,11 @@ class WP_Backstage_Component {
 	 * @param mixed $value  The value to format.
 	 * @param array $field  An array of field arguments.
 	 * @return string  The value of the field as a string
+	 * @deprecated 4.0.0
 	 */
 	protected function format_field_value( $value = null, $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render_column()' );
 
 		$content = '';
 
@@ -1821,7 +1668,7 @@ class WP_Backstage_Component {
 						'<address><a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s<span>%3$s<span><a></address>',
 						esc_url( $formatted_address_url ),
 						'<i class="dashicons dashicons-location" aria-hidden="true" style="font-size:inherit;height:auto;width:auto;margin-top:-2px;margin-right:2px;vertical-align:middle;"></i>',
-						wp_kses( $formatted_address, WP_Backstage::$kses_p )
+						esc_html( $formatted_address )
 					);
 					break;
 				case 'media':
@@ -1997,15 +1844,12 @@ class WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			if ( $field['has_column'] && $field['is_sortable'] ) {
 
-				if ( $field['has_column'] && $field['is_sortable'] ) {
+				$columns[ $field['name'] ] = $field['name'];
 
-					$columns[ $field['name'] ] = $field['name'];
-
-				}
 			}
 		}
 
@@ -2022,8 +1866,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $attrs  An array of attributes as `$key => $value` pairs.
 	 * @return  string  The imploded, escaped, formatted attributes.
+	 * @deprecated 4.0.0
 	 */
 	protected function format_attrs( $attrs = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::input_attrs()' );
 
 		$formatted_attrs = array();
 
@@ -2082,8 +1929,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_input( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] ); ?>
@@ -2104,7 +1954,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2133,7 +1983,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2154,8 +2004,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_date( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
@@ -2179,7 +2032,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2210,7 +2063,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2230,8 +2083,11 @@ class WP_Backstage_Component {
 	 * @param   int    $number    The number of options to render.
 	 * @param   string $selected  The selected option's value.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_time_options( $number = 0, $selected = '' ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Time_Field::render_time_options()' );
 
 		if ( ! $number > 0 ) {
 			return;
@@ -2261,8 +2117,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_time( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2280,7 +2139,7 @@ class WP_Backstage_Component {
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 				style="padding:2px 0;font-size:inherit;display:inline-block;"><?php
 
-					echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 				?></legend>
 
@@ -2306,7 +2165,7 @@ class WP_Backstage_Component {
 
 							<small><?php
 
-								echo wp_kses( $piece['label'], WP_Backstage::$kses_label );
+								echo wp_kses( $piece['label'], 'wp_backstage_field_label' );
 
 							?></small>
 
@@ -2352,7 +2211,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2373,8 +2232,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_color( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2404,7 +2266,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2433,7 +2295,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2452,8 +2314,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_checkbox( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2486,7 +2351,7 @@ class WP_Backstage_Component {
 				for="<?php echo esc_attr( $id ); ?>"
 				style="display:inline-block;vertical-align:top;"><?php
 
-					echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 				?></label>
 
@@ -2499,7 +2364,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2517,8 +2382,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_textarea( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2540,7 +2408,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2568,7 +2436,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2590,8 +2458,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_editor( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2618,7 +2489,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2646,7 +2517,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2670,8 +2541,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_code( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2695,7 +2569,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;margin-bottom:4px;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2723,7 +2597,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2744,8 +2618,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_select( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2765,7 +2642,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -2814,7 +2691,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2835,8 +2712,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_radio( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2856,7 +2736,7 @@ class WP_Backstage_Component {
 
 					<legend style="display:inline-block;padding:2px 0;font-size:inherit;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></legend>
 
@@ -2909,7 +2789,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -2930,8 +2810,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_checkbox_set( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2954,7 +2837,7 @@ class WP_Backstage_Component {
 					id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 					style="display:inline-block;padding:2px 0;font-size:inherit;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></legend>
 
@@ -3007,7 +2890,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -3032,8 +2915,11 @@ class WP_Backstage_Component {
 	 * @since   3.3.0  Adds error and loader elements and removes the `clone` methodology in favor of ajax rendering.
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_media_uploader( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -3089,7 +2975,7 @@ class WP_Backstage_Component {
 				<legend 
 				class="wp-backstage-media-uploader__legend"
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"><?php
-					echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 				?></legend>
 
 			<?php } ?>
@@ -3113,7 +2999,7 @@ class WP_Backstage_Component {
 				id="<?php printf( '%1$s_error', esc_attr( $id ) ); ?>"
 				class="wp-backstage-media-uploader__error notice inline notice-error">
 					<span>
-						<?php echo wp_kses( $error_text, WP_Backstage::$kses_p ); ?>
+						<?php echo esc_html( $error_text ); ?>
 						<button 
 						type="button"
 						id="<?php printf( '%1$s_button_try_again', esc_attr( $id ) ); ?>" 
@@ -3178,7 +3064,7 @@ class WP_Backstage_Component {
 				src="/wp-admin/images/spinner.gif" 
 				alt="<?php echo esc_attr( $loader_text ); ?>" />
 				&nbsp;
-				<span><?php echo wp_kses( $loader_text, WP_Backstage::$kses_p ); ?></span>
+				<span><?php echo esc_html( $loader_text ); ?></span>
 			</span>
 
 			<?php if ( ! empty( $field['description'] ) ) { ?>
@@ -3188,7 +3074,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -3210,8 +3096,11 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_address( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -3234,7 +3123,7 @@ class WP_Backstage_Component {
 				id="<?php printf( '%1$s_legend', esc_attr( $id ) ); ?>"
 				style="display:inline-block;font-size:inherit;"><?php
 
-					echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 				?></legend>
 
@@ -3254,7 +3143,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'Country', 'address field - country label', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Country', 'address field - country label', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3298,7 +3187,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'Address', 'address field - line 1', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Address', 'address field - line 1', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3331,7 +3220,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'Address (Line 2)', 'address field - line 2', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Address (Line 2)', 'address field - line 2', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3364,7 +3253,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'City', 'address field - city', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'City', 'address field - city', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3397,7 +3286,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'State / Province / Region', 'address field - state input', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'State / Province / Region', 'address field - state input', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3429,7 +3318,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'State', 'address field - state select', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'State', 'address field - state select', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3473,7 +3362,7 @@ class WP_Backstage_Component {
 
 						<small><?php
 
-							echo wp_kses( _x( 'Zip Code', 'address field - zip', 'wp_backstage' ), WP_Backstage::$kses_label );
+							echo wp_kses( _x( 'Zip Code', 'address field - zip', 'wp_backstage' ), 'wp_backstage_field_label' );
 
 						?></small>
 
@@ -3505,7 +3394,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -3524,8 +3413,11 @@ class WP_Backstage_Component {
 	 * @since   3.1.0 Allows for full query args to be passed.
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_select_posts( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
@@ -3560,7 +3452,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -3599,7 +3491,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -3617,8 +3509,11 @@ class WP_Backstage_Component {
 	 * @since   3.1.0
 	 * @param   array $field  An array of field arguments.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
 	protected function render_select_users( $field = array() ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::render()' );
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 		$id    = $field['id'] ? $field['id'] : sanitize_key( $field['name'] );
@@ -3644,7 +3539,7 @@ class WP_Backstage_Component {
 					for="<?php echo esc_attr( $id ); ?>"
 					style="display:inline-block;"><?php
 
-						echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+						echo wp_kses( $field['label'], 'wp_backstage_field_label' );
 
 					?></label>
 
@@ -3696,7 +3591,7 @@ class WP_Backstage_Component {
 				class="description"
 				style="display:block;"><?php
 
-					echo wp_kses( $field['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $field['description'], 'wp_backstage_field_description' );
 
 				?></span>
 
@@ -3754,14 +3649,14 @@ class WP_Backstage_Component {
 						style="display:inline-block;vertical-align:middle" />
 						&nbsp;
 						<span style="display:inline-block;vertical-align:middle;"><?php
-							echo wp_kses( $loader_text, WP_Backstage::$kses_p );
+							echo esc_html( $loader_text );
 						?></span>
 					</div>
 				</div>
 				<div id="wp_backstage_rest_api_preview_instructions" style="position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;border:1px solid #c3c4c7;box-sizing:border-box;z-index:10;">
 					<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
 						<span style="display:inline-block;vertical-align:middle;"><?php
-							echo wp_kses( $instructions_text, WP_Backstage::$kses_p );
+							echo wp_kses_post( $instructions_text );
 						?></span>
 					</div>
 				</div>
@@ -3776,7 +3671,7 @@ class WP_Backstage_Component {
 					const form = document.getElementById('wp_backstage_rest_api_preview_form');
 					const helpButton = document.getElementById('contextual-help-link');
 					const panelButton = document.querySelector('#tab-link-wp_backstage_rest_api_preview > a');
-					const settings = window.wpBackstage.restAPIPreview.settings;
+					const settings = window.wpBackstage.codeSettings.jsonReadOnly;
 					// Add event listeners.
 					panelButton.addEventListener('click', handleRefreshtrigger);
 					helpButton.addEventListener('click', handleRefreshtrigger);

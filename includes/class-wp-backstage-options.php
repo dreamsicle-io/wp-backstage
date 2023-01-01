@@ -58,14 +58,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	);
 
 	/**
-	 * Registered
-	 *
-	 * @since  0.0.1
-	 * @var    array  $registered  An array of already-registered option keys.
-	 */
-	protected static $registered = array();
-
-	/**
 	 * Add
 	 *
 	 * @since   0.0.1
@@ -91,25 +83,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 */
 	public function __construct( $slug = '', $args = array() ) {
 
-		$this->default_address_args = array_merge(
-			$this->default_address_args,
-			array(
-				'max_width' => '50em',
-			)
-		);
-		$this->default_code_args    = array_merge(
-			$this->default_code_args,
-			array(
-				'max_width' => '50em',
-			)
-		);
-		$this->default_editor_args  = array_merge(
-			$this->default_editor_args,
-			array(
-				'max_width' => '50em',
-			)
-		);
-		$this->slug                 = sanitize_key( $slug );
+		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array(
 			sprintf( 'settings_page_%1$s', $this->slug ),
@@ -134,15 +108,18 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		$this->args = wp_parse_args( $args, $this->default_args );
 
 		if ( empty( $this->args['title'] ) ) {
-
 			$this->args['title'] = $this->slug;
-
 		}
 
 		if ( empty( $this->args['menu_title'] ) ) {
-
 			$this->args['menu_title'] = $this->args['title'];
+		}
 
+		foreach ( $this->args['sections'] as $i => $field_group ) {
+			$this->args['sections'][ $i ] = wp_parse_args( $field_group, $this->default_section_args );
+			foreach ( $this->args['sections'][ $i ]['fields'] as $ii => $field ) {
+				$this->args['sections'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
+			}
 		}
 
 	}
@@ -168,52 +145,22 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 		}
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		foreach ( $this->required_args as $required_arg ) {
 
-			foreach ( $this->required_args as $required_arg ) {
+			if ( empty( $this->args[ $required_arg ] ) ) {
 
-				if ( empty( $this->args[ $required_arg ] ) ) {
+				$this->errors[] = new WP_Error(
+					'required_options_arg',
+					sprintf(
+						/* translators: 1: options page slug, 2:required arg key. */
+						_x( '[Options: %1$s] The %2$s key is required.', 'options - required arg error', 'wp_backstage' ),
+						$this->slug,
+						'<code>' . $required_arg . '</code>'
+					)
+				);
 
-					$this->errors[] = new WP_Error(
-						'required_options_arg',
-						sprintf(
-							/* translators: 1: options page slug, 2:required arg key. */
-							_x( '[Options: %1$s] The %2$s key is required.', 'options - required arg error', 'wp_backstage' ),
-							$this->slug,
-							'<code>' . $required_arg . '</code>'
-						)
-					);
-
-				}
 			}
 		}
-
-		$fields = $this->get_fields();
-
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			foreach ( $fields as $field ) {
-
-				if ( in_array( $field['name'], self::$registered ) ) {
-
-					$this->errors[] = new WP_Error(
-						'duplicate_options_key',
-						sprintf(
-							/* translators: 1: options page slug, 2: setting key. */
-							_x( '[Options: %1$s] There is already an option with the %2$s key.', 'options - setting exists error', 'wp_backstage' ),
-							$this->slug,
-							'<code>' . $field['name'] . '</code>'
-						)
-					);
-
-				} else {
-
-					self::$registered[] = $field['name'];
-
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -256,9 +203,15 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
 		add_action( 'tool_box', array( $this, 'add_tool_card' ), 10 );
-		add_action( "admin_print_footer_scripts-settings_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
-		add_action( "admin_print_footer_scripts-appearance_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
-		add_action( "admin_print_footer_scripts-tools_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		if ( $this->args['type'] === 'settings' ) {
+			add_action( "admin_print_footer_scripts-settings_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		}
+		if ( $this->args['type'] === 'theme' ) {
+			add_action( "admin_print_footer_scripts-appearance_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		}
+		if ( $this->args['type'] === 'tools' ) {
+			add_action( "admin_print_footer_scripts-tools_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
+		}
 
 		parent::init();
 
@@ -290,7 +243,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 						title="<?php echo esc_attr( $link_title ); ?>"
 						style="text-decoration:none;"><?php
 
-							echo esc_html( $this->args['title'] );
+							echo wp_kses( $this->args['title'], 'wp_backstage_tool_card_title' );
 
 						?></a>
 
@@ -378,36 +331,36 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 					$section['id'],
 					$section['title'],
 					array( $this, 'render_section_description' ),
-					$this->slug
+					$this->slug,
+					array(
+						'section' => $section,
+					),
 				);
 
 				if ( is_array( $section['fields'] ) && ! empty( $section['fields'] ) ) {
 
 					foreach ( $section['fields'] as $field ) {
 
-						$field               = wp_parse_args( $field, $this->default_field_args );
-						$field_id            = sanitize_key( $field['name'] );
-						$field['value']      = get_option( $field['name'] );
-						$field['show_label'] = false;
-						$input_class         = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+						$field_class = $this->get_field_class( $field['type'] );
+						$schema      = $field_class->get_schema();
 
-						if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-							$field['input_attrs']['class'] = sprintf( 'regular-text %1$s', $input_class );
+						$show_in_rest = false;
+						if ( $field['show_in_rest'] ) {
+							$show_in_rest = array(
+								'schema' => $schema,
+							);
 						}
 
-						if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-							$default_rows                 = ( $field['type'] === 'editor' ) ? 15 : 5;
-							$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-							$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : 90;
-						}
+						$field['value'] = get_option( $field['name'] );
 
 						register_setting(
 							$this->slug,
 							$field['name'],
 							array(
-								'description'       => wp_kses( $field['description'], WP_Backstage::$kses_p ),
-								'show_in_rest'      => $this->args['show_in_rest'],
-								'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+								'description'       => wp_strip_all_tags( $field['description'], true ),
+								'type'              => $schema['type'],
+								'sanitize_callback' => array( $field_class, 'sanitize' ),
+								'show_in_rest'      => $show_in_rest,
 							)
 						);
 
@@ -418,8 +371,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 							$this->slug,
 							$section['id'],
 							array(
-								'label_for' => ! in_array( $field['type'], $this->remove_label_for_fields ) ? $field_id : false,
-								'class'     => '',
+								'label_for' => ! $field_class->has_tag( 'remove_label_for' ) ? $field_class->get_id( $field ) : '',
 								'field'     => $field,
 							)
 						);
@@ -446,7 +398,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			$args,
 			array(
 				'label_for' => '',
-				'class'     => '',
 				'field'     => array(),
 			)
 		);
@@ -460,6 +411,17 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		 */
 		$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $args['field'] );
 
+		$field_class = $this->get_field_class( $field['type'] );
+
+		if ( $field_class->has_tag( 'text_control' ) ) {
+			$field = $this->add_field_input_classes( $field, array( 'regular-text' ) );
+		}
+
+		if ( $field_class->has_tag( 'textarea_control' ) ) {
+			$field = $this->add_field_input_classes( $field, array( 'large-text' ) );
+			$field = $this->set_field_textarea_dimensions( $field, 10, 50 );
+		}
+
 		/**
 		 * Fires before the settings field is rendered.
 		 *
@@ -469,7 +431,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		 */
 		do_action( "wp_backstage_{$this->slug}_field_before", $field );
 
-		$this->render_field_by_type( $field );
+		$field_class->render( $field );
 
 		/**
 		 * Fires after the settings field is rendered.
@@ -479,6 +441,31 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		 * @param array $field an array of field arguments.
 		 */
 		do_action( "wp_backstage_{$this->slug}_field_after", $field );
+
+		$this->render_field_description( $field );
+
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p 
+			class="description" 
+			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
 
 	}
 
@@ -490,8 +477,11 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param mixed  $value The value of the set key to run the search against.
 	 * @param int    $number The max number of sections to find.
 	 * @return array  the sections if found, or an empty array.
+	 * @deprecated 4.0.0
 	 */
 	protected function get_sections_by( $key = '', $value = null, $number = 0 ) {
+
+		_deprecated_function( __METHOD__, '4.0.0' );
 
 		$sections = $this->get_sections();
 		$result   = array();
@@ -527,8 +517,11 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param string $key The section key to run the search against.
 	 * @param mixed  $value The value of the set key to run the search against.
 	 * @return array the first section if found, or null.
+	 * @deprecated 4.0.0
 	 */
 	protected function get_section_by( $key = '', $value = null ) {
+
+		_deprecated_function( __METHOD__, '4.0.0' );
 
 		$sections = $this->get_sections_by( $key, $value, 1 );
 		$result   = null;
@@ -552,29 +545,17 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 */
 	public function render_section_description( $args = array() ) {
 
-		$args = wp_parse_args(
-			$args,
-			array(
-				'id'       => '',
-				'title'    => '',
-				'callback' => array(),
-			)
-		);
+		$section = isset( $args['section'] ) ? $args['section'] : array();
 
-		if ( ! empty( $args['id'] ) ) {
+		if ( ! empty( $section ) ) { ?>
 
-			$section = $this->get_section_by( 'id', $args['id'] );
+			<p><?php
 
-			if ( ! empty( $section ) ) { ?>
+				echo wp_kses( $section['description'], 'wp_backstage_options_section_description' );
 
-				<p class="description"><?php
+			?></p>
 
-					echo wp_kses( $section['description'], WP_Backstage::$kses_p );
-
-				?></p>
-
-			<?php }
-		}
+		<?php }
 
 	}
 
@@ -593,21 +574,21 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 			<h1><?php
 
-				echo wp_kses( $this->args['title'], WP_Backstage::$kses_p );
+				echo wp_kses( $this->args['title'], 'wp_backstage_options_page_title' );
 
 			?></h1>
 
 			<?php if ( ! empty( $this->args['description'] ) ) { ?>
 
-				<p class="description"><?php
+				<p><?php
 
-					echo wp_kses( $this->args['description'], WP_Backstage::$kses_p );
+					echo wp_kses( $this->args['description'], 'wp_backstage_options_page_description' );
 
 				?></p>
 
 			<?php } ?>
 
-			<form method="POST" action="options.php"> <?php
+			<form method="POST" action="options.php"><?php
 
 				settings_fields( $this->slug );
 
@@ -628,20 +609,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @return  array
 	 */
 	protected function get_sections() {
-
-		$sections = array();
-
-		if ( is_array( $this->args['sections'] ) && ! empty( $this->args['sections'] ) ) {
-
-			foreach ( $this->args['sections'] as $section ) {
-
-				$sections[] = wp_parse_args( $section, $this->default_section_args );
-
-			}
-		}
-
-		return $sections;
-
+		return $this->args['sections'];
 	}
 
 	/**
@@ -655,19 +623,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		$sections = $this->get_sections();
 		$fields   = array();
 
-		if ( is_array( $sections ) && ! empty( $sections ) ) {
-
-			foreach ( $sections as $section ) {
-
-				if ( is_array( $section['fields'] ) && ! empty( $section['fields'] ) ) {
-
-					foreach ( $section['fields'] as $field ) {
-
-						$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-					}
-				}
-			}
+		foreach ( $sections as $section ) {
+			$fields = array_merge( $fields, $section['fields'] );
 		}
 
 		return $fields;

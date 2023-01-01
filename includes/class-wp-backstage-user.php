@@ -74,30 +74,12 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	public function __construct( $args = array() ) {
 
-		$this->default_field_args   = array_merge(
+		$this->default_field_args = array_merge(
 			$this->default_field_args,
 			array(
 				'has_column'    => false,
 				'is_sortable'   => false,
 				'is_filterable' => false,
-			)
-		);
-		$this->default_address_args = array_merge(
-			$this->default_address_args,
-			array(
-				'max_width' => '50em',
-			)
-		);
-		$this->default_code_args    = array_merge(
-			$this->default_code_args,
-			array(
-				'max_width' => '50em',
-			)
-		);
-		$this->default_editor_args  = array_merge(
-			$this->default_editor_args,
-			array(
-				'max_width' => '50em',
 			)
 		);
 
@@ -120,6 +102,12 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	protected function set_args( $args = array() ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
+		foreach ( $this->args['field_groups'] as $i => $field_group ) {
+			$this->args['field_groups'][ $i ] = wp_parse_args( $field_group, $this->default_field_group_args );
+			foreach ( $this->args['field_groups'][ $i ]['fields'] as $ii => $field ) {
+				$this->args['field_groups'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
+			}
+		}
 	}
 
 	/**
@@ -130,25 +118,21 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	protected function set_errors() {
 
-		if ( is_array( $this->required_args ) && ! empty( $this->required_args ) ) {
+		foreach ( $this->required_args as $required_arg ) {
 
-			foreach ( $this->required_args as $required_arg ) {
+			if ( empty( $this->args[ $required_arg ] ) ) {
 
-				if ( empty( $this->args[ $required_arg ] ) ) {
+				$this->errors[] = new WP_Error(
+					'required_user_arg',
+					sprintf(
+						/* translators: 1:required arg key. */
+						_x( '[User] The %1$s key is required.', 'user - required arg error', 'wp_backstage' ),
+						'<code>' . $required_arg . '</code>'
+					)
+				);
 
-					$this->errors[] = new WP_Error(
-						'required_user_arg',
-						sprintf(
-							/* translators: 1:required arg key. */
-							_x( '[User] The %1$s key is required.', 'user - required arg error', 'wp_backstage' ),
-							'<code>' . $required_arg . '</code>'
-						)
-					);
-
-				}
 			}
 		}
-
 	}
 
 	/**
@@ -235,7 +219,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$schema = $this->get_field_schema( $field );
+			$field_class = $this->get_field_class( $field['type'] );
+			$schema      = $field_class->get_schema();
 
 			$show_in_rest = false;
 			if ( $field['show_in_rest'] ) {
@@ -248,10 +233,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 				$this->slug,
 				$field['name'],
 				array(
-					'description'       => $field['label'],
+					'description'       => wp_strip_all_tags( $field['description'], true ),
 					'type'              => $schema['type'],
 					'single'            => true,
-					'sanitize_callback' => array( $this, $this->get_sanitize_callback( $field ) ),
+					'sanitize_callback' => array( $field_class, 'sanitize' ),
 					'show_in_rest'      => $show_in_rest,
 				)
 			);
@@ -335,20 +320,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @return  array  An array of field group argument arrays.
 	 */
 	protected function get_field_groups() {
-
-		$field_groups = array();
-
-		if ( is_array( $this->args['field_groups'] ) && ! empty( $this->args['field_groups'] ) ) {
-
-			foreach ( $this->args['field_groups'] as $field_group ) {
-
-				$field_groups[] = wp_parse_args( $field_group, $this->default_field_group_args );
-
-			}
-		}
-
-		return $field_groups;
-
+		return $this->args['field_groups'];
 	}
 
 	/**
@@ -362,19 +334,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$field_groups = $this->get_field_groups();
 		$fields       = array();
 
-		if ( is_array( $field_groups ) && ! empty( $field_groups ) ) {
-
-			foreach ( $field_groups as $field_group ) {
-
-				if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
-
-					foreach ( $field_group['fields'] as $field ) {
-
-						$fields[] = wp_parse_args( $field, $this->default_field_args );
-
-					}
-				}
-			}
+		foreach ( $field_groups as $field_group ) {
+			$fields = array_merge( $fields, $field_group['fields'] );
 		}
 
 		return $fields;
@@ -393,39 +354,31 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		$field_groups = $this->get_field_groups();
 
-		if ( is_array( $field_groups ) && ! empty( $field_groups ) ) {
+		foreach ( $field_groups as $field_group ) { ?>
 
-			foreach ( $field_groups as $field_group ) { ?>
+			<h2><?php
+				echo wp_kses( $field_group['title'], 'wp_backstage_user_field_group_title' );
+			?></h2>
 
-				<h2><?php
+			<?php if ( ! empty( $field_group['description'] ) ) { ?>
 
-					echo wp_kses( $field_group['title'], WP_Backstage::$kses_p );
+				<p><?php
+					echo wp_kses( $field_group['description'], 'wp_backstage_user_field_group_description' );
+				?></p>
 
-				?></h2>
+			<?php } ?>
 
-				<?php if ( ! empty( $field_group['description'] ) ) { ?>
+			<table class="form-table">
 
-					<p class="description"><?php
+				<tbody><?php
 
-						echo wp_kses( $field_group['description'], WP_Backstage::$kses_p );
+					$this->render_fields( $field_group, $user instanceof WP_User ? $user : null );
 
-					?></p>
+				?></tbody>
 
-				<?php } ?>
+			</table>
 
-				<table class="form-table">
-
-					<tbody><?php
-
-						$this->render_fields( $field_group, $user instanceof WP_User ? $user : null );
-
-					?></tbody>
-
-				</table>
-
-			<?php }
-		}
-
+		<?php }
 	}
 
 	/**
@@ -434,70 +387,83 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   3.1.0 Checks if there is a user before getting the value as this is also run on the add new user form where there is no user yet.
 	 * @param   array        $field_group  An array of field group arguments.
-	 * @param   WP_User|null $user  An instance of `WP_User` or null if on the add user form.
+	 * @param   WP_User|null $user An instance of `WP_User` if on the edit form or `null` if on the add form.
 	 * @return  void
 	 */
 	protected function render_fields( $field_group = array(), $user = null ) {
 
-		if ( is_array( $field_group['fields'] ) && ! empty( $field_group['fields'] ) ) {
+		foreach ( $field_group['fields'] as $field ) {
 
-			foreach ( $field_group['fields'] as $field ) {
+			$field['value'] = $user instanceof WP_User ? get_user_meta( $user->ID, $field['name'], true ) : null;
 
-				$field['value']      = $user instanceof WP_User ? get_user_meta( $user->ID, $field['name'], true ) : null;
-				$field['show_label'] = false;
-				$input_class         = isset( $field['input_attrs']['class'] ) ? $field['input_attrs']['class'] : '';
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $user );
 
-				if ( ! in_array( $field['type'], $this->non_regular_text_fields ) ) {
-					$field['input_attrs']['class'] = sprintf( 'regular-text %1$s', $input_class );
-				}
+			$field_class = $this->get_field_class( $field['type'] );
 
-				if ( in_array( $field['type'], $this->textarea_control_fields ) ) {
-					$default_rows                 = ( $field['type'] === 'editor' ) ? 15 : 5;
-					$default_cols                 = $this->is_screen( 'id', 'user' ) ? 60 : 30;
-					$field['input_attrs']['rows'] = isset( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $default_rows;
-					$field['input_attrs']['cols'] = isset( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $default_cols;
-				}
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'regular-text' ) );
+			}
 
-				$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $user ); ?>
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->set_field_textarea_dimensions( $field, 5, 30 );
+			}?>
 
-				<tr>
+			<tr class="<?php printf( 'user-%1$s-wrap', esc_attr( $field_class->get_id( $field ) ) ); ?>">
 
-					<th>
+				<th>
 
-						<?php if ( ! in_array( $field['type'], $this->remove_label_for_fields ) ) { ?>
+					<?php if ( $field_class->has_tag( 'remove_label_for' ) ) { ?>
 
-							<label for="<?php echo sanitize_key( $field['name'] ); ?>"><?php
+						<span><?php
+							$field_class->label( $field );
+						?></span>
 
-								echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+					<?php } else { ?>
 
-							?></label>
+						<label for="<?php $field_class->element_id( $field ); ?>"><?php
+							$field_class->label( $field );
+						?></label>
 
-						<?php } else { ?>
+					<?php } ?>
 
-							<span><?php
+				</th>
 
-								echo wp_kses( $field['label'], WP_Backstage::$kses_label );
+				<td><?php
 
-							?></span>
+					do_action( "wp_backstage_{$this->slug}_field_before", $field, $user );
 
-						<?php } ?>
+					$field_class->render( $field );
 
-					</th>
+					do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
 
-					<td><?php
+					$this->render_field_description( $field );
 
-						do_action( "wp_backstage_{$this->slug}_field_before", $field, $user );
+				?></td>
 
-						$this->render_field_by_type( $field );
+			</tr>
 
-						do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
+		<?php }
+	}
 
-					?></td>
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
 
-				</tr>
+		if ( ! empty( $field['description'] ) ) {
 
-			<?php }
-		}
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p class="description"
+			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
 
 	}
 
@@ -527,21 +493,19 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			if ( isset( $post_data[ $field['name'] ] ) ) {
 
-				if ( isset( $post_data[ $field['name'] ] ) ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ] );
 
-					$value = $this->sanitize_field( $field, $post_data[ $field['name'] ] );
+				update_user_meta( $user_id, $field['name'], $value );
 
-					update_user_meta( $user_id, $field['name'], $value );
+			} else {
 
-				} else {
+				delete_user_meta( $user_id, $field['name'] );
 
-					delete_user_meta( $user_id, $field['name'] );
-
-				}
 			}
 		}
 
@@ -583,11 +547,12 @@ class WP_Backstage_User extends WP_Backstage_Component {
 				return $content;
 			}
 
-			$formatted_value = $this->format_field_value( $value, $field );
+			if ( ! empty( $value ) ) {
 
-			if ( ! empty( $formatted_value ) ) {
-
-				$content = $formatted_value;
+				ob_start();
+				$field_class = $this->get_field_class( $field['type'] );
+				$field_class->render_column( $field, $value );
+				$content = ob_get_clean();
 
 			} else {
 
@@ -758,16 +723,13 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
 
-			foreach ( $fields as $field ) {
+			// phpcs:ignore WordPress.Security.NonceVerification
+			$url_params = wp_unslash( $_GET );
 
-				// phpcs:ignore WordPress.Security.NonceVerification
-				$url_params = wp_unslash( $_GET );
-
-				if ( isset( $url_params[ $field['name'] ] ) ) {
-					$args[ $field['name'] ] = $url_params[ $field['name'] ];
-				}
+			if ( isset( $url_params[ $field['name'] ] ) ) {
+				$args[ $field['name'] ] = $url_params[ $field['name'] ];
 			}
 		}
 
@@ -796,13 +758,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			$fields = $this->get_fields();
 
-			if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-				foreach ( $fields as $field ) {
-
-					$hidden[] = $field['name'];
-
-				}
+			foreach ( $fields as $field ) {
+				$hidden[] = $field['name'];
 			}
 		}
 

@@ -87,6 +87,21 @@ function wp_backstage_init() {
 			),
 		),
 		array(
+			'type'         => 'range',
+			'name'         => 'wp_backstage_range_field',
+			'label'        => __( 'Range', 'wp_backstage_examples' ),
+			'description'  => __( 'Please select a number from 1-5. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'help'         => __( 'This is the help description for the Range field. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'has_column'   => true,
+			'is_sortable'  => true,
+			'show_in_rest' => true,
+			'input_attrs'  => array(
+				'min'  => 0,
+				'max'  => 5,
+				'step' => 1,
+			),
+		),
+		array(
 			'type'         => 'checkbox',
 			'name'         => 'wp_backstage_checkbox_field',
 			'label'        => __( 'Checkbox', 'wp_backstage_examples' ),
@@ -288,9 +303,6 @@ function wp_backstage_init() {
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
-			'args'         => array(
-				'format' => 'yy-mm-dd',
-			),
 		),
 		array(
 			'type'         => 'time',
@@ -352,6 +364,18 @@ function wp_backstage_init() {
 		),
 		array(
 			'type'         => 'code',
+			'name'         => 'wp_backstage_php_field',
+			'label'        => __( 'Code (PHP)', 'wp_backstage_examples' ),
+			'description'  => __( 'Please enter some code. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'help'         => __( 'This is the help description for the Code (PHP) field. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'has_column'   => true,
+			'show_in_rest' => true,
+			'args'         => array(
+				'language' => 'php',
+			),
+		),
+		array(
+			'type'         => 'code',
 			'name'         => 'wp_backstage_html_field',
 			'label'        => __( 'Code (HTML)', 'wp_backstage_examples' ),
 			'description'  => __( 'Please enter some code. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
@@ -368,7 +392,7 @@ function wp_backstage_init() {
 			'has_column'   => true,
 			'show_in_rest' => true,
 			'args'         => array(
-				'mime' => 'text/css',
+				'language' => 'css',
 			),
 		),
 		array(
@@ -380,7 +404,19 @@ function wp_backstage_init() {
 			'has_column'   => true,
 			'show_in_rest' => true,
 			'args'         => array(
-				'mime' => 'text/javascript',
+				'language' => 'javascript',
+			),
+		),
+		array(
+			'type'         => 'code',
+			'name'         => 'wp_backstage_json_field',
+			'label'        => __( 'Code (JSON)', 'wp_backstage_examples' ),
+			'description'  => __( 'Please enter some code. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'help'         => __( 'This is the help description for the Code (JSON) field. <a href="#">Example Link</a>', 'wp_backstage_examples' ),
+			'has_column'   => true,
+			'show_in_rest' => true,
+			'args'         => array(
+				'language' => 'json',
 			),
 		),
 		array(
@@ -759,11 +795,10 @@ function wp_backstage_init() {
 	WP_Backstage_Options::add(
 		'wp_backstage_options',
 		array(
-			'title'        => __( 'Test Options', 'wp_backstage_examples' ),
-			'menu_title'   => __( 'Test Options', 'wp_backstage_examples' ),
-			'description'  => __( 'A test custom options page containing all field types.', 'wp_backstage_examples' ),
-			'show_in_rest' => true,
-			'sections'     => array(
+			'title'       => __( 'Test Options', 'wp_backstage_examples' ),
+			'menu_title'  => __( 'Test Options', 'wp_backstage_examples' ),
+			'description' => __( 'A test custom options page containing all field types.', 'wp_backstage_examples' ),
+			'sections'    => array(
 				array(
 					'id'          => 'wp_backstage_options_fields',
 					'title'       => __( 'All Fields', 'wp_backstage_examples' ),

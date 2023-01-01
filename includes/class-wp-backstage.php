@@ -28,7 +28,7 @@ class WP_Backstage {
 	protected $fields = array();
 
 	/**
-	 * KSES P
+	 * KSES Description
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
@@ -36,45 +36,60 @@ class WP_Backstage {
 	 * @since  3.4.0  Added support for `<span>` elements.
 	 * @var    array  $kses_p  KSES configuration for paragraph tags.
 	 */
-	public static $kses_p = array(
+	protected $kses_description = array(
 		'span'   => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'a'      => array(
-			'id'     => array(),
-			'class'  => array(),
-			'style'  => array(),
-			'href'   => array(),
-			'title'  => array(),
-			'target' => array(),
-			'rel'    => array(),
+			'id'     => true,
+			'class'  => true,
+			'style'  => true,
+			'href'   => true,
+			'title'  => true,
+			'target' => true,
+			'rel'    => true,
 		),
 		'em'     => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'strong' => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'code'   => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'i'      => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'br'     => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sub'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sup'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strike' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 	);
 
@@ -87,36 +102,240 @@ class WP_Backstage {
 	 * @since  3.4.0  Added support for `<br>` and `<span>` elements.
 	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
-	public static $kses_label = array(
+	protected $kses_label = array(
 		'span'   => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'em'     => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'strong' => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'code'   => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'i'      => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 		'br'     => array(
-			'id'    => array(),
-			'class' => array(),
-			'style' => array(),
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sub'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sup'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strike' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+	);
+
+	/**
+	 * KSES Title
+	 *
+	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
+	 *
+	 * @since  0.0.1
+	 * @since  3.4.0  Added support for `<span>` elements.
+	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 */
+	protected $kses_title = array(
+		'span'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'a'      => array(
+			'id'     => true,
+			'class'  => true,
+			'style'  => true,
+			'href'   => true,
+			'title'  => true,
+			'target' => true,
+			'rel'    => true,
+		),
+		'em'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strong' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'code'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'i'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'br'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sub'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sup'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strike' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+	);
+
+	/**
+	 * KSES List Item
+	 *
+	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
+	 *
+	 * @since  0.0.1
+	 * @since  3.4.0  Added support for `<span>` elements.
+	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 */
+	protected $kses_list_item = array(
+		'span'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'a'      => array(
+			'id'     => true,
+			'class'  => true,
+			'style'  => true,
+			'href'   => true,
+			'title'  => true,
+			'target' => true,
+			'rel'    => true,
+		),
+		'em'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strong' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'code'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'i'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'br'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sub'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sup'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strike' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+	);
+
+	/**
+	 * KSES Button
+	 *
+	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
+	 *
+	 * @since  0.0.1
+	 * @since  3.4.0  Added support for `<span>` elements.
+	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 */
+	protected $kses_button = array(
+		'span'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'em'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strong' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'code'   => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'i'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'br'     => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sub'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'sup'    => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'strike' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
 		),
 	);
 
@@ -158,19 +377,9 @@ class WP_Backstage {
 		add_action( 'after_setup_theme', array( $this, 'register_field_classes' ), 0 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
-		add_action( 'admin_print_styles', array( $this, 'inline_editor_style' ), 10 );
-		add_action( 'admin_print_styles', array( $this, 'inline_code_editor_style' ), 10 );
-		add_action( 'admin_print_styles', array( $this, 'inline_media_uploader_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 20 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_mixin_overrides_script' ), 20 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_uploader_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_date_picker_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_color_picker_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_address_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_editor_script' ), 10 );
-		add_action( 'admin_print_footer_scripts', array( $this, 'inline_code_editor_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-post.php', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-post-new.php', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'inline_taxonomy_script' ), 10 );
@@ -183,7 +392,45 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
-		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
+		add_filter( 'wp_kses_allowed_html', array( $this, 'manage_kses' ), 10, 2 );
+	}
+
+	/**
+	 * Manage KSES
+	 *
+	 * @since 4.0.0
+	 * @param array  $allowed A KSES definition list.
+	 * @param string $context The KSES context identifier.
+	 * @return array A filtered KSES definition list.
+	 */
+	public function manage_kses( array $allowed = array(), string $context = '' ) {
+		switch ( $context ) {
+			case 'wp_backstage_error_message':
+				return $this->kses_description;
+			case 'wp_backstage_help_list_item':
+				return $this->kses_list_item;
+			case 'wp_backstage_field_label':
+				return $this->kses_label;
+			case 'wp_backstage_field_description':
+				return $this->kses_description;
+			case 'wp_backstage_filter_label':
+				return $this->kses_label;
+			case 'wp_backstage_options_page_title':
+				return $this->kses_title;
+			case 'wp_backstage_options_page_description':
+				return $this->kses_description;
+			case 'wp_backstage_options_section_description':
+				return $this->kses_description;
+			case 'wp_backstage_user_field_group_title':
+				return $this->kses_title;
+			case 'wp_backstage_user_field_group_description':
+				return $this->kses_description;
+			case 'wp_backstage_button':
+				return $this->kses_button;
+			case 'wp_backstage_tool_card_title':
+				return $this->kses_button;
+		}
+		return $allowed;
 	}
 
 	/**
@@ -195,8 +442,25 @@ class WP_Backstage {
 	public function register_field_classes() {
 		// Register the default field classes.
 		$this->register_field_class( 'default', new WP_Backstage_Field() );
+		$this->register_field_class( 'address', new WP_Backstage_Address_Field() );
+		$this->register_field_class( 'checkbox', new WP_Backstage_Checkbox_Field() );
+		$this->register_field_class( 'checkbox_set', new WP_Backstage_Checkbox_Set_Field() );
+		$this->register_field_class( 'code', new WP_Backstage_Code_Field() );
+		$this->register_field_class( 'color', new WP_Backstage_Color_Field() );
+		$this->register_field_class( 'date', new WP_Backstage_Date_Field() );
+		$this->register_field_class( 'editor', new WP_Backstage_Editor_Field() );
+		$this->register_field_class( 'email', new WP_Backstage_Email_Field() );
+		$this->register_field_class( 'media', new WP_Backstage_Media_Field() );
 		$this->register_field_class( 'number', new WP_Backstage_Number_Field() );
+		$this->register_field_class( 'radio', new WP_Backstage_Radio_Field() );
 		$this->register_field_class( 'range', new WP_Backstage_Range_Field() );
+		$this->register_field_class( 'select', new WP_Backstage_Select_Field() );
+		$this->register_field_class( 'select_posts', new WP_Backstage_Select_Posts_Field() );
+		$this->register_field_class( 'select_users', new WP_Backstage_Select_Users_Field() );
+		$this->register_field_class( 'tel', new WP_Backstage_Tel_Field() );
+		$this->register_field_class( 'textarea', new WP_Backstage_Textarea_Field() );
+		$this->register_field_class( 'time', new WP_Backstage_Time_Field() );
+		$this->register_field_class( 'url', new WP_Backstage_URL_Field() );
 
 		/**
 		 * Fires after the default field classes are registered. This hook should be
@@ -253,7 +517,7 @@ class WP_Backstage {
 	 */
 	public function inline_rest_api_preview_code_editor_script() {
 
-		$rest_api_preview_code_editor_settings = wp_enqueue_code_editor(
+		$settings = wp_enqueue_code_editor(
 			array(
 				'type'       => 'text/json',
 				'codemirror' => array(
@@ -263,13 +527,12 @@ class WP_Backstage {
 			)
 		);
 
-		if ( $rest_api_preview_code_editor_settings ) {
-
+		if ( $settings ) {
 			wp_add_inline_script(
 				'code-editor',
 				sprintf(
-					'window.wpBackstage.restAPIPreview.settings = %1$s;',
-					wp_json_encode( $rest_api_preview_code_editor_settings )
+					'window.wpBackstage.codeSettings.jsonReadOnly = %1$s;',
+					wp_json_encode( $settings )
 				)
 			);
 		}
@@ -283,8 +546,11 @@ class WP_Backstage {
 	 * @since   2.0.0
 	 * @since   3.3.0 Adds styles for new media uploader preview rendering.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_media_uploader_style() { ?>
+	public function inline_media_uploader_style() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::inline_style()' ); ?>
 
 		<style 
 		id="wp_backstage_media_uploader_style"
@@ -517,8 +783,11 @@ class WP_Backstage {
 	 *
 	 * @since   0.0.1
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_editor_style() { ?>
+	public function inline_editor_style() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Editor_Field::inline_style()' ); ?>
 
 		<style 
 		id="wp_backstage_editor_style"
@@ -573,8 +842,11 @@ class WP_Backstage {
 	 *
 	 * @since   2.0.0
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_code_editor_style() { ?>
+	public function inline_code_editor_style() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Code_Field::inline_style()' ); ?>
 
 		<style 
 		id="wp_backstage_code_editor_style"
@@ -610,11 +882,11 @@ class WP_Backstage {
 	 */
 	public function enqueue_admin_scripts() {
 
-		// jquery.
+		// jQuery.
 		if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery' );
 		}
-		// jquery ui.
+		// jQuery UI.
 		if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 		}
@@ -632,28 +904,28 @@ class WP_Backstage {
 		if ( ! wp_script_is( 'jquery-ui-datepicker', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 		}
-		// editor.
+		// WP Editor.
 		if ( ! did_action( 'wp_enqueue_editor' ) ) {
 			wp_enqueue_editor();
 		}
-		// media.
+		// WP Media.
 		if ( ! did_action( 'wp_enqueue_media' ) ) {
 			wp_enqueue_media();
 		}
+		// WP Media Element.
 		if ( ! wp_style_is( 'wp-mediaelement', 'enqueued' ) ) {
 			wp_enqueue_style( 'wp-mediaelement' );
 		}
 		if ( ! wp_script_is( 'wp-mediaelement', 'enqueued' ) ) {
 			wp_enqueue_script( 'wp-mediaelement' );
 		}
-		// color picker.
+		// WP Color Picker.
 		if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 			wp_enqueue_script( 'wp-color-picker' );
 		}
 		if ( ! wp_style_is( 'wp-color-picker', 'enqueued' ) ) {
 			wp_enqueue_style( 'wp-color-picker' );
 		}
-
 	}
 
 	/**
@@ -670,8 +942,12 @@ class WP_Backstage {
 	 *
 	 * @since 3.3.0
 	 * @return void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_media_mixin_overrides_script() { ?>
+	public function inline_media_mixin_overrides_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::inline_media_mixin_overrides_script()' ); ?>
+
 		<script id="wp_backstage_media_mixin_overrides_script">
 			(function() {
 				function removeAllPlayersOverride() {
@@ -699,9 +975,7 @@ class WP_Backstage {
 	 */
 	public function inline_thumbnail_column_style() { ?>
 
-		<style 
-		id="wp_backstage_thumbnail_column_style"
-		type="text/css">
+		<style id="wp_backstage_thumbnail_column_style">
 
 			table.wp-list-table th.column-thumbnail,
 			table.wp-list-table td.column-thumbnail {
@@ -730,18 +1004,25 @@ class WP_Backstage {
 	 */
 	public function inline_global_style() { ?>
 
-		<style 
-		id="wp_backstage_global_style"
-		type="text/css">
+		<style id="wp_backstage_global_style">
+
+			/* legends as labels */
+			.form-wrap legend {
+				display: block;
+				padding: 2px 0;
+				color: #1d2327;
+				font-weight: 400;
+				text-shadow: none;
+			}
 
 			/* Meta box fields */
-			.postbox .wp-backstage-field {
-				margin-bottom: 12px;
+			.postbox .wp-backstage-field + .howto {
+				margin-top: 0.2em;
 			}
 
 			/* Widget fields */
-			#widgets-right .widget .wp-backstage-field .description {
-				padding: 0;
+			.widget .widget-field-description {
+				margin-top: -0.8em;
 			}
 
 			/* Table filters */
@@ -749,12 +1030,16 @@ class WP_Backstage {
 				display: none;
 			}
 
-			/* Form Tables */
-			@media screen and (max-width: 782px) {
-				.form-table {
-					table-layout: fixed;
-					max-width: 100%;
-				}
+			/* Fields */
+			.wp-backstage-field {
+				display: block;
+			}
+
+			.wp-backstage-field::before,
+			.wp-backstage-field::after {
+				content: '';
+				display: table;
+				clear: both;
 			}
 
 		</style>
@@ -770,23 +1055,39 @@ class WP_Backstage {
 	 * @return  void
 	 */
 	public function inline_global_script() { ?>
-		<script 
-		id="wp_backstage_global_script"
-		type="text/javascript">
-			window.wpBackstage = {
-				colorPicker: {},
-				datePicker: {},
-				address: {},
-				mediaUploader: {},
-				editor: {},
-				codeEditor: {
-					settings: {},
-				},
-				restAPIPreview: {
-					settings: {},
-				},
-			};
+
+		<script id="wp_backstage_global_script">
+
+			(function() {
+				window.wpBackstage = {
+					codeSettings: {},
+					fields: {},
+					initAllFields: function(container = document) {
+						for (var key in window.wpBackstage.fields) {
+							if (window.wpBackstage.fields[key].initAll && (typeof window.wpBackstage.fields[key].initAll === 'function')) {
+								window.wpBackstage.fields[key].initAll(container);
+							}
+						}
+					},
+					resetAllFields: function(container = document) {
+						for (var key in window.wpBackstage.fields) {
+							if (window.wpBackstage.fields[key].resetAll && (typeof window.wpBackstage.fields[key].resetAll === 'function')) {
+								window.wpBackstage.fields[key].resetAll(container);
+							}
+						}
+					},
+					refreshAllFields: function(container = document) {
+						for (var key in window.wpBackstage.fields) {
+							if (window.wpBackstage.fields[key].refreshAll && (typeof window.wpBackstage.fields[key].refreshAll === 'function')) {
+								window.wpBackstage.fields[key].refreshAll(container);
+							}
+						}
+					},
+				};
+			}());
+
 		</script>
+
 	<?php }
 
 	/**
@@ -804,8 +1105,11 @@ class WP_Backstage {
 	 * @since   2.0.0  Full rewrite of the media uploader script.
 	 * @since   3.3.0  Renders previews via ajax instead of clone functionality.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_media_uploader_script() { ?>
+	public function inline_media_uploader_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::inline_script()' );?>
 
 		<script 
 		id="wp_backstage_media_uploader_script"
@@ -1253,8 +1557,11 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_date_picker_script() { ?>
+	public function inline_date_picker_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Date_Field::inline_script()' ); ?>
 
 		<script 
 		id="wp_backstage_date_picker_script"
@@ -1311,8 +1618,11 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_color_picker_script() { ?>
+	public function inline_color_picker_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Color_Field::inline_script()' ); ?>
 
 		<script 
 		id="wp_backstage_color_picker_script"
@@ -1423,8 +1733,11 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_code_editor_script() { ?>
+	public function inline_code_editor_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Code_Field::inline_script()' ); ?>
 
 		<script 
 		id="wp_backstage_code_editor_script"
@@ -1531,8 +1844,11 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_address_script() { ?>
+	public function inline_address_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Address_Field::inline_script()' ); ?>
 
 		<script 
 		id="wp_backstage_address_script"
@@ -1615,8 +1931,11 @@ class WP_Backstage {
 	 * @since   0.0.1
 	 * @since   2.0.0  Added methods to global `wpBackstage` object and fixes shortcode rendering.
 	 * @return  void
+	 * @deprecated 4.0.0
 	 */
-	public function inline_editor_script() { ?>
+	public function inline_editor_script() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Editor_Field::inline_script()' ); ?>
 
 		<script 
 		id="wp_backstage_editor_script"
@@ -1769,11 +2088,11 @@ class WP_Backstage {
 	 */
 	public function inline_post_type_script() { ?>
 
-		<script 
-		id="wp_backstage_post_type_script"
-		type="text/javascript">
+		<script id="wp_backstage_post_type_script">
 
 			(function($) {
+
+				var refreshTimer = null;
 
 				function findParentMetaBox(element = null) {
 					var parentNode = element.parentNode;
@@ -1783,28 +2102,30 @@ class WP_Backstage {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
+				function refreshMetaBox(metaBox = null) {
+					if (refreshTimer) clearTimeout(refreshTimer);
+					refreshTimer = setTimeout(function() {
+						if (! metaBox.classList.contains('closed')) {
+							window.wpBackstage.refreshAllFields(metaBox);
+						}
+					}, 500);
+				}
+
 				function handleMetaBoxHandleClick(e = null) {
 					const metaBox = findParentMetaBox(e.target);
-					if (! metaBox.classList.contains('closed')) {
-						window.wpBackstage.editor.refreshAll(metaBox);
-						window.wpBackstage.codeEditor.refreshAll(metaBox);
-					}
+					refreshMetaBox(metaBox);
 				}
 
 				function handleMetaBoxSortStop(e = null, ui = null) {
-					const item = ui.item[0];
-					if (item.classList.contains('postbox')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
+					if (ui.item[0] instanceof HTMLElement && ui.item[0].classList.contains('postbox')) {
+						const metaBox = ui.item[0];
+						refreshMetaBox(metaBox);
 					}
 				}
 
 				function handleScreenOptionChange(e = null) {
 					const metaBox = document.getElementById(e.target.value);
-					if (metaBox && ! metaBox.classList.contains('closed')) {
-						window.wpBackstage.editor.refreshAll(metaBox);
-						window.wpBackstage.codeEditor.refreshAll(metaBox);
-					}
+					refreshMetaBox(metaBox);
 				}
 
 				function initMetaBoxSortable(sortable = null) {
@@ -1822,38 +2143,27 @@ class WP_Backstage {
 
 				function initAllMetaBoxSortables() {
 					const metaBoxSortables = document.querySelectorAll('.meta-box-sortables');
-					if (metaBoxSortables && (metaBoxSortables.length > 0)) {
-						for (var i = 0; i < metaBoxSortables.length; i++) {
-							initMetaBoxSortable(metaBoxSortables[i]);
-						}
-					}
+					metaBoxSortables.forEach(function(metaBoxSortable) {
+						initMetaBoxSortable(metaBoxSortable);
+					});
 				}
 
 				function initAllMetaBoxes() {
 					const metaBoxes = document.querySelectorAll('.postbox');
-					if (metaBoxes && (metaBoxes.length > 0)) {
-						for (var i = 0; i < metaBoxes.length; i++) {
-							initMetaBox(metaBoxes[i]);
-						}
-					}
+					metaBoxes.forEach(function(metaBox) {
+						initMetaBox(metaBox);
+					});
 				}
 
 				function initAllScreenOptions() {
 					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
+					checkboxes.forEach(function(checkbox) {
+						initScreenOption(checkbox);
+					});
 				}
 
 				function init() {
-					window.wpBackstage.colorPicker.initAll();
-					window.wpBackstage.datePicker.initAll();
-					window.wpBackstage.address.initAll();
-					window.wpBackstage.mediaUploader.initAll();
-					window.wpBackstage.codeEditor.initAll();
-					window.wpBackstage.editor.initAll();
+					window.wpBackstage.initAllFields();
 					initAllMetaBoxes();
 					initAllMetaBoxSortables();
 					initAllScreenOptions();
@@ -1864,8 +2174,7 @@ class WP_Backstage {
 
 				function handleBlockEditorLoad() {
 					setTimeout(function() {
-						window.wpBackstage.editor.refreshAll();
-						window.wpBackstage.codeEditor.refreshAll();
+						window.wpBackstage.refreshAllFields();
 					}, 500); 
 				}
 
@@ -2447,18 +2756,14 @@ class WP_Backstage {
 	 */
 	public function inline_taxonomy_script() { ?>
 
-		<script 
-		id="wp_backstage_taxonomy_script"
-		type="text/javascript">
+		<script id="wp_backstage_taxonomy_script">
 
 			(function($) {
 
 				function resetForm() {
 					const form = document.querySelector('#addtag');
 					form.reset();
-					window.wpBackstage.colorPicker.resetAll(form);
-					window.wpBackstage.codeEditor.resetAll(form);
-					window.wpBackstage.mediaUploader.resetAll(form);
+					window.wpBackstage.resetAllFields(form);
 				}
 
 				function handleSuccess(e = null, request = null, settings = null) {
@@ -2475,12 +2780,7 @@ class WP_Backstage {
 				}
 
 				function init() {
-					window.wpBackstage.colorPicker.initAll();
-					window.wpBackstage.datePicker.initAll();
-					window.wpBackstage.address.initAll();
-					window.wpBackstage.mediaUploader.initAll();
-					window.wpBackstage.codeEditor.initAll();
-					window.wpBackstage.editor.initAll();
+					window.wpBackstage.initAllFields();
 					$(document).ajaxSuccess(handleSuccess);
 				}
 
@@ -2509,12 +2809,7 @@ class WP_Backstage {
 			(function($) {
 
 				function init() {
-					window.wpBackstage.colorPicker.initAll();
-					window.wpBackstage.datePicker.initAll();
-					window.wpBackstage.address.initAll();
-					window.wpBackstage.mediaUploader.initAll();
-					window.wpBackstage.codeEditor.initAll();
-					window.wpBackstage.editor.initAll();
+					window.wpBackstage.initAllFields();
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {
@@ -2565,22 +2860,29 @@ class WP_Backstage {
 				}
 
 				function handleWidgetAdded(e = null, $widget = null) {
+					const widget = $widget[0];
 					setTimeout(function() {
-						initWidget($widget[0]);
+						initWidget(widget);
 					}, 500);
 				}
 
 				function handleWidgetUpdated(e = null, $widget = null) {
-					refreshWidget($widget[0]);
+					const widget = $widget[0];
+					window.wpBackstage.initAllFields(widget);
 				}
 
 				function handleWidgetSynced(e = null, $widget = null) {
-					console.log('synced');
+					// This function is fired when the widget is synced via the customizer 
+					// in the classic widgets experience only. Currently nothing has to be
+					// done here in this instance.
+					// console.log('synced', e, $widget);
 				}
 
 				function initWidgetBlock(widget = null) {
 					const block = findParentBlock(widget);
-					block.addEventListener('click', handleBlockClick);
+					if (block) {
+						block.addEventListener('click', handleBlockClick);
+					}
 				}
 
 				function handleBlockClick(e = null) {
@@ -2588,50 +2890,26 @@ class WP_Backstage {
 					if (! parentWidget) {
 						const block = e.target.classList.contains('wp-block-legacy-widget') ? e.target : findParentBlock(e.target);
 						const widget = block.querySelector('.widget');
-						window.wpBackstage.editor.refreshAll(widget);
-						window.wpBackstage.codeEditor.refreshAll(widget);
+						window.wpBackstage.refreshAllFields(widget);
 					}
 				}
 
 				function initWidgetArea(container = null) {
-					window.wpBackstage.colorPicker.initAll(container);
-					window.wpBackstage.datePicker.initAll(container);
-					window.wpBackstage.address.initAll(container);
-					window.wpBackstage.mediaUploader.initAll(container);
-					window.wpBackstage.codeEditor.initAll(container);
-					window.wpBackstage.editor.initAll(container);
+					window.wpBackstage.initAllFields(container);
 					initAllWidgetHandles(container);
 				}
 
 				function initWidget(widget = null) {
-					window.wpBackstage.colorPicker.initAll(widget);
-					window.wpBackstage.datePicker.initAll(widget);
-					window.wpBackstage.address.initAll(widget);
-					window.wpBackstage.mediaUploader.initAll(widget);
-					window.wpBackstage.codeEditor.initAll(widget);
-					window.wpBackstage.editor.initAll(widget);
+					window.wpBackstage.initAllFields(widget);
 					initAllWidgetHandles(widget);
 					initWidgetBlock(widget);
-				}
-
-				function refreshWidget(widget = null) {
-					window.wpBackstage.colorPicker.initAll(widget);
-					window.wpBackstage.datePicker.initAll(widget);
-					window.wpBackstage.address.initAll(widget);
-					window.wpBackstage.mediaUploader.initAll(widget);
-					window.wpBackstage.codeEditor.initAll(widget);
-					// The editor must be destroyed and reinitialized,
-					// as something about it is still being attached
-					// to the DOM in this case.
-					window.wpBackstage.editor.refreshAll(widget);
 				}
 
 				function handleWidgetHandleClick(e = null) {
 					const widget = findParentWidget(e.target);
 					setTimeout(function() {
 						if (widget.classList.contains('open')) {
-							window.wpBackstage.editor.refreshAll(widget);
-							window.wpBackstage.codeEditor.refreshAll(widget);
+							window.wpBackstage.refreshAllFields(widget);
 						}
 					}, 500);
 				}
@@ -2643,18 +2921,16 @@ class WP_Backstage {
 				function initAllWidgetHandles(container = null) {
 					container = container || document;
 					const widgetHandles = container.querySelectorAll('.widget-top');
-					if (widgetHandles && (widgetHandles.length > 0)) {
-						for (var i = 0; i < widgetHandles.length; i++) {
-							initWidgetHandle(widgetHandles[i]);
-						}
-					}
+					widgetHandles.forEach(function(widgetHandle) {
+						initWidgetHandle(widgetHandle);
+					});
 				}
 
 				function handleWidgetSorted(e = null, $sortable = null) {
 					const $widget = $sortable.item.find('.widget.open');
 					if ($widget && $widget[0]) {
-						window.wpBackstage.editor.refreshAll($widget[0]);
-						window.wpBackstage.codeEditor.refreshAll($widget[0]);
+						const widget = $widget[0];
+						window.wpBackstage.editor.refreshAllFields(widget);
 					}
 				}
 
@@ -2699,19 +2975,12 @@ class WP_Backstage {
 	 */
 	public function inline_user_script() { ?>
 
-		<script 
-		id="wp_backstage_user_script"
-		type="text/javascript">
+		<script id="wp_backstage_user_script">
 
 			(function($) {
 
 				function init() {
-					window.wpBackstage.colorPicker.initAll();
-					window.wpBackstage.datePicker.initAll();
-					window.wpBackstage.address.initAll();
-					window.wpBackstage.mediaUploader.initAll();
-					window.wpBackstage.codeEditor.initAll();
-					window.wpBackstage.editor.initAll();
+					window.wpBackstage.initAllFields();
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {
@@ -2735,127 +3004,128 @@ class WP_Backstage {
 	 * @param int  $attachment_id The ID of the attachment to render.
 	 * @param bool $is_multiple Whether the media uploader allows multiple attachments or not.
 	 * @return void
+	 * @deprecated 4.0.0
 	 */
 	public function render_media_item( $attachment_id = 0, $is_multiple = false ) {
 
-			$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::render_media_item()' );
 
-			<?php if ( $is_multiple ) {
+		$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
 
-				$remove_label = _x( 'Remove', 'media item - remove', 'wp_backstage' ); ?>
+		<?php if ( $is_multiple ) {
 
-				<span 
-				class="wp-backstage-media-uploader__attachment"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<button 
-					title="<?php echo esc_attr( $remove_label ); ?>"
-					type="button" 
-					class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
-						<span class="screen-reader-text"><?php
-							echo esc_html( $remove_label );
-						?></span>
-					</button>
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'thumbnail',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-					<span class="wp-backstage-media-uploader__attachment-filename">
-						<span><?php echo esc_html( $attachment['filename'] ); ?></span>
-					</span>
-				</span>
+			$remove_label = _x( 'Remove', 'media item - remove', 'wp_backstage' ); ?>
 
-			<?php } elseif ( $attachment['type'] === 'video' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-video"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput
-					echo wp_video_shortcode(
-						array(
-							'src'     => esc_url( $attachment['url'] ),
-							'preload' => 'metadata',
-							'class'   => 'wp-video-shortcode wp-mediaelement-keep',
-						),
-					); ?>
-				</span>
-
-			<?php } elseif ( $attachment['type'] === 'audio' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-audio"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput
-					echo wp_audio_shortcode(
-						array(
-							'src'     => esc_url( $attachment['url'] ),
-							'preload' => 'metadata',
-							'class'   => 'wp-audio-shortcode wp-mediaelement-keep',
-						),
-					); ?>
-				</span>
-
-			<?php } elseif ( $attachment['type'] === 'image' ) { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-image"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'medium',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-
-				</span>
-
-			<?php } else { ?>
-
-				<span 
-				class="wp-backstage-media-uploader__attachment-single-file"
-				data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
-				data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
-				data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
-
-					<?php echo wp_get_attachment_image(
-						absint( $attachment['id'] ),
-						'medium',
-						true,
-						array(
-							'title' => $attachment['filename'],
-						)
-					); ?>
-
-					<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
-						echo esc_html( $attachment['filename'] );
+			<span 
+			class="wp-backstage-media-uploader__attachment"
+			data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+			data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+			data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+				<button 
+				title="<?php echo esc_attr( $remove_label ); ?>"
+				type="button" 
+				class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+					<span class="screen-reader-text"><?php
+						echo esc_html( $remove_label );
 					?></span>
-					<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
-						printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
-					?></span>
-
+				</button>
+				<?php echo wp_get_attachment_image(
+					absint( $attachment['id'] ),
+					'thumbnail',
+					true,
+					array(
+						'title' => $attachment['filename'],
+					)
+				); ?>
+				<span class="wp-backstage-media-uploader__attachment-filename">
+					<span><?php echo esc_html( $attachment['filename'] ); ?></span>
 				</span>
+			</span>
 
-			<?php } ?>
+		<?php } elseif ( $attachment['type'] === 'video' ) { ?>
 
-		</span>
+			<span 
+			class="wp-backstage-media-uploader__attachment-single-video"
+			data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+			data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+			data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo wp_video_shortcode(
+					array(
+						'src'     => esc_url( $attachment['url'] ),
+						'preload' => 'metadata',
+						'class'   => 'wp-video-shortcode wp-mediaelement-keep',
+					),
+				); ?>
+			</span>
 
-	<?php }
+		<?php } elseif ( $attachment['type'] === 'audio' ) { ?>
+
+			<span 
+			class="wp-backstage-media-uploader__attachment-single-audio"
+			data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+			data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+			data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput
+				echo wp_audio_shortcode(
+					array(
+						'src'     => esc_url( $attachment['url'] ),
+						'preload' => 'metadata',
+						'class'   => 'wp-audio-shortcode wp-mediaelement-keep',
+					),
+				); ?>
+			</span>
+
+		<?php } elseif ( $attachment['type'] === 'image' ) { ?>
+
+			<span 
+			class="wp-backstage-media-uploader__attachment-single-image"
+			data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+			data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+			data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+				<?php echo wp_get_attachment_image(
+					absint( $attachment['id'] ),
+					'medium',
+					true,
+					array(
+						'title' => $attachment['filename'],
+					)
+				); ?>
+
+			</span>
+
+		<?php } else { ?>
+
+			<span 
+			class="wp-backstage-media-uploader__attachment-single-file"
+			data-attachment-type="<?php echo esc_attr( $attachment['type'] ); ?>"
+			data-attachment-subtype="<?php echo esc_attr( $attachment['subtype'] ); ?>"
+			data-attachment-id="<?php echo esc_attr( $attachment['id'] ); ?>">
+
+				<?php echo wp_get_attachment_image(
+					absint( $attachment['id'] ),
+					'medium',
+					true,
+					array(
+						'title' => $attachment['filename'],
+					)
+				); ?>
+
+				<span class="wp-backstage-media-uploader__attachment-single-file-filename"><?php
+					echo esc_html( $attachment['filename'] );
+				?></span>
+				<span class="wp-backstage-media-uploader__attachment-single-file-meta"><?php
+					printf( '%1$s • %2$s', esc_html( $attachment['mime'] ), esc_html( $attachment['filesizeHumanReadable'] ) );
+				?></span>
+
+			</span>
+
+		<?php }
+
+	}
 
 	/**
 	 * Ajax Render Media
@@ -2865,8 +3135,11 @@ class WP_Backstage {
 	 *
 	 * @since 3.3.0
 	 * @return void
+	 * @deprecated 4.0.0
 	 */
 	public function ajax_render_media() {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Media_Field::ajax_render_media()' );
 
 		// phpcs:ignore WordPress.Security.NonceVerification
 		$posted_values = wp_unslash( $_POST );

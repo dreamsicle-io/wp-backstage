@@ -1421,40 +1421,34 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 			$field = $this->get_field_by( 'name', $query->query_vars['orderby'] );
 
-			if ( is_array( $field ) && ! empty( $field ) ) {
+			if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
 
-				if ( $field['is_sortable'] ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$schema      = $field_class->get_schema();
+				$is_numeric  = in_array( $schema['type'], array( 'number', 'integer' ) );
 
-					if ( ! isset( $query->query_vars['meta_query'] ) || empty( $query->query_vars['meta_query'] ) ) {
+				if ( ! isset( $query->query_vars['meta_query'] ) || empty( $query->query_vars['meta_query'] ) ) {
+					// phpcs:ignore WordPress.DB.SlowDBQuery
+					$query->query_vars['meta_query'] = array(
+						'relation' => 'OR',
+						array(
+							'key'     => $field['name'],
+							'compare' => 'NOT EXISTS',
+						),
+						array(
+							'key'     => $field['name'],
+							'compare' => 'EXISTS',
+						),
+					);
+				} else {
+					// phpcs:ignore WordPress.DB.SlowDBQuery
+					$query->query_vars['meta_key'] = $field['name'];
+				}
 
-						// phpcs:ignore WordPress.DB.SlowDBQuery
-						$query->query_vars['meta_query'] = array(
-							'relation' => 'OR',
-							array(
-								'key'     => $field['name'],
-								'compare' => 'NOT EXISTS',
-							),
-							array(
-								'key'     => $field['name'],
-								'compare' => 'EXISTS',
-							),
-						);
-					} else {
-
-						// phpcs:ignore WordPress.DB.SlowDBQuery
-						$query->query_vars['meta_key'] = $field['name'];
-
-					}
-
-					if ( $field['type'] === 'number' ) {
-
-						$query->query_vars['orderby'] = 'meta_value_num';
-
-					} else {
-
-						$query->query_vars['orderby'] = 'meta_value';
-
-					}
+				if ( $is_numeric ) {
+					$query->query_vars['orderby'] = 'meta_value_num';
+				} else {
+					$query->query_vars['orderby'] = 'meta_value';
 				}
 			}
 		}

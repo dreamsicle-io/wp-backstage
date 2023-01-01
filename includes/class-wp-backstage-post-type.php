@@ -2117,45 +2117,38 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
 
-			if ( is_array( $field ) && ! empty( $field ) ) {
+			if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
 
-				if ( $field['is_sortable'] ) {
+				$field_class = $this->get_field_class( $field['type'] );
+				$schema      = $field_class->get_schema();
+				$is_numeric  = in_array( $schema['type'], array( 'number', 'integer' ) );
 
-					// If there is currently no meta query, get all items whether
-					// they have the meta key or not by setting a meta query.
-					$meta_query = $query->get( 'meta_query' );
-					if ( empty( $meta_query ) ) {
-
-						$query->set(
-							'meta_query',
+				// If there is currently no meta query, get all items whether
+				// they have the meta key or not by setting a meta query.
+				$meta_query = $query->get( 'meta_query' );
+				if ( empty( $meta_query ) ) {
+					$query->set(
+						'meta_query',
+						array(
+							'relation' => 'OR',
 							array(
-								'relation' => 'OR',
-								array(
-									'key'     => $field['name'],
-									'compare' => 'NOT EXISTS',
-								),
-								array(
-									'key'     => $field['name'],
-									'compare' => 'EXISTS',
-								),
-							)
-						);
+								'key'     => $field['name'],
+								'compare' => 'NOT EXISTS',
+							),
+							array(
+								'key'     => $field['name'],
+								'compare' => 'EXISTS',
+							),
+						)
+					);
+				} else {
+					$query->set( 'meta_key', $field['name'] );
+				}
 
-					} else {
-
-						$query->set( 'meta_key', $field['name'] );
-
-					}
-
-					if ( $field['type'] === 'number' ) {
-
-						$query->set( 'orderby', 'meta_value_num' );
-
-					} else {
-
-						$query->set( 'orderby', 'meta_value' );
-
-					}
+				if ( $is_numeric ) {
+					$query->set( 'orderby', 'meta_value_num' );
+				} else {
+					$query->set( 'orderby', 'meta_value' );
 				}
 			}
 		}

@@ -23,9 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Define constants.
 define( 'WP_BACKSTAGE', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
+// Require the main class.
 require WP_BACKSTAGE . '/includes/class-wp-backstage.php';
+// Require component classes.
 require WP_BACKSTAGE . '/includes/class-wp-backstage-component.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-post-type.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-taxonomy.php';
@@ -34,11 +37,31 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget-base.php';
+// Require field classes.
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-address-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-checkbox-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-checkbox-set-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-code-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-color-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-date-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-editor-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-email-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-media-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-number-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-radio-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-range-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-select-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-select-posts-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-select-users-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-tel-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-textarea-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-time-field.php';
+require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-url-field.php';
+// Require examples.
 require WP_BACKSTAGE . '/examples/tests.php';
 
+// Initialize the main class.
 add_action( 'plugins_loaded', array( new WP_Backstage(), 'init' ), 10 );
 
 /**

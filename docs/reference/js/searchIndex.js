@@ -1486,6 +1486,16 @@ Search.appendIndex(
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Field.html#method_sanitize"
         },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Avalidate\u0028\u0029",
+            "name": "validate",
+            "summary": "Validate",
+            "url": "classes/WP-Backstage-Field.html#method_validate"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Avalidation_error\u0028\u0029",
+            "name": "validation_error",
+            "summary": "Validation\u0020Error",
+            "url": "classes/WP-Backstage-Field.html#method_validation_error"
+        },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Ainline_style\u0028\u0029",
             "name": "inline_style",
             "summary": "Inline\u0020Style",
@@ -1551,10 +1561,20 @@ Search.appendIndex(
             "summary": "Get\u0020Option\u0020Label",
             "url": "classes/WP-Backstage-Field.html#method_get_option_label"
         },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_label\u0028\u0029",
+            "name": "get_label",
+            "summary": "Get\u0020Label",
+            "url": "classes/WP-Backstage-Field.html#method_get_label"
+        },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Alabel\u0028\u0029",
             "name": "label",
             "summary": "Label",
             "url": "classes/WP-Backstage-Field.html#method_label"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_description\u0028\u0029",
+            "name": "get_description",
+            "summary": "Get\u0020Description",
+            "url": "classes/WP-Backstage-Field.html#method_get_description"
         },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Adescription\u0028\u0029",
             "name": "description",
@@ -1596,6 +1616,11 @@ Search.appendIndex(
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Number-Field.html#method_sanitize"
         },                {
+            "fqsen": "\\WP_Backstage_Number_Field\u003A\u003Avalidate\u0028\u0029",
+            "name": "validate",
+            "summary": "Validate",
+            "url": "classes/WP-Backstage-Number-Field.html#method_validate"
+        },                {
             "fqsen": "\\WP_Backstage_Number_Field\u003A\u003Ainline_style\u0028\u0029",
             "name": "inline_style",
             "summary": "Inline\u0020Style",
@@ -1615,6 +1640,11 @@ Search.appendIndex(
             "name": "WP_Backstage_Range_Field",
             "summary": "WP\u0020Backstage\u0020Range\u0020Field",
             "url": "classes/WP-Backstage-Range-Field.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Range_Field\u003A\u003Avalidate\u0028\u0029",
+            "name": "validate",
+            "summary": "Validate",
+            "url": "classes/WP-Backstage-Range-Field.html#method_validate"
         },                {
             "fqsen": "\\WP_Backstage_Range_Field\u003A\u003Ainline_style\u0028\u0029",
             "name": "inline_style",
@@ -1946,6 +1976,11 @@ Search.appendIndex(
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Email-Field.html#method_sanitize"
         },                {
+            "fqsen": "\\WP_Backstage_Email_Field\u003A\u003Avalidate\u0028\u0029",
+            "name": "validate",
+            "summary": "Validate",
+            "url": "classes/WP-Backstage-Email-Field.html#method_validate"
+        },                {
             "fqsen": "\\WP_Backstage_Email_Field\u003A\u003Arender_column\u0028\u0029",
             "name": "render_column",
             "summary": "Render\u0020Column",
@@ -2240,6 +2275,11 @@ Search.appendIndex(
             "name": "sanitize",
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-URL-Field.html#method_sanitize"
+        },                {
+            "fqsen": "\\WP_Backstage_URL_Field\u003A\u003Avalidate\u0028\u0029",
+            "name": "validate",
+            "summary": "Validate",
+            "url": "classes/WP-Backstage-URL-Field.html#method_validate"
         },                {
             "fqsen": "\\WP_Backstage_URL_Field\u003A\u003Arender_column\u0028\u0029",
             "name": "render_column",

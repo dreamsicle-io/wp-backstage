@@ -547,13 +547,12 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 
 				function handleCountryChange(e = null) {
 					const address = findParentAddress(e.target);
-					if (address) toggleByCountry(address);
+					toggleByCountry(address);
 				}
 
 				function init(address = null) {
 					const countrySelect = getCountrySelect(address);
 					countrySelect.addEventListener('change', handleCountryChange);
-
 					toggleByCountry(address);
 				}
 

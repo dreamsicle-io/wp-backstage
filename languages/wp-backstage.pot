@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-01T21:21:56+00:00\n"
+"POT-Creation-Date: 2023-01-01T22:31:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -120,43 +120,43 @@ msgid "Try again"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3145
-#: includes/fields/class-wp-backstage-address-field.php:695
+#: includes/fields/class-wp-backstage-address-field.php:694
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3189
-#: includes/fields/class-wp-backstage-address-field.php:722
+#: includes/fields/class-wp-backstage-address-field.php:721
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3222
-#: includes/fields/class-wp-backstage-address-field.php:739
+#: includes/fields/class-wp-backstage-address-field.php:738
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3255
-#: includes/fields/class-wp-backstage-address-field.php:756
+#: includes/fields/class-wp-backstage-address-field.php:755
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3288
-#: includes/fields/class-wp-backstage-address-field.php:773
+#: includes/fields/class-wp-backstage-address-field.php:772
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3320
-#: includes/fields/class-wp-backstage-address-field.php:791
+#: includes/fields/class-wp-backstage-address-field.php:790
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
 #: includes/class-wp-backstage-component.php:3364
-#: includes/fields/class-wp-backstage-address-field.php:818
+#: includes/fields/class-wp-backstage-address-field.php:817
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
@@ -850,237 +850,213 @@ msgctxt "taxonomy - required arg error"
 msgid "[Taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
-#. translators: 1: field label.
-#: includes/class-wp-backstage-taxonomy.php:326
-msgctxt "taxonomy term validation - email"
-msgid "The value for %1$s is not a valid email address."
-msgstr ""
-
-#. translators: 1: field label.
-#: includes/class-wp-backstage-taxonomy.php:339
-msgctxt "taxonomy term validation - url"
-msgid "The value for %1$s is not a valid URL."
-msgstr ""
-
-#. translators: 1: field label, 2: field minimum.
-#: includes/class-wp-backstage-taxonomy.php:353
-msgctxt "taxonomy term validation - minimum"
-msgid "The value for %1$s must be greater than or equal to %2$d."
-msgstr ""
-
-#. translators: 1: field label, 2: field maximum.
-#: includes/class-wp-backstage-taxonomy.php:367
-msgctxt "taxonomy term validation - maximum"
-msgid "The value for %1$s must be less than or equal to %2$d."
-msgstr ""
-
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:427
+#: includes/class-wp-backstage-taxonomy.php:375
 msgctxt "term updated messages - added singular"
 msgid "%1$s added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:432
+#: includes/class-wp-backstage-taxonomy.php:380
 msgctxt "term updated messages - deleted singular"
 msgid "%1$s deleted."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:437
+#: includes/class-wp-backstage-taxonomy.php:385
 msgctxt "term updated messages - updated singular"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:442
+#: includes/class-wp-backstage-taxonomy.php:390
 msgctxt "term updated messages - not added singular"
 msgid "%1$s not added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:447
+#: includes/class-wp-backstage-taxonomy.php:395
 msgctxt "term updated messages - not updated singular"
 msgid "%1$s not updated."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:452
+#: includes/class-wp-backstage-taxonomy.php:400
 msgctxt "term updated messages - deleted plural"
 msgid "%1$s deleted."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:492
+#: includes/class-wp-backstage-taxonomy.php:440
 msgctxt "taxonomy overview help tab - title"
 msgid "Overview"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:503
+#: includes/class-wp-backstage-taxonomy.php:451
 msgctxt "taxonomy adding terms help tab - title"
 msgid "Adding %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:518
+#: includes/class-wp-backstage-taxonomy.php:466
 msgctxt "taxonomy rest api help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:539
+#: includes/class-wp-backstage-taxonomy.php:487
 msgid "<strong>Name</strong> — The name is how it appears on your site."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:541
+#: includes/class-wp-backstage-taxonomy.php:489
 msgid "<strong>Slug</strong> — The \"slug\" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:546
+#: includes/class-wp-backstage-taxonomy.php:494
 msgid "<strong>Parent</strong> — %1$s can have a hierarchy. You can create a more general parent %2$s, and under that optional child %1$s for more refinement. To create a child %2$s, just choose another %2$s from the Parent dropdown."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:552
+#: includes/class-wp-backstage-taxonomy.php:500
 msgid "<strong>Description</strong> — The description is not prominent by default; however, some themes may display it."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:566
+#: includes/class-wp-backstage-taxonomy.php:514
 msgctxt "taxonomy adding terms help tab - overview"
 msgid "When adding a new %1$s on this screen, you'll fill in the following fields:"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:572
+#: includes/class-wp-backstage-taxonomy.php:520
 msgctxt "taxonomy adding terms help tab - screen options"
 msgid "You can change the display of this screen using the Screen Options tab to set how many %1$s are displayed per screen and to display/hide columns in the table."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:649
+#: includes/class-wp-backstage-taxonomy.php:597
 msgctxt "taxonomy overview help tab - overview"
 msgid "You can use %1$s to define sections of your site and group related content."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: post type links.
-#: includes/class-wp-backstage-taxonomy.php:659
+#: includes/class-wp-backstage-taxonomy.php:607
 msgctxt "taxonomy overview help tab - post types"
 msgid "%1$s can be used to organize items from their related post types: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:710
+#: includes/class-wp-backstage-taxonomy.php:658
 msgctxt "taxonomy rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this term. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:786
+#: includes/class-wp-backstage-taxonomy.php:734
 msgctxt "taxonomy table filter - submit"
 msgid "Filter"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:858
+#: includes/class-wp-backstage-taxonomy.php:806
 msgctxt "taxonomy labels - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:863
+#: includes/class-wp-backstage-taxonomy.php:811
 msgctxt "taxonomy labels - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:868
+#: includes/class-wp-backstage-taxonomy.php:816
 msgctxt "taxonomy labels - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:873
+#: includes/class-wp-backstage-taxonomy.php:821
 msgctxt "taxonomy labels - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:878
+#: includes/class-wp-backstage-taxonomy.php:826
 msgctxt "taxonomy labels - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:883
+#: includes/class-wp-backstage-taxonomy.php:831
 msgctxt "taxonomy labels - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:888
+#: includes/class-wp-backstage-taxonomy.php:836
 msgctxt "taxonomy labels - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:893
+#: includes/class-wp-backstage-taxonomy.php:841
 msgctxt "taxonomy labels - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:898
+#: includes/class-wp-backstage-taxonomy.php:846
 msgctxt "taxonomy labels - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:903
+#: includes/class-wp-backstage-taxonomy.php:851
 msgctxt "taxonomy labels - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:908
+#: includes/class-wp-backstage-taxonomy.php:856
 msgctxt "taxonomy labels - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:913
+#: includes/class-wp-backstage-taxonomy.php:861
 msgctxt "taxonomy labels - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:918
+#: includes/class-wp-backstage-taxonomy.php:866
 msgctxt "taxonomy labels - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:923
+#: includes/class-wp-backstage-taxonomy.php:871
 msgctxt "taxonomy labels - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:928
+#: includes/class-wp-backstage-taxonomy.php:876
 msgctxt "taxonomy labels - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:933
+#: includes/class-wp-backstage-taxonomy.php:881
 msgctxt "taxonomy labels - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:938
+#: includes/class-wp-backstage-taxonomy.php:886
 msgctxt "taxonomy labels - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:943
+#: includes/class-wp-backstage-taxonomy.php:891
 msgctxt "taxonomy labels - back to items"
 msgid "&larr; Go to %1$s"
 msgstr ""
@@ -2373,6 +2349,12 @@ msgstr ""
 msgid "Wyoming"
 msgstr ""
 
+#. translators: 1: field label.
+#: includes/fields/class-wp-backstage-email-field.php:47
+msgctxt "url field - validate"
+msgid "The value for %1$s is not a valid URL."
+msgstr ""
+
 #. translators: 1: field label
 #: includes/fields/class-wp-backstage-media-field.php:980
 msgctxt "media field - modal single button"
@@ -2424,10 +2406,34 @@ msgctxt "media field - try again button"
 msgid "Try again"
 msgstr ""
 
+#. translators: 1: field label, 2: field minimum.
+#: includes/fields/class-wp-backstage-number-field.php:70
+msgctxt "number field - validate minimum"
+msgid "The value for %1$s must be greater than or equal to %2$d."
+msgstr ""
+
+#. translators: 1: field label, 2: field maximum.
+#: includes/fields/class-wp-backstage-number-field.php:84
+msgctxt "number field - validate maximum"
+msgid "The value for %1$s must be less than or equal to %2$d."
+msgstr ""
+
 #. translators: 1: value label.
 #: includes/fields/class-wp-backstage-radio-field.php:52
 msgctxt "radio field - column filter link title"
 msgid "Filter by %1$s"
+msgstr ""
+
+#. translators: 1: field label, 2: field minimum.
+#: includes/fields/class-wp-backstage-range-field.php:58
+msgctxt "range field - validate minimum"
+msgid "The value for %1$s must be greater than or equal to %2$d."
+msgstr ""
+
+#. translators: 1: field label, 2: field maximum.
+#: includes/fields/class-wp-backstage-range-field.php:72
+msgctxt "range field - validate maximum"
+msgid "The value for %1$s must be less than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: value label.
@@ -2459,4 +2465,10 @@ msgstr ""
 #: includes/fields/class-wp-backstage-time-field.php:139
 msgctxt "time field - second"
 msgid "Second"
+msgstr ""
+
+#. translators: 1: field label.
+#: includes/fields/class-wp-backstage-url-field.php:47
+msgctxt "email field - validate"
+msgid "The value for %1$s is not a valid email address."
 msgstr ""

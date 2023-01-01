@@ -114,6 +114,32 @@ class WP_Backstage_Field {
 	}
 
 	/**
+	 * Validate
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param mixed $value The unsantized value.
+	 * @return null|WP_Error true if valid, or an instance of `WP_Error` if invalid.
+	 */
+	public function validate( array $field = array(), $value = null ): ?WP_Error {
+		return null;
+	}
+
+	/**
+	 * Validation Error
+	 *
+	 * @since 4.0.0
+	 * @param string $message A formatted message to be passed to an instance of `WP_Error`.
+	 * @return WP_Error An instance of `WP_Error`.
+	 */
+	public function validation_error( $message = '' ) {
+		return new WP_Error(
+			'wp_backstage_field_validation',
+			$message
+		);
+	}
+
+	/**
 	 * Inline Style
 	 *
 	 * @since 4.0.0
@@ -325,6 +351,17 @@ class WP_Backstage_Field {
 	}
 
 	/**
+	 * Get Label
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return string The field's label.
+	 */
+	public function get_label( array $field = array() ): string {
+		return ! empty( $field['label'] ) ? $field['label'] : $field['name'];
+	}
+
+	/**
 	 * Label
 	 *
 	 * @since 4.0.0
@@ -332,8 +369,19 @@ class WP_Backstage_Field {
 	 * @return void
 	 */
 	public function label( array $field = array() ): void {
-		$label = ! empty( $field['label'] ) ? $field['label'] : $field['name'];
+		$label = $this->get_label( $field );
 		echo wp_kses( $label, 'wp_backstage_field_label' );
+	}
+
+	/**
+	 * Get Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return string The field's description.
+	 */
+	public function get_description( array $field = array() ): string {
+		return ! empty( $field['description'] ) ? $field['description'] : '';
 	}
 
 	/**
@@ -344,7 +392,8 @@ class WP_Backstage_Field {
 	 * @return void
 	 */
 	public function description( array $field = array() ): void {
-		echo wp_kses( $field['description'], 'wp_backstage_field_description' );
+		$description = $this->get_description( $field );
+		echo wp_kses( $description, 'wp_backstage_field_description' );
 	}
 
 	/**

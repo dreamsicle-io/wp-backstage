@@ -117,8 +117,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 						id="<?php $this->option_id( $field, $option ); ?>" 
 						value="<?php echo esc_attr( $option['value'] ); ?>" 
 						<?php checked( true, $this->is_option_checked( $field, $option ) ); ?>
-						<?php disabled( true, ( $field['disabled'] || $option['disabled'] ) ); ?>
-						<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'disabled', 'checked' ) ); ?> />
+						<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
 						<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
 							$this->option_label( $option );

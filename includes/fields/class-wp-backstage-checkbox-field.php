@@ -93,8 +93,7 @@ class WP_Backstage_Checkbox_Field extends WP_Backstage_Field {
 				name="<?php echo esc_attr( $field['name'] ); ?>" 
 				id="<?php $this->element_id( $field ); ?>" 
 				<?php checked( true, $field['value'] ); ?>
-				<?php disabled( true, $field['disabled'] ); ?>
-				<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked', 'disabled' ) ); ?> />
+				<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
 				<span id="<?php $this->element_id( $field, 'text' ); ?>"><?php
 					$this->label( $field );

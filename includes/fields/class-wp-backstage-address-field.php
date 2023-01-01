@@ -698,8 +698,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					<select
 					id="<?php $this->element_id( $field, 'country' ); ?>"
 					name="<?php $this->piece_name( $field, 'country' ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'id', 'name', 'disabled' ) ); ?>>
+					<?php $this->input_attrs( $field, array( 'id', 'name' ) ); ?>>
 
 						<?php foreach ( $this->countries as $country_code => $country_label ) { ?>
 
@@ -728,8 +727,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					id="<?php $this->element_id( $field, 'address_1' ); ?>"
 					name="<?php $this->piece_name( $field, 'address_1' ); ?>"
 					value="<?php echo esc_attr( $values['address_1'] ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'disabled' ) ); ?> />
+					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value' ) ); ?> />
 
 				</span>
 
@@ -746,8 +744,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					id="<?php $this->element_id( $field, 'address_2' ); ?>"
 					name="<?php $this->piece_name( $field, 'address_2' ); ?>"
 					value="<?php echo esc_attr( $values['address_2'] ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'diabled' ) ); ?> />
+					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value' ) ); ?> />
 
 				</span>
 
@@ -764,8 +761,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					id="<?php $this->element_id( $field, 'city' ); ?>"
 					name="<?php $this->piece_name( $field, 'city' ); ?>"
 					value="<?php echo esc_attr( $values['city'] ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'disabled' ) ); ?> />
+					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value' ) ); ?> />
 
 				</span>
 
@@ -782,8 +778,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					id="<?php $this->element_id( $field, 'state' ); ?>"
 					name="<?php $this->piece_name( $field, 'state' ); ?>"
 					value="<?php echo esc_attr( $values['state'] ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'disabled' ) ); ?> />
+					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value' ) ); ?> />
 
 				</span>
 
@@ -799,8 +794,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					<select
 					id="<?php $this->element_id( $field, 'us_state' ); ?>"
 					name="<?php $this->piece_name( $field, 'state' ); ?>"
-					<?php disabled( true, true ); ?>
-					<?php $this->input_attrs( $field, array( 'id', 'name', 'disabled' ) ); ?>>
+					<?php $this->input_attrs( $field, array( 'id', 'name' ) ); ?>>
 
 						<?php foreach ( $this->us_states as $us_state_code => $us_state_name ) { ?>
 
@@ -829,8 +823,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					id="<?php $this->element_id( $field, 'zip' ); ?>"
 					name="<?php $this->piece_name( $field, 'zip' ); ?>"
 					value="<?php echo esc_attr( $values['zip'] ); ?>"
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'disabled' ) ); ?> />
+					<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value' ) ); ?> />
 
 				</span>
 

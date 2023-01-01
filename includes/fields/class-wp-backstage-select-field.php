@@ -79,15 +79,13 @@ class WP_Backstage_Select_Field extends WP_Backstage_Field {
 			<select 
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			id="<?php $this->element_id( $field ); ?>" 
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled' ) ); ?>>
+			<?php $this->input_attrs( $field, array( 'name', 'id' ) ); ?>>
 
 				<?php foreach ( $options as $i => $option ) { ?>
 
 					<option 
 					value="<?php echo esc_attr( $option['value'] ); ?>" 
-					<?php selected( $option['value'], $field['value'] ); ?>
-					<?php disabled( true, ( $field['disabled'] || $option['disabled'] ) ); ?>><?php
+					<?php selected( $option['value'], $field['value'] ); ?>><?php
 						$this->option_label( $option );
 					?></option>
 

@@ -305,8 +305,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 			name="<?php echo esc_attr( $field['name'] ); ?>"
 			id="<?php $this->element_id( $field ); ?>"
 			class="code"
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled', 'class' ) ); ?>><?php
+			<?php $this->input_attrs( $field, array( 'name', 'id', 'class' ) ); ?>><?php
 				echo esc_textarea( $field['value'] );
 			?></textarea>
 

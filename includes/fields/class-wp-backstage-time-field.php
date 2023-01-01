@@ -101,8 +101,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 			}
 
 			.wp-backstage-time-field__input-container {
-				display: inline-block;
-				vertical-align: middle;
+				display: block;
 			}
 
 			.wp-backstage-time-field__sep {
@@ -156,15 +155,12 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					echo wp_kses( $hour_label, 'wp_backstage_field_label' );
 				?></label>
 
-				<br />
-
 				<span class="wp-backstage-time-field__input-container">
 
 					<select 
 					name="<?php printf( '%1$s[hour]', esc_attr( $field['name'] ) ); ?>" 
 					id="<?php $this->element_id( $field, 'hour' ); ?>" 
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled' ) );?>>
+					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 24; $i++ ) {
 							$option = $this->get_time_option( $i ); ?>
@@ -191,15 +187,12 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					echo wp_kses( $minute_label, 'wp_backstage_field_label' );
 				?></label>
 
-				<br />
-
 				<span class="wp-backstage-time-field__input-container">
 
 					<select 
 					name="<?php printf( '%1$s[minute]', esc_attr( $field['name'] ) ); ?>" 
 					id="<?php $this->element_id( $field, 'minute' ); ?>" 
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled' ) );?>>
+					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 60; $i++ ) {
 							$option = $this->get_time_option( $i ); ?>
@@ -226,15 +219,12 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					echo wp_kses( $second_label, 'wp_backstage_field_label' );
 				?></label>
 
-				<br />
-
 				<span class="wp-backstage-time-field__input-container">
 
 					<select 
 					name="<?php printf( '%1$s[second]', esc_attr( $field['name'] ) ); ?>" 
 					id="<?php $this->element_id( $field, 'second' ); ?>" 
-					<?php disabled( true, $field['disabled'] ); ?>
-					<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled' ) );?>>
+					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 60; $i++ ) {
 							$option = $this->get_time_option( $i ); ?>

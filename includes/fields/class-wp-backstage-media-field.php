@@ -1025,8 +1025,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			value="<?php echo is_array( $field['value'] ) ? esc_attr( implode( ',', $field['value'] ) ) : esc_attr( $field['value'] ); ?>"
 			style="display:none;"
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'disabled', 'style' ) ); ?> />
+			<?php $this->input_attrs( $field, array( 'type', 'id', 'name', 'value', 'style' ) ); ?> />
 
 			<span 
 			class="wp-backstage-media-uploader__preview"

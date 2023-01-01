@@ -370,8 +370,7 @@ class WP_Backstage_Field {
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			id="<?php $this->element_id( $field ); ?>" 
 			value="<?php echo esc_attr( $field['value'] ); ?>" 
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'disabled' ) ); ?> />
+			<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value' ) ); ?> />
 
 		</span>
 

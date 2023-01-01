@@ -147,9 +147,8 @@ function wp_backstage_init() {
 					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
-					'value'    => 'option_3',
-					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
-					'disabled' => true,
+					'value' => 'option_3',
+					'label' => __( 'Option 3', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_4',
@@ -177,9 +176,8 @@ function wp_backstage_init() {
 					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
-					'value'    => 'option_3',
-					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
-					'disabled' => true,
+					'value' => 'option_3',
+					'label' => __( 'Option 3', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_4',
@@ -205,9 +203,8 @@ function wp_backstage_init() {
 					'label' => __( 'Option 2', 'wp_backstage_examples' ),
 				),
 				array(
-					'value'    => 'option_3',
-					'label'    => __( 'Option 3', 'wp_backstage_examples' ),
-					'disabled' => true,
+					'value' => 'option_3',
+					'label' => __( 'Option 3', 'wp_backstage_examples' ),
 				),
 				array(
 					'value' => 'option_4',

@@ -349,8 +349,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 			class="wp-editor-area"
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			id="<?php $this->element_id( $field ); ?>" 
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'class', 'name', 'id', 'disabled' ) ); ?>><?php
+			<?php $this->input_attrs( $field, array( 'class', 'name', 'id' ) ); ?>><?php
 				echo esc_textarea( $field['value'] );
 			?></textarea>
 

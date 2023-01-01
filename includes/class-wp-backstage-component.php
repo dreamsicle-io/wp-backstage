@@ -87,7 +87,6 @@ class WP_Backstage_Component {
 		'label'        => '',
 		'title'        => '',
 		'value'        => null,
-		'disabled'     => false,
 		'description'  => '',
 		'help'         => '',
 		'show_label'   => true,

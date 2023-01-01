@@ -132,8 +132,7 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 			<select 
 			name="<?php echo esc_attr( $field['name'] ); ?>" 
 			id="<?php $this->element_id( $field ); ?>" 
-			<?php disabled( true, $field['disabled'] ); ?>
-			<?php $this->input_attrs( $field, array( 'name', 'id', 'disabled' ) ); ?>>
+			<?php $this->input_attrs( $field, array( 'name', 'id' ) ); ?>>
 
 				<option value="" <?php selected( true, empty( $field['value'] ) ); ?>><?php
 					printf( '― %1$s ―', esc_html( $args['option_none_label'] ) );

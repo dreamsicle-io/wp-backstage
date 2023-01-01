@@ -44,7 +44,7 @@ class WP_Backstage_Email_Field extends WP_Backstage_Field {
 			return $this->validation_error(
 				sprintf(
 					/* translators: 1: field label. */
-					_x( 'The value for %1$s is not a valid URL.', 'url field - validate', 'wp_backstage' ),
+					_x( 'The value for %1$s is not a valid email address.', 'email field - validate', 'wp_backstage' ),
 					$this->get_label( $field )
 				)
 			);

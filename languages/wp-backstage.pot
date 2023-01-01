@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-01T22:31:57+00:00\n"
+"POT-Creation-Date: 2023-01-01T23:13:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -2351,8 +2351,8 @@ msgstr ""
 
 #. translators: 1: field label.
 #: includes/fields/class-wp-backstage-email-field.php:47
-msgctxt "url field - validate"
-msgid "The value for %1$s is not a valid URL."
+msgctxt "email field - validate"
+msgid "The value for %1$s is not a valid email address."
 msgstr ""
 
 #. translators: 1: field label
@@ -2469,6 +2469,6 @@ msgstr ""
 
 #. translators: 1: field label.
 #: includes/fields/class-wp-backstage-url-field.php:47
-msgctxt "email field - validate"
-msgid "The value for %1$s is not a valid email address."
+msgctxt "url field - validate"
+msgid "The value for %1$s is not a valid URL."
 msgstr ""

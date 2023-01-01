@@ -47,9 +47,9 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	protected array $mime_types = array(
 		'php'        => 'application/x-httpd-php',
 		'html'       => 'text/html',
-		'javascript' => 'text/javascript',
-		'json'       => 'text/json',
 		'css'        => 'text/css',
+		'javascript' => 'text/javascript',
+		'json'       => 'application/json',
 	);
 
 	/**

@@ -8,9 +8,9 @@
  * Plugin Name:       WP Backstage
  * Plugin URI:        https://github.com/dreamsicle-io/wp-backstage
  * Description:       Create standardized and deployable WordPress objects like post types with meta boxes and custom fields, taxonomy terms with custom fields, options pages with custom fields and widgets with custom fields; and extend existing WordPress objects like pages, posts, attachments, categories, tags, users and nav menu items.
- * Version:           3.7.2
+ * Version:           4.0.0
  * Requires PHP:      7.4.0
- * Requires at least: 5.8.0
+ * Requires at least: 6.1.1
  * Author:            Dreamsicle
  * Author URI:        https://www.dreamsicle.io
  * License:           GPLv2

@@ -1496,6 +1496,21 @@ Search.appendIndex(
             "summary": "Validation\u0020Error",
             "url": "classes/WP-Backstage-Field.html#method_validation_error"
         },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aadd_rest_api_link\u0028\u0029",
+            "name": "add_rest_api_link",
+            "summary": "Add\u0020REST\u0020API\u0020Link",
+            "url": "classes/WP-Backstage-Field.html#method_add_rest_api_link"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_rest_api_link_base\u0028\u0029",
+            "name": "get_rest_api_link_base",
+            "summary": "Get\u0020REST\u0020API\u0020Link\u0020Base",
+            "url": "classes/WP-Backstage-Field.html#method_get_rest_api_link_base"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_rest_api_link_key\u0028\u0029",
+            "name": "get_rest_api_link_key",
+            "summary": "Get\u0020REST\u0020API\u0020Link\u0020Key",
+            "url": "classes/WP-Backstage-Field.html#method_get_rest_api_link_key"
+        },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Ainline_style\u0028\u0029",
             "name": "inline_style",
             "summary": "Inline\u0020Style",
@@ -1605,6 +1620,11 @@ Search.appendIndex(
             "name": "schema",
             "summary": "Schema",
             "url": "classes/WP-Backstage-Field.html#property_schema"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003A\u0024rest_api_link_base",
+            "name": "rest_api_link_base",
+            "summary": "REST\u0020API\u0020Link\u0020Base",
+            "url": "classes/WP-Backstage-Field.html#property_rest_api_link_base"
         },                {
             "fqsen": "\\WP_Backstage_Number_Field",
             "name": "WP_Backstage_Number_Field",
@@ -1996,6 +2016,11 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Media-Field.html#method_init"
         },                {
+            "fqsen": "\\WP_Backstage_Media_Field\u003A\u003Aadd_rest_api_link\u0028\u0029",
+            "name": "add_rest_api_link",
+            "summary": "Add\u0020REST\u0020API\u0020Link",
+            "url": "classes/WP-Backstage-Media-Field.html#method_add_rest_api_link"
+        },                {
             "fqsen": "\\WP_Backstage_Media_Field\u003A\u003Aajax_render_media\u0028\u0029",
             "name": "ajax_render_media",
             "summary": "Ajax\u0020Render\u0020Media",
@@ -2101,6 +2126,11 @@ Search.appendIndex(
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Select-Posts-Field.html#method_sanitize"
         },                {
+            "fqsen": "\\WP_Backstage_Select_Posts_Field\u003A\u003Aadd_rest_api_link\u0028\u0029",
+            "name": "add_rest_api_link",
+            "summary": "Add\u0020REST\u0020API\u0020Link",
+            "url": "classes/WP-Backstage-Select-Posts-Field.html#method_add_rest_api_link"
+        },                {
             "fqsen": "\\WP_Backstage_Select_Posts_Field\u003A\u003Aget_query\u0028\u0029",
             "name": "get_query",
             "summary": "Get\u0020Query",
@@ -2155,6 +2185,11 @@ Search.appendIndex(
             "name": "sanitize",
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Select-Users-Field.html#method_sanitize"
+        },                {
+            "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Aadd_rest_api_link\u0028\u0029",
+            "name": "add_rest_api_link",
+            "summary": "Add\u0020REST\u0020API\u0020Link",
+            "url": "classes/WP-Backstage-Select-Users-Field.html#method_add_rest_api_link"
         },                {
             "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Aget_query\u0028\u0029",
             "name": "get_query",

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-01T23:13:03+00:00\n"
+"POT-Creation-Date: 2023-01-02T00:23:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -41,154 +41,154 @@ msgid "Error: %1$s"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:1443
+#: includes/class-wp-backstage-component.php:1446
 msgctxt "select users filter - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1456
+#: includes/class-wp-backstage-component.php:1459
 msgctxt "select users filter - option none label"
 msgid "All Users"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1472
+#: includes/class-wp-backstage-component.php:1475
 msgctxt "filter - option none label"
 msgid "All options"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1612
+#: includes/class-wp-backstage-component.php:1615
 #: includes/fields/class-wp-backstage-checkbox-field.php:62
 msgctxt "checkbox column - true"
 msgid "True"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/class-wp-backstage-component.php:1749
+#: includes/class-wp-backstage-component.php:1752
 msgctxt "filterable value link title"
 msgid "Filter by %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2931
+#: includes/class-wp-backstage-component.php:2934
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2936
+#: includes/class-wp-backstage-component.php:2939
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2941
+#: includes/class-wp-backstage-component.php:2944
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2946
+#: includes/class-wp-backstage-component.php:2949
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2951
+#: includes/class-wp-backstage-component.php:2954
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2956
+#: includes/class-wp-backstage-component.php:2959
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2959
+#: includes/class-wp-backstage-component.php:2962
 msgctxt "media uploader field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2960
+#: includes/class-wp-backstage-component.php:2963
 msgctxt "media uploader field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2961
+#: includes/class-wp-backstage-component.php:2964
 msgctxt "media uploader field - try again button"
 msgid "Try again"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3145
+#: includes/class-wp-backstage-component.php:3148
 #: includes/fields/class-wp-backstage-address-field.php:694
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3189
+#: includes/class-wp-backstage-component.php:3192
 #: includes/fields/class-wp-backstage-address-field.php:721
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3222
+#: includes/class-wp-backstage-component.php:3225
 #: includes/fields/class-wp-backstage-address-field.php:738
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3255
+#: includes/class-wp-backstage-component.php:3258
 #: includes/fields/class-wp-backstage-address-field.php:755
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3288
+#: includes/class-wp-backstage-component.php:3291
 #: includes/fields/class-wp-backstage-address-field.php:772
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3320
+#: includes/class-wp-backstage-component.php:3323
 #: includes/fields/class-wp-backstage-address-field.php:790
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3364
+#: includes/class-wp-backstage-component.php:3367
 #: includes/fields/class-wp-backstage-address-field.php:817
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3426
+#: includes/class-wp-backstage-component.php:3429
 msgctxt "select posts field - default option none label"
 msgid "Select"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3522
+#: includes/class-wp-backstage-component.php:3525
 msgctxt "select users field - default option none label"
 msgid "Select"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:3569
-#: includes/fields/class-wp-backstage-select-users-field.php:148
+#: includes/class-wp-backstage-component.php:3572
+#: includes/fields/class-wp-backstage-select-users-field.php:171
 msgctxt "select users field - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3616
+#: includes/class-wp-backstage-component.php:3619
 msgctxt "rest api preview - loading"
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3617
+#: includes/class-wp-backstage-component.php:3620
 msgctxt "rest api preview - instructions"
 msgid "<strong>No data fetched yet</strong> ― Click the fetch button to get started."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3633
+#: includes/class-wp-backstage-component.php:3636
 msgctxt "rest api preview - form submit"
 msgid "Fetch"
 msgstr ""
@@ -363,459 +363,459 @@ msgctxt "post updated messages - revision restored singular"
 msgid "%1$s restored to revision from %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:635
+#: includes/class-wp-backstage-post-type.php:636
 msgctxt "post type overview help tab - title"
 msgid "Overview"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:644
+#: includes/class-wp-backstage-post-type.php:645
 msgctxt "post type screen content help tab - title"
 msgid "Screen Content"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:653
+#: includes/class-wp-backstage-post-type.php:654
 msgctxt "post type available actions help tab - title"
 msgid "Available Actions"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:662
+#: includes/class-wp-backstage-post-type.php:663
 msgctxt "post type bulk actions help tab - title"
 msgid "Bulk Actions"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:675
+#: includes/class-wp-backstage-post-type.php:676
 msgctxt "post type customize display help tab - title"
 msgid "Customizing This Display"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:686
+#: includes/class-wp-backstage-post-type.php:687
 msgctxt "post type title and editor help tab - title"
 msgid "Title and Editor"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:698
+#: includes/class-wp-backstage-post-type.php:699
 msgctxt "post type inserting media help tab - title"
 msgid "Inserting Media"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:709
+#: includes/class-wp-backstage-post-type.php:710
 msgctxt "post type publish settings help tab - title"
 msgid "Publish Settings"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:720
+#: includes/class-wp-backstage-post-type.php:721
 msgctxt "post type discussion settings help tab - title"
 msgid "Discussion Settings"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:732
+#: includes/class-wp-backstage-post-type.php:733
 msgctxt "post type rest api preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:756
+#: includes/class-wp-backstage-post-type.php:757
 msgctxt "discussion settings help tab - trackbacks"
 msgid "<strong>Send Trackbacks</strong> — Trackbacks are a way to notify legacy blog systems that you've linked to them. Enter the URL(s) you want to send trackbacks. If you link to other WordPress sites they'll be notified automatically using pingbacks, and this field is unnecessary."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:764
+#: includes/class-wp-backstage-post-type.php:765
 msgctxt "discussion settings help tab - comments"
 msgid "<strong>Discussion</strong> — You can turn comments and pings on or off, and if there are comments on the %1$s, you can see them here and moderate them."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:811
+#: includes/class-wp-backstage-post-type.php:812
 msgctxt "post publish settings help tab - overview"
 msgid "Several boxes on this screen contain settings for how your content will be published, including:"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:817
+#: includes/class-wp-backstage-post-type.php:818
 msgctxt "post publish settings help tab - publish"
 msgid "<strong>Publish</strong> — You can set the terms of publishing your %1$s in the Publish box. For Status, Visibility, and Publish (immediately), click on the Edit link to reveal more options. Visibility includes options for password-protecting a %1$s. The Password protected option allows you to set an arbitrary password for each %1$s. The Private option hides the %1$s from everyone except editors and administrators. Publish (immediately) allows you to set a future or past date and time, so you can schedule a %1$s to be published in the future or backdate a %1$s."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:823
+#: includes/class-wp-backstage-post-type.php:824
 msgctxt "post publish settings help tab - format"
 msgid "<strong>Format</strong> — Formats designate how your theme will display a specific %1$s. For example, you could have a <em>standard</em> %1$s with a title and paragraphs, or a short <em>aside</em> that omits the title and contains a short text blurb. Your theme could enable all or some of 10 possible formats. <a href=\"https://wordpress.org/support/article/post-formats/\" target=\"_blank\" rel=\"noopener\">Learn more about formats</a>."
 msgstr ""
 
 #. translators: 1: featured image label, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:830
+#: includes/class-wp-backstage-post-type.php:831
 msgctxt "post publish settings help tab - thumbnail"
 msgid "<strong>%1$s</strong> — This allows you to associate an image with your %2$s without inserting it. This is usually useful only if your theme makes use of the image as a thumbnail on the home page, a custom header, etc."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:838
+#: includes/class-wp-backstage-post-type.php:839
 msgctxt "post publish settings help tab - excerpt"
 msgid "<strong>Excerpt</strong> — Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href=\"https://wordpress.org/support/article/excerpt/\" target=\"_blank\" rel=\"noopener\">Learn more about manual excerpts</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:845
+#: includes/class-wp-backstage-post-type.php:846
 msgctxt "post publish settings help tab - slug"
 msgid "<strong>Slug</strong> — The slug of the post is a unique, URL-friendly identifier of the %1$s and will be used when constructing the permalink. <a href=\"https://wordpress.org/support/article/using-permalinks/\" target=\"_blank\" rel=\"noopener\">Learn more about permalinks</a>."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: post type plural name.
-#: includes/class-wp-backstage-post-type.php:852
+#: includes/class-wp-backstage-post-type.php:853
 msgctxt "post publish settings help tab - page attributes order"
 msgid "<strong>%1$s Attributes</strong> — Set the numerical order of this %1$s. This can be used to sort the %2$s when querying them."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: post type plural name.
-#: includes/class-wp-backstage-post-type.php:860
+#: includes/class-wp-backstage-post-type.php:861
 msgctxt "post publish settings help tab - page attributes hierarchy"
 msgid "The parent %1$s can be set here inorder to create a hierarchy of %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:866
+#: includes/class-wp-backstage-post-type.php:867
 msgctxt "post publish settings help tab - page attributes learn more"
 msgid "<a href=\"https://make.wordpress.org/support/user-manual/pages/page-attributes/\" target=\"_blank\" rel=\"noopener\">Learn more about attributes</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:871
+#: includes/class-wp-backstage-post-type.php:872
 msgctxt "post publish settings help tab - author"
 msgid "<strong>Author</strong> — The user attributed as the author of the %1$s."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:878
+#: includes/class-wp-backstage-post-type.php:879
 msgctxt "post publish settings help tab - custom fields"
 msgid "<strong>Custom Fields</strong> — Custom fields can be used to add extra metadata to the %1$s that you can use in your theme. <a href=\"https://wordpress.org/support/article/custom-fields/\" target=\"_blank\" rel=\"noopener\">Learn more about custom fields</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:885
+#: includes/class-wp-backstage-post-type.php:886
 msgctxt "post publish settings help tab - revisions"
 msgid "<strong>Revisions</strong> — This allows you to view the %1$s revisions. <a href=\"https://wordpress.org/support/article/revisions/\" target=\"_blank\" rel=\"noopener\">Learn more about revisions</a>."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: post type singular name, 3: post type plural name.
-#: includes/class-wp-backstage-post-type.php:893
+#: includes/class-wp-backstage-post-type.php:894
 msgctxt "post publish settings help tab - taxonomy"
 msgid "<strong>%1$s</strong> ― Manage the %1$s attached to the %2$s. <a href=\"https://wordpress.org/support/article/taxonomies/\" target=\"_blank\" rel=\"noopener\">Learn more about taxonomies</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:964
+#: includes/class-wp-backstage-post-type.php:965
 msgctxt "post inserting media help tab - overview"
 msgid "You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your %1$s. To create an image gallery, select the images to add and click the “Create a new gallery” button.<br/><br/>You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the content of your %1$s. <a href=\"https://wordpress.org/support/article/embeds/\" target=\"_blank\" rel=\"noopener\">Learn more about embeds</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1006
+#: includes/class-wp-backstage-post-type.php:1007
 msgctxt "post title and editor help tab - title support"
 msgid "<strong>Title</strong> — Enter a title for your %1$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1011
+#: includes/class-wp-backstage-post-type.php:1012
 msgctxt "post title and editor help tab - permalink support"
 msgid "After you enter a title, you'll see the permalink below if the post, which you can edit."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1020
+#: includes/class-wp-backstage-post-type.php:1021
 msgctxt "post title and editor help tab - editor support"
 msgid "<strong>Editor</strong> — Enter the text for your %1$s. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab.<br/><br/>Visual mode gives you an editor that is similar to a word processor. Click the Toolbar Toggle button to get a second row of controls.<br/><br/>The Text mode allows you to enter HTML along with your %1$s text. Note that &lt;p&gt; and &lt;br&gt; tags are converted to line breaks when switching to the Text editor to make it less cluttered. When you type, a single line break can be used instead of typing &lt;br&gt;, and two line breaks instead of paragraph tags. The line breaks are converted back to tags automatically.<br/><br/>You can insert media files by clicking the button above the editor and following the directions. You can align or edit images using the inline formatting toolbar available in Visual mode.<br/><br/>You can enable distraction-free writing mode using the icon to the right. This feature is not available for old browsers or devices with small screens, and requires that the full-height editor be enabled in Screen Options.<br/><br/>Keyboard users: When you are working in the visual editor, you can use <code>Alt + F10</code> to access the toolbar."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: list of meta box titles.
-#: includes/class-wp-backstage-post-type.php:1071
+#: includes/class-wp-backstage-post-type.php:1072
 msgctxt "post customize display help tab - overview"
 msgid "The title field and the big %1$s Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (%2$s) or to choose a 1- or 2-column layout for this screen."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1112
+#: includes/class-wp-backstage-post-type.php:1113
 msgctxt "post bulk actions help tab - overview"
 msgid "You can also edit or move multiple %1$s to the Trash at once. Select the %1$s you want to act on using the checkboxes, then select the action you want to take from the Bulk actions menu and click Apply.<br/><br/>When using Bulk Edit, you can change the metadata for all selected %1$s at once. To remove a %2$s from the grouping, just click the x next to its name in the Bulk Edit area that appears."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1153
+#: includes/class-wp-backstage-post-type.php:1154
 msgctxt "post available actions help tab - overview"
 msgid "Hovering over a row in the %1$s list will display action links that allow you to manage your %2$s. You can perform the following actions:"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1173
+#: includes/class-wp-backstage-post-type.php:1174
 msgctxt "post available actions help tab - edit action"
 msgid "<strong>Edit</strong> takes you to the editing screen for that %1$s. You can also reach that screen by clicking on the %1$s title."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1178
+#: includes/class-wp-backstage-post-type.php:1179
 msgctxt "post available actions help tab - quick edit action"
 msgid "<strong>Quick Edit</strong> provides inline access to the metadata of your %1$s, allowing you to update %1$s details without leaving this screen."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1183
+#: includes/class-wp-backstage-post-type.php:1184
 msgctxt "post available actions help tab - trash action"
 msgid "<strong>Trash</strong> removes your %1$s from this list and places it in the Trash, from which you can permanently delete it."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1188
+#: includes/class-wp-backstage-post-type.php:1189
 msgctxt "post available actions help tab - view and preview actions"
 msgid "<strong>Preview</strong> will show you what your draft %1$s will look like if you publish it. <strong>View</strong> will take you to your live site to view the %1$s. Which link is available depends on your post's status."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1235
+#: includes/class-wp-backstage-post-type.php:1236
 msgctxt "post screen content help tab - overview"
 msgid "You can customize the display of this screen's contents in a number of ways:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1261
+#: includes/class-wp-backstage-post-type.php:1262
 msgctxt "post screen content help tab - columns"
 msgid "You can hide/display columns based on your needs and decide how many %1$s to list per screen using the Screen Options tab."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1266
+#: includes/class-wp-backstage-post-type.php:1267
 msgctxt "post screen content help tab - statuses"
 msgid "You can filter the list of %1$s by post status using the text links above the %1$s list to only show %1$s with that status. The default view is to show all %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1271
+#: includes/class-wp-backstage-post-type.php:1272
 msgctxt "post screen content help tab - view mode"
 msgid "You can view %1$s in a simple title list or with an excerpt using the Screen Options tab."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: taxonomy labels 3: filterable field labels.
-#: includes/class-wp-backstage-post-type.php:1276
+#: includes/class-wp-backstage-post-type.php:1277
 msgctxt "post screen content help tab - filter"
 msgid "You can refine the list to show only %1$s from a specific month, those in a specific taxonomy (%2$s), or those with a specific value for filterable fields (%3$s) by using the dropdown menus above the %1$s list. Click the Filter button after making your selection. You can also refine the list by clicking on the author, taxonomies (%2$s), and filterable fields (%3$s) in the %1$s list."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1338
+#: includes/class-wp-backstage-post-type.php:1339
 msgctxt "post type overview help tab - overview"
 msgid "This screen provides access to all of your %1$s. You can customize the display of this screen to suit your workflow."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post post type plural name.
-#: includes/class-wp-backstage-post-type.php:1350
+#: includes/class-wp-backstage-post-type.php:1351
 msgctxt "post type overview help tab - capability type: page"
 msgid "%1$s are similar to %2$s in that they have the same management capability, meaning the same user roles that can manage %2$s can manage %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: page post type plural name.
-#: includes/class-wp-backstage-post-type.php:1363
+#: includes/class-wp-backstage-post-type.php:1364
 msgctxt "post type overview help tab - capability type: post"
 msgid "%1$s are similar to %2$s in that they have the same management capability, meaning the same user roles that can manage %2$s can manage %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1375
+#: includes/class-wp-backstage-post-type.php:1376
 msgctxt "post type overview help tab - hierarchy"
 msgid "%1$s can have a hierarchy. You can nest %1$s under other %1$s by making one the \"Parent\" of the other, creating a group of %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: taxonomy links.
-#: includes/class-wp-backstage-post-type.php:1401
+#: includes/class-wp-backstage-post-type.php:1402
 msgctxt "post overview help tab - taxonomies"
 msgid "%1$s can be organized using their related taxonomies: %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1450
+#: includes/class-wp-backstage-post-type.php:1451
 msgctxt "post type rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this post. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
 #. translators: 1: post type, 2: post title.
-#: includes/class-wp-backstage-post-type.php:1525
+#: includes/class-wp-backstage-post-type.php:1526
 msgctxt "dashboard activity post link title"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1580
+#: includes/class-wp-backstage-post-type.php:1581
 msgctxt "post type - add new"
 msgid "Add New"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1583
+#: includes/class-wp-backstage-post-type.php:1584
 msgctxt "post type - archives"
 msgid "%1$s Archives"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1588
+#: includes/class-wp-backstage-post-type.php:1589
 msgctxt "post type - attributes"
 msgid "%1$s Attributes"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1593
+#: includes/class-wp-backstage-post-type.php:1594
 msgctxt "post type - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1598
+#: includes/class-wp-backstage-post-type.php:1599
 msgctxt "post type - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1603
+#: includes/class-wp-backstage-post-type.php:1604
 msgctxt "post type - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1608
+#: includes/class-wp-backstage-post-type.php:1609
 msgctxt "post type - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1613
+#: includes/class-wp-backstage-post-type.php:1614
 msgctxt "post type - new item"
 msgid "New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1618
+#: includes/class-wp-backstage-post-type.php:1619
 msgctxt "post type - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1623
+#: includes/class-wp-backstage-post-type.php:1624
 msgctxt "post type - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1628
+#: includes/class-wp-backstage-post-type.php:1629
 msgctxt "post type - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1633
+#: includes/class-wp-backstage-post-type.php:1634
 msgctxt "post type - view items"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1638
+#: includes/class-wp-backstage-post-type.php:1639
 msgctxt "post type - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1643
+#: includes/class-wp-backstage-post-type.php:1644
 msgctxt "post type - not found"
 msgid "No %1$s found"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1648
+#: includes/class-wp-backstage-post-type.php:1649
 msgctxt "post type - not found in trash"
 msgid "No %1$s found in trash"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1653
+#: includes/class-wp-backstage-post-type.php:1654
 msgctxt "post type - set featured image"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1658
+#: includes/class-wp-backstage-post-type.php:1659
 msgctxt "post type - remove featured image"
 msgid "Remove %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1663
+#: includes/class-wp-backstage-post-type.php:1664
 msgctxt "post type - use featured image"
 msgid "Use as %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1668
+#: includes/class-wp-backstage-post-type.php:1669
 msgctxt "post type - insert into item"
 msgid "Insert into %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1673
+#: includes/class-wp-backstage-post-type.php:1674
 msgctxt "post type - uploaded to this item"
 msgid "Uploaded to this %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1678
+#: includes/class-wp-backstage-post-type.php:1679
 msgctxt "post type - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1683
+#: includes/class-wp-backstage-post-type.php:1684
 msgctxt "post type - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1688
+#: includes/class-wp-backstage-post-type.php:1689
 msgctxt "post type - filter items list"
 msgid "Filter %1$s list"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1693
+#: includes/class-wp-backstage-post-type.php:1694
 msgctxt "post type - item published"
 msgid "%1$s published."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1698
+#: includes/class-wp-backstage-post-type.php:1699
 msgctxt "post type - item published privately"
 msgid "%1$s published privately."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1703
+#: includes/class-wp-backstage-post-type.php:1704
 msgctxt "post type - item reverted to draft"
 msgid "%1$s reverted to draft."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1708
+#: includes/class-wp-backstage-post-type.php:1709
 msgctxt "post type - item scheduled"
 msgid "%1$s scheduled."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1713
+#: includes/class-wp-backstage-post-type.php:1714
 msgctxt "post type - item updated"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1718
+#: includes/class-wp-backstage-post-type.php:1719
 msgctxt "post type - item link"
 msgid "%1$s Link"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1723
+#: includes/class-wp-backstage-post-type.php:1724
 msgctxt "post type - item link description"
 msgid "A link to a %1$s"
 msgstr ""
 
 #. translators: 1: published count, 2: post type label
-#: includes/class-wp-backstage-post-type.php:2426
+#: includes/class-wp-backstage-post-type.php:2427
 msgctxt "dashboard glance item"
 msgid "%1$d %2$s"
 msgstr ""
@@ -851,212 +851,212 @@ msgid "[Taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:375
+#: includes/class-wp-backstage-taxonomy.php:376
 msgctxt "term updated messages - added singular"
 msgid "%1$s added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:380
+#: includes/class-wp-backstage-taxonomy.php:381
 msgctxt "term updated messages - deleted singular"
 msgid "%1$s deleted."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:385
+#: includes/class-wp-backstage-taxonomy.php:386
 msgctxt "term updated messages - updated singular"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:390
+#: includes/class-wp-backstage-taxonomy.php:391
 msgctxt "term updated messages - not added singular"
 msgid "%1$s not added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:395
+#: includes/class-wp-backstage-taxonomy.php:396
 msgctxt "term updated messages - not updated singular"
 msgid "%1$s not updated."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:400
+#: includes/class-wp-backstage-taxonomy.php:401
 msgctxt "term updated messages - deleted plural"
 msgid "%1$s deleted."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:440
+#: includes/class-wp-backstage-taxonomy.php:441
 msgctxt "taxonomy overview help tab - title"
 msgid "Overview"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:451
+#: includes/class-wp-backstage-taxonomy.php:452
 msgctxt "taxonomy adding terms help tab - title"
 msgid "Adding %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:466
+#: includes/class-wp-backstage-taxonomy.php:467
 msgctxt "taxonomy rest api help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:487
+#: includes/class-wp-backstage-taxonomy.php:488
 msgid "<strong>Name</strong> — The name is how it appears on your site."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:489
+#: includes/class-wp-backstage-taxonomy.php:490
 msgid "<strong>Slug</strong> — The \"slug\" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:494
+#: includes/class-wp-backstage-taxonomy.php:495
 msgid "<strong>Parent</strong> — %1$s can have a hierarchy. You can create a more general parent %2$s, and under that optional child %1$s for more refinement. To create a child %2$s, just choose another %2$s from the Parent dropdown."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:500
+#: includes/class-wp-backstage-taxonomy.php:501
 msgid "<strong>Description</strong> — The description is not prominent by default; however, some themes may display it."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:514
+#: includes/class-wp-backstage-taxonomy.php:515
 msgctxt "taxonomy adding terms help tab - overview"
 msgid "When adding a new %1$s on this screen, you'll fill in the following fields:"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:520
+#: includes/class-wp-backstage-taxonomy.php:521
 msgctxt "taxonomy adding terms help tab - screen options"
 msgid "You can change the display of this screen using the Screen Options tab to set how many %1$s are displayed per screen and to display/hide columns in the table."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:597
+#: includes/class-wp-backstage-taxonomy.php:598
 msgctxt "taxonomy overview help tab - overview"
 msgid "You can use %1$s to define sections of your site and group related content."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: post type links.
-#: includes/class-wp-backstage-taxonomy.php:607
+#: includes/class-wp-backstage-taxonomy.php:608
 msgctxt "taxonomy overview help tab - post types"
 msgid "%1$s can be used to organize items from their related post types: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:658
+#: includes/class-wp-backstage-taxonomy.php:659
 msgctxt "taxonomy rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this term. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:734
+#: includes/class-wp-backstage-taxonomy.php:735
 msgctxt "taxonomy table filter - submit"
 msgid "Filter"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:806
+#: includes/class-wp-backstage-taxonomy.php:807
 msgctxt "taxonomy labels - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:811
+#: includes/class-wp-backstage-taxonomy.php:812
 msgctxt "taxonomy labels - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:816
+#: includes/class-wp-backstage-taxonomy.php:817
 msgctxt "taxonomy labels - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:821
+#: includes/class-wp-backstage-taxonomy.php:822
 msgctxt "taxonomy labels - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:826
+#: includes/class-wp-backstage-taxonomy.php:827
 msgctxt "taxonomy labels - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:831
+#: includes/class-wp-backstage-taxonomy.php:832
 msgctxt "taxonomy labels - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:836
+#: includes/class-wp-backstage-taxonomy.php:837
 msgctxt "taxonomy labels - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:841
+#: includes/class-wp-backstage-taxonomy.php:842
 msgctxt "taxonomy labels - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:846
+#: includes/class-wp-backstage-taxonomy.php:847
 msgctxt "taxonomy labels - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:851
+#: includes/class-wp-backstage-taxonomy.php:852
 msgctxt "taxonomy labels - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:856
+#: includes/class-wp-backstage-taxonomy.php:857
 msgctxt "taxonomy labels - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:861
+#: includes/class-wp-backstage-taxonomy.php:862
 msgctxt "taxonomy labels - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:866
+#: includes/class-wp-backstage-taxonomy.php:867
 msgctxt "taxonomy labels - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:871
+#: includes/class-wp-backstage-taxonomy.php:872
 msgctxt "taxonomy labels - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:876
+#: includes/class-wp-backstage-taxonomy.php:877
 msgctxt "taxonomy labels - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:881
+#: includes/class-wp-backstage-taxonomy.php:882
 msgctxt "taxonomy labels - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:886
+#: includes/class-wp-backstage-taxonomy.php:887
 msgctxt "taxonomy labels - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:891
+#: includes/class-wp-backstage-taxonomy.php:892
 msgctxt "taxonomy labels - back to items"
 msgid "&larr; Go to %1$s"
 msgstr ""
@@ -1067,17 +1067,17 @@ msgctxt "user - required arg error"
 msgid "[User] The %1$s key is required."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:266
+#: includes/class-wp-backstage-user.php:267
 msgctxt "user rest api preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:303
+#: includes/class-wp-backstage-user.php:304
 msgctxt "user rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this user. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:590
+#: includes/class-wp-backstage-user.php:591
 msgctxt "users table filter - submit"
 msgid "Filter"
 msgstr ""
@@ -1095,7 +1095,7 @@ msgid "%1$s:"
 msgstr ""
 
 #: includes/class-wp-backstage.php:3017
-#: includes/fields/class-wp-backstage-media-field.php:101
+#: includes/fields/class-wp-backstage-media-field.php:134
 msgctxt "media item - remove"
 msgid "Remove"
 msgstr ""
@@ -2356,52 +2356,52 @@ msgid "The value for %1$s is not a valid email address."
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:980
+#: includes/fields/class-wp-backstage-media-field.php:1013
 msgctxt "media field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:985
+#: includes/fields/class-wp-backstage-media-field.php:1018
 msgctxt "media field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:990
+#: includes/fields/class-wp-backstage-media-field.php:1023
 msgctxt "media field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:995
+#: includes/fields/class-wp-backstage-media-field.php:1028
 msgctxt "media field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1000
+#: includes/fields/class-wp-backstage-media-field.php:1033
 msgctxt "media field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1005
+#: includes/fields/class-wp-backstage-media-field.php:1038
 msgctxt "media field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1008
+#: includes/fields/class-wp-backstage-media-field.php:1041
 msgctxt "media field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1009
+#: includes/fields/class-wp-backstage-media-field.php:1042
 msgctxt "media field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1010
+#: includes/fields/class-wp-backstage-media-field.php:1043
 msgctxt "media field - try again button"
 msgid "Try again"
 msgstr ""

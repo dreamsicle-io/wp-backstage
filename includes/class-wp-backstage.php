@@ -2156,7 +2156,7 @@ class WP_Backstage {
 				}
 
 				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+					const checkboxes = document.querySelectorAll('#adv-settings .metabox-prefs input[type="checkbox"]');
 					checkboxes.forEach(function(checkbox) {
 						initScreenOption(checkbox);
 					});

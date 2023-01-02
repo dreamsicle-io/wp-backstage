@@ -29,6 +29,26 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	);
 
 	/**
+	 * Inline Style
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_style(): void { ?>
+
+		<style id="wp_backstage_radio_field_style">
+
+			.wp-backstage-radio-field__option-label {
+				margin: 0.35em 0 0.5em!important;
+				display: inline-block;
+				line-height: 1.4;
+			}
+
+		</style>
+
+	<?php }
+
+	/**
 	 * Render Column
 	 *
 	 * @since 4.0.0
@@ -71,14 +91,16 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 		$options = $this->get_options( $field ); ?>
 
 		<span 
-		class="<?php $this->root_class( $field ); ?>"
+		class="<?php $this->root_class( $field, array( 'wp-backstage-radio-field' ) ); ?>"
 		id="<?php $this->element_id( $field, 'container' ); ?>"
 		data-field-id="<?php $this->element_id( $field ); ?>"
 		data-field-type="<?php echo esc_attr( $field['type'] ); ?>">
 
 			<?php foreach ( $options as $i => $option ) { ?>
 
-				<label id="<?php $this->option_id( $field, $option, 'label' ); ?>">
+				<label 
+				id="<?php $this->option_id( $field, $option, 'label' ); ?>"
+				class="wp-backstage-radio-field__option-label">
 
 					<input 
 					type="radio" 
@@ -88,7 +110,9 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 					<?php checked( true, ( $field['value'] === $option['value'] ) || ( empty( $field['value'] ) && ( $i === 0 ) ) ); ?>
 					<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
-					<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
+					<span 
+					class="wp-backstage-radio-field__option-text"
+					id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
 						$this->option_label( $option );
 					?></span>
 

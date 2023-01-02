@@ -1801,6 +1801,11 @@ Search.appendIndex(
             "summary": "Is\u0020Option\u0020Checked",
             "url": "classes/WP-Backstage-Checkbox-Set-Field.html#method_is_option_checked"
         },                {
+            "fqsen": "\\WP_Backstage_Checkbox_Set_Field\u003A\u003Ainline_style\u0028\u0029",
+            "name": "inline_style",
+            "summary": "Inline\u0020Style",
+            "url": "classes/WP-Backstage-Checkbox-Set-Field.html#method_inline_style"
+        },                {
             "fqsen": "\\WP_Backstage_Checkbox_Set_Field\u003A\u003Arender\u0028\u0029",
             "name": "render",
             "summary": "Render",
@@ -2075,6 +2080,11 @@ Search.appendIndex(
             "name": "WP_Backstage_Radio_Field",
             "summary": "WP\u0020Backstage\u0020Radio\u0020Field",
             "url": "classes/WP-Backstage-Radio-Field.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Radio_Field\u003A\u003Ainline_style\u0028\u0029",
+            "name": "inline_style",
+            "summary": "Inline\u0020Style",
+            "url": "classes/WP-Backstage-Radio-Field.html#method_inline_style"
         },                {
             "fqsen": "\\WP_Backstage_Radio_Field\u003A\u003Arender_column\u0028\u0029",
             "name": "render_column",

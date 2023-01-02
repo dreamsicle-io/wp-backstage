@@ -84,6 +84,26 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	}
 
 	/**
+	 * Inline Style
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_style(): void { ?>
+
+		<style id="wp_backstage_checkbox_set_field_style">
+
+			.wp-backstage-checkbox-set-field__option-label {
+				margin: 0.35em 0 0.5em!important;
+				display: inline-block;
+				line-height: 1.4;
+			}
+
+		</style>
+
+	<?php }
+
+	/**
 	 * Render
 	 *
 	 * @since 4.0.0
@@ -95,14 +115,16 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 		$options = $this->get_options( $field ); ?>
 
 		<span 
-		class="<?php $this->root_class( $field ); ?>"
+		class="<?php $this->root_class( $field, array( 'wp-backstage-checkbox-set-field' ) ); ?>"
 		id="<?php $this->element_id( $field, 'container' ); ?>"
 		data-field-id="<?php $this->element_id( $field ); ?>"
 		data-field-type="<?php echo esc_attr( $field['type'] ); ?>">
 
 			<?php foreach ( $options as $i => $option ) { ?>
 
-				<label id="<?php $this->option_id( $field, $option, 'label' ); ?>">
+				<label 
+				class="wp-backstage-checkbox-set-field__option-label"
+				id="<?php $this->option_id( $field, $option, 'label' ); ?>">
 
 					<input 
 					type="checkbox" 
@@ -112,7 +134,9 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 					<?php checked( true, $this->is_option_checked( $field, $option ) ); ?>
 					<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
-					<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
+					<span 
+					class="wp-backstage-checkbox-set-field__option-text"
+					id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
 						$this->option_label( $option );
 					?></span>
 

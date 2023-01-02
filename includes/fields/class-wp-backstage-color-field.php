@@ -57,9 +57,50 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @return void
 	 */
 	public function render_column( array $field = array(), $value = null ): void { ?>
-		<a href="<?php printf( 'mailto:%1$s', esc_attr( $value ) ); ?>" target="_blank" rel="noopener noreferrer"><?php
-			echo esc_html( $value );
-		?></a>
+
+		<span class="wp-backstage-color-field-column">
+			<i 
+			class="wp-backstage-color-field-column__icon"
+			style="<?php printf( 'background-color:%1$s;', esc_attr( $value ) ); ?>"
+			title="<?php echo esc_attr( $value ); ?>" 
+			role="presentation"></i>
+
+			<span class="wp-backstage-color-field-column__text"><?php
+				echo esc_html( $value )
+			?></span>
+		</span>
+
+	<?php }
+
+	/**
+	 * Inline Style
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_style(): void { ?>
+		<style id="wp_backstage_color_field_style">
+
+			.wp-backstage-color-field-column {
+				display: inline-block;
+			}
+
+			.wp-backstage-color-field-column__icon {
+				display: inline-block;
+				vertical-align: middle;
+				width: 1.25em;
+				height: 1.25em;
+				border: 1px solid #e1e1e1;
+				border-radius: 0.2em;
+				margin-inline-end: 0.2em;
+			}
+
+			.wp-backstage-color-field-column__text {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+		</style>
 	<?php }
 
 	/**

@@ -1471,6 +1471,11 @@ Search.appendIndex(
             "summary": "Has\u0020Tag",
             "url": "classes/WP-Backstage-Field.html#method_has_tag"
         },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_filter_url\u0028\u0029",
+            "name": "get_filter_url",
+            "summary": "Get\u0020Filter\u0020URL",
+            "url": "classes/WP-Backstage-Field.html#method_get_filter_url"
+        },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Ainit\u0028\u0029",
             "name": "init",
             "summary": "Init",
@@ -1595,6 +1600,11 @@ Search.appendIndex(
             "name": "description",
             "summary": "Label",
             "url": "classes/WP-Backstage-Field.html#method_description"
+        },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_filter_args\u0028\u0029",
+            "name": "get_filter_args",
+            "summary": "Get\u0020Filter\u0020Args",
+            "url": "classes/WP-Backstage-Field.html#method_get_filter_args"
         },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Arender\u0028\u0029",
             "name": "render",
@@ -1891,6 +1901,11 @@ Search.appendIndex(
             "summary": "Render\u0020Column",
             "url": "classes/WP-Backstage-Color-Field.html#method_render_column"
         },                {
+            "fqsen": "\\WP_Backstage_Color_Field\u003A\u003Ainline_style\u0028\u0029",
+            "name": "inline_style",
+            "summary": "Inline\u0020Style",
+            "url": "classes/WP-Backstage-Color-Field.html#method_inline_style"
+        },                {
             "fqsen": "\\WP_Backstage_Color_Field\u003A\u003Ainline_script\u0028\u0029",
             "name": "inline_script",
             "summary": "Inline\u0020Color\u0020Field\u0020Script",
@@ -2156,6 +2171,16 @@ Search.appendIndex(
             "summary": "Post\u0020Options",
             "url": "classes/WP-Backstage-Select-Posts-Field.html#method_post_options"
         },                {
+            "fqsen": "\\WP_Backstage_Select_Posts_Field\u003A\u003Aget_filter_args\u0028\u0029",
+            "name": "get_filter_args",
+            "summary": "Get\u0020Filter\u0020Args",
+            "url": "classes/WP-Backstage-Select-Posts-Field.html#method_get_filter_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Select_Posts_Field\u003A\u003Arender_column\u0028\u0029",
+            "name": "render_column",
+            "summary": "Render\u0020Column",
+            "url": "classes/WP-Backstage-Select-Posts-Field.html#method_render_column"
+        },                {
             "fqsen": "\\WP_Backstage_Select_Posts_Field\u003A\u003Arender\u0028\u0029",
             "name": "render",
             "summary": "Render",
@@ -2208,8 +2233,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Aget_users\u0028\u0029",
             "name": "get_users",
-            "summary": "Get\u0020Posts",
+            "summary": "Get\u0020Users",
             "url": "classes/WP-Backstage-Select-Users-Field.html#method_get_users"
+        },                {
+            "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Aget_filter_args\u0028\u0029",
+            "name": "get_filter_args",
+            "summary": "Get\u0020Filter\u0020Args",
+            "url": "classes/WP-Backstage-Select-Users-Field.html#method_get_filter_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Arender_column\u0028\u0029",
+            "name": "render_column",
+            "summary": "Render\u0020Column",
+            "url": "classes/WP-Backstage-Select-Users-Field.html#method_render_column"
         },                {
             "fqsen": "\\WP_Backstage_Select_Users_Field\u003A\u003Arender\u0028\u0029",
             "name": "render",

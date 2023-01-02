@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-02T14:47:24+00:00\n"
+"POT-Creation-Date: 2023-01-02T17:50:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -35,160 +35,144 @@ msgid "https://www.dreamsicle.io"
 msgstr ""
 
 #. translators: 1: error message.
-#: includes/class-wp-backstage-component.php:397
+#: includes/class-wp-backstage-component.php:396
 msgctxt "component error message"
 msgid "Error: %1$s"
 msgstr ""
 
-#. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:1446
-msgctxt "select users filter - option label"
-msgid "%1$s (%2$s)"
-msgstr ""
-
-#: includes/class-wp-backstage-component.php:1459
-msgctxt "select users filter - option none label"
-msgid "All Users"
-msgstr ""
-
-#: includes/class-wp-backstage-component.php:1475
-msgctxt "filter - option none label"
-msgid "All options"
-msgstr ""
-
-#: includes/class-wp-backstage-component.php:1615
+#: includes/class-wp-backstage-component.php:1533
 #: includes/fields/class-wp-backstage-checkbox-field.php:61
 msgctxt "checkbox column - true"
 msgid "True"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/class-wp-backstage-component.php:1752
+#: includes/class-wp-backstage-component.php:1670
 msgctxt "filterable value link title"
 msgid "Filter by %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2934
+#: includes/class-wp-backstage-component.php:2852
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2939
+#: includes/class-wp-backstage-component.php:2857
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2944
+#: includes/class-wp-backstage-component.php:2862
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2949
+#: includes/class-wp-backstage-component.php:2867
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2954
+#: includes/class-wp-backstage-component.php:2872
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2959
+#: includes/class-wp-backstage-component.php:2877
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2962
+#: includes/class-wp-backstage-component.php:2880
 msgctxt "media uploader field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2963
+#: includes/class-wp-backstage-component.php:2881
 msgctxt "media uploader field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2964
+#: includes/class-wp-backstage-component.php:2882
 msgctxt "media uploader field - try again button"
 msgid "Try again"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3148
+#: includes/class-wp-backstage-component.php:3066
 #: includes/fields/class-wp-backstage-address-field.php:693
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3192
+#: includes/class-wp-backstage-component.php:3110
 #: includes/fields/class-wp-backstage-address-field.php:720
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3225
+#: includes/class-wp-backstage-component.php:3143
 #: includes/fields/class-wp-backstage-address-field.php:737
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3258
+#: includes/class-wp-backstage-component.php:3176
 #: includes/fields/class-wp-backstage-address-field.php:754
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3291
+#: includes/class-wp-backstage-component.php:3209
 #: includes/fields/class-wp-backstage-address-field.php:771
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3323
+#: includes/class-wp-backstage-component.php:3241
 #: includes/fields/class-wp-backstage-address-field.php:789
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3367
+#: includes/class-wp-backstage-component.php:3285
 #: includes/fields/class-wp-backstage-address-field.php:816
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3429
+#: includes/class-wp-backstage-component.php:3347
 msgctxt "select posts field - default option none label"
 msgid "Select"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3525
+#: includes/class-wp-backstage-component.php:3443
 msgctxt "select users field - default option none label"
 msgid "Select"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:3572
-#: includes/fields/class-wp-backstage-select-users-field.php:170
+#: includes/class-wp-backstage-component.php:3490
+#: includes/fields/class-wp-backstage-select-users-field.php:231
 msgctxt "select users field - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3619
+#: includes/class-wp-backstage-component.php:3537
 msgctxt "rest api preview - loading"
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3620
+#: includes/class-wp-backstage-component.php:3538
 msgctxt "rest api preview - instructions"
 msgid "<strong>No data fetched yet</strong> ― Click the fetch button to get started."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3636
+#: includes/class-wp-backstage-component.php:3554
 msgctxt "rest api preview - form submit"
 msgid "Fetch"
 msgstr ""
@@ -2355,6 +2339,11 @@ msgctxt "email field - validate"
 msgid "The value for %1$s is not a valid email address."
 msgstr ""
 
+#: includes/fields/class-wp-backstage-field.php:510
+msgctxt "field filter - option none label"
+msgid "All options"
+msgstr ""
+
 #. translators: 1: field label
 #: includes/fields/class-wp-backstage-media-field.php:1012
 msgctxt "media field - modal single button"
@@ -2419,7 +2408,7 @@ msgid "The value for %1$s must be less than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-radio-field.php:72
+#: includes/fields/class-wp-backstage-radio-field.php:66
 msgctxt "radio field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
@@ -2437,19 +2426,42 @@ msgid "The value for %1$s must be less than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-select-field.php:52
+#: includes/fields/class-wp-backstage-select-field.php:46
 msgctxt "select field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-select-posts-field.php:74
+#: includes/fields/class-wp-backstage-select-posts-field.php:75
 msgctxt "select posts field - default option none label"
 msgid "Select a Post"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-select-users-field.php:73
+#. translators: 1: value label.
+#: includes/fields/class-wp-backstage-select-posts-field.php:215
+msgctxt "select posts field - column filter link title"
+msgid "Filter by %1$s"
+msgstr ""
+
+#: includes/fields/class-wp-backstage-select-users-field.php:74
 msgctxt "select users field - default option none label"
 msgid "Select a User"
+msgstr ""
+
+#. translators: 1: user display name, 2: user username
+#: includes/fields/class-wp-backstage-select-users-field.php:154
+msgctxt "select users field - filter option label"
+msgid "%1$s (%2$s)"
+msgstr ""
+
+#: includes/fields/class-wp-backstage-select-users-field.php:167
+msgctxt "select users field - filter option none label"
+msgid "All Users"
+msgstr ""
+
+#. translators: 1: value label.
+#: includes/fields/class-wp-backstage-select-users-field.php:187
+msgctxt "select users field - column filter link title"
+msgid "Filter by %1$s"
 msgstr ""
 
 #: includes/fields/class-wp-backstage-time-field.php:141

@@ -570,7 +570,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 */
 	public function render_page() { ?>
 
-		<div class="wrap">
+		<div id="wp_backstage_options_page_wrap" class="wrap">
 
 			<h1><?php
 

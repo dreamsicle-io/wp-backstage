@@ -1044,6 +1044,13 @@ class WP_Backstage {
 				clear: both;
 			}
 
+			/* Options pages */
+			@media screen and (max-width: 782px) {
+				#wp_backstage_options_page_wrap .form-table {
+					table-layout: fixed;
+				}
+			}
+
 		</style>
 
 	<?php }

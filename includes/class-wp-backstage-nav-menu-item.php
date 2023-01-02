@@ -325,7 +325,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				if ( isset( $post_data[ $field['name'] ][ $item_id ] ) ) {
 
 					$field_class = $this->get_field_class( $field['type'] );
-					$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ][ $item_id ] );
+					$value       = $field_class->sanitize( $post_data[ $field['name'] ][ $item_id ] );
 
 					update_post_meta( $item_id, $field['name'], $value );
 
@@ -373,7 +373,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 					if ( isset( $posted_values[ $field['name'] ] ) ) {
 
 						$field_class = $this->get_field_class( $field['type'] );
-						$value       = $field_class->sanitize( $field, $posted_values[ $field['name'] ] );
+						$value       = $field_class->sanitize( $posted_values[ $field['name'] ] );
 
 						update_post_meta( $item_id, $field['name'], $value );
 
@@ -468,7 +468,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 										if ( ! empty( $setting_values ) && isset( $setting_values[ $meta_key ] ) ) {
 
 											$field_class = $this->get_field_class( $field['type'] );
-											$value       = $field_class->sanitize( $field, $setting_values[ $meta_key ] );
+											$value       = $field_class->sanitize( $setting_values[ $meta_key ] );
 
 											// Cast this to an array, or array values will have their first index plucked.
 											$value = array( $value );

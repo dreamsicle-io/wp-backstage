@@ -78,29 +78,25 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 
 			<?php foreach ( $options as $i => $option ) { ?>
 
-				<span 
-				id="<?php $this->option_id( $field, $option, 'container' ); ?>"
-				style="display:block;">
+				<label id="<?php $this->option_id( $field, $option, 'label' ); ?>">
 
-					<label 
-					id="<?php $this->option_id( $field, $option, 'label' ); ?>"
-					style="display:inline-block;">
+					<input 
+					type="radio" 
+					name="<?php echo esc_attr( $field['name'] ); ?>" 
+					id="<?php $this->option_id( $field, $option ); ?>" 
+					value="<?php echo esc_attr( $option['value'] ); ?>" 
+					<?php checked( true, ( $field['value'] === $option['value'] ) || ( empty( $field['value'] ) && ( $i === 0 ) ) ); ?>
+					<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
-						<input 
-						type="radio" 
-						name="<?php echo esc_attr( $field['name'] ); ?>" 
-						id="<?php $this->option_id( $field, $option ); ?>" 
-						value="<?php echo esc_attr( $option['value'] ); ?>" 
-						<?php checked( true, ( $field['value'] === $option['value'] ) || ( empty( $field['value'] ) && ( $i === 0 ) ) ); ?>
-						<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
+					<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
+						$this->option_label( $option );
+					?></span>
 
-						<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
-							$this->option_label( $option );
-						?></span>
+				</label>
 
-					</label>
-
-				</span>
+				<?php if ( ( $i + 1 ) < count( $options ) ) { ?>
+					<br />
+				<?php } ?>
 
 			<?php } ?>
 

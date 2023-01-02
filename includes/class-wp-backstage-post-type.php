@@ -1834,7 +1834,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			if ( isset( $post_data[ $field['name'] ] ) ) {
 
 				$field_class = $this->get_field_class( $field['type'] );
-				$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ] );
+				$value       = $field_class->sanitize( $post_data[ $field['name'] ] );
 
 				update_post_meta( $post_id, $field['name'], $value );
 

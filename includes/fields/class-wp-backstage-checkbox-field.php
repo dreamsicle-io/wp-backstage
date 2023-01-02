@@ -42,11 +42,10 @@ class WP_Backstage_Checkbox_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
 	 * @return boolean The santizied value.
 	 */
-	public function sanitize( array $field = array(), $value = null ) {
+	public function sanitize( $value = null ) {
 		return boolval( $value );
 	}
 

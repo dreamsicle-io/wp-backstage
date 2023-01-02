@@ -322,7 +322,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 			if ( isset( $new_instance[ $field['name'] ] ) ) {
 
 				$field_class = $this->get_field_class( $field['type'] );
-				$value       = $field_class->sanitize( $field, $new_instance[ $field['name'] ] );
+				$value       = $field_class->sanitize( $new_instance[ $field['name'] ] );
 
 				$new_instance[ $field['name'] ] = $value;
 

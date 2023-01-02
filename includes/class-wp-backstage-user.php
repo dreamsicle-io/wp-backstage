@@ -499,7 +499,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 			if ( isset( $post_data[ $field['name'] ] ) ) {
 
 				$field_class = $this->get_field_class( $field['type'] );
-				$value       = $field_class->sanitize( $field, $post_data[ $field['name'] ] );
+				$value       = $field_class->sanitize( $post_data[ $field['name'] ] );
 
 				update_user_meta( $user_id, $field['name'], $value );
 

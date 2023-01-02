@@ -63,11 +63,10 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( array $field = array(), $value = null ) {
+	public function sanitize( $value = null ) {
 		return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : array();
 	}
 
@@ -101,31 +100,27 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 		data-field-id="<?php $this->element_id( $field ); ?>"
 		data-field-type="<?php echo esc_attr( $field['type'] ); ?>">
 
-			<?php foreach ( $options as $option ) { ?>
+			<?php foreach ( $options as $i => $option ) { ?>
 
-				<span 
-				id="<?php $this->option_id( $field, $option, 'container' ); ?>"
-				style="display:block;">
+				<label id="<?php $this->option_id( $field, $option, 'label' ); ?>">
 
-					<label 
-					id="<?php $this->option_id( $field, $option, 'label' ); ?>"
-					style="display:inline-block;">
+					<input 
+					type="checkbox" 
+					name="<?php printf( '%1$s[]', esc_attr( $field['name'] ) ); ?>" 
+					id="<?php $this->option_id( $field, $option ); ?>" 
+					value="<?php echo esc_attr( $option['value'] ); ?>" 
+					<?php checked( true, $this->is_option_checked( $field, $option ) ); ?>
+					<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
 
-						<input 
-						type="checkbox" 
-						name="<?php printf( '%1$s[]', esc_attr( $field['name'] ) ); ?>" 
-						id="<?php $this->option_id( $field, $option ); ?>" 
-						value="<?php echo esc_attr( $option['value'] ); ?>" 
-						<?php checked( true, $this->is_option_checked( $field, $option ) ); ?>
-						<?php $this->input_attrs( $field, array( 'type', 'name', 'id', 'value', 'checked' ) ); ?> />
+					<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
+						$this->option_label( $option );
+					?></span>
 
-						<span id="<?php $this->option_id( $field, $option, 'text' ); ?>"><?php
-							$this->option_label( $option );
-						?></span>
+				</label>
 
-					</label>
-
-				</span>
+				<?php if ( ( $i + 1 ) < count( $options ) ) { ?>
+					<br />
+				<?php } ?>
 
 			<?php } ?>
 

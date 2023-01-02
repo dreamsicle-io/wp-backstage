@@ -80,11 +80,10 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
 	 * @return int|null The santizied value.
 	 */
-	public function sanitize( array $field = array(), $value = null ) {
+	public function sanitize( $value = null ) {
 		return is_numeric( $value ) ? absint( $value ) : null;
 	}
 

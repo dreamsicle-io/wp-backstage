@@ -32,11 +32,10 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( array $field = array(), $value = null ) {
+	public function sanitize( $value = null ) {
 		$values = array(
 			'hour'   => isset( $value['hour'] ) ? $value['hour'] : '00',
 			'minute' => isset( $value['minute'] ) ? $value['minute'] : '00',
@@ -104,6 +103,11 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 				display: block;
 			}
 
+			.wp-backstage-time-field__input-container select {
+				width: auto !important;
+				display: inline-block !important;
+				vertical-align: middle;
+			}
 			.wp-backstage-time-field__sep {
 				display: inline-block;
 				vertical-align: middle;

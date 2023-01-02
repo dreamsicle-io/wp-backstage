@@ -890,12 +890,14 @@ class WP_Backstage {
 		if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 		}
-		if ( ! wp_script_is( 'jquery-ui-theme-default', 'enqueued' ) ) {
+		if ( ! wp_script_is( 'jquery-ui-theme-base', 'enqueued' ) ) {
+			$wp_scripts        = wp_scripts();
+			$jquery_ui_version = $wp_scripts->registered['jquery-ui-core']->ver;
 			wp_enqueue_style(
-				'jquery-ui-theme-default',
-				'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
+				'jquery-ui-theme-base',
+				"https://code.jquery.com/ui/{$jquery_ui_version}/themes/base/jquery-ui.min.css",
 				array(),
-				'1.12.1'
+				$jquery_ui_version
 			);
 		}
 		if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {

@@ -61,6 +61,14 @@ class WP_Backstage_Field {
 	);
 
 	/**
+	 * REST API Link Base
+	 *
+	 * @since 4.0.0
+	 * @var string $rest_api_link_base The REST API link base as in `{$link_base}:{$field_name}`.
+	 */
+	protected string $rest_api_link_base = 'wpBackstage';
+
+	/**
 	 * Construct
 	 *
 	 * @since 4.0.0
@@ -132,11 +140,46 @@ class WP_Backstage_Field {
 	 * @param string $message A formatted message to be passed to an instance of `WP_Error`.
 	 * @return WP_Error An instance of `WP_Error`.
 	 */
-	public function validation_error( $message = '' ) {
+	public function validation_error( $message = '' ): WP_Error {
 		return new WP_Error(
 			'wp_backstage_field_validation',
 			$message
 		);
+	}
+
+	/**
+	 * Add REST API Link
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The response object to manipulate.
+	 * @param array            $field An array of field arguments.
+	 * @param mixed            $value The field's value.
+	 * @return WP_REST_Response The augmented response object.
+	 */
+	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
+		return $response;
+	}
+
+	/**
+	 * Get REST API Link Base
+	 *
+	 * @since 4.0.0
+	 * @return string;
+	 */
+	public function get_rest_api_link_base(): string {
+		return $this->rest_api_link_base;
+	}
+
+	/**
+	 * Get REST API Link Key
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return string The constructed REST API link key for the field.
+	 */
+	public function get_rest_api_link_key( array $field = array() ): string {
+		$link_base = $this->get_rest_api_link_base();
+		return sprintf( '%1$s:%2$s', esc_attr( $link_base ), esc_attr( $field['name'] ) );
 	}
 
 	/**

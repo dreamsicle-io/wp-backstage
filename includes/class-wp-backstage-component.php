@@ -1245,8 +1245,11 @@ class WP_Backstage_Component {
 	 * @param array            $field An array of field arguments.
 	 * @param mixed            $value The field's value.
 	 * @return WP_REST_Response The augmented response object.
+	 * @deprecated 4.0.0
 	 */
 	public function add_rest_api_field_link( $response = null, $field = array(), $value = null ) {
+
+		_deprecated_function( __METHOD__, '4.0.0', 'WP_Backstage_Field::add_rest_api_link()' );
 
 		$link_base = 'wpBackstage';
 		$link_key  = "{$link_base}:{$field['name']}";

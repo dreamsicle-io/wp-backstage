@@ -57,6 +57,39 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	}
 
 	/**
+	 * Add REST API Link
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The response object to manipulate.
+	 * @param array            $field An array of field arguments.
+	 * @param mixed            $value The field's value.
+	 * @return WP_REST_Response The augmented response object.
+	 */
+	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
+		$attachment_ids = is_array( $value ) ? array_map( 'absint', $value ) : array();
+		foreach ( $attachment_ids as $attachment_id ) {
+			if ( $attachment_id > 0 ) {
+				$post_type_obj = get_post_type_object( 'attachment' );
+				$response->add_link(
+					$this->get_rest_api_link_key( $field ),
+					rest_url(
+						sprintf(
+							'/%1$s/%2$s/%3$d',
+							$post_type_obj->rest_namespace,
+							$post_type_obj->rest_base,
+							$attachment_id
+						)
+					),
+					array(
+						'embeddable' => true,
+					)
+				);
+			}
+		}
+		return $response;
+	}
+
+	/**
 	 * Ajax Render Media
 	 *
 	 * This method is responsible for providing the ajax response for the media uploader

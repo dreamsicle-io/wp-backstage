@@ -351,9 +351,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$value = get_term_meta( $term->term_id, $field['name'], true );
+			$value       = get_term_meta( $term->term_id, $field['name'], true );
+			$field_class = $this->get_field_class( $field['type'] );
+			$response    = $field_class->add_rest_api_link( $response, $field, $value );
 
-			$response = $this->add_rest_api_field_link( $response, $field, $value );
 		}
 
 		return $response;

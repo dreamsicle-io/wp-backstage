@@ -88,6 +88,29 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 	}
 
 	/**
+	 * Add REST API Link
+	 *
+	 * @since 3.4.0
+	 * @param WP_REST_Response $response The response object to manipulate.
+	 * @param array            $field An array of field arguments.
+	 * @param mixed            $value The field's value.
+	 * @return WP_REST_Response The augmented response object.
+	 */
+	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
+		$user_id = absint( $value );
+		if ( $user_id > 0 ) {
+			$response->add_link(
+				$this->get_rest_api_link_key( $field ),
+				rest_url( sprintf( '/wp/v2/users/%1$d', $user_id ) ),
+				array(
+					'embeddable' => true,
+				)
+			);
+		}
+		return $response;
+	}
+
+	/**
 	 * Get Query
 	 *
 	 * @since 4.0.0

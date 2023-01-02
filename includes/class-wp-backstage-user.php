@@ -192,9 +192,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$value = get_user_meta( $user->ID, $field['name'], true );
+			$value       = get_user_meta( $user->ID, $field['name'], true );
+			$field_class = $this->get_field_class( $field['type'] );
+			$response    = $field_class->add_rest_api_link( $response, $field, $value );
 
-			$response = $this->add_rest_api_field_link( $response, $field, $value );
 		}
 
 		return $response;

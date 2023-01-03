@@ -231,19 +231,19 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 				$field = $this->set_field_textarea_dimensions( $field, 6, 50 );
 			} ?>
 
-			<p class="widget-field-control"><?php
-
-				$this->render_field_label( $field );
+			<p><?php
 
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $instance );
 
+				$this->render_field_label( $field );
+
 				$field_class->render( $field );
+
+				$this->render_field_description( $field );
 
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $instance );
 
 			?></p>
-
-			<?php $this->render_field_description( $field ); ?>
 
 		<?php }
 	}
@@ -295,9 +295,11 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 
 			$field_class = $this->get_field_class( $field['type'] ); ?>
 
-			<p class="widget-field-description"><?php
+			<span
+			class="description" 
+			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
 				$field_class->description( $field );
-			?></p>
+			?></span>
 
 		<?php }
 

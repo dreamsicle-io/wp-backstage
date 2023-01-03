@@ -32,9 +32,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @since  0.0.1
-	 * @since  3.4.0  Added support for `<span>` elements.
-	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  4.0.0
+	 * @var    array  $kses_description  KSES configuration for descriptions.
 	 */
 	protected $kses_description = array(
 		'span'   => array(
@@ -103,8 +102,7 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @since  0.0.1
-	 * @since  3.4.0  Added support for `<br>` and `<span>` elements.
+	 * @since  4.0.0
 	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
 	protected $kses_label = array(
@@ -165,9 +163,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @since  0.0.1
-	 * @since  3.4.0  Added support for `<span>` elements.
-	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  4.0.0
+	 * @var    array  $kses_title  KSES configuration for titles.
 	 */
 	protected $kses_title = array(
 		'span'   => array(
@@ -236,9 +233,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @since  0.0.1
-	 * @since  3.4.0  Added support for `<span>` elements.
-	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  4.0.0
+	 * @var    array  $kses_list_item  KSES configuration for list items.
 	 */
 	protected $kses_list_item = array(
 		'span'   => array(
@@ -307,9 +303,8 @@ class WP_Backstage {
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_kses/ wp_kses()
 	 *
-	 * @since  0.0.1
-	 * @since  3.4.0  Added support for `<span>` elements.
-	 * @var    array  $kses_p  KSES configuration for paragraph tags.
+	 * @since  4.0.0
+	 * @var    array  $kses_button  KSES configuration for buttons and links.
 	 */
 	protected $kses_button = array(
 		'span'   => array(

@@ -230,7 +230,18 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 			$field['id']    = sprintf( 'edit-menu-item-%1$s_%2$d', $field_name, $item->ID );
 			$field['value'] = get_post_meta( $item->ID, $field_name, true );
 
-			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $item ); ?>
+			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $item );
+
+			$field_class = $this->get_field_class( $field['type'] );
+
+			if ( $field_class->has_tag( 'text_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+			}
+
+			if ( $field_class->has_tag( 'textarea_control' ) ) {
+				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+				$field = $this->set_field_textarea_dimensions( $field, 3, 20 );
+			} ?>
 
 			<p 
 			class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
@@ -238,12 +249,37 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
 
-				$field_class = $this->get_field_class( $field['type'] );
+				$this->render_field_label( $field );
+
 				$field_class->render( $field );
+
+				$this->render_field_description( $field );
 
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
 
 			?></p>
+
+		<?php }
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<span
+			class="description" 
+			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></span>
 
 		<?php }
 

@@ -58,11 +58,23 @@ require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-tel-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-textarea-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-time-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-url-field.php';
-// Require examples.
-require WP_BACKSTAGE . '/examples/tests.php';
 
 // Initialize the main class.
 add_action( 'plugins_loaded', array( new WP_Backstage(), 'init' ), 10 );
+
+/**
+ * WP Backstage Require Tests
+ *
+ * @since 4.0.0
+ * @return void
+ */
+function wp_backstage_require_tests(): void {
+	if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
+		require WP_BACKSTAGE . '/examples/tests.php';
+	}
+}
+
+add_action( 'after_setup_theme', 'wp_backstage_require_tests', 0 );
 
 /**
  * WP Backstage Activation

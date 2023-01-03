@@ -61,6 +61,11 @@ Search.appendIndex(
             "summary": "Render\u0020Field\u0020Description",
             "url": "classes/WP-Backstage-Component.html#method_render_field_label"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_field_description\u0028\u0029",
+            "name": "render_field_description",
+            "summary": "Render\u0020Field\u0020Description",
+            "url": "classes/WP-Backstage-Component.html#method_render_field_description"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Ainline_code_editor_script\u0028\u0029",
             "name": "inline_code_editor_script",
             "summary": "Inline\u0020Code\u0020Editor\u0020Script",
@@ -485,6 +490,11 @@ Search.appendIndex(
             "name": "render_fields",
             "summary": "Render\u0020Fields",
             "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_field_description\u0028\u0029",
+            "name": "render_field_description",
+            "summary": "Render\u0020Field\u0020Description",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_field_description"
         },                {
             "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_customizer_fields\u0028\u0029",
             "name": "render_customizer_fields",
@@ -1275,6 +1285,11 @@ Search.appendIndex(
             "name": "init",
             "summary": "Init",
             "url": "classes/WP-Backstage.html#method_init"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Aregister_init_hook\u0028\u0029",
+            "name": "register_init_hook",
+            "summary": "Register\u0020Init\u0020Hook",
+            "url": "classes/WP-Backstage.html#method_register_init_hook"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Amanage_kses\u0028\u0029",
             "name": "manage_kses",

@@ -61,6 +61,11 @@ class WP_Backstage {
 			'class' => true,
 			'style' => true,
 		),
+		'u'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
 		'code'   => array(
 			'id'    => true,
 			'class' => true,
@@ -114,6 +119,11 @@ class WP_Backstage {
 			'style' => true,
 		),
 		'strong' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'u'      => array(
 			'id'    => true,
 			'class' => true,
 			'style' => true,
@@ -184,6 +194,11 @@ class WP_Backstage {
 			'class' => true,
 			'style' => true,
 		),
+		'u'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
 		'code'   => array(
 			'id'    => true,
 			'class' => true,
@@ -250,6 +265,11 @@ class WP_Backstage {
 			'class' => true,
 			'style' => true,
 		),
+		'u'      => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
 		'code'   => array(
 			'id'    => true,
 			'class' => true,
@@ -303,6 +323,11 @@ class WP_Backstage {
 			'style' => true,
 		),
 		'strong' => array(
+			'id'    => true,
+			'class' => true,
+			'style' => true,
+		),
+		'u'      => array(
 			'id'    => true,
 			'class' => true,
 			'style' => true,

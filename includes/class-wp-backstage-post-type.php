@@ -105,9 +105,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		'title'       => '',
 		'description' => '',
 		'help'        => '',
-		'context'     => '',
-		'priority'    => '',
-		'hidden'      => '',
+		'context'     => 'advanced',
+		'priority'    => 'default',
+		'hidden'      => false,
 		'fields'      => array(),
 	);
 
@@ -2322,6 +2322,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			$field_class->render( $field );
 
+			$this->render_field_description( $field );
+
 			/**
 			 * Fires after the custom meta field is rendered.
 			 *
@@ -2331,8 +2333,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			 * @param WP_Post $post an array of field arguments.
 			 */
 			do_action( "wp_backstage_{$this->slug}_field_after", $field, $post );
-
-			$this->render_field_description( $field );
 
 		}
 

@@ -2239,20 +2239,8 @@ class WP_Backstage {
 
 			(function($) {
 
-				var navMenuItemHandleTimer = null;
-				var navMenuItemMoveTimer = null;
-
-				function getInitialItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items);
-				}
-
-				function getNewItems() {
-					const itemList = document.getElementById('menu-to-edit');
-					const items = itemList.querySelectorAll('.menu-item');
-					return Array.from(items).filter(item => ! item.hasAttribute('data-wp-backstage-initialized'));
-				}
+				var refreshTimer = null;
+				var refreshFieldContainersTimer = null;
 
 				function findParentNavMenuItem(element = null) {
 					var parentNode = element.parentNode;
@@ -2267,103 +2255,96 @@ class WP_Backstage {
 						const params = new URLSearchParams(settings.data);
 						const action = params.get('action');
 						if (action === 'add-menu-item') {
-							const newItems = getNewItems();
-							newItems.forEach(function(newItem) {
-								window.wpBackstage.initAllFields(newItem);
-								initAllNavMenuItemHandles(newItem);
-								newItem.setAttribute('data-wp-backstage-initialized', true);
-							});
+							initReadyItems();
 						}
 					}
-				}
-
-				function handleNavMenuItemMoveLinkClick(e = null) {
-					const navMenuItem = findParentNavMenuItem(e.target);
-					if (navMenuItemMoveTimer) {
-						clearTimeout(navMenuItemMoveTimer);
-					}
-					navMenuItemMoveTimer = setTimeout(function() {
-						if (navMenuItem.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.refreshAllFields(navMenuItem);
-						}
-					}, 500);
-				}
-
-				function initNavMenuItemMoveLink(link = null) {
-					link.addEventListener('click', handleNavMenuItemMoveLinkClick);
-				}
-
-				function initAllNavMenuItemMoveLinks(container = null) {
-					container = container || document.getElementById('menu-to-edit');
-					const navMenuItemMoveLinks = container.querySelectorAll('.menus-move');
-					navMenuItemMoveLinks.forEach(function(navMenuItemMovelink) {
-						initNavMenuItemMoveLink(navMenuItemMovelink);
-					});
-				}
-
-				function init() {
-					const initialItems = getInitialItems();
-					initialItems.forEach(function(initialItem) {
-						initialItem.setAttribute('data-wp-backstage-initialized', true);
-					});
-					window.wpBackstage.initAllFields();
-					initAllNavMenuItemHandles();
-					initNavMenuSortable();
-					initAllScreenOptions();
-					initAllNavMenuItemMoveLinks();
-					$(document).ajaxSuccess(handleSuccess);
-				}
-
-				function handleNavMenuItemHandleClick(e = null) {
-					if (navMenuItemHandleTimer) clearTimeout(navMenuItemHandleTimer);
-					const navMenuItem = findParentNavMenuItem(e.target);
-					navMenuItemHandleTimer = setTimeout(function() {
-						if (navMenuItem.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.refreshAllFields(navMenuItem);
-						}
-					}, 500);
-				}
-
-				function handleScreenOptionChange(e = null) {
-					const fieldContainers = document.querySelectorAll('[data-wp-backstage-field-name="' + e.target.value + '"]:not(.hidden-field)');
-					fieldContainers.forEach(function(fieldContainer) {
-						window.wpBackstage.refreshAllFields(fieldContainer);
-					});
-				}
-
-				function initNavMenuItemHandle(handle = null) {
-					handle.addEventListener('click', handleNavMenuItemHandleClick);
-				}
-
-				function initAllNavMenuItemHandles(container = null) {
-					container = container || document.getElementById('menu-to-edit');
-					const navMenuItemHandles = container.querySelectorAll('.menu-item-handle .item-edit');
-					navMenuItemHandles.forEach(function(navMenuItemHandle) {
-						initNavMenuItemHandle(navMenuItemHandle);
-					});
-				}
-
-				function initScreenOption(checkbox = null) {
-					checkbox.addEventListener('change', handleScreenOptionChange);
 				}
 
 				function handleNavMenuSortStop(e = null, ui = null) {
 					const item = ui.item[0];
 					if (item.classList.contains('menu-item')) {
-						window.wpBackstage.refreshAllFields(item);
+						refreshItem(item);
 					}
 				}
 
-				function initNavMenuSortable() {
+				function initSortable() {
 					const sortable = document.getElementById('menu-to-edit');
 					$(sortable).on('sortstop', handleNavMenuSortStop);
 				}
 
-				function initAllScreenOptions() {
-					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
+				function handleScreenOptionChange(e = null) {
+					const fieldContainers = document.querySelectorAll('.menu-item .field-' + e.target.value);
+					refreshFieldContainers(fieldContainers);
+				}
+
+				function initScreenOptions() {
+					const checkboxes = document.querySelectorAll('#adv-settings .metabox-prefs .hide-column-tog');
 					checkboxes.forEach(function(checkbox) {
-						initScreenOption(checkbox);
+						checkbox.addEventListener('change', handleScreenOptionChange);
 					});
+				}
+
+				function refreshItem(item = null) {
+					if (refreshTimer) clearTimeout(refreshTimer);
+					refreshTimer = setTimeout(function() {
+						if (item.classList.contains('menu-item-edit-active')) {
+							window.wpBackstage.refreshAllFields(item);
+						}
+					}, 500);
+				}
+
+				function refreshFieldContainers(fieldContainers = []) {
+					if (refreshFieldContainersTimer) clearTimeout(refreshFieldContainersTimer);
+					refreshFieldContainersTimer = setTimeout(function() {
+						fieldContainers.forEach(function(fieldContainer) {
+							if (! fieldContainer.classList.contains('hidden-field')) {
+								window.wpBackstage.refreshAllFields(fieldContainer);
+							}
+						});
+					}, 500);
+				}
+
+				function handleItemHandleClick(e = null) {
+					const item = findParentNavMenuItem(e.target);
+					refreshItem(item);
+				}
+
+				function handleItemMoveLinkClick(e = null) {
+					const item = findParentNavMenuItem(e.target);
+					refreshItem(item);
+				}
+
+				function initItemHandle(item = null) {
+					const handle = item.querySelector('.menu-item-handle .item-edit');
+					handle.addEventListener('click', handleItemHandleClick);
+				}
+
+				function initItemMoveLinks(item = null) {
+					const links = item.querySelectorAll('.menus-move');
+					links.forEach(function(link) {
+						link.addEventListener('click', handleItemMoveLinkClick);
+					});
+				}
+
+				function initItem(item = null) {
+					window.wpBackstage.initAllFields(item);
+					initItemHandle(item);
+					initItemMoveLinks(item);
+					item.setAttribute('data-wp-backstage-initialized', 'true');
+				}
+
+				function initReadyItems() {
+					const items = document.querySelectorAll('#menu-to-edit .menu-item:not([data-wp-backstage-initialized="true"])');
+					items.forEach(function(item) {
+						initItem(item);
+					});
+				}
+
+				function init() {
+					initReadyItems();
+					initSortable();
+					initScreenOptions();
+					$(document).ajaxSuccess(handleSuccess);
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {

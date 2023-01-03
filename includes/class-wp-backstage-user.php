@@ -431,12 +431,28 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 				<td><?php
 
+					/**
+					 * Fires before the user field is rendered.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param WP_User $user The user object.
+					 */
 					do_action( "wp_backstage_{$this->slug}_field_before", $field, $user );
 
 					$field_class->render( $field );
 
 					$this->render_field_description( $field );
 
+					/**
+					 * Fires after the user field is rendered.
+					 *
+					 * @since 0.0.1
+					 *
+					 * @param array $field an array of field arguments.
+					 * @param WP_User $user The user object.
+					 */
 					do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
 
 				?></td>

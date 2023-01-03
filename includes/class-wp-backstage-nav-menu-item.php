@@ -247,6 +247,14 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 			class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
 			data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php
 
+				/**
+				 * Fires before the nav menu item field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Post $item The nav menu item object.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
 
 				$this->render_field_label( $field );
@@ -255,6 +263,14 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 				$this->render_field_description( $field );
 
+				/**
+				 * Fires after the nav menu item field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param WP_Post $item The nav menu item object.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
 
 			?></p>

@@ -233,6 +233,14 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 
 			<p><?php
 
+				/**
+				 * Fires before the widget field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param array $instance The widget instance args.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $instance );
 
 				$this->render_field_label( $field );
@@ -241,6 +249,14 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 
 				$this->render_field_description( $field );
 
+				/**
+				 * Fires after the user field is rendered.
+				 *
+				 * @since 0.0.1
+				 *
+				 * @param array $field an array of field arguments.
+				 * @param array $instance The widget instance args.
+				 */
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $instance );
 
 			?></p>

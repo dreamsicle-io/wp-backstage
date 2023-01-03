@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-03T14:33:36+00:00\n"
+"POT-Creation-Date: 2023-01-03T14:40:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1061,7 +1061,7 @@ msgctxt "user rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this user. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:591
+#: includes/class-wp-backstage-user.php:607
 msgctxt "users table filter - submit"
 msgid "Filter"
 msgstr ""
@@ -1073,7 +1073,7 @@ msgid "[Widget] The %1$s key is required."
 msgstr ""
 
 #. translators: 1: field name.
-#: includes/class-wp-backstage-widget.php:264
+#: includes/class-wp-backstage-widget.php:280
 msgctxt "widget - field label"
 msgid "%1$s:"
 msgstr ""

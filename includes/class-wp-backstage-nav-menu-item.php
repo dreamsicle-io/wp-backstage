@@ -243,9 +243,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				$field = $this->set_field_textarea_dimensions( $field, 3, 20 );
 			} ?>
 
-			<p 
-			class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"
-			data-wp-backstage-field-name="<?php echo esc_attr( $field_name ); ?>"><?php
+			<p class="<?php echo esc_attr( sprintf( 'field-%1$s', $field_name ) ); ?> description description-wide"><?php
 
 				/**
 				 * Fires before the nav menu item field is rendered.

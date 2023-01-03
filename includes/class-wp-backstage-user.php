@@ -435,9 +435,9 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 					$field_class->render( $field );
 
-					do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
-
 					$this->render_field_description( $field );
+
+					do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
 
 				?></td>
 

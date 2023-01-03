@@ -433,6 +433,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 		$field_class->render( $field );
 
+		$this->render_field_description( $field );
+
 		/**
 		 * Fires after the settings field is rendered.
 		 *
@@ -441,8 +443,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		 * @param array $field an array of field arguments.
 		 */
 		do_action( "wp_backstage_{$this->slug}_field_after", $field );
-
-		$this->render_field_description( $field );
 
 	}
 

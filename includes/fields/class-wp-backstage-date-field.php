@@ -160,9 +160,7 @@ class WP_Backstage_Date_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
-
-		$args = $this->get_args( $field ); ?>
+	public function render( array $field = array() ): void { ?>
 
 		<span 
 		class="<?php $this->root_class( $field ); ?>"

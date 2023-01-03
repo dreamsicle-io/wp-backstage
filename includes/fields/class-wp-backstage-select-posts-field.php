@@ -26,6 +26,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 */
 	protected array $tags = array(
 		'select_control',
+		'is_filterable',
 	);
 
 	/**
@@ -163,6 +164,63 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 			)
 		);
 	}
+
+	/**
+	 * Get Filter Args
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param mixed $value The value of the filter.
+	 * @return array An array of filter control arguments.
+	 */
+	public function get_filter_args( array $field = array(), $value = null ): array {
+		$query = $this->get_query( $field );
+		$posts = $this->get_posts( $field );
+
+		$post_type_obj = get_post_type_object( $query['post_type'] );
+
+		$options = walk_page_dropdown_tree(
+			$posts,
+			0,
+			array(
+				'value_field' => 'ID',
+				'selected'    => absint( $value ),
+			)
+		);
+
+		return array(
+			'name'              => $field['name'],
+			'label'             => $field['label'],
+			'value'             => absint( $value ),
+			'options'           => $options,
+			'option_none_label' => $post_type_obj->labels->all_items,
+		);
+	}
+
+	/**
+	 * Render Column
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param mixed $value The field's value.
+	 * @return void
+	 */
+	public function render_column( array $field = array(), $value = null ): void {
+
+		$post_id    = absint( $value );
+		$url        = $this->get_filter_url( $field, $post_id );
+		$label      = wp_strip_all_tags( get_the_title( $post_id ) );
+		$link_title = sprintf(
+			/* translators: 1: value label. */
+			_x( 'Filter by %1$s', 'select posts field - column filter link title', 'wp_backstage' ),
+			$label
+		); ?>
+
+		<a href="<?php echo esc_url( $url ); ?>" title="<?php echo esc_attr( $link_title ); ?>"><?php
+			echo esc_html( $label );
+		?></a>
+
+	<?php }
 
 	/**
 	 * Render

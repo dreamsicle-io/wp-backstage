@@ -26,6 +26,7 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 */
 	protected array $tags = array(
 		'remove_label_for',
+		'is_filterable',
 	);
 
 	/**
@@ -39,8 +40,9 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 		<style id="wp_backstage_radio_field_style">
 
 			.wp-backstage-radio-field__option-label {
-				margin: 0.35em 0 0.5em!important;
-				display: inline-block;
+				margin: 0.35em 0 0.5em !important;
+				display: inline-block !important;
+				padding: 0 !important;
 				line-height: 1.4;
 			}
 
@@ -57,16 +59,9 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * @return void
 	 */
 	public function render_column( array $field = array(), $value = null ): void {
-		global $wp;
-		// Prepare the query args array.
-		$query_args = array();
-		// Set the field name to the current value.
-		$query_args[ $field['name'] ] = $value;
-		// Prepare the dynamic URL.
-		$url = admin_url( add_query_arg( $query_args, $wp->request ) );
-		// Get the option label.
-		$label = $this->get_option_label( $field, $value );
-		// Prepare the link title.
+
+		$url        = $this->get_filter_url( $field, $value );
+		$label      = $this->get_option_label( $field, $value );
 		$link_title = sprintf(
 			/* translators: 1: value label. */
 			_x( 'Filter by %1$s', 'radio field - column filter link title', 'wp_backstage' ),

@@ -89,6 +89,52 @@ class WP_Backstage_Field {
 	}
 
 	/**
+	 * Get Filter URL
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param mixed $value The filter's value.
+	 * @return string The formatted filter URL.
+	 */
+	protected function get_filter_url( array $field = array(), $value = null ): string {
+
+		$screen = get_current_screen();
+
+		switch ( $screen->base ) {
+			case 'edit-tags':
+				return add_query_arg(
+					array(
+						'taxonomy'         => $screen->taxonomy,
+						'post_type'        => $screen->post_type,
+						"{$field['name']}" => $value,
+					),
+					admin_url( '/edit-tags.php' )
+				);
+			case 'edit':
+				return add_query_arg(
+					array(
+						'post_type'        => $screen->post_type,
+						"{$field['name']}" => $value,
+					),
+					admin_url( '/edit.php' )
+				);
+			case 'users':
+				return add_query_arg(
+					array(
+						"{$field['name']}" => $value,
+					),
+					admin_url( '/users.php' )
+				);
+			default:
+				return add_query_arg(
+					array(
+						"{$field['name']}" => $value,
+					),
+				);
+		}
+	}
+
+	/**
 	 * Init
 	 *
 	 * @since 4.0.0
@@ -436,6 +482,33 @@ class WP_Backstage_Field {
 	public function description( array $field = array() ): void {
 		$description = $this->get_description( $field );
 		echo wp_kses( $description, 'wp_backstage_field_description' );
+	}
+
+	/**
+	 * Get Filter Args
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @param mixed $value The value for the filter.
+	 * @return array An array of filter arguments.
+	 */
+	public function get_filter_args( array $field = array(), $value = null ): array {
+
+		// Filter out the options that have an empty value.
+		$options = array_filter(
+			$this->get_options( $field ),
+			function( $option ) {
+				return ! empty( $option['value'] );
+			}
+		);
+
+		return array(
+			'name'              => $field['name'],
+			'label'             => $field['label'],
+			'value'             => $value,
+			'options'           => $options,
+			'option_none_label' => _x( 'All options', 'field filter - option none label', 'wp_backstage' ),
+		);
 	}
 
 	/**

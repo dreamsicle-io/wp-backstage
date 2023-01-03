@@ -26,6 +26,7 @@ class WP_Backstage_Select_Field extends WP_Backstage_Field {
 	 */
 	protected array $tags = array(
 		'select_control',
+		'is_filterable',
 	);
 
 	/**
@@ -37,16 +38,9 @@ class WP_Backstage_Select_Field extends WP_Backstage_Field {
 	 * @return void
 	 */
 	public function render_column( array $field = array(), $value = null ): void {
-		global $wp;
-		// Prepare the query args array.
-		$query_args = array();
-		// Set the field name to the current value.
-		$query_args[ $field['name'] ] = $value;
-		// Prepare the dynamic URL.
-		$url = admin_url( add_query_arg( $query_args, $wp->request ) );
-		// Get the option label.
-		$label = $this->get_option_label( $field, $value );
-		// Prepare the link title.
+
+		$url        = $this->get_filter_url( $field, $value );
+		$label      = $this->get_option_label( $field, $value );
 		$link_title = sprintf(
 			/* translators: 1: value label. */
 			_x( 'Filter by %1$s', 'select field - column filter link title', 'wp_backstage' ),

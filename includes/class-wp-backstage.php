@@ -374,7 +374,8 @@ class WP_Backstage {
 	 * @return  void
 	 */
 	public function init() {
-		add_action( 'after_setup_theme', array( $this, 'register_field_classes' ), 0 );
+		add_action( 'after_setup_theme', array( $this, 'register_field_classes' ), 10 );
+		add_action( 'after_setup_theme', array( $this, 'register_init_hook' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
@@ -393,6 +394,23 @@ class WP_Backstage {
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
 		add_action( 'wp_backstage_options_print_footer_scripts', array( $this, 'inline_options_script' ), 10 );
 		add_filter( 'wp_kses_allowed_html', array( $this, 'manage_kses' ), 10, 2 );
+	}
+
+	/**
+	 * Register Init Hook
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function register_init_hook() {
+
+		/**
+		 * Fires when it is safe to initialize WP Backstage components.
+		 *
+		 * @since 4.0.0
+		 * @return void
+		 */
+		do_action( 'wp_backstage_init' );
 	}
 
 	/**
@@ -2209,17 +2227,15 @@ class WP_Backstage {
 		// phpcs:ignore WordPress.Security.NonceVerification
 		$params = wp_unslash( $_GET );
 
-		$add_new_screen   = ( isset( $params['menu'] ) && 0 === (int) $params['menu'] ) ? true : false;
-		$locations_screen = ( isset( $params['action'] ) && 'locations' === $params['action'] ) ? true : false;
+		$add_new_screen   = ( isset( $params['menu'] ) && ( 0 === absint( $params['menu'] ) ) ) ? true : false;
+		$locations_screen = ( isset( $params['action'] ) && ( 'locations' === $params['action'] ) ) ? true : false;
 
 		// If the screen is the "Manage Locations" or "Add New" screen, bail.
 		if ( $add_new_screen || $locations_screen ) {
 			return;
 		} ?>
 
-		<script 
-		id="wp_backstage_nav_menu_item_script"
-		type="text/javascript">
+		<script id="wp_backstage_nav_menu_item_script">
 
 			(function($) {
 
@@ -2252,17 +2268,11 @@ class WP_Backstage {
 						const action = params.get('action');
 						if (action === 'add-menu-item') {
 							const newItems = getNewItems();
-							for (var i = 0; i < newItems.length; i++) {
-								const newItem = newItems[i];
-								window.wpBackstage.colorPicker.initAll(newItem);
-								window.wpBackstage.datePicker.initAll(newItem);
-								window.wpBackstage.address.initAll(newItem);
-								window.wpBackstage.mediaUploader.initAll(newItem);
-								window.wpBackstage.editor.initAll(newItem);
-								window.wpBackstage.codeEditor.initAll(newItem);
+							newItems.forEach(function(newItem) {
+								window.wpBackstage.initAllFields(newItem);
 								initAllNavMenuItemHandles(newItem);
 								newItem.setAttribute('data-wp-backstage-initialized', true);
-							}
+							});
 						}
 					}
 				}
@@ -2274,8 +2284,7 @@ class WP_Backstage {
 					}
 					navMenuItemMoveTimer = setTimeout(function() {
 						if (navMenuItem.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(navMenuItem);
-							window.wpBackstage.codeEditor.refreshAll(navMenuItem);
+							window.wpBackstage.refreshAllFields(navMenuItem);
 						}
 					}, 500);
 				}
@@ -2287,24 +2296,17 @@ class WP_Backstage {
 				function initAllNavMenuItemMoveLinks(container = null) {
 					container = container || document.getElementById('menu-to-edit');
 					const navMenuItemMoveLinks = container.querySelectorAll('.menus-move');
-					if (navMenuItemMoveLinks && (navMenuItemMoveLinks.length > 0)) {
-						for (var i = 0; i < navMenuItemMoveLinks.length; i++) {
-							initNavMenuItemMoveLink(navMenuItemMoveLinks[i]);
-						}
-					}
+					navMenuItemMoveLinks.forEach(function(navMenuItemMovelink) {
+						initNavMenuItemMoveLink(navMenuItemMovelink);
+					});
 				}
 
 				function init() {
 					const initialItems = getInitialItems();
-					for (var i = 0; i < initialItems.length; i++) {
-						initialItems[i].setAttribute('data-wp-backstage-initialized', true);
-					}
-					window.wpBackstage.colorPicker.initAll();
-					window.wpBackstage.datePicker.initAll();
-					window.wpBackstage.address.initAll();
-					window.wpBackstage.mediaUploader.initAll();
-					window.wpBackstage.codeEditor.initAll();
-					window.wpBackstage.editor.initAll();
+					initialItems.forEach(function(initialItem) {
+						initialItem.setAttribute('data-wp-backstage-initialized', true);
+					});
+					window.wpBackstage.initAllFields();
 					initAllNavMenuItemHandles();
 					initNavMenuSortable();
 					initAllScreenOptions();
@@ -2313,27 +2315,20 @@ class WP_Backstage {
 				}
 
 				function handleNavMenuItemHandleClick(e = null) {
+					if (navMenuItemHandleTimer) clearTimeout(navMenuItemHandleTimer);
 					const navMenuItem = findParentNavMenuItem(e.target);
-					if (navMenuItemHandleTimer) {
-						clearTimeout(navMenuItemHandleTimer);
-					}
 					navMenuItemHandleTimer = setTimeout(function() {
 						if (navMenuItem.classList.contains('menu-item-edit-active')) {
-							window.wpBackstage.editor.refreshAll(navMenuItem);
-							window.wpBackstage.codeEditor.refreshAll(navMenuItem);
+							window.wpBackstage.refreshAllFields(navMenuItem);
 						}
 					}, 500);
 				}
 
 				function handleScreenOptionChange(e = null) {
-					const fieldContainers = document.querySelectorAll('[data-wp-backstage-field-name="' + e.target.value + '"]');
-					for (var i = 0; i < fieldContainers.length; i++) {
-						const fieldContainer = fieldContainers[i];
-						if (fieldContainer && ! fieldContainer.classList.contains('hidden-field')) {
-							window.wpBackstage.editor.refreshAll(fieldContainer);
-							window.wpBackstage.codeEditor.refreshAll(fieldContainer);
-						}
-					}
+					const fieldContainers = document.querySelectorAll('[data-wp-backstage-field-name="' + e.target.value + '"]:not(.hidden-field)');
+					fieldContainers.forEach(function(fieldContainer) {
+						window.wpBackstage.refreshAllFields(fieldContainer);
+					});
 				}
 
 				function initNavMenuItemHandle(handle = null) {
@@ -2343,11 +2338,9 @@ class WP_Backstage {
 				function initAllNavMenuItemHandles(container = null) {
 					container = container || document.getElementById('menu-to-edit');
 					const navMenuItemHandles = container.querySelectorAll('.menu-item-handle .item-edit');
-					if (navMenuItemHandles && (navMenuItemHandles.length > 0)) {
-						for (var i = 0; i < navMenuItemHandles.length; i++) {
-							initNavMenuItemHandle(navMenuItemHandles[i]);
-						}
-					}
+					navMenuItemHandles.forEach(function(navMenuItemHandle) {
+						initNavMenuItemHandle(navMenuItemHandle);
+					});
 				}
 
 				function initScreenOption(checkbox = null) {
@@ -2357,8 +2350,7 @@ class WP_Backstage {
 				function handleNavMenuSortStop(e = null, ui = null) {
 					const item = ui.item[0];
 					if (item.classList.contains('menu-item')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
+						window.wpBackstage.refreshAllFields(item);
 					}
 				}
 
@@ -2369,11 +2361,9 @@ class WP_Backstage {
 
 				function initAllScreenOptions() {
 					const checkboxes = document.querySelectorAll('.metabox-prefs input[type="checkbox"]');
-					if (checkboxes && (checkboxes.length > 0)) {
-						for (var i = 0; i < checkboxes.length; i++) {
-							initScreenOption(checkboxes[i]);
-						}
-					}
+					checkboxes.forEach(function(checkbox) {
+						initScreenOption(checkbox);
+					});
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {

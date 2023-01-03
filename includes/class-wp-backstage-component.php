@@ -103,7 +103,6 @@ class WP_Backstage_Component {
 	 * @var    array  $default_filter_control_args  The default filter control args for this instance.
 	 */
 	protected $default_filter_control_args = array(
-		'id'                => '',
 		'name'              => '',
 		'value'             => null,
 		'label'             => '',
@@ -585,6 +584,27 @@ class WP_Backstage_Component {
 			?></label>
 
 		<?php }
+	}
+
+	/**
+	 * Render Field Description
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return void
+	 */
+	protected function render_field_description( $field = array() ) {
+
+		if ( ! empty( $field['description'] ) ) {
+
+			$field_class = $this->get_field_class( $field['type'] ); ?>
+
+			<p id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+				$field_class->description( $field );
+			?></p>
+
+		<?php }
+
 	}
 
 	/**
@@ -1390,95 +1410,20 @@ class WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
-		// phpcs:ignore WordPress.Security.NonceVerification
-		$url_params = wp_unslash( $_GET );
-
 		foreach ( $fields as $field ) {
 
-			$field = wp_parse_args( $field, $this->default_field_args );
+			$field_class = $this->get_field_class( $field['type'] );
 
-			if ( $field['is_filterable'] && in_array( $field['type'], $this->filterable_fields ) ) {
+			if ( $field['is_filterable'] && $field_class->has_tag( 'is_filterable' ) ) {
 
-				$args = array();
+				// phpcs:ignore WordPress.Security.NonceVerification
+				$url_params = wp_unslash( $_GET );
 
 				$value = isset( $url_params[ $field['name'] ] ) ? $url_params[ $field['name'] ] : null;
 
-				switch ( $field['type'] ) {
-					case 'select_posts':
-						$field_args = wp_parse_args( $field['args'], $this->default_select_posts_args );
-						$query      = wp_parse_args( $field_args['query'], $this->default_select_posts_args['query'] );
-
-						$post_type_object = get_post_type_object( $query['post_type'] );
-
-						$posts = get_posts( $query );
-
-						$options = walk_page_dropdown_tree(
-							$posts,
-							0,
-							array(
-								'value_field' => 'ID',
-								'selected'    => absint( $value ),
-							)
-						);
-
-						$args = array(
-							'id'                => $field['name'],
-							'name'              => $field['name'],
-							'label'             => $field['label'],
-							'value'             => absint( $value ),
-							'options'           => $options,
-							'option_none_label' => $post_type_object->labels->all_items,
-						);
-						break;
-					case 'select_users':
-						$field_args = wp_parse_args( $field['args'], $this->default_select_users_args );
-						$query      = wp_parse_args( $field_args['query'], $this->default_select_users_args['query'] );
-
-						$users = get_users( $query );
-
-						$options = array();
-
-						foreach ( $users as $user ) {
-							$options[] = array(
-								'value' => $user->ID,
-								'label' => sprintf(
-									/* translators: 1: user display name, 2: user username */
-									_x( '%1$s (%2$s)', 'select users filter - option label', 'wp_backstage' ),
-									esc_html( $user->display_name ),
-									esc_html( $user->user_login )
-								),
-							);
-						}
-
-						$args = array(
-							'id'                => $field['name'],
-							'name'              => $field['name'],
-							'label'             => $field['label'],
-							'value'             => absint( $value ),
-							'options'           => $options,
-							'option_none_label' => _x( 'All Users', 'select users filter - option none label', 'wp_backstage' ),
-						);
-						break;
-					default:
-						$options = array_filter(
-							$field['options'],
-							function( $option ) {
-								return ! empty( $option['value'] );
-							}
-						);
-						$args    = array(
-							'id'                => $field['name'],
-							'name'              => $field['name'],
-							'label'             => $field['label'],
-							'value'             => $value,
-							'options'           => $options,
-							'option_none_label' => _x( 'All options', 'filter - option none label', 'wp_backstage' ),
-						);
-						break;
-				}
+				$args = $field_class->get_filter_args( $field, $value );
 
 				$this->render_table_filter_control( $args );
-
 			}
 		}
 	}
@@ -1499,41 +1444,35 @@ class WP_Backstage_Component {
 	 */
 	public function render_table_filter_control( $args = array() ) {
 
-		$args = wp_parse_args( $args, $this->default_filter_control_args ); ?>
+		$args  = wp_parse_args( $args, $this->default_filter_control_args );
+		$label = ! empty( $args['label'] ) ? $args['label'] : $args['name']; ?>
 
 		<label 
-		id="<?php printf( '%1$s_label', esc_attr( $args['id'] ) ); ?>"
-		for="<?php printf( '%1$s_filter', esc_attr( $args['id'] ) ); ?>"
+		id="<?php printf( '%1$s_label', esc_attr( $args['name'] ) ); ?>"
+		for="<?php printf( '%1$s_filter', esc_attr( $args['name'] ) ); ?>"
 		class="screen-reader-text"><?php
 
-			echo wp_kses( $args['label'], 'wp_backstage_filter_label' );
+			echo wp_kses( $label, 'wp_backstage_filter_label' );
 
 		?></label>
 
 		<select 
 		name="<?php echo esc_attr( $args['name'] ); ?>" 
-		id="<?php printf( '%1$s_filter', esc_attr( $args['id'] ) ); ?>"
-		title="<?php echo esc_attr( $args['label'] ); ?>">
+		id="<?php printf( '%1$s_filter', esc_attr( $args['name'] ) ); ?>"
+		title="<?php echo esc_attr( $label ); ?>">
 
 			<option value=""><?php
-
 				echo esc_html( $args['option_none_label'] );
-
 			?></option>
 
 			<?php if ( is_array( $args['options'] ) && ! empty( $args['options'] ) ) { ?>
 
-				<?php foreach ( $args['options'] as $option ) {
-
-					$option       = wp_parse_args( $option, $this->default_option_args );
-					$option_label = ! empty( $option['label'] ) ? $option['label'] : $option['value']; ?>
+				<?php foreach ( $args['options'] as $option ) { ?>
 
 					<option 
 					value="<?php echo esc_attr( $option['value'] ); ?>"
 					<?php selected( $option['value'], $args['value'] ); ?>><?php
-
-						echo esc_html( $option_label );
-
+						echo esc_html( $option['label'] );
 					?></option>
 
 				<?php } ?>

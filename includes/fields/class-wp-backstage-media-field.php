@@ -69,17 +69,9 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 		$attachment_ids = is_array( $value ) ? array_map( 'absint', $value ) : array();
 		foreach ( $attachment_ids as $attachment_id ) {
 			if ( $attachment_id > 0 ) {
-				$post_type_obj = get_post_type_object( 'attachment' );
 				$response->add_link(
 					$this->get_rest_api_link_key( $field ),
-					rest_url(
-						sprintf(
-							'/%1$s/%2$s/%3$d',
-							$post_type_obj->rest_namespace,
-							$post_type_obj->rest_base,
-							$attachment_id
-						)
-					),
+					rest_get_route_for_post( $attachment_id ),
 					array(
 						'embeddable' => true,
 					)

@@ -321,6 +321,11 @@ Search.appendIndex(
             "summary": "Slug",
             "url": "classes/WP-Backstage-Component.html#property_slug"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024args",
+            "name": "args",
+            "summary": "Args",
+            "url": "classes/WP-Backstage-Component.html#property_args"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024errors",
             "name": "errors",
             "summary": "Errors",
@@ -1405,6 +1410,11 @@ Search.appendIndex(
             "name": "inline_nav_menu_item_script",
             "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_script_BACKUP\u0028\u0029",
+            "name": "inline_nav_menu_item_customizer_script_BACKUP",
+            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_script_BACKUP"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_script\u0028\u0029",
             "name": "inline_nav_menu_item_customizer_script",

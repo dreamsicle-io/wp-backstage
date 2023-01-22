@@ -100,18 +100,10 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
 		$post_id = absint( $value );
 		if ( $post_id > 0 ) {
-			$post_type     = get_post_type( $post_id );
-			$post_type_obj = get_post_type_object( $post_type );
+			$post_type = get_post_type( $post_id );
 			$response->add_link(
 				$this->get_rest_api_link_key( $field ),
-				rest_url(
-					sprintf(
-						'/%1$s/%2$s/%3$d',
-						$post_type_obj->rest_namespace,
-						$post_type_obj->rest_base,
-						$post_id
-					)
-				),
+				rest_get_route_for_post( $post_id ),
 				array(
 					'postType'   => $post_type,
 					'embeddable' => true,

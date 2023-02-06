@@ -38,6 +38,14 @@ class WP_Backstage_Component {
 	protected $slug = '';
 
 	/**
+	 * Args
+	 *
+	 * @since 0.0.1
+	 * @var array $args An array of component arguments.
+	 */
+	protected $args = array();
+
+	/**
 	 * Errors
 	 *
 	 * @since  0.0.1

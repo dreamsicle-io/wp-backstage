@@ -1841,6 +1841,11 @@ Search.appendIndex(
             "summary": "Inline\u0020Style",
             "url": "classes/WP-Backstage-Checkbox-Set-Field.html#method_inline_style"
         },                {
+            "fqsen": "\\WP_Backstage_Checkbox_Set_Field\u003A\u003Ainline_script\u0028\u0029",
+            "name": "inline_script",
+            "summary": "Inline\u0020Script",
+            "url": "classes/WP-Backstage-Checkbox-Set-Field.html#method_inline_script"
+        },                {
             "fqsen": "\\WP_Backstage_Checkbox_Set_Field\u003A\u003Arender\u0028\u0029",
             "name": "render",
             "summary": "Render",
@@ -2126,6 +2131,11 @@ Search.appendIndex(
             "summary": "Inline\u0020Style",
             "url": "classes/WP-Backstage-Radio-Field.html#method_inline_style"
         },                {
+            "fqsen": "\\WP_Backstage_Radio_Field\u003A\u003Ainline_script\u0028\u0029",
+            "name": "inline_script",
+            "summary": "Inline\u0020Script",
+            "url": "classes/WP-Backstage-Radio-Field.html#method_inline_script"
+        },                {
             "fqsen": "\\WP_Backstage_Radio_Field\u003A\u003Arender_column\u0028\u0029",
             "name": "render_column",
             "summary": "Render\u0020Column",
@@ -2355,6 +2365,11 @@ Search.appendIndex(
             "name": "inline_style",
             "summary": "Inline\u0020Style",
             "url": "classes/WP-Backstage-Time-Field.html#method_inline_style"
+        },                {
+            "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Ainline_script\u0028\u0029",
+            "name": "inline_script",
+            "summary": "Inline\u0020Sript",
+            "url": "classes/WP-Backstage-Time-Field.html#method_inline_script"
         },                {
             "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Arender_column\u0028\u0029",
             "name": "render_column",

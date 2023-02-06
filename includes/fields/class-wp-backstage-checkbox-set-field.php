@@ -67,7 +67,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @return array The santizied value.
 	 */
 	public function sanitize( $value = null ) {
-		return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : array();
+		return is_array( $value ) ? array_values( array_map( 'sanitize_text_field', $value ) ) : array();
 	}
 
 	/**
@@ -105,6 +105,35 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	<?php }
 
 	/**
+	 * Inline Script
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_script(): void { ?>
+
+		<script id="wp_backstage_checkbox_set_field_script">
+
+			(function() {
+
+				function setValue(control = null, value = []) {
+					const checkboxes = control.querySelectorAll('input[type="checkbox"]');
+					checkboxes.forEach(function(checkbox) {
+						if (value.includes(checkbox.value)) checkbox.checked = true;
+					});
+				}
+
+				window.wpBackstage.fields.checkbox_set = {
+					setValue: setValue,
+				}
+
+			})();
+
+		</script>
+
+	<?php }
+
+	/**
 	 * Render
 	 *
 	 * @since 4.0.0
@@ -129,7 +158,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 
 					<input 
 					type="checkbox" 
-					name="<?php printf( '%1$s[]', esc_attr( $field['name'] ) ); ?>" 
+					name="<?php printf( '%1$s[%2$d]', esc_attr( $field['name'] ), esc_attr( $i ) ); ?>" 
 					id="<?php $this->option_id( $field, $option ); ?>" 
 					value="<?php echo esc_attr( $option['value'] ); ?>" 
 					<?php checked( true, $this->is_option_checked( $field, $option ) ); ?>

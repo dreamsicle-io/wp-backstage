@@ -51,6 +51,35 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	<?php }
 
 	/**
+	 * Inline Script
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_script(): void { ?>
+
+		<script id="wp_backstage_radio_field_script">
+
+			(function() {
+
+				function setValue(control = null, value = null) {
+					const radios = control.querySelectorAll('input[type="radio"]');
+					radios.forEach(function(radio) {
+						if (radio.value === value) radio.checked = true;
+					});
+				}
+
+				window.wpBackstage.fields.radio = {
+					setValue: setValue,
+				}
+
+			})();
+
+		</script>
+
+	<?php }
+
+	/**
 	 * Render Column
 	 *
 	 * @since 4.0.0

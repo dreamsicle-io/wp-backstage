@@ -89,12 +89,12 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 				display: block;
 			}
 
-			.wp-backstage-time-field__piece-container {
+			.wp-backstage-time-field__piece {
 				display: inline-block;
 				vertical-align: middle;
 			}
 
-			.wp-backstage-time-field__piece-container label {
+			.wp-backstage-time-field__piece label {
 				display: inline-block;
 				font-size: 0.875em;
 			}
@@ -114,6 +114,38 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 			}
 
 		</style>
+
+	<?php }
+
+	/**
+	 * Inline Sript
+	 *
+	 * @since 4.0.0
+	 * @return void
+	 */
+	public function inline_script(): void { ?>
+
+		<script id="wp_backstage_time_field_script">
+
+			(function() {
+
+				function setValue(control = null, value = '00:00:00') {
+					const values = value.split(':');
+					const hourSelect = control.querySelector('.wp-backstage-time-field__piece--hour select');
+					const minuteSelect = control.querySelector('.wp-backstage-time-field__piece--minute select');
+					const secondSelect = control.querySelector('.wp-backstage-time-field__piece--second select');
+					hourSelect.value = (values && values[0]) ? values[0] : '00';
+					minuteSelect.value = (values && values[1]) ? values[1] : '00';
+					secondSelect.value = (values && values[2]) ? values[2] : '00';
+				}
+
+				window.wpBackstage.fields.time = {
+					setValue: setValue,
+				};
+
+			})();
+
+		</script>
 
 	<?php }
 
@@ -153,7 +185,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 
 			<span 
 			id="<?php $this->element_id( $field, 'hour_container' ); ?>"
-			class="wp-backstage-time-field__piece-container">
+			class="wp-backstage-time-field__piece wp-backstage-time-field__piece--hour">
 
 				<label for="<?php $this->element_id( $field, 'hour' ); ?>"><?php
 					echo wp_kses( $hour_label, 'wp_backstage_field_label' );
@@ -185,7 +217,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 
 			<span 
 			id="<?php $this->element_id( $field, 'minute_container' ); ?>"
-			class="wp-backstage-time-field__piece-container">
+			class="wp-backstage-time-field__piece wp-backstage-time-field__piece--minute">
 
 				<label for="<?php $this->element_id( $field, 'minute' ); ?>"><?php
 					echo wp_kses( $minute_label, 'wp_backstage_field_label' );
@@ -217,7 +249,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 
 			<span 
 			id="<?php $this->element_id( $field, 'second_container' ); ?>"
-			class="wp-backstage-time-field__piece-container">
+			class="wp-backstage-time-field__piece wp-backstage-time-field__piece--second">
 
 				<label for="<?php $this->element_id( $field, 'second' ); ?>"><?php
 					echo wp_kses( $second_label, 'wp_backstage_field_label' );

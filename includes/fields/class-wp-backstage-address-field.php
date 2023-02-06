@@ -594,11 +594,29 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					toggleByCountry(address);
 				}
 
+				function setValue(address = null, value = null) {
+					const countrySelect = address.querySelector('.wp-backstage-address-field__control--country select');
+					const address1Input = address.querySelector('.wp-backstage-address-field__control--address-1 input');
+					const address2Input = address.querySelector('.wp-backstage-address-field__control--address-2 input');
+					const cityInput = address.querySelector('.wp-backstage-address-field__control--city input');
+					const stateSelect = address.querySelector('.wp-backstage-address-field__control--state input');
+					const stateInput = address.querySelector('.wp-backstage-address-field__control--us-state select');
+					const zipInput = address.querySelector('.wp-backstage-address-field__control--zip input');
+					countrySelect.value = (value && value.country) ? value.country : 'US';
+					address1Input.value = (value && value.address_1) ? value.address_1 : '';
+					address2Input.value = (value && value.address_2) ? value.address_2 : '';
+					cityInput.value = (value && value.city) ? value.city : '';
+					stateSelect.value = (value && value.state) ? value.state : 'AL';
+					stateInput.value = (value && value.state) ? value.state : '';
+					zipInput.value = (value && value.zip) ? value.zip : '';
+				}
+
 				window.wpBackstage.fields.address = {
 					initAll: initAll,
 					init: init,
 					resetAll: resetAll,
 					reset: reset,
+					setValue: setValue,
 				};
 
 			})(jQuery);

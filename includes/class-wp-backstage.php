@@ -2387,7 +2387,7 @@ class WP_Backstage {
 	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
 	 * @return  void
 	 */
-	public function inline_nav_menu_item_customizer_script() { ?>
+	public function inline_nav_menu_item_customizer_script_BACKUP() { ?>
 
 		<script 
 		id="wp_backstage_nav_menu_item_customizer_script"
@@ -2611,17 +2611,11 @@ class WP_Backstage {
 				}
 
 				function initFields(control = null) {
-					window.wpBackstage.colorPicker.initAll(control.container[0]);
-					window.wpBackstage.datePicker.initAll(control.container[0]);
-					window.wpBackstage.address.initAll(control.container[0]);
-					window.wpBackstage.mediaUploader.initAll(control.container[0]);
-					window.wpBackstage.codeEditor.initAll(control.container[0]);
-					window.wpBackstage.editor.initAll(control.container[0]);
+					window.wpBackstage.initAllFields(control.container[0]);
 				}
 
 				function handleControlExpanded(control =  null) {
-					window.wpBackstage.editor.refreshAll(control.container[0]);
-					window.wpBackstage.codeEditor.refreshAll(control.container[0]);
+					window.wpBackstage.refreshAllFields(control.container[0]);
 				}
 
 				function handleNavMenuSortStop(e = null, ui = null) {
@@ -2733,6 +2727,94 @@ class WP_Backstage {
 									}, 500);
 								});
 
+							});
+						}
+					});
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					init();
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Nav Menu Item Customizer Script
+	 *
+	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
+	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
+	 *
+	 * @since   2.0.0
+	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
+	 * @return  void
+	 */
+	public function inline_nav_menu_item_customizer_script() { ?>
+
+		<script id="wp_backstage_nav_menu_item_customizer_script">
+
+			(function($) {
+
+				function setControlValues(control = null) {
+					const values = control.setting().meta;
+					for (var fieldName in control.elements) {
+						const field = control.elements[fieldName].element[0];
+						if ((field instanceof HTMLElement) && field.classList.contains('wp-backstage-field')) {
+							const type = field.dataset.fieldType;
+							if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].setValue === 'function')) {
+								window.wpBackstage.fields[type].setValue(field, values[fieldName]);
+							} else {
+								const fieldId = field.dataset.fieldId;
+								const value = values[fieldName];
+								const input = field.querySelector('#' + fieldId);
+								if (input instanceof HTMLInputElement) {
+									if (input.type === 'checkbox') {
+										input.checked = Boolean(value);
+									} else {
+										input.value = value.toString();
+									}
+								} else if (input instanceof HTMLTextAreaElement) {
+									input.value = value.toString();
+								} else if (input instanceof HTMLSelectElement) {
+									input.value = value.toString() || input.options[0].value;
+								}
+							}
+						}
+					}
+				}
+
+				function extendControl(control = null) {
+					const containers = control.container.find('[data-wp-backstage-field-name]');
+					containers.each(function() {
+						const container = $(this);
+						const fieldName = container.attr('data-wp-backstage-field-name');
+						const field = container.find('.wp-backstage-field');
+						control.elements[fieldName] = new wp.customize.Element(field);
+					});
+				}
+
+				function initFields(control = null) {
+					window.wpBackstage.initAllFields(control.container[0]);
+				}
+
+				function refreshFields(control =  null) {
+					window.wpBackstage.refreshAllFields(control.container[0]);
+				}
+
+				function init() {
+					wp.customize.control.bind('add', function(control) {
+						if (control.extended(wp.customize.Menus.MenuItemControl)) {
+							control.deferred.embedded.done(function() {
+								extendControl(control);
+								setControlValues(control);
+								initFields(control);
+
+								control.expanded.bind(function(isExpanded) {
+									if (isExpanded) refreshFields(control);
+								});
 							});
 						}
 					});

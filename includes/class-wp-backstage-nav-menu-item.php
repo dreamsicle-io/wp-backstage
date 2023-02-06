@@ -199,9 +199,13 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 		$fields = $this->get_fields();
 
+		if ( ! isset( $item->meta ) || ! is_array( $item->meta ) ) {
+			$item->meta = array();
+		}
+
 		foreach ( $fields as $field ) {
-			$field_name        = $field['name'];
-			$item->$field_name = get_post_meta( $item->ID, $field_name, true );
+			$field_name                = $field['name'];
+			$item->meta[ $field_name ] = get_post_meta( $item->ID, $field_name, true );
 		}
 
 		return $item;
@@ -316,10 +320,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 		foreach ( $fields as $field ) {
 
-			$field_name     = $field['name'];
-			$field['name']  = sprintf( 'menu-item-%1$s[{{ data.menu_item_id }}]', $field_name );
-			$field['id']    = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
-			$field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
+			$field_name    = $field['name'];
+			$field['name'] = sprintf( 'menu-item-%1$s[{{ data.menu_item_id }}]', $field_name );
+			$field['id']   = sprintf( 'edit-menu-item-%1$s-{{ data.menu_item_id }}', $field_name );
+			// $field['value'] = sprintf( '{{ data.%1$s }}', $field_name );
 
 			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field ); ?>
 

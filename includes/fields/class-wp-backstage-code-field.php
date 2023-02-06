@@ -267,7 +267,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					return document.querySelector('.wp-backstage-field--type-code[data-field-id="' + fieldId + '"]');
 				}
 
-				window.wpBackstage.fields.codeEditor = {
+				window.wpBackstage.fields.code = {
 					initAll: initAll,
 					init: init,
 					refreshAll: refreshAll,

@@ -247,7 +247,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					});
 				}
 
-				window.wpBackstage.fields.colorPicker = {
+				window.wpBackstage.fields.color = {
 					initAll: initAll,
 					init: init,
 					destroyAll: destroyAll,

@@ -974,7 +974,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				window.wpBackstage.fields.mediaUploader = {
+				window.wpBackstage.fields.media = {
 					initAll: initAll,
 					init: init,
 					resetAll: resetAll,

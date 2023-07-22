@@ -38,6 +38,14 @@ class WP_Backstage_Component {
 	protected $slug = '';
 
 	/**
+	 * Args
+	 *
+	 * @since  0.0.1
+	 * @var    array  $args  The array of args on the instance.
+	 */
+	protected $args = array();
+
+	/**
 	 * Errors
 	 *
 	 * @since  0.0.1
@@ -2562,7 +2570,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ? $field['value'] : '' ); ?></textarea>
 
 			</span>
 
@@ -2640,7 +2648,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ? $field['value'] : '' ); ?></textarea>
 
 			</span>
 
@@ -2717,7 +2725,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ? $field['value'] : '' ); ?></textarea>
 
 			</span>
 

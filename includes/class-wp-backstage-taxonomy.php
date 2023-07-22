@@ -20,6 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 	/**
+	 * New
+	 * 
+	 * @since 2.0.0
+	 * @var string $new Whether the instance is creating a new taxonomy or modifying an existing one.
+	 */
+	protected $new = true;
+
+	/**
 	 * Default Args
 	 *
 	 * @since  0.0.1
@@ -281,9 +289,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_filter( "manage_edit-{$this->slug}_columns", array( $this, 'add_field_columns' ), 10 );
 		add_filter( "manage_edit-{$this->slug}_sortable_columns", array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( "manage_{$this->slug}_custom_column", array( $this, 'manage_admin_column_content' ), 10, 3 );
-		add_filter( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );
+		add_action( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
 		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10 );
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
 		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
@@ -1302,40 +1310,40 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function add_list_table_query_actions( $query = null ) {
 
-		if ( is_admin() && in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+		$query_taxonomy = $query->query_vars['taxonomy'];
+		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );
 
-			if ( $this->is_screen( 'id', $this->screen_id ) && $this->is_screen( 'base', 'edit-tags' ) ) {
+		if ( $this->is_screen( 'id', $this->screen_id ) && $this->is_screen( 'base', 'edit-tags' ) && $is_taxonomy ) {
 
-				if ( $query->query_vars['fields'] === 'count' ) {
+			if ( $query->query_vars['fields'] === 'count' ) {
 
-					// If this is the first count query, it can be safely assumed that this is the query
-					// that populates the total count at the top of the terms list table.
-					if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_count_query" ) ) {
+				// If this is the first count query, it can be safely assumed that this is the query
+				// that populates the total count at the top of the terms list table.
+				if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_count_query" ) ) {
 
-						/**
-						 * Fires when the term query is determined to be the one that populates the list table count.
-						 *
-						 * @since 3.1.0
-						 *
-						 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
-						 */
-						do_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", $query );
-					}
-				} else {
+					/**
+					 * Fires when the term query is determined to be the one that populates the list table count.
+					 *
+					 * @since 3.1.0
+					 *
+					 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+					 */
+					do_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", $query );
+				}
+			} else {
 
-					// If this is the first query that is not a count query, it can be safely assumed that
-					// the query is the main query that populates the terms list table.
-					if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_query" ) ) {
+				// If this is the first query that is not a count query, it can be safely assumed that
+				// the query is the main query that populates the terms list table.
+				if ( ! did_action( "wp_backstage_{$this->slug}_terms_list_table_query" ) ) {
 
-						/**
-						 * Fires when the term query is determined to be the one that populates the list table rows.
-						 *
-						 * @since 3.1.0
-						 *
-						 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
-						 */
-						do_action( "wp_backstage_{$this->slug}_terms_list_table_query", $query );
-					}
+					/**
+					 * Fires when the term query is determined to be the one that populates the list table rows.
+					 *
+					 * @since 3.1.0
+					 *
+					 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
+					 */
+					do_action( "wp_backstage_{$this->slug}_terms_list_table_query", $query );
 				}
 			}
 		}
@@ -1389,7 +1397,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function manage_sorting( $query = null ) {
 
-		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+		$query_taxonomy = $query->query_vars['taxonomy'];
+		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );
+
+		if ( $is_taxonomy ) {
 
 			$field = $this->get_field_by( 'name', $query->query_vars['orderby'] );
 
@@ -1449,7 +1460,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function manage_filtering( $query = null ) {
 
-		if ( in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+		$query_taxonomy = $query->query_vars['taxonomy'];
+		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );
+
+		if ( $is_taxonomy ) {
 
 			$fields = $this->get_fields();
 

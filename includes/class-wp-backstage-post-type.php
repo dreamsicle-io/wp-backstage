@@ -20,6 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 	/**
+	 * New
+	 * 
+	 * @since 2.0.0
+	 * @var string $new Whether the instance is creating a new taxonomy or modifying an existing one.
+	 */
+	protected $new = true;
+
+	/**
 	 * Hidden Meta Boxes
 	 *
 	 * @since  0.0.1

@@ -291,6 +291,11 @@ Search.appendIndex(
             "summary": "Slug",
             "url": "classes/WP-Backstage-Component.html#property_slug"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024args",
+            "name": "args",
+            "summary": "Args",
+            "url": "classes/WP-Backstage-Component.html#property_args"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024errors",
             "name": "errors",
             "summary": "Errors",
@@ -816,6 +821,11 @@ Search.appendIndex(
             "summary": "Inline\u0020Dashboard\u0020Glance\u0020Item\u0020Style",
             "url": "classes/WP-Backstage-Post-Type.html#method_inline_dashboard_glance_item_style"
         },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024new",
+            "name": "new",
+            "summary": "New",
+            "url": "classes/WP-Backstage-Post-Type.html#property_new"
+        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024hidden_meta_boxes",
             "name": "hidden_meta_boxes",
             "summary": "Hidden\u0020Meta\u0020Boxes",
@@ -976,6 +986,11 @@ Search.appendIndex(
             "summary": "Manage\u0020Default\u0020Hidden\u0020Columns",
             "url": "classes/WP-Backstage-Taxonomy.html#method_manage_default_hidden_columns"
         },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024new",
+            "name": "new",
+            "summary": "New",
+            "url": "classes/WP-Backstage-Taxonomy.html#property_new"
+        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024default_args",
             "name": "default_args",
             "summary": "Default\u0020Args",
@@ -1135,6 +1150,16 @@ Search.appendIndex(
             "name": "update",
             "summary": "Update",
             "url": "classes/WP-Backstage-Widget-Base.html#method_update"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003A\u0024slug",
+            "name": "slug",
+            "summary": "Slug",
+            "url": "classes/WP-Backstage-Widget-Base.html#property_slug"
+        },                {
+            "fqsen": "\\WP_Backstage_Widget_Base\u003A\u003A\u0024args",
+            "name": "args",
+            "summary": "Args",
+            "url": "classes/WP-Backstage-Widget-Base.html#property_args"
         },                {
             "fqsen": "\\WP_Backstage_Widget",
             "name": "WP_Backstage_Widget",

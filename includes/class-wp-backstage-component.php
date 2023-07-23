@@ -38,6 +38,14 @@ class WP_Backstage_Component {
 	protected $slug = '';
 
 	/**
+	 * Args
+	 *
+	 * @since  0.0.1
+	 * @var    array  $args  The array of args on the instance.
+	 */
+	protected $args = array();
+
+	/**
 	 * Errors
 	 *
 	 * @since  0.0.1
@@ -1777,7 +1785,7 @@ class WP_Backstage_Component {
 					$content = wpautop( wp_kses_post( $value ) );
 					break;
 				case 'code':
-					$content = '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ) . '</textarea>';
+					$content = '<textarea disabled rows="3" style="font-size:10px;">' . esc_textarea( $value ?? '' ) . '</textarea>';
 					break;
 				case 'color':
 					$icon_style = 'width:24px;height:24px;border:1px solid #e1e1e1;background-color:' . esc_attr( $value ) . ';';
@@ -2562,7 +2570,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ?? '' ); ?></textarea>
 
 			</span>
 
@@ -2640,7 +2648,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ?? '' ); ?></textarea>
 
 			</span>
 
@@ -2717,7 +2725,7 @@ class WP_Backstage_Component {
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo $this->format_attrs( $field['input_attrs'] );
-				?>><?php echo esc_textarea( $field['value'] ); ?></textarea>
+				?>><?php echo esc_textarea( $field['value'] ?? '' ); ?></textarea>
 
 			</span>
 

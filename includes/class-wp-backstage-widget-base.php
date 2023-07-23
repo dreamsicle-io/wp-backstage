@@ -24,6 +24,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage_Widget_Base extends WP_Widget {
 
 	/**
+	 * Slug
+	 *
+	 * @since  2.0.0
+	 * @var    array  $slug  The widget slug.
+	 */
+	protected $slug = '';
+
+	/**
+	 * Args
+	 *
+	 * @since  2.0.0
+	 * @var    array  $args  The array of all args on the instance.
+	 */
+	protected $args = array();
+
+	/**
 	 * Construct
 	 *
 	 * Constructs the widget and calls the parent widgets constructor.

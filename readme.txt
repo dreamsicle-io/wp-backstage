@@ -2,7 +2,7 @@
 
 Contributors: noahmason
 Tags: post-types, taxonomies, attachments, nav-menus, options, settings, widgets, meta-boxes, custom-fields
-Stable tag: 3.7.2
+Stable tag: 3.7.3
 Requires PHP: 7.4.0
 Requires at least: 5.8.0
 Tested up to: 6.0.0

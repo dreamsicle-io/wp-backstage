@@ -119,12 +119,20 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 				function setValue(control = null, value = []) {
 					const checkboxes = control.querySelectorAll('input[type="checkbox"]');
 					checkboxes.forEach(function(checkbox) {
-						if (value.includes(checkbox.value)) checkbox.checked = true;
+						checkbox.checked = value.includes(checkbox.value);
+					});
+				}
+
+				function getValue(control = null) {
+					const checkboxes = control.querySelectorAll('input[type="checkbox"]:checked');
+					return Array.from(checkboxes).map(function(checkbox) {
+						return checkbox.value;
 					});
 				}
 
 				window.wpBackstage.fields.checkbox_set = {
 					setValue: setValue,
+					getValue: getValue,
 				}
 
 			})();

@@ -65,12 +65,18 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 				function setValue(control = null, value = null) {
 					const radios = control.querySelectorAll('input[type="radio"]');
 					radios.forEach(function(radio) {
-						if (radio.value === value) radio.checked = true;
+						radio.checked = (radio.value === value);
 					});
+				}
+
+				function getValue(control = null) {
+					const selected = control.querySelector('input[type="radio"]:checked');
+					return selected ? selected.value : undefined;
 				}
 
 				window.wpBackstage.fields.radio = {
 					setValue: setValue,
+					getValue: getValue,
 				}
 
 			})();

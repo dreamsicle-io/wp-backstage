@@ -491,15 +491,15 @@ Search.appendIndex(
             "summary": "Setup\u0020Nav\u0020Menu\u0020Item",
             "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_setup_nav_menu_item"
         },                {
-            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_fields\u0028\u0029",
-            "name": "render_fields",
-            "summary": "Render\u0020Fields",
-            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields"
-        },                {
             "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_field_description\u0028\u0029",
             "name": "render_field_description",
             "summary": "Render\u0020Field\u0020Description",
             "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_field_description"
+        },                {
+            "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_fields\u0028\u0029",
+            "name": "render_fields",
+            "summary": "Render\u0020Fields",
+            "url": "classes/WP-Backstage-Nav-Menu-Item.html#method_render_fields"
         },                {
             "fqsen": "\\WP_Backstage_Nav_Menu_Item\u003A\u003Arender_customizer_fields\u0028\u0029",
             "name": "render_customizer_fields",
@@ -1425,6 +1425,11 @@ Search.appendIndex(
             "name": "inline_nav_menu_item_script",
             "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_backbone_override\u0028\u0029",
+            "name": "inline_nav_menu_item_customizer_backbone_override",
+            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Backbone\u0020Override",
+            "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_backbone_override"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_script_BACKUP\u0028\u0029",
             "name": "inline_nav_menu_item_customizer_script_BACKUP",

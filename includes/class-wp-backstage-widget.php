@@ -20,6 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage_Widget extends WP_Backstage_Component {
 
 	/**
+	 * Slug
+	 *
+	 * @since  2.0.0
+	 * @var    array  $slug  The widget slug.
+	 */
+	protected $slug = '';
+
+	/**
 	 * Default Args
 	 *
 	 * @since  0.0.1
@@ -163,7 +171,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @link https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/  WP_Widget::get_field_name()
 	 *
 	 * @since   2.0.0
-	 * @param   array  $field_name  The field name.
+	 * @param   string $field_name  The field name.
 	 * @param   string $id_base     The current widget instance id base.
 	 * @param   string $number      The current widget instance number.
 	 * @return  string

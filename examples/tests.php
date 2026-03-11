@@ -590,13 +590,6 @@ function wp_backstage_get_test_field_groups( string $field_name_suffix = '' ): a
 			'fields'      => wp_backstage_get_test_fields( array( 'number', 'range' ), $field_name_suffix ),
 		),
 		array(
-			'id'          => 'wp_backstage_numeric_fields',
-			'title'       => __( 'Numeric Fields', 'wp_backstage_examples' ),
-			'description' => wp_backstage_get_test_description( __( 'These fields test numeric controls.', 'wp_backstage_examples' ) ),
-			'help'        => wp_backstage_get_test_description( __( 'This is the help description for the Numeric Fields field group.', 'wp_backstage_examples' ) ),
-			'fields'      => wp_backstage_get_test_fields( array( 'number', 'range' ), $field_name_suffix ),
-		),
-		array(
 			'id'          => 'wp_backstage_selectable_fields',
 			'title'       => __( 'Selectable Fields', 'wp_backstage_examples' ),
 			'description' => wp_backstage_get_test_description( __( 'These fields test selectable controls.', 'wp_backstage_examples' ) ),
@@ -609,6 +602,13 @@ function wp_backstage_get_test_field_groups( string $field_name_suffix = '' ): a
 			'description' => wp_backstage_get_test_description( __( 'These fields test date/time controls.', 'wp_backstage_examples' ) ),
 			'help'        => wp_backstage_get_test_description( __( 'This is the help description for the Date/Time Fields field group.', 'wp_backstage_examples' ) ),
 			'fields'      => wp_backstage_get_test_fields( array( 'date', 'time' ), $field_name_suffix ),
+		),
+		array(
+			'id'          => 'wp_backstage_location_fields',
+			'title'       => __( 'Location Fields', 'wp_backstage_examples' ),
+			'description' => wp_backstage_get_test_description( __( 'These fields test location controls.', 'wp_backstage_examples' ) ),
+			'help'        => wp_backstage_get_test_description( __( 'This is the help description for the Location Fields field group.', 'wp_backstage_examples' ) ),
+			'fields'      => wp_backstage_get_test_fields( array( 'address' ), $field_name_suffix ),
 		),
 		array(
 			'id'          => 'wp_backstage_color_fields',

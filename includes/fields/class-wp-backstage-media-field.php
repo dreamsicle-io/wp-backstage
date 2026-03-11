@@ -321,6 +321,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 
 			.wp-backstage-media-uploader {
 				display: block;
+				position: relative;
 			}
 
 			.wp-backstage-media-uploader__buttons {

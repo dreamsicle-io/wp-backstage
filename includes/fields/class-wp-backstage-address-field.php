@@ -621,9 +621,9 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					const stateInput = control.querySelector('.wp-backstage-address-field__control--state input');
 					const usStateSelect = control.querySelector('.wp-backstage-address-field__control--us-state select');
 					const zipInput = control.querySelector('.wp-backstage-address-field__control--zip input');
-
+					const country = countrySelect.value || 'US';
 					return {
-						country: countrySelect.value || 'US',
+						country: country,
 						address_1: address1Input.value,
 						address_2: address2Input.value,
 						city: cityInput.value,

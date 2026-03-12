@@ -133,7 +133,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 				<button 
 				title="<?php echo esc_attr( $remove_label ); ?>"
 				type="button" 
-				class="wp-backstage-media-uploader__attachment-remove button-link attachment-close media-modal-icon">
+				class="wp-backstage-media-uploader__attachment-remove button-link attachment-close">
+					<span class="media-modal-icon" aria-hidden="true"></span>
 					<span class="screen-reader-text"><?php
 						echo esc_html( $remove_label );
 					?></span>

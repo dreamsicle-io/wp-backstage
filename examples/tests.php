@@ -157,6 +157,41 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			),
 		),
 		array(
+			'type'          => 'select',
+			'name'          => 'wp_backstage_select_with_callable_options_field',
+			'label'         => __( 'Select with Callable Options', 'wp_backstage_examples' ),
+			'description'   => wp_backstage_get_test_description( __( 'Select an option.', 'wp_backstage_examples' ) ),
+			'help'          => wp_backstage_get_test_description( __( 'This is the help description for the Select with Callable Options field.', 'wp_backstage_examples' ) ),
+			'has_column'    => true,
+			'is_sortable'   => true,
+			'is_filterable' => true,
+			'show_in_rest'  => true,
+			'options'       => function() {
+				return array(
+					array(
+						'value' => '',
+						'label' => __( '― Select an Option ―', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_1',
+						'label' => __( 'Option 1', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_2',
+						'label' => __( 'Option 2', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_3',
+						'label' => __( 'Option 3', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_4',
+						'label' => __( 'Option 4', 'wp_backstage_examples' ),
+					),
+				);
+			},
+		),
+		array(
 			'type'          => 'radio',
 			'name'          => 'wp_backstage_radio_field',
 			'label'         => __( 'Radio', 'wp_backstage_examples' ),
@@ -186,6 +221,37 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			),
 		),
 		array(
+			'type'          => 'radio',
+			'name'          => 'wp_backstage_radio_with_callable_options_field',
+			'label'         => __( 'Radio with Callable Options', 'wp_backstage_examples' ),
+			'description'   => wp_backstage_get_test_description( __( 'Select an option.', 'wp_backstage_examples' ) ),
+			'help'          => wp_backstage_get_test_description( __( 'This is the help description for the Radio with Callable Options field.', 'wp_backstage_examples' ) ),
+			'has_column'    => true,
+			'is_sortable'   => true,
+			'is_filterable' => true,
+			'show_in_rest'  => true,
+			'options'       => function() {
+				return array(
+					array(
+						'value' => 'option_1',
+						'label' => __( 'Option 1', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_2',
+						'label' => __( 'Option 2', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_3',
+						'label' => __( 'Option 3', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_4',
+						'label' => __( 'Option 4', 'wp_backstage_examples' ),
+					),
+				);
+			},
+		),
+		array(
 			'type'         => 'checkbox_set',
 			'name'         => 'wp_backstage_checkbox_set_field',
 			'label'        => __( 'Checkbox Set', 'wp_backstage_examples' ),
@@ -211,6 +277,35 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 					'label' => __( 'Option 4', 'wp_backstage_examples' ),
 				),
 			),
+		),
+		array(
+			'type'         => 'checkbox_set',
+			'name'         => 'wp_backstage_checkbox_set_with_callable_options_field',
+			'label'        => __( 'Checkbox Set with Callable Options', 'wp_backstage_examples' ),
+			'description'  => wp_backstage_get_test_description( __( 'Select all that apply.', 'wp_backstage_examples' ) ),
+			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Checkbox Set with Callable Options field.', 'wp_backstage_examples' ) ),
+			'has_column'   => true,
+			'show_in_rest' => true,
+			'options'      => function() {
+				return array(
+					array(
+						'value' => 'option_1',
+						'label' => __( 'Option 1', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_2',
+						'label' => __( 'Option 2', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_3',
+						'label' => __( 'Option 3', 'wp_backstage_examples' ),
+					),
+					array(
+						'value' => 'option_4',
+						'label' => __( 'Option 4', 'wp_backstage_examples' ),
+					),
+				);
+			},
 		),
 		array(
 			'type'         => 'media',

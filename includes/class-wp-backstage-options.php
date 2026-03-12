@@ -193,16 +193,19 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   0.0.1
-	 * @since   2.0.0  Added `hook_script_action` actions to all types of options pages.
-	 * @since   3.6.0  Removes `sprintf` templates from hook names.
-	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
+	 * @since   2.0.0 Added `hook_script_action` actions to all types of options pages.
+	 * @since   3.6.0 Removes `sprintf` templates from hook names.
+	 * @since   4.0.0 Registers settings with REST API and removes error checking of the `WP_Backstage` class as it no longer reports errors.
 	 * @return  void
 	 */
 	public function init() {
 
+		add_action( 'admin_init', array( $this, 'register_settings' ), 10 );
+		add_action( 'rest_api_init', array( $this, 'register_settings' ), 10 );
 		add_action( 'admin_menu', array( $this, 'add_page' ), 10 );
 		add_action( 'admin_init', array( $this, 'add_settings' ), 10 );
 		add_action( 'tool_box', array( $this, 'add_tool_card' ), 10 );
+		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
 		if ( $this->args['type'] === 'settings' ) {
 			add_action( "admin_print_footer_scripts-settings_page_{$this->slug}", array( $this, 'hook_script_action' ), 10 );
 		}
@@ -215,6 +218,75 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 		parent::init();
 
+	}
+
+	/**
+	 * Add Help Tabs
+	 *
+	 * Registers options page help tabs.
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 *
+	 * @since   4.0.1
+	 * @param   WP_Screen $screen an instance of `WP_Screen`.
+	 * @return  void
+	 */
+	public function add_help_tabs( $screen ) {
+
+		if ( $this->is_screen( 'id', $this->screen_id, $screen ) ) {
+
+			// REST API preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'options rest api help tab - title', 'wp_backstage' ),
+					'callback' => array( $this, 'render_rest_api_preview_help_tab' ),
+					'priority' => 90,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Render REST API Preview Help Tab
+	 *
+	 * @since 4.0.1
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
+		$rest_namespace = 'wp/v2';
+		$rest_base      = 'settings';
+		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
+
+		/**
+		 * Fires before the options REST API preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_options_rest_api_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( _x( '<strong>REST API</strong> ― Preview the WordPress REST API response for the site settings endpoint. This endpoint returns the global settings object and may include REST-exposed settings beyond those shown on this options page. The native settings endpoint does not expose preview contexts or embeddable linked resources the way other core REST endpoints do.', 'options rest api preview help tab - title', 'wp_backstage' ) ) );
+		$this->render_rest_api_preview(
+			$path,
+			array(
+				'supports_context' => false,
+				'supports_embed'   => false,
+			)
+		);
+
+		/**
+		 * Fires after the options REST API preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_options_rest_api_preview_help_tab_after', $screen, $args );
 	}
 
 	/**
@@ -312,11 +384,45 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Register Settings
+	 *
+	 * @since 4.0.0
+	 */
+	public function register_settings() {
+		$fields = $this->get_fields();
+
+		foreach ( $fields as $field ) {
+
+			$field_class = $this->get_field_class( $field['type'] );
+			$schema      = $field_class->get_schema();
+
+			$show_in_rest = false;
+			if ( $field['show_in_rest'] ) {
+				$show_in_rest = array(
+					'schema' => $schema,
+				);
+			}
+
+			register_setting(
+				$this->slug,
+				$field['name'],
+				array(
+					'description'       => wp_strip_all_tags( $field['description'], true ),
+					'type'              => $schema['type'],
+					'sanitize_callback' => array( $field_class, 'sanitize' ),
+					'show_in_rest'      => $show_in_rest,
+				)
+			);
+
+		}
+
+	}
+
+	/**
 	 * Add Settings
 	 *
-	 * @todo  Maybe make per field rest option?
-	 *
 	 * @since   0.0.1
+	 * @since   4.0.0 Moves setting registration out to `register_settings` so that it can be hooked to REST API init independently.
 	 * @return  void
 	 */
 	public function add_settings() {
@@ -341,28 +447,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 					foreach ( $section['fields'] as $field ) {
 
-						$field_class = $this->get_field_class( $field['type'] );
-						$schema      = $field_class->get_schema();
-
-						$show_in_rest = false;
-						if ( $field['show_in_rest'] ) {
-							$show_in_rest = array(
-								'schema' => $schema,
-							);
-						}
-
+						$field_class    = $this->get_field_class( $field['type'] );
 						$field['value'] = get_option( $field['name'] );
-
-						register_setting(
-							$this->slug,
-							$field['name'],
-							array(
-								'description'       => wp_strip_all_tags( $field['description'], true ),
-								'type'              => $schema['type'],
-								'sanitize_callback' => array( $field_class, 'sanitize' ),
-								'show_in_rest'      => $show_in_rest,
-							)
-						);
 
 						add_settings_field(
 							$field['name'],

@@ -571,6 +571,16 @@ Search.appendIndex(
             "summary": "Init",
             "url": "classes/WP-Backstage-Options.html#method_init"
         },                {
+            "fqsen": "\\WP_Backstage_Options\u003A\u003Aadd_help_tabs\u0028\u0029",
+            "name": "add_help_tabs",
+            "summary": "Add\u0020Help\u0020Tabs",
+            "url": "classes/WP-Backstage-Options.html#method_add_help_tabs"
+        },                {
+            "fqsen": "\\WP_Backstage_Options\u003A\u003Arender_rest_api_preview_help_tab\u0028\u0029",
+            "name": "render_rest_api_preview_help_tab",
+            "summary": "Render\u0020REST\u0020API\u0020Preview\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-Options.html#method_render_rest_api_preview_help_tab"
+        },                {
             "fqsen": "\\WP_Backstage_Options\u003A\u003Aadd_tool_card\u0028\u0029",
             "name": "add_tool_card",
             "summary": "Add\u0020Tool\u0020Card",
@@ -580,6 +590,11 @@ Search.appendIndex(
             "name": "add_page",
             "summary": "Add\u0020Page",
             "url": "classes/WP-Backstage-Options.html#method_add_page"
+        },                {
+            "fqsen": "\\WP_Backstage_Options\u003A\u003Aregister_settings\u0028\u0029",
+            "name": "register_settings",
+            "summary": "Register\u0020Settings",
+            "url": "classes/WP-Backstage-Options.html#method_register_settings"
         },                {
             "fqsen": "\\WP_Backstage_Options\u003A\u003Aadd_settings\u0028\u0029",
             "name": "add_settings",

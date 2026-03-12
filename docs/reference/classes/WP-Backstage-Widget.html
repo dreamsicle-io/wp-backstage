@@ -3544,7 +3544,7 @@ and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only be
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-component.php"><a href="files/includes-class-wp-backstage-component.html"><abbr title="includes/class-wp-backstage-component.php">class-wp-backstage-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">3565</span>
+    <span class="phpdocumentor-element-found-in__line">3567</span>
 
     </aside>
 
@@ -3552,11 +3552,11 @@ and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only be
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">render_rest_api_preview</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">render_rest_api_preview</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>This method renders a REST API preview for a given path. Code mirror is used to initialize a
-json editor area that is read only. Filters for <code class="prettyprint">context</code> and <code class="prettyprint">_embed</code> are provided for
-through api response checks.</p>
+JSON editor area that is read only. Controls for <code class="prettyprint">context</code> and <code class="prettyprint">_embed</code> can be disabled for
+endpoints that do not support them natively.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3567,6 +3567,15 @@ through api response checks.</p>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>An API path to fetch.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Optional preview configuration arguments.</p>
 </section>
 
             </dd>
@@ -3593,6 +3602,16 @@ through api response checks.</p>
                                             <span class="phpdocumentor-tag-link">3.4.2</span>
                                                                                 
                                                  <section class="phpdocumentor-description"><p>Fixes bug where event listeners were being added instead of removed on destroy.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Adds arguments.</p>
 </section>
 
                                     </dd>

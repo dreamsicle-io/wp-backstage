@@ -3554,32 +3554,49 @@ class WP_Backstage_Component {
 	 * Render REST API Preview
 	 *
 	 * This method renders a REST API preview for a given path. Code mirror is used to initialize a
-	 * json editor area that is read only. Filters for `context` and `_embed` are provided for
-	 * through api response checks.
+	 * JSON editor area that is read only. Controls for `context` and `_embed` can be disabled for
+	 * endpoints that do not support them natively.
 	 *
 	 * @since 3.4.0
 	 * @since 3.4.2 Fixes bug where event listeners were being added instead of removed on destroy.
+	 * @since 4.0.0 Adds arguments.
 	 * @param string $path An API path to fetch.
+	 * @param array  $args Optional preview configuration arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview( $path = '' ) {
+	public function render_rest_api_preview( $path = '', $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'supports_context' => true,
+				'supports_embed'   => true,
+			)
+		);
+
 		$loader_text       = _x( 'Loading...', 'rest api preview - loading', 'wp_backstage' );
 		$instructions_text = _x( '<strong>No data fetched yet</strong> ― Click the fetch button to get started.', 'rest api preview - instructions', 'wp_backstage' );
 		$full_url          = get_rest_url( null, $path ); ?>
+
 		<div 
 		id="wp_backstage_rest_api_preview"
-		data-api-path="<?php echo esc_url( $path ); ?>">
+		data-api-path="<?php echo esc_url( $path ); ?>"
+		data-supports-context="<?php echo esc_attr( $args['supports_context'] ? 'true' : 'false' ); ?>"
+		data-supports-embed="<?php echo esc_attr( $args['supports_embed'] ? 'true' : 'false' ); ?>">
 			<form id="wp_backstage_rest_api_preview_form" style="margin-bottom: 1em;">
-				<select name="wp_backstage_rest_api_preview_context" title="context" style="margin-right:15px;">
-					<option value="view" selected>view</option>
-					<option value="embed">embed</option>
-					<option value="edit">edit</option>
-				</select>
-				<label>
-					<input type="checkbox" name="wp_backstage_rest_api_preview_embed" value="true" />
-					<span>_embed</span>
-				</label>
-				<button type="sumbit" class="button"><?php
+				<?php if ( $args['supports_context'] ) { ?>
+					<select name="wp_backstage_rest_api_preview_context" title="context" style="margin-right:15px;">
+						<option value="view" selected>view</option>
+						<option value="embed">embed</option>
+						<option value="edit">edit</option>
+					</select>
+				<?php } ?>
+				<?php if ( $args['supports_embed'] ) { ?>
+					<label>
+						<input type="checkbox" name="wp_backstage_rest_api_preview_embed" value="true" />
+						<span>_embed</span>
+					</label>
+				<?php } ?>
+				<button type="submit" class="button"><?php
 					echo esc_html( _x( 'Fetch', 'rest api preview - form submit', 'wp_backstage' ) );
 				?></button>
 			</form>
@@ -3645,24 +3662,24 @@ class WP_Backstage_Component {
 					codeMirrorInst.clearHistory();
 				}
 
-				function showInstructions() {
+				function showInstructions(show = true) {
 					const instructions = document.getElementById('wp_backstage_rest_api_preview_instructions');
-					instructions.style.display = 'block';
+					instructions.style.display = show ? 'block' : 'none';
 				}
 
-				function hideInstructions() {
-					const instructions = document.getElementById('wp_backstage_rest_api_preview_instructions');
-					instructions.style.display = 'none';
-				}
-
-				function showLoader() {
+				function showLoader(show = true) {
 					const loader = document.getElementById('wp_backstage_rest_api_preview_loader');
-					loader.style.display = 'block';
+					loader.style.display = show ? 'block' : 'none';
 				}
 
-				function hideLoader() {
-					const loader = document.getElementById('wp_backstage_rest_api_preview_loader');
-					loader.style.display = 'none';
+				function enableForm(enabled = true) {
+					const form = document.getElementById('wp_backstage_rest_api_preview_form');
+					if (form instanceof HTMLFormElement) {
+						const controls = form.querySelectorAll('button, input, select, textarea');
+						controls.forEach(function(control) {
+							control.disabled = !enabled;
+						});
+					}
 				}
 
 				function refresh() {
@@ -3701,20 +3718,28 @@ class WP_Backstage_Component {
 					const preview = document.getElementById('wp_backstage_rest_api_preview');
 					const form = document.getElementById('wp_backstage_rest_api_preview_form');
 					const path = preview.getAttribute('data-api-path');
-					formData = new FormData(form);
-					hideInstructions();
-					showLoader();
+					const supportsContext = (preview.dataset.supportsContext === 'true');
+					const supportsEmbed = (preview.dataset.supportsEmbed === 'true');
+					const query = {};
+					const formData = new FormData(form);
+					if (supportsContext) {
+						query.context = formData.get('wp_backstage_rest_api_preview_context');
+					}
+					if (supportsEmbed) {
+						query._embed = (formData.get('wp_backstage_rest_api_preview_embed') === 'true');
+					}
+					enableForm(false);
+					showInstructions(false);
+					showLoader(true);
 					window.wp.apiRequest({
-						path: path,
 						type: 'GET',
-						data: {
-							context: formData.get('wp_backstage_rest_api_preview_context'),
-							_embed: (formData.get('wp_backstage_rest_api_preview_embed') === 'true'),
-						},
+						path: path,
+						data: query,
 					})
 					.then(function(data = null) {
 						setValue(JSON.stringify(data, null, 2));
-						hideLoader();
+						showLoader(false);
+						enableForm(true);
 					})
 					.fail(function(request = null, statusText = '') {
 						var message = statusText;
@@ -3723,7 +3748,8 @@ class WP_Backstage_Component {
 						}
 						console.error(message);
 						setValue(JSON.stringify(request.responseJSON, null, 2));
-						hideLoader();
+						showLoader(false);
+						enableForm(true);
 					});
 				}
 

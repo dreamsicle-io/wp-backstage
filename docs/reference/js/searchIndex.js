@@ -1936,6 +1936,11 @@ Search.appendIndex(
             "summary": "Render\u0020Column",
             "url": "classes/WP-Backstage-Field.html#method_render_column"
         },                {
+            "fqsen": "\\WP_Backstage_Field\u003A\u003Aresolve_options\u0028\u0029",
+            "name": "resolve_options",
+            "summary": "Resolve\u0020Options",
+            "url": "classes/WP-Backstage-Field.html#method_resolve_options"
+        },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_options\u0028\u0029",
             "name": "get_options",
             "summary": "Get\u0020Options",

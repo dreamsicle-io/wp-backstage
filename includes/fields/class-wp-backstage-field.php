@@ -391,6 +391,32 @@ class WP_Backstage_Field {
 	}
 
 	/**
+	 * Resolve Options
+	 *
+	 * Enumerable fields may provide `options` as an array of option arguments or
+	 * as a callable that receives the parsed field array and returns those
+	 * option arguments.
+	 *
+	 * @since 4.0.0
+	 * @param array $field An array of field arguments.
+	 * @return array An array of raw option arguments.
+	 */
+	protected function resolve_options( array $field = array() ): array {
+
+		$options = isset( $field['options'] ) ? $field['options'] : array();
+
+		if ( is_callable( $options ) ) {
+			try {
+				$options = call_user_func( $options, $field );
+			} catch ( Throwable $throwable ) {
+				$options = array();
+			}
+		}
+
+		return is_array( $options ) ? $options : array();
+	}
+
+	/**
 	 * Get Options
 	 *
 	 * @since 4.0.0
@@ -399,13 +425,15 @@ class WP_Backstage_Field {
 	 */
 	public function get_options( array $field = array() ): array {
 		$options = array();
-		foreach ( $field['options'] as $option ) {
-			$option = wp_parse_args( $option, $this->default_option_args );
-			// If the label is empty, use the value as the label.
-			if ( empty( $option['label'] ) ) {
-				$option['label'] = $option['value'];
+		foreach ( $this->resolve_options( $field ) as $option ) {
+			if ( is_array( $option ) ) {
+				$option = wp_parse_args( $option, $this->default_option_args );
+				// If the label is empty, use the value as the label.
+				if ( empty( $option['label'] ) ) {
+					$option['label'] = $option['value'];
+				}
+				$options[] = $option;
 			}
-			$options[] = $option;
 		}
 		return $options;
 	}
@@ -419,7 +447,7 @@ class WP_Backstage_Field {
 	 */
 	public function get_option_labels( array $field = array() ): array {
 		$labels = array();
-		foreach ( $field['options'] as $option ) {
+		foreach ( $this->get_options( $field ) as $option ) {
 			$labels[ $option['value'] ] = $option['label'];
 		}
 		return $labels;

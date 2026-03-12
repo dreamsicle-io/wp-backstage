@@ -430,25 +430,25 @@ class WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   3.7.1 Returns false if `get_current_screen()` is not defined.
-	 * @param   string       $key    The key of the `WP_Screen` object to check.
-	 * @param   string|array $value  The value or array of values to check.
+	 * @param   string         $key    The key of the `WP_Screen` object to check.
+	 * @param   string|array   $value  The value or array of values to check.
+	 * @param   WP_Screen|null $screen The passed in screen to check. Leave null to call `get_current_screen()`.
 	 * @return  bool If the match was successful or not.
 	 */
-	protected function is_screen( $key = '', $value = '' ) {
+	protected function is_screen( $key = '', $value = '', $screen = null ) {
 
 		$is_screen = false;
 
-		if ( function_exists( 'get_current_screen' ) ) {
-
+		if ( ! $screen && function_exists( 'get_current_screen' ) ) {
 			$screen = get_current_screen();
+		}
 
-			if ( empty( $screen ) ) {
-				$is_screen = false;
-			} elseif ( is_array( $value ) ) {
-				$is_screen = in_array( $screen->$key, $value );
-			} else {
-				$is_screen = ( $value === $screen->$key );
-			}
+		if ( ! $screen ) {
+			$is_screen = false;
+		} elseif ( is_array( $value ) ) {
+			$is_screen = in_array( $screen->$key, $value );
+		} else {
+			$is_screen = ( $value === $screen->$key );
 		}
 
 		return $is_screen;

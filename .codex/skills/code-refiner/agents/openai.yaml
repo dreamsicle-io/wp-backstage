@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Refiner"
+  short_description: "Repo style and structure refinements"
+  default_prompt: "Use $code-refiner to do a code-quality and refinement pass to ensure written code changes matches project conventions and adjacent file patterns."

@@ -438,9 +438,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		if ( $screen->base === 'edit-tags' && $screen->taxonomy === $this->slug ) {
 
-			if ( $this->new ) {
+			$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 
-				$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+			if ( $this->new ) {
 
 				// Overview help tab.
 				$screen->add_help_tab(
@@ -466,6 +466,16 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				);
 
 			}
+			// REST API preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'taxonomy collection rest api help tab - title', 'wp_backstage' ),
+					'priority' => 90,
+					'callback' => array( $this, 'render_rest_api_collection_preview_help_tab' ),
+				)
+			);
+
 		} elseif ( $screen->base === 'term' && $screen->taxonomy === $this->slug ) {
 
 			// REST API preview help tab.
@@ -675,6 +685,49 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		 * @param  array      $args An array of help tab arguments.
 		 */
 		do_action( 'wp_backstage_taxonomy_rest_api_preview_help_tab_after', $screen, $args );
+	}
+
+	/**
+	 * Render REST API Collection Preview Help Tab
+	 *
+	 * @since 4.0.1
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_collection_preview_help_tab( $screen = null, $args = array() ) {
+		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
+
+		$path = sprintf( '/%1$s/%2$s', $taxonomy_obj->rest_namespace, $taxonomy_obj->rest_base );
+
+		/**
+		 * Fires before the taxonomy REST API collection preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_rest_api_collection_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post(
+			wpautop(
+				sprintf(
+					/* translators: 1: taxonomy plural name. */
+					_x( '<strong>REST API</strong> ― Preview the WordPress REST API response for the %1$s collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records.', 'taxonomy rest api collection help tab - title', 'wp_backstage' ),
+					$taxonomy_obj->labels->name
+				)
+			)
+		);
+		$this->render_rest_api_preview( $path );
+
+		/**
+		 * Fires after the taxonomy REST API collection preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_taxonomy_rest_api_collection_preview_help_tab_after', $screen, $args );
 	}
 
 	/**

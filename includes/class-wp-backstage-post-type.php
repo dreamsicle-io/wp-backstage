@@ -674,6 +674,17 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 					)
 				);
 			}
+
+			// REST API preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'post type rest api collection preview help tab - title', 'wp_backstage' ),
+					'callback' => array( $this, 'render_rest_api_collection_preview_help_tab' ),
+					'priority' => 90,
+				)
+			);
+
 		} elseif ( $screen->base === 'post' && $screen->post_type === $this->slug ) {
 
 			if ( $this->new ) {
@@ -1467,6 +1478,49 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		 * @param  array      $args An array of help tab arguments.
 		 */
 		do_action( 'wp_backstage_post_type_rest_api_preview_help_tab_after', $screen, $args );
+	}
+
+	/**
+	 * Render REST API Collection Preview Help Tab
+	 *
+	 * @since 4.0.1
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_collection_preview_help_tab( $screen = null, $args = array() ) {
+		$post_type_obj = get_post_type_object( $screen->post_type );
+
+		$path = sprintf( '/%1$s/%2$s', $post_type_obj->rest_namespace, $post_type_obj->rest_base );
+
+		/**
+		 * Fires before the post type REST API collection preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_post_type_rest_api_collection_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post(
+			wpautop(
+				sprintf(
+					/* translators: 1: post type plural name. */
+					_x( '<strong>REST API</strong> ― Preview the WordPress REST API response for the %1$s collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records.', 'post type rest api collection help tab - title', 'wp_backstage' ),
+					$post_type_obj->labels->name
+				)
+			)
+		);
+		$this->render_rest_api_preview( $path );
+
+		/**
+		 * Fires after the post type REST API collection preview help tab content.
+		 *
+		 * @since  4.0.1
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_post_type_rest_api_collection_preview_help_tab_after', $screen, $args );
 	}
 
 	/**

@@ -746,6 +746,11 @@ Search.appendIndex(
             "summary": "Render\u0020API\u0020Preview\u0020Help\u0020Tab",
             "url": "classes/WP-Backstage-Post-Type.html#method_render_rest_api_preview_help_tab"
         },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Arender_rest_api_collection_preview_help_tab\u0028\u0029",
+            "name": "render_rest_api_collection_preview_help_tab",
+            "summary": "Render\u0020REST\u0020API\u0020Collection\u0020Preview\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-Post-Type.html#method_render_rest_api_collection_preview_help_tab"
+        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aregister_api_meta\u0028\u0029",
             "name": "register_api_meta",
             "summary": "Register\u0020API\u0020Meta",
@@ -960,6 +965,11 @@ Search.appendIndex(
             "name": "render_rest_api_preview_help_tab",
             "summary": "Render\u0020REST\u0020API\u0020Preview\u0020Help\u0020Tab",
             "url": "classes/WP-Backstage-Taxonomy.html#method_render_rest_api_preview_help_tab"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_rest_api_collection_preview_help_tab\u0028\u0029",
+            "name": "render_rest_api_collection_preview_help_tab",
+            "summary": "Render\u0020REST\u0020API\u0020Collection\u0020Preview\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_render_rest_api_collection_preview_help_tab"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aregister_api_meta\u0028\u0029",
             "name": "register_api_meta",

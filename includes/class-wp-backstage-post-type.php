@@ -1978,9 +1978,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of meta box ids
 	 */
-	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen = null ) {
+	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen ) {
 
-		if ( $screen->post_type === $this->slug ) {
+		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
 			$meta_boxes = $this->get_meta_boxes();
 
@@ -2447,9 +2447,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
 
-		if ( $this->is_screen( 'post_type', $this->slug ) ) {
+		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
 			$fields = $this->get_fields();
 

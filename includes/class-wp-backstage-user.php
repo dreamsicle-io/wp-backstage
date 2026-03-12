@@ -764,9 +764,9 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array An array of hidden column keys.
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
 
-		if ( $this->is_screen( 'id', $this->screen_id ) ) {
+		if ( $this->is_screen( 'id', $this->screen_id, $screen ) ) {
 
 			$fields = $this->get_fields();
 

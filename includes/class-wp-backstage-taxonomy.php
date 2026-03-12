@@ -1535,9 +1535,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen = null ) {
+	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
 
-		if ( $this->is_screen( 'taxonomy', $this->slug ) ) {
+		if ( $this->is_screen( 'taxonomy', $this->slug, $screen ) ) {
 
 			$fields = $this->get_fields();
 

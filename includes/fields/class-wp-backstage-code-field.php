@@ -113,7 +113,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * @return void
 	 */
 	public function render_column( array $field = array(), $value = null ): void { ?>
-		<textrea readonly><?php echo esc_textarea( $value ); ?></textrea>
+		<textrea readonly><?php echo esc_textarea( $value ?? '' ); ?></textrea>
 	<?php }
 
 	/**
@@ -305,7 +305,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 			id="<?php $this->element_id( $field ); ?>"
 			class="code"
 			<?php $this->input_attrs( $field, array( 'name', 'id', 'class' ) ); ?>><?php
-				echo esc_textarea( $field['value'] );
+				echo esc_textarea( $field['value'] ?? '' );
 			?></textarea>
 
 		</span>

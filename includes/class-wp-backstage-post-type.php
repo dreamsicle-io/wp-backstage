@@ -1974,6 +1974,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * been modified by the user.
 	 *
 	 * @since   0.0.1
+	 * @since   4.0.0 Uses screen passed form hook to normalize functionality with hidden columns on collection screens.
 	 * @param   array     $hidden  An array of already-set hidden meta box IDs.
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of meta box ids

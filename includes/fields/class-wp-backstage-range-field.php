@@ -92,6 +92,7 @@ class WP_Backstage_Range_Field extends WP_Backstage_Field {
 
 			.wp-backstage-field--type-range input {
 				width: 100%;
+				accent-color: #2c3338;
 			}
 
 			#addtag .wp-backstage-field--type-range input,

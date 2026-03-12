@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-11T18:40:46+00:00\n"
+"POT-Creation-Date: 2026-03-12T14:17:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -1078,7 +1078,7 @@ msgctxt "widget - field label"
 msgid "%1$s:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:3577
+#: includes/class-wp-backstage.php:2786
 #: includes/fields/class-wp-backstage-media-field.php:126
 msgctxt "media item - remove"
 msgid "Remove"
@@ -2345,52 +2345,52 @@ msgid "All options"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1005
+#: includes/fields/class-wp-backstage-media-field.php:1006
 msgctxt "media field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1010
+#: includes/fields/class-wp-backstage-media-field.php:1011
 msgctxt "media field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1015
+#: includes/fields/class-wp-backstage-media-field.php:1016
 msgctxt "media field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1020
+#: includes/fields/class-wp-backstage-media-field.php:1021
 msgctxt "media field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1025
+#: includes/fields/class-wp-backstage-media-field.php:1026
 msgctxt "media field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1030
+#: includes/fields/class-wp-backstage-media-field.php:1031
 msgctxt "media field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1033
+#: includes/fields/class-wp-backstage-media-field.php:1034
 msgctxt "media field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1034
+#: includes/fields/class-wp-backstage-media-field.php:1035
 msgctxt "media field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1035
+#: includes/fields/class-wp-backstage-media-field.php:1036
 msgctxt "media field - try again button"
 msgid "Try again"
 msgstr ""
@@ -2464,17 +2464,17 @@ msgctxt "select users field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:201
+#: includes/fields/class-wp-backstage-time-field.php:203
 msgctxt "time field - hour"
 msgid "Hour"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:202
+#: includes/fields/class-wp-backstage-time-field.php:204
 msgctxt "time field - minute"
 msgid "Minute"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:203
+#: includes/fields/class-wp-backstage-time-field.php:205
 msgctxt "time field - second"
 msgid "Second"
 msgstr ""

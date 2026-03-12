@@ -32,27 +32,45 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param mixed $value The unsantized value.
+	 * @param string|array $value The unsantized value, as a time string `00:00:00`, or an associative array with keys `hour`, `minute`, `second`.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value = null ) {
-		$values = array(
-			'hour'   => isset( $value['hour'] ) ? $value['hour'] : '00',
-			'minute' => isset( $value['minute'] ) ? $value['minute'] : '00',
-			'second' => isset( $value['second'] ) ? $value['second'] : '00',
+	public function sanitize( $value = '' ) {
+
+		// If the passed in value is a string, parse it into a time array.
+		if ( is_string( $value ) ) {
+			$value = explode( ':', $value );
+			$value = array(
+				'hour'   => isset( $value[0] ) ? $value[0] : '00',
+				'minute' => isset( $value[1] ) ? $value[1] : '00',
+				'second' => isset( $value[2] ) ? $value[2] : '00',
+			);
+		}
+
+		$value = array(
+			'hour'   => isset( $value['hour'] ) ? max( 0, min( 23, absint( $value['hour'] ) ) ) : 0,
+			'minute' => isset( $value['minute'] ) ? max( 0, min( 59, absint( $value['minute'] ) ) ) : 0,
+			'second' => isset( $value['second'] ) ? max( 0, min( 59, absint( $value['second'] ) ) ) : 0,
 		);
-		return implode( ':', array_map( 'sanitize_key', $values ) );
+
+		return implode(
+			':',
+			array_map(
+				array( $this, 'get_time_piece' ),
+				$value
+			)
+		);
 	}
 
 	/**
-	 * Get Time Option
+	 * Get Time Piece
 	 *
 	 * @since 4.0.0
 	 * @param int $number The time option number to be converted to a two character string.
 	 * @return string A two character string.
 	 */
-	public function get_time_option( int $number = 0 ): string {
-		$option = esc_attr( $number );
+	public function get_time_piece( int $number = 0 ): string {
+		$option = strval( $number );
 		if ( strlen( $option ) === 1 ) {
 			$option = '0' . $option;
 		}
@@ -60,18 +78,21 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	}
 
 	/**
-	 * Get Time Values
+	 * Get Time Pieces
 	 *
 	 * @since 4.0.0
 	 * @param string $value The time string.
-	 * @return array An array of values as `[hour] => '00', [minute] => '00', [second] => '00'`.
+	 * @return array An array of values as `[hour] => '00'`, `[minute] => '00'`, `[second] => '00'`.
 	 */
-	public function get_time_values( string $value = '' ): array {
+	public function get_time_pieces( string $value = '' ): array {
 		$values = explode( ':', $value );
-		return array(
-			'hour'   => isset( $values[0] ) ? $values[0] : '00',
-			'minute' => isset( $values[1] ) ? $values[1] : '00',
-			'second' => isset( $values[2] ) ? $values[2] : '00',
+		return array_map(
+			array( $this, 'get_time_piece' ),
+			array(
+				'hour'   => isset( $values[0] ) ? max( 0, min( 23, absint( $values[0] ) ) ) : 0,
+				'minute' => isset( $values[1] ) ? max( 0, min( 59, absint( $values[1] ) ) ) : 0,
+				'second' => isset( $values[2] ) ? max( 0, min( 59, absint( $values[2] ) ) ) : 0,
+			)
 		);
 	}
 
@@ -130,6 +151,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 			(function() {
 
 				function setValue(control = null, value = '00:00:00') {
+					value = (typeof value === 'string') ? value : '00:00:00';
 					const values = value.split(':');
 					const hourSelect = control.querySelector('.wp-backstage-time-field__piece--hour select');
 					const minuteSelect = control.querySelector('.wp-backstage-time-field__piece--minute select');
@@ -139,8 +161,16 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					secondSelect.value = (values && values[2]) ? values[2] : '00';
 				}
 
+				function getValue(control = null) {
+					const hourSelect = control.querySelector('.wp-backstage-time-field__piece--hour select');
+					const minuteSelect = control.querySelector('.wp-backstage-time-field__piece--minute select');
+					const secondSelect = control.querySelector('.wp-backstage-time-field__piece--second select');
+					return [hourSelect.value, minuteSelect.value, secondSelect.value].join(':');
+				}
+
 				window.wpBackstage.fields.time = {
 					setValue: setValue,
+					getValue: getValue,
 				};
 
 			})();
@@ -175,7 +205,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 		$second_label = _x( 'Second', 'time field - second', 'wp_backstage' );
 		$value        = ! empty( $field['value'] ) ? $field['value'] : '';
 
-		$values = $this->get_time_values( $value ); ?>
+		$values = $this->get_time_pieces( $value ); ?>
 
 		<span 
 		class="<?php $this->root_class( $field, array( 'wp-backstage-time-field' ) ); ?>"
@@ -199,7 +229,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 24; $i++ ) {
-							$option = $this->get_time_option( $i ); ?>
+							$option = $this->get_time_piece( $i ); ?>
 							<option 
 							value="<?php echo esc_attr( $option ); ?>"
 							<?php selected( $option, $values['hour'] ); ?>><?php
@@ -231,7 +261,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 60; $i++ ) {
-							$option = $this->get_time_option( $i ); ?>
+							$option = $this->get_time_piece( $i ); ?>
 							<option 
 							value="<?php echo esc_attr( $option ); ?>"
 							<?php selected( $option, $values['minute'] ); ?>><?php
@@ -263,7 +293,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					<?php $this->input_attrs( $field, array( 'name', 'id' ) );?>>
 
 						<?php for ( $i = 0; $i < 60; $i++ ) {
-							$option = $this->get_time_option( $i ); ?>
+							$option = $this->get_time_piece( $i ); ?>
 							<option 
 							value="<?php echo esc_attr( $option ); ?>"
 							<?php selected( $option, $values['second'] ); ?>><?php

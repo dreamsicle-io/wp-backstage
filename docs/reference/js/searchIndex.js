@@ -1426,16 +1426,6 @@ Search.appendIndex(
             "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_script"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_backbone_override\u0028\u0029",
-            "name": "inline_nav_menu_item_customizer_backbone_override",
-            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Backbone\u0020Override",
-            "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_backbone_override"
-        },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_script_BACKUP\u0028\u0029",
-            "name": "inline_nav_menu_item_customizer_script_BACKUP",
-            "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_script_BACKUP"
-        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_customizer_script\u0028\u0029",
             "name": "inline_nav_menu_item_customizer_script",
             "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Script",
@@ -2371,15 +2361,15 @@ Search.appendIndex(
             "summary": "Sanitize",
             "url": "classes/WP-Backstage-Time-Field.html#method_sanitize"
         },                {
-            "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Aget_time_option\u0028\u0029",
-            "name": "get_time_option",
-            "summary": "Get\u0020Time\u0020Option",
-            "url": "classes/WP-Backstage-Time-Field.html#method_get_time_option"
+            "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Aget_time_piece\u0028\u0029",
+            "name": "get_time_piece",
+            "summary": "Get\u0020Time\u0020Piece",
+            "url": "classes/WP-Backstage-Time-Field.html#method_get_time_piece"
         },                {
-            "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Aget_time_values\u0028\u0029",
-            "name": "get_time_values",
-            "summary": "Get\u0020Time\u0020Values",
-            "url": "classes/WP-Backstage-Time-Field.html#method_get_time_values"
+            "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Aget_time_pieces\u0028\u0029",
+            "name": "get_time_pieces",
+            "summary": "Get\u0020Time\u0020Pieces",
+            "url": "classes/WP-Backstage-Time-Field.html#method_get_time_pieces"
         },                {
             "fqsen": "\\WP_Backstage_Time_Field\u003A\u003Ainline_style\u0028\u0029",
             "name": "inline_style",

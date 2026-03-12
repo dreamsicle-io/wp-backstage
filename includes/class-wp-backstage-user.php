@@ -85,7 +85,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 		$this->slug = 'user';
 		$this->set_args( $args );
-		$this->screen_id = array( 'user-edit', 'profile', 'user' );
+		$this->screen_id = array( 'user-edit', 'profile', 'user', 'users' );
 		$this->nonce_key = '_wp_backstage_user_nonce';
 		$this->set_errors();
 
@@ -256,10 +256,19 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
 	 * @return  void
 	 */
-	public function add_help_tabs( $screen = null ) {
+	public function add_help_tabs( $screen ) {
 
-		if ( $screen->id === 'user-edit' || $screen->id === 'profile' ) {
-
+		if ( $screen->id === 'users' ) {
+			// REST API collection preview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => 'wp_backstage_rest_api_preview',
+					'title'    => _x( 'REST API', 'user rest api collection preview help tab - title', 'wp_backstage' ),
+					'callback' => array( $this, 'render_rest_api_collection_preview_help_tab' ),
+					'priority' => 90,
+				)
+			);
+		} elseif ( $screen->id === 'user-edit' || $screen->id === 'profile' ) {
 			// REST API preview help tab.
 			$screen->add_help_tab(
 				array(
@@ -273,6 +282,41 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Render API Collection Preview Help Tab
+	 *
+	 * @since 4.0.0
+	 * @param WP_Screen $screen The current WP_Screen instance.
+	 * @param array     $args An array of help tab arguments.
+	 * @return void
+	 */
+	public function render_rest_api_collection_preview_help_tab( $screen, $args = array() ) {
+		$rest_namespace = 'wp/v2';
+		$rest_base      = 'users';
+		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
+
+		/**
+		 * Fires before the user REST API collection help tab content.
+		 *
+		 * @since  4.0.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_user_rest_api_collection_preview_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( _x( '<strong>REST API</strong> ― Preview the WordPress REST API response for the users collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records.', 'user rest api collection help tab - title', 'wp_backstage' ) ) );
+		$this->render_rest_api_preview( $path );
+
+		/**
+		 * Fires after the user REST API collection help tab content.
+		 *
+		 * @since  4.0.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_user_rest_api_collection_preview_help_tab_after', $screen, $args );
+	}
+
+	/**
 	 * Render API Preview Help Tab
 	 *
 	 * @since 3.4.0
@@ -280,7 +324,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen = null, $args = array() ) {
+	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
 		//phpcs:ignore WordPress.Security.NonceVerification
 		$params         = wp_unslash( $_GET );
 		$user_id        = isset( $params['user_id'] ) ? absint( $params['user_id'] ) : 0;

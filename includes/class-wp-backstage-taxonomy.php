@@ -1530,6 +1530,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 *
 	 * @since   0.0.1
+	 * @since   4.0.0 Uses screen passed form hook to fix extra column display after quick edit.
 	 * @since   3.0.0      Only add the field to hidden columns array if the field is set to have a column.
 	 * @param   array     $hidden  An array of hidden columns.
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.

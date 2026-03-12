@@ -2442,6 +2442,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * UI has never been modified by the user.
 	 *
 	 * @since   0.0.1
+	 * @since   4.0.0 Uses screen passed form hook to fix extra column display after quick edit.
 	 * @since   3.0.0      Only add the field to hidden columns array if the field is set to have a column.
 	 * @param   array     $hidden  An array of already-set hidden column names.
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.

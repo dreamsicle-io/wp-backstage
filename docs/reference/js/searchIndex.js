@@ -1111,6 +1111,11 @@ Search.appendIndex(
             "summary": "Add\u0020Help\u0020Tabs",
             "url": "classes/WP-Backstage-User.html#method_add_help_tabs"
         },                {
+            "fqsen": "\\WP_Backstage_User\u003A\u003Arender_rest_api_collection_preview_help_tab\u0028\u0029",
+            "name": "render_rest_api_collection_preview_help_tab",
+            "summary": "Render\u0020API\u0020Collection\u0020Preview\u0020Help\u0020Tab",
+            "url": "classes/WP-Backstage-User.html#method_render_rest_api_collection_preview_help_tab"
+        },                {
             "fqsen": "\\WP_Backstage_User\u003A\u003Arender_rest_api_preview_help_tab\u0028\u0029",
             "name": "render_rest_api_preview_help_tab",
             "summary": "Render\u0020API\u0020Preview\u0020Help\u0020Tab",

@@ -631,7 +631,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
 	 * @return  void
 	 */
-	public function add_help_tabs( $screen = null ) {
+	public function add_help_tabs( $screen ) {
 
 		if ( $screen->base === 'edit' && $screen->post_type === $this->slug ) {
 
@@ -767,7 +767,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_discussion_settings_help_tab( $screen = null, $args = array() ) {
+	public function render_discussion_settings_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -817,7 +817,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_publish_settings_help_tab( $screen = null, $args = array() ) {
+	public function render_publish_settings_help_tab( $screen, $args = array() ) {
 		$post_type_obj        = get_post_type_object( $screen->post_type );
 		$post_type_taxonomies = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -976,7 +976,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_inserting_media_help_tab( $screen = null, $args = array() ) {
+	public function render_inserting_media_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1016,7 +1016,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_title_and_editor_help_tab( $screen = null, $args = array() ) {
+	public function render_title_and_editor_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -1073,7 +1073,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_customize_display_help_tab( $screen = null, $args = array() ) {
+	public function render_customize_display_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		global $wp_meta_boxes;
@@ -1124,7 +1124,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_bulk_actions_help_tab( $screen = null, $args = array() ) {
+	public function render_bulk_actions_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1165,7 +1165,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_available_actions_help_tab( $screen = null, $args = array() ) {
+	public function render_available_actions_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1248,7 +1248,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_screen_content_help_tab( $screen = null, $args = array() ) {
+	public function render_screen_content_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1349,7 +1349,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab args.
 	 * @return void
 	 */
-	public function render_overview_help_tab( $screen = null, $args = array() ) {
+	public function render_overview_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1453,7 +1453,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen = null, $args = array() ) {
+	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
 		$post_id       = get_the_ID();
 		$post_type_obj = get_post_type_object( $this->slug );
 		$path          = sprintf( '/%1$s/%2$s/%3$d', $post_type_obj->rest_namespace, $post_type_obj->rest_base, $post_id );
@@ -1483,12 +1483,12 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	/**
 	 * Render REST API Collection Preview Help Tab
 	 *
-	 * @since 4.0.1
+	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( $screen = null, $args = array() ) {
+	public function render_rest_api_collection_preview_help_tab( $screen, $args = array() ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$path = sprintf( '/%1$s/%2$s', $post_type_obj->rest_namespace, $post_type_obj->rest_base );
@@ -1496,7 +1496,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		/**
 		 * Fires before the post type REST API collection preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */
@@ -1516,7 +1516,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		/**
 		 * Fires after the post type REST API collection preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */

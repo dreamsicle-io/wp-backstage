@@ -434,7 +434,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
 	 * @return  void
 	 */
-	public function add_help_tabs( $screen = null ) {
+	public function add_help_tabs( $screen ) {
 
 		if ( $screen->base === 'edit-tags' && $screen->taxonomy === $this->slug ) {
 
@@ -498,7 +498,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_adding_terms_help_tab( $screen = null, $args = array() ) {
+	public function render_adding_terms_help_tab( $screen, $args = array() ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 		$bullets      = array();
 
@@ -590,7 +590,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_overview_help_tab( $screen = null, $args = array() ) {
+	public function render_overview_help_tab( $screen, $args = array() ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 
 		$post_type_links = array();
@@ -658,7 +658,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen = null, $args = array() ) {
+	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
 		// phpcs:ignore WordPress.Security.NonceVerification
 		$params       = wp_unslash( $_GET );
 		$term_id      = isset( $params['tag_ID'] ) ? absint( $params['tag_ID'] ) : 0;
@@ -690,20 +690,19 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	/**
 	 * Render REST API Collection Preview Help Tab
 	 *
-	 * @since 4.0.1
+	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( $screen = null, $args = array() ) {
+	public function render_rest_api_collection_preview_help_tab( $screen, $args = array() ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
-
-		$path = sprintf( '/%1$s/%2$s', $taxonomy_obj->rest_namespace, $taxonomy_obj->rest_base );
+		$path         = sprintf( '/%1$s/%2$s', $taxonomy_obj->rest_namespace, $taxonomy_obj->rest_base );
 
 		/**
 		 * Fires before the taxonomy REST API collection preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */
@@ -723,7 +722,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		/**
 		 * Fires after the taxonomy REST API collection preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */

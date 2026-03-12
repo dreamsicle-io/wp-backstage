@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-12T17:37:36+00:00\n"
+"POT-Creation-Date: 2026-03-12T18:10:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp_backstage\n"
@@ -949,120 +949,120 @@ msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:716
+#: includes/class-wp-backstage-taxonomy.php:715
 msgctxt "taxonomy rest api collection help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the %1$s collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:796
+#: includes/class-wp-backstage-taxonomy.php:795
 msgctxt "taxonomy table filter - submit"
 msgid "Filter"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:868
+#: includes/class-wp-backstage-taxonomy.php:867
 msgctxt "taxonomy labels - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:873
+#: includes/class-wp-backstage-taxonomy.php:872
 msgctxt "taxonomy labels - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:878
+#: includes/class-wp-backstage-taxonomy.php:877
 msgctxt "taxonomy labels - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:883
+#: includes/class-wp-backstage-taxonomy.php:882
 msgctxt "taxonomy labels - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:888
+#: includes/class-wp-backstage-taxonomy.php:887
 msgctxt "taxonomy labels - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:893
+#: includes/class-wp-backstage-taxonomy.php:892
 msgctxt "taxonomy labels - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:898
+#: includes/class-wp-backstage-taxonomy.php:897
 msgctxt "taxonomy labels - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:903
+#: includes/class-wp-backstage-taxonomy.php:902
 msgctxt "taxonomy labels - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:908
+#: includes/class-wp-backstage-taxonomy.php:907
 msgctxt "taxonomy labels - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:913
+#: includes/class-wp-backstage-taxonomy.php:912
 msgctxt "taxonomy labels - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:918
+#: includes/class-wp-backstage-taxonomy.php:917
 msgctxt "taxonomy labels - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:923
+#: includes/class-wp-backstage-taxonomy.php:922
 msgctxt "taxonomy labels - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:928
+#: includes/class-wp-backstage-taxonomy.php:927
 msgctxt "taxonomy labels - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:933
+#: includes/class-wp-backstage-taxonomy.php:932
 msgctxt "taxonomy labels - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:938
+#: includes/class-wp-backstage-taxonomy.php:937
 msgctxt "taxonomy labels - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:943
+#: includes/class-wp-backstage-taxonomy.php:942
 msgctxt "taxonomy labels - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:948
+#: includes/class-wp-backstage-taxonomy.php:947
 msgctxt "taxonomy labels - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:953
+#: includes/class-wp-backstage-taxonomy.php:952
 msgctxt "taxonomy labels - back to items"
 msgid "&larr; Go to %1$s"
 msgstr ""
@@ -1073,17 +1073,27 @@ msgctxt "user - required arg error"
 msgid "[User] The %1$s key is required."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:267
+#: includes/class-wp-backstage-user.php:266
+msgctxt "user rest api collection preview help tab - title"
+msgid "REST API"
+msgstr ""
+
+#: includes/class-wp-backstage-user.php:276
 msgctxt "user rest api preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:304
+#: includes/class-wp-backstage-user.php:306
+msgctxt "user rest api collection help tab - title"
+msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the users collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records."
+msgstr ""
+
+#: includes/class-wp-backstage-user.php:348
 msgctxt "user rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this user. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:607
+#: includes/class-wp-backstage-user.php:651
 msgctxt "users table filter - submit"
 msgid "Filter"
 msgstr ""

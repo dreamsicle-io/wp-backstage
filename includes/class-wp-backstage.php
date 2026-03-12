@@ -1082,6 +1082,12 @@ class WP_Backstage {
 				clear: both;
 			}
 
+			/* Menu item fields */
+			.menu-item-settings .wp-backstage-field + .description {
+				display: block;
+				margin-top: 6px;
+			}
+
 			/* Options pages */
 			@media screen and (max-width: 782px) {
 				#wp_backstage_options_page_wrap .form-table {
@@ -2387,420 +2393,93 @@ class WP_Backstage {
 	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
 	 * @return  void
 	 */
-	public function inline_nav_menu_item_customizer_script_BACKUP() { ?>
-
-		<script 
-		id="wp_backstage_nav_menu_item_customizer_script"
-		type="text/javascript">
-
-			(function($) {
-
-				var controlExpandTimer = null;
-
-				function setControlElementValue(controlElement = null, value = undefined, menuItemID = 0) {
-					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
-					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
-					const elementName = 'menu-item-' + fieldName + '[' + menuItemID + ']';
-					switch (fieldType) {
-						case 'checkbox': {
-							const input = controlElement.element.find('[name="' + elementName + '"]');
-							input.attr('checked', Boolean(value));
-							break;
-						}
-						case 'radio': {
-							const radios = controlElement.element.find('[name="' + elementName + '"]');
-							if (! value && (radios.length > 0)) {
-								value = $(radios[0]).val();
-							}
-							radios.each(function() {
-								const radio = $(this);
-								radio.attr('checked', (radio.val() === value));
-							});
-							break;
-						}
-						case 'checkbox_set': {
-							const checkboxes = controlElement.element.find('[name="' + elementName + '[]"]');
-							checkboxes.each(function() {
-								const checkbox = $(this);
-								checkbox.attr('checked', (Array.isArray(value) && value.includes(checkbox.val())));
-							});
-							break;
-						}
-						case 'time': {
-							const timePieces = (value && ! Array.isArray(value)) ? value.split(':') : value;
-							const hourSelect = controlElement.element.find('[name="' + elementName + '[hour]"]');
-							const minuteSelect = controlElement.element.find('[name="' + elementName + '[minute]"]');
-							const secondSelect = controlElement.element.find('[name="' + elementName + '[second]"]');
-							hourSelect.val((timePieces && timePieces[0]) ? timePieces[0] : hourSelect.find('option:first-child').val());
-							minuteSelect.val((timePieces && timePieces[1]) ? timePieces[1] : minuteSelect.find('option:first-child').val());
-							secondSelect.val((timePieces && timePieces[2]) ? timePieces[2] : secondSelect.find('option:first-child').val());
-							break;
-						}
-						case 'address': {
-							const countrySelect = controlElement.element.find('[name="' + elementName + '[country]"]');
-							const address1Input = controlElement.element.find('[name="' + elementName + '[address_1]"]');
-							const address2Input = controlElement.element.find('[name="' + elementName + '[address_2]"]');
-							const cityInput = controlElement.element.find('[name="' + elementName + '[city]"]');
-							const stateSelect = controlElement.element.find('select[name="' + elementName + '[state]"]');
-							const stateInput = controlElement.element.find('input[name="' + elementName + '[state]"]');
-							const zipInput = controlElement.element.find('[name="' + elementName + '[zip]"]');
-							countrySelect.val((value && value.country) ? value.country : 'US');
-							address1Input.val((value && value.address_1) ? value.address_1 : '');
-							address2Input.val((value && value.address_2) ? value.address_2 : '');
-							cityInput.val((value && value.city) ? value.city : '');
-							stateSelect.val((value && value.state) ? value.state : 'AL');
-							stateInput.val((value && value.state) ? value.state : '');
-							zipInput.val((value && value.zip) ? value.zip : '');
-							break;
-						}
-						case 'select': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							select.val(value || select.find('option:first-child').val());
-							break;
-						}
-						case 'select_posts': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							value = parseInt(value, 10);
-							value = value ? value.toString() : undefined;
-							select.val(value || select.find('option:first-child').val());
-							break;
-						}
-						case 'select_users': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							value = parseInt(value, 10);
-							value = value ? value.toString() : undefined;
-							select.val(value || select.find('option:first-child').val());
-							break;
-						}
-						default: {
-							const input = controlElement.element.find('[name="' + elementName + '"]');
-							input.val(value);
-							break;
-						}
-					}
-				}
-
-				function initControlElementChangeHandler(controlElement = null, setting = null, menuItemID = 0) {
-					const fieldName = controlElement.element.attr('data-wp-backstage-field-name');
-					const fieldType = controlElement.element.attr('data-wp-backstage-field-type');
-					const elementName = 'menu-item-' + fieldName + '[' + menuItemID + ']';
-					switch (fieldType) {
-						case 'checkbox': {
-							const input = controlElement.element.find('[name="' + elementName + '"]');
-							input.on('change', function(e) {
-								handleSettingChange(setting, fieldName, e.target.checked ? e.target.value : undefined);
-							});
-							break;
-						}
-						case 'radio': {
-							const radios = controlElement.element.find('[name="' + elementName + '"]');
-							radios.each(function() {
-								const radio = $(this);
-								radio.on('change', function(e) {
-									if (e.target.checked) {
-										handleSettingChange(setting, fieldName, e.target.value);
-									}
-								});
-							});
-							break;
-						}
-						case 'checkbox_set': {
-							const checkboxes = controlElement.element.find('[name="' + elementName + '[]"]');
-							checkboxes.each(function() {
-								const checkbox = $(this);
-								checkbox.on('change', function(e) {
-									handleCheckboxSetSettingChange(setting, fieldName, e.target.value, e.target.checked);
-								});
-							});
-							break;
-						}
-						case 'time': {
-							const hourSelect = controlElement.element.find('[name="' + elementName + '[hour]"]');
-							const minuteSelect = controlElement.element.find('[name="' + elementName + '[minute]"]');
-							const secondSelect = controlElement.element.find('[name="' + elementName + '[second]"]');
-							hourSelect.on('change', function(e) {
-								handleTimeSettingChange(setting, fieldName, 0, e.target.value);
-							});
-							minuteSelect.on('change', function(e) {
-								handleTimeSettingChange(setting, fieldName, 1, e.target.value);
-							});
-							secondSelect.on('change', function(e) {
-								handleTimeSettingChange(setting, fieldName, 2, e.target.value);
-							});
-							break;
-						}
-						case 'address': {
-							const countrySelect = controlElement.element.find('[name="' + elementName + '[country]"]');
-							const address1Input = controlElement.element.find('[name="' + elementName + '[address_1]"]');
-							const address2Input = controlElement.element.find('[name="' + elementName + '[address_2]"]');
-							const cityInput = controlElement.element.find('[name="' + elementName + '[city]"]');
-							const stateSelect = controlElement.element.find('select[name="' + elementName + '[state]"]');
-							const stateInput = controlElement.element.find('input[name="' + elementName + '[state]"]');
-							const zipInput = controlElement.element.find('[name="' + elementName + '[zip]"]');
-							countrySelect.on('change', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'country', e.target.value);
-							});
-							address1Input.on('change input propertychange paste', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'address_1', e.target.value);
-							});
-							address2Input.on('change input propertychange paste', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'address_2', e.target.value);
-							});
-							cityInput.on('change input propertychange paste', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'city', e.target.value);
-							});
-							stateSelect.on('change', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'state', e.target.value);
-							});
-							stateInput.on('change input propertychange paste', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'state', e.target.value);
-							});
-							zipInput.on('change input propertychange paste', function(e) {
-								handleAddressSettingChange(setting, fieldName, 'zip', e.target.value);
-							});
-							break;
-						}
-						case 'select': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							select.on('change', function(e) {
-								handleSettingChange(setting, fieldName, e.target.value );
-							});
-							break;
-						}
-						case 'select_posts': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							select.on('change', function(e) {
-								handleSettingChange(setting, fieldName, e.target.value );
-							});
-							break;
-						}
-						case 'select_users': {
-							const select = controlElement.element.find('[name="' + elementName + '"]');
-							select.on('change', function(e) {
-								handleSettingChange(setting, fieldName, e.target.value );
-							});
-							break;
-						}
-						default: {
-							const input = controlElement.element.find('[name="' + elementName + '"]');
-							input.on('change input propertychange paste', function(e) {
-								handleSettingChange(setting, fieldName, e.target.value);
-							});
-							break;
-						}
-					}
-				}
-
-				function setControlValues(control = null) {
-					const values = control.setting();
-					const elements = control.wpBackstageElements;
-					for (var fieldName in elements) {
-						setControlElementValue(elements[fieldName], values[fieldName], control.params.menu_item_id);
-					}
-				}
-
-				function extendControl(control = null) {
-					control.wpBackstageElements = {};
-					const fields = control.container.find('[data-wp-backstage-field-name]');
-					fields.each(function() {
-						const field = $(this);
-						const fieldName = field.attr('data-wp-backstage-field-name');
-						const fieldFound = control.container.find('[data-wp-backstage-field-name="' + fieldName + '"]');
-						control.wpBackstageElements[fieldName] = new wp.customize.Element(fieldFound);
-					});
-				}
-
-				function initFields(control = null) {
-					window.wpBackstage.initAllFields(control.container[0]);
-				}
-
-				function handleControlExpanded(control =  null) {
-					window.wpBackstage.refreshAllFields(control.container[0]);
-				}
-
-				function handleNavMenuSortStop(e = null, ui = null) {
-					const item = ui.item[0];
-					if (item.classList.contains('menu-item')) {
-						window.wpBackstage.editor.refreshAll(item);
-						window.wpBackstage.codeEditor.refreshAll(item);
-					}
-				}
-
-				function handleSectionInitSortables(section = null) {
-					section.contentContainer.on('sortstop', handleNavMenuSortStop);
-				}
-
-				function handleSettingChange(setting = null, fieldName = '', value = undefined) {
-					const currentValues = setting();
-					if (currentValues[fieldName] !== value) {
-						setting.set(Object.assign(
-							{},
-							_.clone(currentValues),
-							{ [fieldName]: value }
-						));
-					}
-				}
-
-				function handleAddressSettingChange(setting = null, fieldName = '', addressKey = '', value = undefined) {
-					const currentValues = setting();
-					if (! currentValues[fieldName] || currentValues[fieldName][addressKey] !== value) {
-						handleSettingChange(setting, fieldName, Object.assign(
-							{},
-							_.clone(currentValues[fieldName]),
-							{ [addressKey]: value }
-						));
-					}
-				}
-
-				function handleTimeSettingChange(setting = null, fieldName = '', index = 0, value = undefined) {
-					const currentValues = setting();
-					const timePieces = currentValues[fieldName] ? _.clone(currentValues[fieldName]).split(':') : ['00', '00', '00'];
-					if (timePieces[index] !== value) {
-						timePieces[index] = value;
-						handleSettingChange(setting, fieldName, timePieces.join(':'));
-					}
-				}
-
-				function handleCheckboxSetSettingChange(setting = null, fieldName = '', value = undefined, checked = false) {
-					const currentValues = setting();
-					const values = currentValues[fieldName] ? _.clone(currentValues[fieldName]) : [];
-					if (checked) {
-						values.push(value);
-					} else {
-						index = values.indexOf(value);
-						if (index >= 0) {
-							values.splice(index, 1);
-						}
-					}
-					handleSettingChange(setting, fieldName, values);
-				}
-
-				function initChangeHandlers(control = null) {
-					const elements = control.wpBackstageElements;
-					for (var fieldName in elements) {
-						initControlElementChangeHandler(elements[fieldName], control.setting, control.params.menu_item_id);
-					}
-				}
-
-				function handleSectionExpanded(section = null) {
-					const openNavMenuItems = section.contentContainer.find('.menu-item-edit-active');
-					for (var i = 0; i < openNavMenuItems.length; i++) {
-						window.wpBackstage.editor.refreshAll(openNavMenuItems[i]);
-						window.wpBackstage.codeEditor.refreshAll(openNavMenuItems[i]);
-					}
-				}
-
-				function init() {
-					wp.customize.bind( 'ready', function() {
-						wp.customize.section.each(function(section) { 
-							if (section.id.startsWith('nav_menu')) {
-								section.expanded.bind(function(isExpanded) {
-									if (isExpanded) {
-										handleSectionExpanded(section);
-									}
-								});
-								section.deferred.initSortables.done(function() {
-									handleSectionInitSortables(section);
-								});
-							}
-						});
-					});
-					wp.customize.control.bind('add', function(control) {
-						if (control.extended(wp.customize.Menus.MenuItemControl)) {
-							control.deferred.embedded.done(function() {
-
-								setTimeout(function() {
-									extendControl(control);
-									setControlValues(control);
-									initFields(control);
-									initChangeHandlers(control);
-								}, 500);
-
-								control.expanded.bind(function(isExpanded) {
-									if (controlExpandTimer) {
-										clearTimeout(controlExpandTimer);
-									}
-									controlExpandTimer = setTimeout(function() {
-										if (isExpanded) {
-											handleControlExpanded(control);
-										}
-									}, 500);
-								});
-
-							});
-						}
-					});
-				}
-
-				document.addEventListener('DOMContentLoaded', function(e) {
-					init();
-				});
-
-			})(jQuery);
-
-		</script>
-
-	<?php }
-
-	/**
-	 * Inline Nav Menu Item Customizer Script
-	 *
-	 * @link    https://wordpress.stackexchange.com/questions/372493/add-settings-to-menu-items-in-the-customizer  Stack Overflow Discussion on Nav Menu Items in the Customizer
-	 * @link    https://gist.github.com/westonruter/7f2b9c18113f0576a72e0aca3ce3dbcb  Customizer Roles Plugin Example by Weston Ruter
-	 *
-	 * @since   2.0.0
-	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
-	 * @return  void
-	 */
 	public function inline_nav_menu_item_customizer_script() { ?>
 
 		<script id="wp_backstage_nav_menu_item_customizer_script">
-
 			(function($) {
 
-				function setControlValues(control = null) {
-					const values = control.setting().meta;
-					for (var fieldName in control.elements) {
-						const field = control.elements[fieldName].element[0];
-						if ((field instanceof HTMLElement) && field.classList.contains('wp-backstage-field')) {
-							const type = field.dataset.fieldType;
-							if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].setValue === 'function')) {
-								window.wpBackstage.fields[type].setValue(field, values[fieldName]);
+				var expandTimer = null;
+
+				function getFieldValue(field) {
+					const type = field.dataset.fieldType;
+					if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].getValue === 'function')) {
+						return window.wpBackstage.fields[type].getValue(field);
+					} else {
+						const fieldId = field.dataset.fieldId;
+						const input = field.querySelector('#' + fieldId);
+						if (input instanceof HTMLInputElement) {
+							if (input.type === 'checkbox') {
+								return input.checked ? input.value : undefined;
 							} else {
-								const fieldId = field.dataset.fieldId;
-								const value = values[fieldName];
-								const input = field.querySelector('#' + fieldId);
-								if (input instanceof HTMLInputElement) {
-									if (input.type === 'checkbox') {
-										input.checked = Boolean(value);
-									} else {
-										input.value = value.toString();
-									}
-								} else if (input instanceof HTMLTextAreaElement) {
-									input.value = value.toString();
-								} else if (input instanceof HTMLSelectElement) {
-									input.value = value.toString() || input.options[0].value;
-								}
+								return input.value;
+							}
+						} else if (input instanceof HTMLTextAreaElement) {
+							return input.value;
+						} else if (input instanceof HTMLSelectElement) {
+							return input.value;
+						}
+					}
+					return undefined;
+				}
+
+				function setFieldValue(field, value = undefined) {
+					const type = field.dataset.fieldType;
+					if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].setValue === 'function')) {
+						window.wpBackstage.fields[type].setValue(field, value);
+					} else {
+						const fieldId = field.dataset.fieldId;
+						const input = field.querySelector('#' + fieldId);
+						if (input instanceof HTMLInputElement) {
+							if (input.type === 'checkbox') {
+								input.checked = Boolean(value);
+							} else {
+								input.value = value ? value.toString() : '';
+							}
+						} else if (input instanceof HTMLTextAreaElement) {
+							input.value = value ? value.toString() : '';
+						} else if (input instanceof HTMLSelectElement) {
+							input.value = (value ? value.toString() : '') || input.options[0].value;
+						}
+					}
+				}
+
+				function setControlValues(control) {
+					const values = control.setting().meta;
+					if (values) {
+						for (const fieldName in control.elements) {
+							const field = control.elements[fieldName].element[0];
+							if ((field instanceof HTMLElement) && field.classList.contains('wp-backstage-field')) {
+								setFieldValue(field, values[fieldName]);
 							}
 						}
 					}
 				}
 
-				function extendControl(control = null) {
+				function extendControl(control) {
 					const containers = control.container.find('[data-wp-backstage-field-name]');
 					containers.each(function() {
 						const container = $(this);
 						const fieldName = container.attr('data-wp-backstage-field-name');
 						const field = container.find('.wp-backstage-field');
+						field.on('change input', function() {
+							const controlValue = control.setting();
+							const fieldValue = getFieldValue(field[0]);
+							const newValues = Object.assign(_.clone(controlValue || {}), {
+								meta: Object.assign(_.clone(controlValue.meta || {}), {
+									[fieldName]: fieldValue,
+								}),
+							});
+							control.setting.set(newValues);
+						});
 						control.elements[fieldName] = new wp.customize.Element(field);
 					});
 				}
 
-				function initFields(control = null) {
+				function initFields(control) {
 					window.wpBackstage.initAllFields(control.container[0]);
 				}
 
-				function refreshFields(control =  null) {
+				function refreshFields(control) {
 					window.wpBackstage.refreshAllFields(control.container[0]);
 				}
 
@@ -2810,10 +2489,18 @@ class WP_Backstage {
 							control.deferred.embedded.done(function() {
 								extendControl(control);
 								setControlValues(control);
-								initFields(control);
-
 								control.expanded.bind(function(isExpanded) {
-									if (isExpanded) refreshFields(control);
+									if (expandTimer) clearTimeout(expandTimer);
+									if (isExpanded) {
+										expandTimer = setTimeout(function() {
+											if (control.container[0].dataset.wpBackstageInitialized !== 'true') {
+												initFields(control);
+												control.container[0].dataset.wpBackstageInitialized = 'true';
+											} else {
+												refreshFields(control);
+											}
+										}, 500);
+									}
 								});
 							});
 						}

@@ -409,6 +409,7 @@ class WP_Backstage {
 		add_action( 'admin_print_footer_scripts-profile.php', array( $this, 'inline_user_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-user-new.php', array( $this, 'inline_user_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-user-edit.php', array( $this, 'inline_user_script' ), 10 );
+		add_action( 'admin_print_footer_scripts-index.php', array( $this, 'inline_dashboard_widget_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-widgets.php', array( $this, 'inline_widget_script' ), 10 );
 		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
 		add_action( 'customize_controls_print_scripts', array( $this, 'inline_nav_menu_item_customizer_script' ), 10 );
@@ -1084,6 +1085,12 @@ class WP_Backstage {
 
 			/* Menu item fields */
 			.menu-item-settings .wp-backstage-field + .description {
+				display: block;
+				margin-top: 6px;
+			}
+
+			/* Dashboard widget fields */
+			#dashboard-widgets .postbox .wp-backstage-field + .description {
 				display: block;
 				margin-top: 6px;
 			}
@@ -2215,6 +2222,12 @@ class WP_Backstage {
 					});
 				}
 
+				function handleBlockEditorLoad() {
+					setTimeout(function() {
+						window.wpBackstage.refreshAllFields();
+					}, 500); 
+				}
+
 				function init() {
 					window.wpBackstage.initAllFields();
 					initAllMetaBoxes();
@@ -2223,12 +2236,6 @@ class WP_Backstage {
 					if (window._wpLoadBlockEditor) {
 						window._wpLoadBlockEditor.then(handleBlockEditorLoad);
 					}
-				}
-
-				function handleBlockEditorLoad() {
-					setTimeout(function() {
-						window.wpBackstage.refreshAllFields();
-					}, 500); 
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {
@@ -2592,6 +2599,40 @@ class WP_Backstage {
 	<?php }
 
 	/**
+	 * Inline Dashboard Widget Script
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function inline_dashboard_widget_script() { ?>
+
+		<script id="wp_backstage_dashboard_widget_script">
+
+			(function($) {
+
+				function init() {
+					window.wpBackstage.initAllFields();
+				}
+
+				function handleWidgetSorted(e = null, $sortable = null) {
+					const widget = $sortable.item[0];
+					if (widget && widget.classList.contains('postbox')) {
+						window.wpBackstage.refreshAllFields(widget);
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					init();
+					$(document).on('sortstop', handleWidgetSorted);
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
 	 * Inline Widget Script
 	 *
 	 * @since   2.0.0
@@ -2699,7 +2740,7 @@ class WP_Backstage {
 					const $widget = $sortable.item.find('.widget.open');
 					if ($widget && $widget[0]) {
 						const widget = $widget[0];
-						window.wpBackstage.editor.refreshAllFields(widget);
+						window.wpBackstage.refreshAllFields(widget);
 					}
 				}
 

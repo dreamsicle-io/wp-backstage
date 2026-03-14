@@ -27,7 +27,7 @@
 - Shared component base:
   - [`includes/class-wp-backstage-component.php`](./includes/class-wp-backstage-component.php) (field utilities, common rendering/sanitization helpers, table/filter helpers, nonce helpers).
 - Components:
-  - Post type, taxonomy, options, user, nav menu item, widget + widget base in `includes/`.
+  - Post type, taxonomy, options, user, nav menu item, widget, dashboard widget, and base adapters in `includes/`.
 - Field system:
   - Base field class + concrete types in `includes/fields/`.
   - Field classes own schema, sanitization, render behavior, and optional JS integration.
@@ -43,6 +43,7 @@
   - `WP_Backstage_User::modify()`
   - `WP_Backstage_Nav_Menu_Item::modify()`
   - `WP_Backstage_Widget::add()`
+  - `WP_Backstage_Dashboard_Widget::add()`
 - Contract expectations:
   - Components parse incoming args against defaults, validate required args, and call `init()`.
   - Component `init()` methods must call `parent::init()`.
@@ -88,6 +89,8 @@
   - `wp_backstage_widget_output_{slug}`
   - `wp_backstage_widget_form_{slug}`
   - `wp_backstage_widget_save_{slug}`
+- Dashboard widget dynamic hooks:
+  - `wp_backstage_dashboard_widget_output_{slug}`
 - Taxonomy list-table query helpers:
   - `wp_backstage_{slug}_terms_list_table_query`
   - `wp_backstage_{slug}_terms_list_table_count_query`
@@ -114,7 +117,7 @@
 ## 8. Verification Workflow
 - Verify claims with targeted search:
   - `rg -n "do_action\\( 'wp_backstage_init'|wp_backstage_register_field_classes|register_field_class|get_field_class|get_field_classes" wp-backstage.php includes/class-wp-backstage.php`
-  - `rg -n "WP_Backstage_Post_Type::add|WP_Backstage_Post_Type::modify|WP_Backstage_Taxonomy::add|WP_Backstage_Taxonomy::modify|WP_Backstage_Options::add|WP_Backstage_User::modify|WP_Backstage_Nav_Menu_Item::modify|WP_Backstage_Widget::add" examples/tests.php`
+  - `rg -n "WP_Backstage_Post_Type::add|WP_Backstage_Post_Type::modify|WP_Backstage_Taxonomy::add|WP_Backstage_Taxonomy::modify|WP_Backstage_Options::add|WP_Backstage_User::modify|WP_Backstage_Nav_Menu_Item::modify|WP_Backstage_Widget::add|WP_Backstage_Dashboard_Widget::add" examples/tests.php`
   - `rg -n "has_tag\\( 'text_control'|has_tag\\( 'textarea_control'|has_tag\\( 'select_control'|has_tag\\( 'remove_label_for'|has_tag\\( 'hide_label'|has_tag\\( 'is_filterable'" includes`
   - `rg -n "window\\.wpBackstage\\.fields\\." includes/fields`
 - Cross-check field argument guidance against live field implementations and [`examples/tests.php`](./examples/tests.php).

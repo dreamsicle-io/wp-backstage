@@ -56,6 +56,6 @@ Declare work complete only when the code:
 
 - Is functionally correct.
 - Is stylistically and structurally indistinguishable from surrounding repository code.
-- Feels written by the same developers as the rest of the application
+- Feels written by the same developers as the rest of the application.
 
 If uncertain between two valid implementations, choose the option that best matches adjacent files and existing conventions.

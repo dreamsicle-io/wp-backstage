@@ -1471,6 +1471,11 @@ Search.appendIndex(
             "summary": "Inline\u0020Options\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_options_script"
         },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_dashboard_widget_script\u0028\u0029",
+            "name": "inline_dashboard_widget_script",
+            "summary": "Inline\u0020Dashboard\u0020Widget\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_dashboard_widget_script"
+        },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_widget_script\u0028\u0029",
             "name": "inline_widget_script",
             "summary": "Inline\u0020Widget\u0020Script",
@@ -2450,6 +2455,101 @@ Search.appendIndex(
             "name": "render_column",
             "summary": "Render\u0020Column",
             "url": "classes/WP-Backstage-URL-Field.html#method_render_column"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget",
+            "name": "WP_Backstage_Dashboard_Widget",
+            "summary": "WP\u0020Backstage\u0020Dashboard\u0020Widget",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Add",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_add"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method___construct"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aset_args\u0028\u0029",
+            "name": "set_args",
+            "summary": "Set\u0020Args",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_set_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aset_errors\u0028\u0029",
+            "name": "set_errors",
+            "summary": "Set\u0020Errors",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_set_errors"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "Init",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_init"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aregister\u0028\u0029",
+            "name": "register",
+            "summary": "Register",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_register"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aget_values\u0028\u0029",
+            "name": "get_values",
+            "summary": "Get\u0020Values",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_get_values"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aupdate_values\u0028\u0029",
+            "name": "update_values",
+            "summary": "Update\u0020Values",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_update_values"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_save"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Arender\u0028\u0029",
+            "name": "render",
+            "summary": "Render",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_render"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Arender_fields\u0028\u0029",
+            "name": "render_fields",
+            "summary": "Render\u0020Form\u0020Fields",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_render_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aget_fields\u0028\u0029",
+            "name": "get_fields",
+            "summary": "Get\u0020Fields",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_get_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aget_field_name\u0028\u0029",
+            "name": "get_field_name",
+            "summary": "Get\u0020Field\u0020Name",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_get_field_name"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Aget_field_id\u0028\u0029",
+            "name": "get_field_id",
+            "summary": "Get\u0020Field\u0020ID",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_get_field_id"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Arender_field_label\u0028\u0029",
+            "name": "render_field_label",
+            "summary": "Render\u0020Field\u0020Label",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_render_field_label"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003Arender_field_description\u0028\u0029",
+            "name": "render_field_description",
+            "summary": "Render\u0020Field\u0020Description",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#method_render_field_description"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003A\u0024default_args",
+            "name": "default_args",
+            "summary": "Default\u0020Args",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#property_default_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Dashboard_Widget\u003A\u003A\u0024required_args",
+            "name": "required_args",
+            "summary": "Required\u0020Args",
+            "url": "classes/WP-Backstage-Dashboard-Widget.html#property_required_args"
         },                {
             "fqsen": "\\",
             "name": "\\",

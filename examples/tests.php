@@ -922,24 +922,22 @@ function wp_backstage_init_tests(): void {
 	WP_Backstage_Options::add(
 		'wp_backstage_theme_options',
 		array(
-			'type'         => 'theme',
-			'title'        => __( 'Test Theme Options', 'wp_backstage_examples' ),
-			'menu_title'   => __( 'Test Theme Options', 'wp_backstage_examples' ),
-			'description'  => __( 'A test custom theme options page containing all field types.', 'wp_backstage_examples' ),
-			'show_in_rest' => true,
-			'sections'     => wp_backstage_get_test_field_groups( 'theme' ),
+			'type'        => 'theme',
+			'title'       => __( 'Test Theme Options', 'wp_backstage_examples' ),
+			'menu_title'  => __( 'Test Theme Options', 'wp_backstage_examples' ),
+			'description' => __( 'A test custom theme options page containing all field types.', 'wp_backstage_examples' ),
+			'sections'    => wp_backstage_get_test_field_groups( 'theme' ),
 		)
 	);
 
 	WP_Backstage_Options::add(
 		'wp_backstage_tool',
 		array(
-			'type'         => 'tools',
-			'title'        => __( 'Test Tool', 'wp_backstage_examples' ),
-			'menu_title'   => __( 'Test Tool', 'wp_backstage_examples' ),
-			'description'  => __( 'A test custom tool options page containing all field types.', 'wp_backstage_examples' ),
-			'show_in_rest' => true,
-			'sections'     => wp_backstage_get_test_field_groups( 'tools' ),
+			'type'        => 'tools',
+			'title'       => __( 'Test Tool', 'wp_backstage_examples' ),
+			'menu_title'  => __( 'Test Tool', 'wp_backstage_examples' ),
+			'description' => __( 'A test custom tool options page containing all field types.', 'wp_backstage_examples' ),
+			'sections'    => wp_backstage_get_test_field_groups( 'tools' ),
 		)
 	);
 
@@ -948,6 +946,15 @@ function wp_backstage_init_tests(): void {
 		array(
 			'title'       => __( 'Test Widget', 'wp_backstage_examples' ),
 			'description' => __( 'A test custom widget containing all field types.', 'wp_backstage_examples' ),
+			'fields'      => wp_backstage_get_test_fields(),
+		)
+	);
+
+	WP_Backstage_Dashboard_Widget::add(
+		'wp_backstage_dashboard_widget',
+		array(
+			'title'       => __( 'Test Dashboard Widget', 'wp_backstage_examples' ),
+			'description' => __( 'A test custom dashboard widget containing all field types.', 'wp_backstage_examples' ),
 			'fields'      => wp_backstage_get_test_fields(),
 		)
 	);
@@ -965,10 +972,27 @@ add_action( 'wp_backstage_init', 'wp_backstage_init_tests', 10 );
  * @return void
  */
 function wp_backstage_test_widget( array $args = array(), array $instance = array() ): void { ?>
-	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
+	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;width:100%;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions
 		print_r( $instance );
 	?></textarea>
 <?php }
 
 add_action( 'wp_backstage_widget_output_wp_backstage_widget', 'wp_backstage_test_widget', 10, 2 );
+
+/**
+ * WP Backstage Test Dashboard Widget
+ *
+ * @since 4.0.0
+ * @param array $args The dashboard widget arguments.
+ * @param array $instance The dashboard widget's saved settings.
+ * @return void
+ */
+function wp_backstage_test_dashboard_widget( array $args = array(), array $instance = array() ): void { ?>
+	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;width:100%;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions
+		print_r( $instance );
+	?></textarea>
+<?php }
+
+add_action( 'wp_backstage_dashboard_widget_output_wp_backstage_dashboard_widget', 'wp_backstage_test_dashboard_widget', 10, 2 );

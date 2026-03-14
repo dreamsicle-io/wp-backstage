@@ -263,10 +263,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 			$field = $this->add_field_input_classes( $field, array( "edit-menu-item-{$field_name}" ) );
 
-			if ( $field_class->has_tag( 'select_control' ) ) {
-				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
-			}
-
 			if ( $field_class->has_tag( 'text_control' ) ) {
 				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
 			}
@@ -335,10 +331,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 			$field_class = $this->get_field_class( $field['type'] );
 
 			$field = $this->add_field_input_classes( $field, array( "edit-menu-item-{$field_name}" ) );
-
-			if ( $field_class->has_tag( 'select_control' ) ) {
-				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
-			}
 
 			if ( $field_class->has_tag( 'text_control' ) ) {
 				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );

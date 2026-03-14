@@ -278,10 +278,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 
 			$field_class = $this->get_field_class( $field['type'] );
 
-			if ( $field_class->has_tag( 'select_control' ) ) {
-				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
-			}
-
 			if ( $field_class->has_tag( 'text_control' ) ) {
 				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
 			}

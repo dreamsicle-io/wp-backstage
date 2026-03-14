@@ -37,6 +37,7 @@ require WP_BACKSTAGE . '/includes/class-wp-backstage-user.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-options.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget.php';
 require WP_BACKSTAGE . '/includes/class-wp-backstage-widget-base.php';
+require WP_BACKSTAGE . '/includes/class-wp-backstage-dashboard-widget.php';
 // Require field classes.
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-field.php';
 require WP_BACKSTAGE . '/includes/fields/class-wp-backstage-address-field.php';

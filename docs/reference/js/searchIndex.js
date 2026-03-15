@@ -796,16 +796,6 @@ Search.appendIndex(
             "summary": "Get\u0020Fields",
             "url": "classes/WP-Backstage-Post-Type.html#method_get_fields"
         },                {
-            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aget_quick_edit_fields\u0028\u0029",
-            "name": "get_quick_edit_fields",
-            "summary": "Get\u0020Quick\u0020Edit\u0020Fields",
-            "url": "classes/WP-Backstage-Post-Type.html#method_get_quick_edit_fields"
-        },                {
-            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aget_quick_edit_meta_boxes\u0028\u0029",
-            "name": "get_quick_edit_meta_boxes",
-            "summary": "Get\u0020Quick\u0020Edit\u0020Meta\u0020Boxes",
-            "url": "classes/WP-Backstage-Post-Type.html#method_get_quick_edit_meta_boxes"
-        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "Save",

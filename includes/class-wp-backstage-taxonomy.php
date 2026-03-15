@@ -1269,7 +1269,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		id="wp_backstage_taxonomy_quick_edit_template"
 		data-id-placeholder="<?php echo esc_attr( $id_placeholder ); ?>">
 
-			<fieldset class="wp-backstage-taxonomy-quick-edit">
+			<fieldset class="wp-backstage-quick-edit">
 
 				<div class="inline-edit-col">
 
@@ -1289,7 +1289,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 						} ?>
 
 						<div
-						class="wp-backstage-taxonomy-quick-edit-field"
+						class="wp-backstage-quick-edit__field"
 						data-wp-backstage-field-name="<?php echo esc_attr( $field['name'] ); ?>"
 						data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>">
 

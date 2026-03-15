@@ -1857,46 +1857,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	}
 
 	/**
-	 * Get Quick Edit Fields
-	 *
-	 * @since   4.0.0
-	 * @return  array  An array of quick edit field arg arrays.
-	 */
-	protected function get_quick_edit_fields() {
-		return $this->get_fields_by( 'quick_edit', true );
-	}
-
-	/**
-	 * Get Quick Edit Meta Boxes
-	 *
-	 * @since   4.0.0
-	 * @return  array  An array of meta boxes with quick edit fields.
-	 */
-	protected function get_quick_edit_meta_boxes() {
-
-		$meta_boxes = array();
-
-		foreach ( $this->get_meta_boxes() as $meta_box ) {
-
-			$meta_box['fields'] = array_values(
-				array_filter(
-					$meta_box['fields'],
-					function( $field ) {
-						return ! empty( $field['quick_edit'] );
-					}
-				)
-			);
-
-			if ( ! empty( $meta_box['fields'] ) ) {
-				$meta_boxes[] = $meta_box;
-			}
-		}
-
-		return $meta_boxes;
-
-	}
-
-	/**
 	 * Save
 	 *
 	 * Saves the form data as individual keys.
@@ -1991,7 +1951,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields = $this->get_quick_edit_fields();
+		$fields = $this->get_fields_by( 'quick_edit', true );
 
 		foreach ( $fields as $field ) {
 
@@ -2519,10 +2479,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$meta_boxes     = $this->get_quick_edit_meta_boxes();
+		$fields         = $this->get_fields_by( 'quick_edit', true );
 		$id_placeholder = '{{ post_id }}';
 
-		if ( empty( $meta_boxes ) ) {
+		if ( empty( $fields ) ) {
 			return;
 		} ?>
 
@@ -2532,39 +2492,35 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		id="wp_backstage_post_type_quick_edit_template"
 		data-id-placeholder="<?php echo esc_attr( $id_placeholder ); ?>">
 
-			<div class="wp-backstage-post-type-quick-edit">
+			<fieldset class="wp-backstage-quick-edit">
 
-				<?php foreach ( $meta_boxes as $meta_box ) { ?>
+				<div class="inline-edit-col">
 
-					<div class="wp-backstage-post-type-quick-edit__group">
+					<?php foreach ( $fields as $field ) {
 
-						<?php if ( ! empty( $meta_box['title'] ) ) { ?>
+						$field['id'] = sprintf( '%1$s_%2$s', $field['name'], $id_placeholder );
+						$field       = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null );
+						$field_class = $this->get_field_class( $field['type'] );
 
-							<h4 class="wp-backstage-post-type-quick-edit__group-title"><?php
-								echo esc_html( $meta_box['title'] );
-							?></h4>
+						if ( $field_class->has_tag( 'text_control' ) ) {
+							$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+						}
 
-						<?php } ?>
+						if ( $field_class->has_tag( 'textarea_control' ) ) {
+							$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+							$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
+						} ?>
 
-						<?php foreach ( $meta_box['fields'] as $field ) {
+						<div
+						class="wp-backstage-quick-edit__field"
+						data-wp-backstage-field-name="<?php echo esc_attr( $field['name'] ); ?>"
+						data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>">
 
-							$field['id'] = sprintf( '%1$s_%2$s', $field['name'], $id_placeholder );
-							$field       = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null );
-							$field_class = $this->get_field_class( $field['type'] );
+							<span class="title">
+								<?php $this->render_field_label( $field ); ?>
+							</span>
 
-							if ( $field_class->has_tag( 'text_control' ) ) {
-								$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
-							}
-
-							if ( $field_class->has_tag( 'textarea_control' ) ) {
-								$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
-								$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
-							} ?>
-
-							<div
-							class="wp-backstage-post-type-quick-edit-field"
-							data-wp-backstage-field-name="<?php echo esc_attr( $field['name'] ); ?>"
-							data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php
+							<span class="input-text-wrap"><?php
 
 								/**
 								 * Fires before the custom quick edit field is rendered.
@@ -2576,11 +2532,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 								 */
 								do_action( "wp_backstage_{$this->slug}_field_before", $field, null );
 
-								$this->render_field_label( $field );
-
 								$field_class->render( $field );
-
-								$this->render_field_description( $field );
 
 								/**
 								 * Fires after the custom quick edit field is rendered.
@@ -2592,15 +2544,15 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 								 */
 								do_action( "wp_backstage_{$this->slug}_field_after", $field, null );
 
-							?></div>
+							?></span>
 
-						<?php } ?>
+						</div>
 
-					</div>
+					<?php } ?>
 
-				<?php } ?>
+				</div>
 
-			</div>
+			</fieldset>
 
 		</div>
 
@@ -2623,7 +2575,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields = $this->get_quick_edit_fields();
+		$fields = $this->get_fields_by( 'quick_edit', true );
 
 		if ( ! empty( $fields ) ) {
 

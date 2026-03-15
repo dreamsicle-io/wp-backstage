@@ -1107,27 +1107,27 @@ class WP_Backstage {
 			}
 
 			/* Taxonomy quick edit */
-			.wp-backstage-taxonomy-quick-edit-field {
+			.wp-backstage-quick-edit__field {
 				display: block;
 				margin: .2em 0;
 				line-height: 2.5;
 				clear: both;
 			}
 
-			.wp-backstage-taxonomy-quick-edit-field .title {
+			.wp-backstage-quick-edit__field .title {
 				display: block;
 				float: left;
 				width: 6em;
 				line-height: 2.5;
 			}
 
-			.wp-backstage-taxonomy-quick-edit-field .input-text-wrap {
-				display: block;
+			.wp-backstage-quick-edit__field .input-text-wrap {
+				display: flow-root;
 				margin-left: 6em;
 			}
 
-			.wp-backstage-taxonomy-quick-edit-field .wp-backstage-field::before,
-			.wp-backstage-taxonomy-quick-edit-field .wp-backstage-field::after {
+			.wp-backstage-quick-edit__field .wp-backstage-field::before,
+			.wp-backstage-quick-edit__field .wp-backstage-field::after {
 				content: unset;
 			}
 
@@ -2334,14 +2334,14 @@ class WP_Backstage {
 
 					const template = document.getElementById('wp_backstage_post_type_quick_edit_template');
 					const idPlaceholder = template.dataset.idPlaceholder;
-					const templateContent = template.querySelector('.wp-backstage-post-type-quick-edit');
+					const templateContent = template.querySelector('.wp-backstage-quick-edit');
 					const templateClone = templateContent.cloneNode(true);
 					const templateHTML = templateClone.innerHTML.replaceAll(idPlaceholder, postId);
 					templateClone.innerHTML = templateHTML;
 
 					const inserted = wrapper.insertBefore(templateClone, submit);
 
-					const fieldContainers = inserted.querySelectorAll('.wp-backstage-post-type-quick-edit-field');
+					const fieldContainers = inserted.querySelectorAll('.wp-backstage-quick-edit__field');
 					fieldContainers.forEach(function(container) {
 						const fieldName = container.dataset.wpBackstageFieldName;
 						const field = container.querySelector('.wp-backstage-field');
@@ -2694,14 +2694,14 @@ class WP_Backstage {
 
 					const template = document.getElementById('wp_backstage_taxonomy_quick_edit_template');
 					const idPlaceholder = template.dataset.idPlaceholder;
-					const templateContent = template.querySelector('.wp-backstage-taxonomy-quick-edit');
+					const templateContent = template.querySelector('.wp-backstage-quick-edit');
 					const templateClone = templateContent.cloneNode(true);
 					const templateHTML = templateClone.innerHTML.replaceAll(idPlaceholder, termId);
 					templateClone.innerHTML = templateHTML;
 
 					const inserted = wrapper.insertBefore(templateClone, submit);
 
-					const fieldContainers = inserted.querySelectorAll('.wp-backstage-taxonomy-quick-edit-field');
+					const fieldContainers = inserted.querySelectorAll('.wp-backstage-quick-edit__field');
 					fieldContainers.forEach(function(container) {
 						const fieldName = container.dataset.wpBackstageFieldName;
 						const field = container.querySelector('.wp-backstage-field');

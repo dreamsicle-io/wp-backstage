@@ -33,6 +33,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'url',
@@ -42,6 +43,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the URL field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'email',
@@ -51,6 +53,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Email field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'tel',
@@ -60,6 +63,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Phone field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'password',
@@ -70,6 +74,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'number',
@@ -80,6 +85,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'input_attrs'  => array(
 				'min'  => 0,
 				'max'  => 100,
@@ -95,6 +101,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'input_attrs'  => array(
 				'min'  => 0,
 				'max'  => 10,
@@ -110,6 +117,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'textarea',
@@ -119,6 +127,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Textarea field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'input_attrs'  => array(
 				'maxlength' => 240,
 			),
@@ -133,6 +142,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'is_sortable'   => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'options'       => array(
 				array(
 					'value' => '',
@@ -166,6 +176,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'is_sortable'   => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'options'       => function() {
 				return array(
 					array(
@@ -201,6 +212,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'is_sortable'   => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'options'       => array(
 				array(
 					'value' => 'option_1',
@@ -230,6 +242,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'is_sortable'   => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'options'       => function() {
 				return array(
 					array(
@@ -259,6 +272,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Checkbox Set field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'options'      => array(
 				array(
 					'value' => 'option_1',
@@ -286,6 +300,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Checkbox Set with Callable Options field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'options'      => function() {
 				return array(
 					array(
@@ -315,6 +330,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Any Media field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'attach' => true,
 			),
@@ -327,6 +343,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Image field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'type'   => 'image',
 				'attach' => true,
@@ -340,6 +357,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Gallery field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'type'     => 'image',
 				'multiple' => true,
@@ -354,6 +372,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Video field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'type'   => 'video',
 				'attach' => true,
@@ -367,6 +386,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Audio field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'type'   => 'audio',
 				'attach' => true,
@@ -380,6 +400,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Documents field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'multiple' => true,
 				'type'     => 'application',
@@ -395,6 +416,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'time',
@@ -405,6 +427,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'   => true,
 			'is_sortable'  => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'color',
@@ -414,6 +437,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Color field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'palettes' => true,
 			),
@@ -426,6 +450,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Color with Custom Palettes field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'palettes' => array( '#ffffff', '#000000', '#67b0ff', '#ff9900' ),
 			),
@@ -438,6 +463,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Color with No Palettes field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'palettes' => false,
 			),
@@ -450,6 +476,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Color with HSL Mode field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'mode' => 'hsl',
 			),
@@ -462,6 +489,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Code (PHP) field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'language' => 'php',
 			),
@@ -474,6 +502,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Code (HTML) field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'code',
@@ -483,6 +512,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Code (CSS) field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'language' => 'css',
 			),
@@ -495,6 +525,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Code (JavaScript) field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'language' => 'javascript',
 			),
@@ -507,6 +538,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Code (JSON) field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'language' => 'json',
 			),
@@ -519,6 +551,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Editor field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'         => 'editor',
@@ -528,6 +561,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Editor with Format Select field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'format_select' => true,
 			),
@@ -540,6 +574,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Editor with Media Buttons field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'media_buttons' => true,
 				'format_select' => true,
@@ -553,6 +588,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Editor with Kitchen Sink field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 			'args'         => array(
 				'media_buttons' => true,
 				'format_select' => true,
@@ -567,6 +603,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'help'         => wp_backstage_get_test_description( __( 'This is the help description for the Address field.', 'wp_backstage_examples' ) ),
 			'has_column'   => true,
 			'show_in_rest' => true,
+			'quick_edit'   => true,
 		),
 		array(
 			'type'          => 'select_posts',
@@ -577,6 +614,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'    => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'args'          => array(
 				'option_none_label' => __( 'Select a page', 'wp_backstage_examples' ),
 				'query'             => array(
@@ -595,6 +633,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'    => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'args'          => array(
 				'option_none_label' => __( 'Select a post', 'wp_backstage_examples' ),
 				'query'             => array(
@@ -613,6 +652,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'has_column'    => true,
 			'is_filterable' => true,
 			'show_in_rest'  => true,
+			'quick_edit'    => true,
 			'args'          => array(
 				'option_none_label' => __( 'Select a user', 'wp_backstage_examples' ),
 				'query'             => array(
@@ -627,7 +667,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 	if ( ! empty( $types ) ) {
 		$fields = array_filter(
 			$fields,
-			function( array $field = array() ) use ( $types ) {
+			function( array $field ) use ( $types ) {
 				return in_array( $field['type'], $types );
 			}
 		);
@@ -635,7 +675,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 
 	if ( ! empty( $name_suffix ) ) {
 		$fields = array_map(
-			function( array $field = array() ) use ( $name_suffix ) {
+			function( array $field ) use ( $name_suffix ) {
 				$field['name'] = sprintf( '%1$s_%2$s', $field['name'], $name_suffix );
 				return $field;
 			},

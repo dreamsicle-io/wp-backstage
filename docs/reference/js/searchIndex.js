@@ -796,10 +796,25 @@ Search.appendIndex(
             "summary": "Get\u0020Fields",
             "url": "classes/WP-Backstage-Post-Type.html#method_get_fields"
         },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aget_quick_edit_fields\u0028\u0029",
+            "name": "get_quick_edit_fields",
+            "summary": "Get\u0020Quick\u0020Edit\u0020Fields",
+            "url": "classes/WP-Backstage-Post-Type.html#method_get_quick_edit_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aget_quick_edit_meta_boxes\u0028\u0029",
+            "name": "get_quick_edit_meta_boxes",
+            "summary": "Get\u0020Quick\u0020Edit\u0020Meta\u0020Boxes",
+            "url": "classes/WP-Backstage-Post-Type.html#method_get_quick_edit_meta_boxes"
+        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "Save",
             "url": "classes/WP-Backstage-Post-Type.html#method_save"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Asave_quick_edit\u0028\u0029",
+            "name": "save_quick_edit",
+            "summary": "Save\u0020Quick\u0020Edit",
+            "url": "classes/WP-Backstage-Post-Type.html#method_save_quick_edit"
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Ahandle_attachments\u0028\u0029",
             "name": "handle_attachments",
@@ -855,6 +870,16 @@ Search.appendIndex(
             "name": "render_meta_box",
             "summary": "Render\u0020Meta\u0020Box",
             "url": "classes/WP-Backstage-Post-Type.html#method_render_meta_box"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Arender_quick_edit_fields\u0028\u0029",
+            "name": "render_quick_edit_fields",
+            "summary": "Render\u0020Quick\u0020Edit\u0020Fields",
+            "url": "classes/WP-Backstage-Post-Type.html#method_render_quick_edit_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Ainline_quick_edit_data\u0028\u0029",
+            "name": "inline_quick_edit_data",
+            "summary": "Inline\u0020Quick\u0020Edit\u0020Data",
+            "url": "classes/WP-Backstage-Post-Type.html#method_inline_quick_edit_data"
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Arender_field_description\u0028\u0029",
             "name": "render_field_description",
@@ -1450,6 +1475,11 @@ Search.appendIndex(
             "name": "inline_post_type_script",
             "summary": "Inline\u0020Post\u0020Type\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_post_type_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_post_type_quick_edit_script\u0028\u0029",
+            "name": "inline_post_type_quick_edit_script",
+            "summary": "Inline\u0020Post\u0020Type\u0020Quick\u0020Edit\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_post_type_quick_edit_script"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_nav_menu_item_script\u0028\u0029",
             "name": "inline_nav_menu_item_script",

@@ -173,6 +173,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				'has_column'    => false,
 				'is_sortable'   => false,
 				'is_filterable' => false,
+				'quick_edit'    => false,
 			)
 		);
 
@@ -354,10 +355,13 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			add_filter( 'manage_upload_sortable_columns', array( $this, 'manage_sortable_columns' ), 10 );
 		} else {
 			add_action( "save_post_{$this->slug}", array( $this, 'save' ), 10, 3 );
+			add_action( "save_post_{$this->slug}", array( $this, 'save_quick_edit' ), 10, 3 );
 			add_filter( "manage_{$this->slug}_posts_columns", array( $this, 'add_thumbnail_column' ), 10 );
 			add_filter( "manage_{$this->slug}_posts_columns", array( $this, 'add_field_columns' ), 10 );
 			add_filter( "manage_edit-{$this->slug}_sortable_columns", array( $this, 'manage_sortable_columns' ), 10 );
 			add_action( "manage_{$this->slug}_posts_custom_column", array( $this, 'render_admin_column' ), 10, 2 );
+			add_action( 'add_inline_data', array( $this, 'inline_quick_edit_data' ), 10, 2 );
+			add_action( 'admin_print_footer_scripts-edit.php', array( $this, 'render_quick_edit_fields' ), 10 );
 		}
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'manage_default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
@@ -1853,6 +1857,46 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Get Quick Edit Fields
+	 *
+	 * @since   4.0.0
+	 * @return  array  An array of quick edit field arg arrays.
+	 */
+	protected function get_quick_edit_fields() {
+		return $this->get_fields_by( 'quick_edit', true );
+	}
+
+	/**
+	 * Get Quick Edit Meta Boxes
+	 *
+	 * @since   4.0.0
+	 * @return  array  An array of meta boxes with quick edit fields.
+	 */
+	protected function get_quick_edit_meta_boxes() {
+
+		$meta_boxes = array();
+
+		foreach ( $this->get_meta_boxes() as $meta_box ) {
+
+			$meta_box['fields'] = array_values(
+				array_filter(
+					$meta_box['fields'],
+					function( $field ) {
+						return ! empty( $field['quick_edit'] );
+					}
+				)
+			);
+
+			if ( ! empty( $meta_box['fields'] ) ) {
+				$meta_boxes[] = $meta_box;
+			}
+		}
+
+		return $meta_boxes;
+
+	}
+
+	/**
 	 * Save
 	 *
 	 * Saves the form data as individual keys.
@@ -1901,9 +1945,65 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				update_post_meta( $post_id, $field['name'], $value );
 
 				if ( $field['type'] === 'media' ) {
-
 					$this->handle_attachments( $post_id, $value, $field );
+				}
+			} else {
 
+				delete_post_meta( $post_id, $field['name'] );
+
+			}
+		}
+
+	}
+
+	/**
+	 * Save Quick Edit
+	 *
+	 * Saves quick edit field data without touching fields that are only available
+	 * on the full edit screen.
+	 *
+	 * @since   4.0.0
+	 * @param   int     $post_id  The ID of the post being saved.
+	 * @param   WP_Post $post     The full `WP_Post` object for the post being saved.
+	 * @param   bool    $update   Whether the post is being updated or not.
+	 * @return  void
+	 */
+	public function save_quick_edit( $post_id, $post, $update = false ) {
+
+		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
+
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return;
+		}
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+		if ( empty( $post_data ) ) {
+			return;
+		}
+		if ( empty( $post_data['action'] ) || ( $post_data['action'] !== 'inline-save' ) ) {
+			return;
+		}
+		if ( empty( $post_data['_inline_edit'] ) ) {
+			return;
+		}
+		if ( ! wp_verify_nonce( $post_data['_inline_edit'], 'inlineeditnonce' ) ) {
+			return;
+		}
+
+		$fields = $this->get_quick_edit_fields();
+
+		foreach ( $fields as $field ) {
+
+			if ( isset( $post_data[ $field['name'] ] ) ) {
+
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $post_data[ $field['name'] ] );
+
+				update_post_meta( $post_id, $field['name'], $value );
+
+				if ( 'media' === $field['type'] ) {
+					$this->handle_attachments( $post_id, $value, $field );
 				}
 			} else {
 
@@ -1979,7 +2079,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of meta box ids
 	 */
-	public function manage_default_hidden_meta_boxes( $hidden = array(), $screen ) {
+	public function manage_default_hidden_meta_boxes( $hidden, $screen ) {
 
 		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
@@ -2332,7 +2432,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array   $meta_box  An array of WP meta box args passed from the `add_meta_box()` function.
 	 * @return  void
 	 */
-	public function render_meta_box( $post = null, $meta_box = array() ) {
+	public function render_meta_box( $post, $meta_box ) {
 
 		$meta_box = wp_parse_args(
 			$meta_box,
@@ -2349,18 +2449,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		foreach ( $meta_box['args']['fields'] as $field ) {
 
 			$field['value'] = get_post_meta( $post->ID, $field['name'], true );
-
-			/**
-			 * Filters the field arguments just before the field is rendered.
-			 *
-			 * @since 0.0.1
-			 *
-			 * @param array $field an array of field arguments.
-			 * @param WP_Post $post an array of field arguments.
-			 */
-			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $post );
-
-			$field_class = $this->get_field_class( $field['type'] );
+			$field          = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $post );
+			$field_class    = $this->get_field_class( $field['type'] );
 
 			if ( $field_class->has_tag( 'text_control' ) ) {
 				$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
@@ -2414,6 +2504,145 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Render Quick Edit Fields
+	 *
+	 * Renders the shared quick edit template for this post type. The field IDs
+	 * use a placeholder token that is rewritten to the active post ID before the
+	 * field scripts initialize.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function render_quick_edit_fields() {
+
+		if ( ! $this->is_screen( 'base', 'edit' ) || ! $this->is_screen( 'post_type', $this->slug ) ) {
+			return;
+		}
+
+		$meta_boxes     = $this->get_quick_edit_meta_boxes();
+		$id_placeholder = '{{ post_id }}';
+
+		if ( empty( $meta_boxes ) ) {
+			return;
+		} ?>
+
+		<div
+		hidden
+		inert
+		id="wp_backstage_post_type_quick_edit_template"
+		data-id-placeholder="<?php echo esc_attr( $id_placeholder ); ?>">
+
+			<div class="wp-backstage-post-type-quick-edit">
+
+				<?php foreach ( $meta_boxes as $meta_box ) { ?>
+
+					<div class="wp-backstage-post-type-quick-edit__group">
+
+						<?php if ( ! empty( $meta_box['title'] ) ) { ?>
+
+							<h4 class="wp-backstage-post-type-quick-edit__group-title"><?php
+								echo esc_html( $meta_box['title'] );
+							?></h4>
+
+						<?php } ?>
+
+						<?php foreach ( $meta_box['fields'] as $field ) {
+
+							$field['id'] = sprintf( '%1$s_%2$s', $field['name'], $id_placeholder );
+							$field       = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null );
+							$field_class = $this->get_field_class( $field['type'] );
+
+							if ( $field_class->has_tag( 'text_control' ) ) {
+								$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+							}
+
+							if ( $field_class->has_tag( 'textarea_control' ) ) {
+								$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+								$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
+							} ?>
+
+							<div
+							class="wp-backstage-post-type-quick-edit-field"
+							data-wp-backstage-field-name="<?php echo esc_attr( $field['name'] ); ?>"
+							data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>"><?php
+
+								/**
+								 * Fires before the custom quick edit field is rendered.
+								 *
+								 * @since 0.0.1
+								 *
+								 * @param array        $field an array of field arguments.
+								 * @param WP_Post|null $post  the current post object if available.
+								 */
+								do_action( "wp_backstage_{$this->slug}_field_before", $field, null );
+
+								$this->render_field_label( $field );
+
+								$field_class->render( $field );
+
+								$this->render_field_description( $field );
+
+								/**
+								 * Fires after the custom quick edit field is rendered.
+								 *
+								 * @since 0.0.1
+								 *
+								 * @param array        $field an array of field arguments.
+								 * @param WP_Post|null $post  the current post object if available.
+								 */
+								do_action( "wp_backstage_{$this->slug}_field_after", $field, null );
+
+							?></div>
+
+						<?php } ?>
+
+					</div>
+
+				<?php } ?>
+
+			</div>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Inline Quick Edit Data
+	 *
+	 * Outputs JSON-encoded values for quick edit fields inside the row's core
+	 * inline data container so the quick edit template can hydrate itself.
+	 *
+	 * @since   4.0.0
+	 * @param   WP_Post      $post              The current post.
+	 * @param   WP_Post_Type $post_type_object  The current post type object.
+	 * @return  void
+	 */
+	public function inline_quick_edit_data( $post, $post_type_object ) {
+
+		if ( $post->post_type !== $this->slug ) {
+			return;
+		}
+
+		$fields = $this->get_quick_edit_fields();
+
+		if ( ! empty( $fields ) ) {
+
+			$values = array();
+
+			foreach ( $fields as $field ) {
+				$values[ $field['name'] ] = get_post_meta( $post->ID, $field['name'], true );
+			} ?>
+
+			<script
+			type="application/json"
+			id="<?php echo esc_attr( "wp_backstage_quick_edit_data_{$post->ID}" ); ?>"><?php
+				echo wp_json_encode( $values, JSON_HEX_TAG );
+			?></script>
+
+		<?php }
+	}
+
+	/**
 	 * Render Field Description
 	 *
 	 * @since 4.0.0
@@ -2449,7 +2678,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
+	public function manage_default_hidden_columns( $hidden, $screen ) {
 
 		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 

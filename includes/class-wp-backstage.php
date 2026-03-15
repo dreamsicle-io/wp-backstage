@@ -403,6 +403,7 @@ class WP_Backstage {
 		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 20 );
 		add_action( 'admin_print_footer_scripts-post.php', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-post-new.php', array( $this, 'inline_post_type_script' ), 10 );
+		add_action( 'admin_print_footer_scripts-edit.php', array( $this, 'inline_post_type_quick_edit_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'inline_taxonomy_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-term.php', array( $this, 'inline_taxonomy_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-nav-menus.php', array( $this, 'inline_nav_menu_item_script' ), 10 );
@@ -468,6 +469,10 @@ class WP_Backstage {
 				return $this->kses_button;
 			case 'wp_backstage_tool_card_title':
 				return $this->kses_button;
+			case 'wp_backstage_quick_edit_group_title':
+				return $this->kses_title;
+			case 'wp_backstage_quick_edit_group_description':
+				return $this->kses_description;
 		}
 		return $allowed;
 	}
@@ -2240,6 +2245,91 @@ class WP_Backstage {
 
 				document.addEventListener('DOMContentLoaded', function(e) {
 					init();
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Post Type Quick Edit Script
+	 *
+	 * Extends core post quick edit by injecting the WP Backstage quick edit
+	 * template after the row is opened and then initializing field scripts for
+	 * the hydrated values.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function inline_post_type_quick_edit_script() { ?>
+
+		<script id="wp_backstage_post_type_quick_edit_script">
+
+			(function($) {
+
+				function setFieldValue(field, value = undefined) {
+					const type = field.dataset.fieldType;
+
+					if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].setValue === 'function')) {
+						window.wpBackstage.fields[type].setValue(field, value);
+						return;
+					}
+
+					const input = field.querySelector('#' + field.dataset.fieldId);
+					const normalizedValue = ((value === undefined) || (value === null)) ? '' : value.toString();
+
+					if (input instanceof HTMLInputElement) {
+						if (input.type === 'checkbox') {
+							input.checked = Boolean(value);
+						} else {
+							input.value = normalizedValue;
+						}
+					} else if (input instanceof HTMLTextAreaElement) {
+						input.value = normalizedValue;
+					} else if (input instanceof HTMLSelectElement) {
+						input.value = normalizedValue || input.options[0].value;
+					}
+				}
+
+				function init(postId = 0) {
+					const editRow = document.getElementById('edit-' + postId);
+					const wrapper = editRow.querySelector('.inline-edit-wrapper');
+					const submit = editRow.querySelector('.inline-edit-save');
+
+					const dataScript = document.getElementById('wp_backstage_quick_edit_data_' + postId);
+					const values = dataScript ? JSON.parse(dataScript.textContent) : {};
+
+					const template = document.getElementById('wp_backstage_post_type_quick_edit_template');
+					const idPlaceholder = template.dataset.idPlaceholder;
+					const templateContent = template.querySelector('.wp-backstage-post-type-quick-edit');
+					const templateClone = templateContent.cloneNode(true);
+					const templateHTML = template.innerHTML.replaceAll(idPlaceholder, postId);
+					templateClone.innerHTML = templateHTML;
+
+					const inserted = wrapper.insertBefore(templateClone, submit);
+
+					const fieldContainers = inserted.querySelectorAll('.wp-backstage-post-type-quick-edit-field');
+					fieldContainers.forEach(function(container) {
+						const fieldName = container.dataset.wpBackstageFieldName;
+						const field = container.querySelector('.wp-backstage-field');
+						setFieldValue(field, values[fieldName]);
+					});
+
+					window.wpBackstage.initAllFields(inserted);
+				}
+
+				document.addEventListener('DOMContentLoaded', function() {
+					if (window.inlineEditPost) {
+						const originalEdit = window.inlineEditPost.edit;
+						window.inlineEditPost.edit = function(elementOrId) {
+							const result = originalEdit.apply(this, arguments);
+							const postId = (typeof elementOrId === 'object') ? this.getId(elementOrId) : elementOrId;
+							init(postId);
+							return result;
+						};
+					}
 				});
 
 			})(jQuery);

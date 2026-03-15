@@ -299,6 +299,13 @@
 <dd>Nonce Key</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/WP-Backstage-Taxonomy.html#property_quick_edit_data">$quick_edit_data</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
+</dt>
+<dd>Quick Edit Data</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/WP-Backstage-Component.html#property_remove_label_for_fields">$remove_label_for_fields</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -404,6 +411,13 @@
 <dd>Add REST API Field Link</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_capture_quick_edit_request_data">capture_quick_edit_request_data()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Capture Quick Edit Request Data</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Component.html#method_has_errors">has_errors()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -423,6 +437,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Inline Code Editor Script</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_inline_quick_edit_data">inline_quick_edit_data()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Inline Quick Edit Data</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Taxonomy.html#method_manage_admin_column_content">manage_admin_column_content()</a>
@@ -549,6 +570,20 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Render Overview Help Tab</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_field_label">render_quick_edit_field_label()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_fields">render_quick_edit_fields()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Render Quick Edit Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Taxonomy.html#method_render_rest_api_collection_preview_help_tab">render_rest_api_collection_preview_help_tab()</a>
@@ -705,6 +740,13 @@
 <dd>Save</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_save_quick_edit">save_quick_edit()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Save Quick Edit</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WP-Backstage-Component.html#method_set_field_input_size">set_field_input_size()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -794,6 +836,20 @@
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Get Option Labels</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_get_quick_add_fields">get_quick_add_fields()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Get Quick Add Fields</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/WP-Backstage-Taxonomy.html#method_get_quick_edit_fields">get_quick_edit_fields()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Get Quick Edit Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/WP-Backstage-Component.html#method_get_sanitize_callback">get_sanitize_callback()</a>
@@ -1275,7 +1331,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -2203,6 +2259,58 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_quick_edit_data">
+        $quick_edit_data
+        <a href="classes/WP-Backstage-Taxonomy.html#property_quick_edit_data" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">39</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Quick Edit Data</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$quick_edit_data</span>
+     = <span class="phpdocumentor-signature__default-value">\null</span></code>
+
+        <section class="phpdocumentor-description"><p>Stores quick edit field values captured before core taxonomy quick edit
+hands the request payload to <code class="prettyprint">wp_update_term()</code>.</p>
+</section>
+
+        <section class="phpdocumentor-description"><p>An array of quick edit field values if available.</p>
+</section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_remove_label_for_fields">
         $remove_label_for_fields
         <a href="classes/WP-Backstage-Component.html#property_remove_label_for_fields" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2261,7 +2369,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
@@ -2310,7 +2418,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -2653,7 +2761,7 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -2740,7 +2848,7 @@ time piece (<code class="prettyprint">hour</code>, <code class="prettyprint">min
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -2965,7 +3073,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">437</span>
+    <span class="phpdocumentor-element-found-in__line">454</span>
 
     </aside>
 
@@ -3042,7 +3150,7 @@ field's <code class="prettyprint">has_column</code> argument is set to <code cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1343</span>
+    <span class="phpdocumentor-element-found-in__line">1616</span>
 
     </aside>
 
@@ -3189,6 +3297,57 @@ This method also takes into account the main &quot;count&quot; query as well, wh
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_capture_quick_edit_request_data">
+        capture_quick_edit_request_data()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_capture_quick_edit_request_data" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1405</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Capture Quick Edit Request Data</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">capture_quick_edit_request_data</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>Captures WP Backstage quick edit field values before core passes the full
+taxonomy quick edit payload into <code class="prettyprint">wp_update_term()</code>. The captured values
+are removed from <code class="prettyprint">$_POST</code> so core only receives term fields it understands.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_has_errors">
         has_errors()
         <a href="classes/WP-Backstage-Component.html#method_has_errors" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3247,7 +3406,7 @@ This method also takes into account the main &quot;count&quot; query as well, wh
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">271</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -3449,6 +3608,80 @@ the code editor scripts when initializing code editor fields.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_inline_quick_edit_data">
+        inline_quick_edit_data()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_inline_quick_edit_data" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1374</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Inline Quick Edit Data</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">inline_quick_edit_data</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$actions</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Term">WP_Term</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$term</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+        <section class="phpdocumentor-description"><p>Appends JSON-encoded values for quick edit fields to the term row action
+markup so the quick edit template can hydrate itself without relying on
+visible custom columns.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$actions</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An array of row action markup strings.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$term</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Term">WP_Term</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The current term.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The filtered row action array.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_manage_admin_column_content">
         manage_admin_column_content()
         <a href="classes/WP-Backstage-Taxonomy.html#method_manage_admin_column_content" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3456,7 +3689,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1283</span>
+    <span class="phpdocumentor-element-found-in__line">1556</span>
 
     </aside>
 
@@ -3535,7 +3768,7 @@ the code editor scripts when initializing code editor fields.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1538</span>
+    <span class="phpdocumentor-element-found-in__line">1811</span>
 
     </aside>
 
@@ -3543,7 +3776,7 @@ the code editor scripts when initializing code editor fields.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">manage_default_hidden_columns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\WP_Screen">WP_Screen</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$screen</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>Adds all generated fields to the hidden columns array by default, so as
 to not choke up the UI. Note that this will only work if this taxonomy's
@@ -3556,7 +3789,7 @@ columns UI has never been modified by the user. Hooked to
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$hidden</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>An array of hidden columns.</p>
 </section>
@@ -3646,7 +3879,7 @@ columns UI has never been modified by the user. Hooked to
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1484</span>
+    <span class="phpdocumentor-element-found-in__line">1757</span>
 
     </aside>
 
@@ -3713,7 +3946,7 @@ available as public query vars.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1397</span>
+    <span class="phpdocumentor-element-found-in__line">1670</span>
 
     </aside>
 
@@ -3852,7 +4085,7 @@ and <code class="prettyprint">WP_Backstage_Taxonomy</code>. Columns will only be
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1427</span>
+    <span class="phpdocumentor-element-found-in__line">1700</span>
 
     </aside>
 
@@ -3919,7 +4152,7 @@ desire is to show terms that don't have a value as well.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -3980,7 +4213,7 @@ desire is to show terms that don't have a value as well.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -4058,7 +4291,7 @@ desire is to show terms that don't have a value as well.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">356</span>
+    <span class="phpdocumentor-element-found-in__line">373</span>
 
     </aside>
 
@@ -4220,7 +4453,7 @@ type (posts, attachments, users, etc.), allowing for the content to be embedded 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">859</span>
+    <span class="phpdocumentor-element-found-in__line">876</span>
 
     </aside>
 
@@ -4288,7 +4521,7 @@ and configures the WP admin UI.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">741</span>
+    <span class="phpdocumentor-element-found-in__line">758</span>
 
     </aside>
 
@@ -4338,7 +4571,7 @@ and generating the schema for each.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1004</span>
+    <span class="phpdocumentor-element-found-in__line">1041</span>
 
     </aside>
 
@@ -4462,7 +4695,7 @@ this will only run on this instance's taxonomy.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">501</span>
+    <span class="phpdocumentor-element-found-in__line">518</span>
 
     </aside>
 
@@ -4530,7 +4763,7 @@ this will only run on this instance's taxonomy.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1096</span>
+    <span class="phpdocumentor-element-found-in__line">1133</span>
 
     </aside>
 
@@ -4672,7 +4905,7 @@ run on terms for this instance's taxonomy.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">593</span>
+    <span class="phpdocumentor-element-found-in__line">610</span>
 
     </aside>
 
@@ -4733,6 +4966,101 @@ run on terms for this instance's taxonomy.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_render_quick_edit_field_label">
+        render_quick_edit_field_label()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_field_label" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1356</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">render_quick_edit_field_label</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$field</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_render_quick_edit_fields">
+        render_quick_edit_fields()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_fields" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1273</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Render Quick Edit Fields</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">render_quick_edit_fields</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>Renders the shared quick edit template for this taxonomy. The field IDs
+use a placeholder token that is rewritten to the active term ID before the
+field scripts initialize.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_render_rest_api_collection_preview_help_tab">
         render_rest_api_collection_preview_help_tab()
         <a href="classes/WP-Backstage-Taxonomy.html#method_render_rest_api_collection_preview_help_tab" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4740,7 +5068,7 @@ run on terms for this instance's taxonomy.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">698</span>
+    <span class="phpdocumentor-element-found-in__line">715</span>
 
     </aside>
 
@@ -4900,7 +5228,7 @@ endpoints that do not support them natively.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">661</span>
+    <span class="phpdocumentor-element-found-in__line">678</span>
 
     </aside>
 
@@ -5085,7 +5413,7 @@ select as defined in <code class="prettyprint">WP_Backstage_Component::render_ta
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">786</span>
+    <span class="phpdocumentor-element-found-in__line">803</span>
 
     </aside>
 
@@ -6472,7 +6800,7 @@ will handle submit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1238</span>
+    <span class="phpdocumentor-element-found-in__line">1457</span>
 
     </aside>
 
@@ -6527,6 +6855,77 @@ will handle submit.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">0.0.1</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_save_quick_edit">
+        save_quick_edit()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_save_quick_edit" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1504</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Save Quick Edit</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">save_quick_edit</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$term_id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tt_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>Saves quick edit field data without touching fields that are only available
+on the full add/edit term forms.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$term_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ID of the term being saved.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tt_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The tt ID of the term being saved.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -6700,7 +7099,7 @@ will handle submit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 
     </aside>
 
@@ -7271,7 +7670,7 @@ currently being called.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">986</span>
+    <span class="phpdocumentor-element-found-in__line">1003</span>
 
     </aside>
 
@@ -7531,6 +7930,104 @@ not &quot;pretty&quot;.</p>
         class="phpdocumentor-element
             -method
             -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_get_quick_add_fields">
+        get_quick_add_fields()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_get_quick_add_fields" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1013</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get Quick Add Fields</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">get_quick_add_fields</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>An array of quick add field arg arrays.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_get_quick_edit_fields">
+        get_quick_edit_fields()
+        <a href="classes/WP-Backstage-Taxonomy.html#method_get_quick_edit_fields" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1023</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get Quick Edit Fields</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">get_quick_edit_fields</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>An array of quick edit field arg arrays.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
             -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_get_sanitize_callback">
@@ -7759,7 +8256,7 @@ function. This method provides a mask of all of this class's
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1189</span>
+    <span class="phpdocumentor-element-found-in__line">1226</span>
 
     </aside>
 
@@ -8252,7 +8749,7 @@ strings are always ISO compliant.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1210</span>
+    <span class="phpdocumentor-element-found-in__line">1247</span>
 
     </aside>
 
@@ -9269,7 +9766,7 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -9328,7 +9825,7 @@ a time piece <code class="prettyprint">&lt;select&gt;</code> as used in this cla
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/class-wp-backstage-taxonomy.php"><a href="files/includes-class-wp-backstage-taxonomy.html"><abbr title="includes/class-wp-backstage-taxonomy.php">class-wp-backstage-taxonomy.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">200</span>
 
     </aside>
 

@@ -1031,6 +1031,16 @@ Search.appendIndex(
             "summary": "Get\u0020Fields",
             "url": "classes/WP-Backstage-Taxonomy.html#method_get_fields"
         },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aget_quick_add_fields\u0028\u0029",
+            "name": "get_quick_add_fields",
+            "summary": "Get\u0020Quick\u0020Add\u0020Fields",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_get_quick_add_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aget_quick_edit_fields\u0028\u0029",
+            "name": "get_quick_edit_fields",
+            "summary": "Get\u0020Quick\u0020Edit\u0020Fields",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_get_quick_edit_fields"
+        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_add_fields\u0028\u0029",
             "name": "render_add_fields",
             "summary": "Render\u0020Add\u0020Fields",
@@ -1051,10 +1061,35 @@ Search.appendIndex(
             "summary": "Render\u0020Edit\u0020Field\u0020Description",
             "url": "classes/WP-Backstage-Taxonomy.html#method_render_edit_field_description"
         },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_quick_edit_fields\u0028\u0029",
+            "name": "render_quick_edit_fields",
+            "summary": "Render\u0020Quick\u0020Edit\u0020Fields",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_fields"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_quick_edit_field_label\u0028\u0029",
+            "name": "render_quick_edit_field_label",
+            "summary": "",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_field_label"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Ainline_quick_edit_data\u0028\u0029",
+            "name": "inline_quick_edit_data",
+            "summary": "Inline\u0020Quick\u0020Edit\u0020Data",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_inline_quick_edit_data"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Acapture_quick_edit_request_data\u0028\u0029",
+            "name": "capture_quick_edit_request_data",
+            "summary": "Capture\u0020Quick\u0020Edit\u0020Request\u0020Data",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_capture_quick_edit_request_data"
+        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "Save",
             "url": "classes/WP-Backstage-Taxonomy.html#method_save"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Asave_quick_edit\u0028\u0029",
+            "name": "save_quick_edit",
+            "summary": "Save\u0020Quick\u0020Edit",
+            "url": "classes/WP-Backstage-Taxonomy.html#method_save_quick_edit"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amanage_admin_column_content\u0028\u0029",
             "name": "manage_admin_column_content",
@@ -1090,6 +1125,11 @@ Search.appendIndex(
             "name": "new",
             "summary": "New",
             "url": "classes/WP-Backstage-Taxonomy.html#property_new"
+        },                {
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024quick_edit_data",
+            "name": "quick_edit_data",
+            "summary": "Quick\u0020Edit\u0020Data",
+            "url": "classes/WP-Backstage-Taxonomy.html#property_quick_edit_data"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024default_args",
             "name": "default_args",
@@ -1491,10 +1531,20 @@ Search.appendIndex(
             "summary": "Inline\u0020Nav\u0020Menu\u0020Item\u0020Customizer\u0020Script",
             "url": "classes/WP-Backstage.html#method_inline_nav_menu_item_customizer_script"
         },                {
-            "fqsen": "\\WP_Backstage\u003A\u003Ainline_taxonomy_script\u0028\u0029",
-            "name": "inline_taxonomy_script",
-            "summary": "Inline\u0020Taxonomy\u0020Script",
-            "url": "classes/WP-Backstage.html#method_inline_taxonomy_script"
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_taxonomy_quick_edit_script\u0028\u0029",
+            "name": "inline_taxonomy_quick_edit_script",
+            "summary": "Inline\u0020Taxonomy\u0020Quick\u0020Edit\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_taxonomy_quick_edit_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_taxonomy_add_script\u0028\u0029",
+            "name": "inline_taxonomy_add_script",
+            "summary": "Inline\u0020Taxonomy\u0020Add\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_taxonomy_add_script"
+        },                {
+            "fqsen": "\\WP_Backstage\u003A\u003Ainline_taxonomy_edit_script\u0028\u0029",
+            "name": "inline_taxonomy_edit_script",
+            "summary": "Inline\u0020Taxonomy\u0020Edit\u0020Script",
+            "url": "classes/WP-Backstage.html#method_inline_taxonomy_edit_script"
         },                {
             "fqsen": "\\WP_Backstage\u003A\u003Ainline_options_script\u0028\u0029",
             "name": "inline_options_script",

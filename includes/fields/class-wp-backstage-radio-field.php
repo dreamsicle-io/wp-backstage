@@ -43,7 +43,7 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 				margin: 0.35em 0 0.5em !important;
 				display: inline-block !important;
 				padding: 0 !important;
-				line-height: 1.4;
+				line-height: 1.4 !important;
 			}
 
 		</style>

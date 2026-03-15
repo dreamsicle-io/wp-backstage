@@ -97,7 +97,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 				margin: 0.35em 0 0.5em !important;
 				display: inline-block !important;
 				padding: 0 !important;
-				line-height: 1.4;
+				line-height: 1.4 !important;
 			}
 
 		</style>

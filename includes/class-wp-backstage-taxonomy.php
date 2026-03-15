@@ -28,6 +28,17 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	protected $new = true;
 
 	/**
+	 * Quick Edit Data
+	 *
+	 * Stores quick edit field values captured before core taxonomy quick edit
+	 * hands the request payload to `wp_update_term()`.
+	 *
+	 * @since 4.0.0
+	 * @var array|null $quick_edit_data An array of quick edit field values if available.
+	 */
+	protected $quick_edit_data = null;
+
+	/**
 	 * Default Args
 	 *
 	 * @since  0.0.1
@@ -118,6 +129,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				'has_column'    => false,
 				'is_sortable'   => false,
 				'is_filterable' => false,
+				'quick_add'     => false,
+				'quick_edit'    => false,
 			)
 		);
 
@@ -275,21 +288,25 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			add_action( 'init', array( $this, 'register' ), 0 );
 			add_filter( 'term_updated_messages', array( $this, 'manage_term_updated_messages' ), 10 );
 		}
+		add_action( 'admin_init', array( $this, 'capture_quick_edit_request_data' ), 10 );
 		add_action( "{$this->slug}_add_form_fields", array( $this, 'render_add_nonce' ), 10 );
 		add_action( "{$this->slug}_term_edit_form_top", array( $this, 'render_edit_nonce' ), 10 );
 		add_action( "{$this->slug}_add_form_fields", array( $this, 'render_add_fields' ), 10 );
 		add_action( "{$this->slug}_edit_form_fields", array( $this, 'render_edit_fields' ), 10, 2 );
 		add_action( "edited_{$this->slug}", array( $this, 'save' ), 10, 2 );
+		add_action( "edited_{$this->slug}", array( $this, 'save_quick_edit' ), 10, 2 );
 		add_action( "created_{$this->slug}", array( $this, 'save' ), 10, 2 );
 		add_filter( "manage_edit-{$this->slug}_columns", array( $this, 'add_field_columns' ), 10 );
 		add_filter( "manage_edit-{$this->slug}_sortable_columns", array( $this, 'manage_sortable_columns' ), 10 );
 		add_filter( "manage_{$this->slug}_custom_column", array( $this, 'manage_admin_column_content' ), 10, 3 );
+		add_filter( "{$this->slug}_row_actions", array( $this, 'inline_quick_edit_data' ), 100, 2 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_action( "wp_backstage_{$this->slug}_terms_list_table_count_query", array( $this, 'manage_list_table_query' ), 10 );
 		add_filter( 'parse_term_query', array( $this, 'add_list_table_query_actions' ), 0 );
 		add_action( 'parse_term_query', array( $this, 'manage_filtering' ), 10 );
 		add_action( 'parse_term_query', array( $this, 'manage_sorting' ), 10 );
 		add_action( "after-{$this->slug}-table", array( $this, 'render_table_filter_form' ), 10 );
+		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'render_quick_edit_fields' ), 10 );
 		add_filter( 'default_hidden_columns', array( $this, 'manage_default_hidden_columns' ), 10, 2 );
 		add_filter( 'pre_insert_term', array( $this, 'validate_term' ), 10, 3 );
 		add_action( 'rest_api_init', array( $this, 'register_api_meta' ), 10 );
@@ -1003,7 +1020,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function render_add_fields( $taxonomy = '' ) {
 
-		$fields = $this->get_fields();
+		$fields = $this->get_fields_by( 'quick_add', true );
 
 		foreach ( $fields as $field ) {
 
@@ -1224,6 +1241,184 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	}
 
 	/**
+	 * Render Quick Edit Fields
+	 *
+	 * Renders the shared quick edit template for this taxonomy. The field IDs
+	 * use a placeholder token that is rewritten to the active term ID before the
+	 * field scripts initialize.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function render_quick_edit_fields() {
+
+		if ( ! $this->is_screen( 'base', 'edit-tags' ) || ! $this->is_screen( 'taxonomy', $this->slug ) ) {
+			return;
+		}
+
+		$fields         = $this->get_fields_by( 'quick_edit', true );
+		$id_placeholder = '{{ term_id }}';
+
+		if ( empty( $fields ) ) {
+			return;
+		} ?>
+
+		<div
+		hidden
+		inert
+		id="wp_backstage_taxonomy_quick_edit_template"
+		data-id-placeholder="<?php echo esc_attr( $id_placeholder ); ?>">
+
+			<fieldset class="wp-backstage-taxonomy-quick-edit">
+
+				<div class="inline-edit-col">
+
+					<?php foreach ( $fields as $field ) {
+
+						$field['id'] = sprintf( '%1$s_%2$s', $field['name'], $id_placeholder );
+						$field       = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, null );
+						$field_class = $this->get_field_class( $field['type'] );
+
+						if ( $field_class->has_tag( 'text_control' ) ) {
+							$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+						}
+
+						if ( $field_class->has_tag( 'textarea_control' ) ) {
+							$field = $this->add_field_input_classes( $field, array( 'widefat' ) );
+							$field = $this->set_field_textarea_dimensions( $field, 5, 50 );
+						} ?>
+
+						<div
+						class="wp-backstage-taxonomy-quick-edit-field"
+						data-wp-backstage-field-name="<?php echo esc_attr( $field['name'] ); ?>"
+						data-wp-backstage-field-type="<?php echo esc_attr( $field['type'] ); ?>">
+
+							<span class="title">
+								<?php $this->render_field_label( $field ); ?>
+							</span>
+
+							<span class="input-text-wrap"><?php
+
+								/**
+								 * Fires before the custom quick edit field is rendered.
+								 *
+								 * @since 0.0.1
+								 *
+								 * @param array         $field an array of field arguments.
+								 * @param WP_Term|null  $term  the current term object if available.
+								 */
+								do_action( "wp_backstage_{$this->slug}_field_before", $field, null );
+
+								$field_class->render( $field );
+
+								/**
+								 * Fires after the custom quick edit field is rendered.
+								 *
+								 * @since 0.0.1
+								 *
+								 * @param array         $field an array of field arguments.
+								 * @param WP_Term|null  $term  the current term object if available.
+								 */
+								do_action( "wp_backstage_{$this->slug}_field_after", $field, null );
+
+							?></span>
+
+						</div>
+
+					<?php } ?>
+
+				</div>
+
+			</fieldset>
+
+		</div>
+
+	<?php }
+
+	/**
+	 * Inline Quick Edit Data
+	 *
+	 * Appends JSON-encoded values for quick edit fields to the term row action
+	 * markup so the quick edit template can hydrate itself without relying on
+	 * visible custom columns.
+	 *
+	 * @since   4.0.0
+	 * @param   array   $actions  An array of row action markup strings.
+	 * @param   WP_Term $term     The current term.
+	 * @return  array   The filtered row action array.
+	 */
+	public function inline_quick_edit_data( $actions, $term ) {
+		if ( current_user_can( 'edit_term', $term->term_id ) ) {
+			$fields = $this->get_fields_by( 'quick_edit', true );
+			$values = array();
+			foreach ( $fields as $field ) {
+				$values[ $field['name'] ] = get_term_meta( $term->term_id, $field['name'], true );
+			}
+			$script = sprintf(
+				'<script type="application/json" id="%1$s">%2$s</script>',
+				esc_attr( "wp_backstage_quick_edit_data_{$term->term_id}" ),
+				wp_json_encode( $values, JSON_HEX_TAG )
+			);
+			if ( isset( $actions['inline hide-if-no-js'] ) ) {
+				$actions['inline hide-if-no-js'] .= $script;
+			}
+		}
+
+		return $actions;
+
+	}
+
+	/**
+	 * Capture Quick Edit Request Data
+	 *
+	 * Captures WP Backstage quick edit field values before core passes the full
+	 * taxonomy quick edit payload into `wp_update_term()`. The captured values
+	 * are removed from `$_POST` so core only receives term fields it understands.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function capture_quick_edit_request_data() {
+
+		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
+
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return;
+		}
+		if ( empty( $post_data ) ) {
+			return;
+		}
+		if ( empty( $post_data['action'] ) || ( 'inline-save-tax' !== $post_data['action'] ) ) {
+			return;
+		}
+		if ( empty( $post_data['taxonomy'] ) || ( sanitize_key( $post_data['taxonomy'] ) !== $this->slug ) ) {
+			return;
+		}
+		if ( empty( $post_data['_inline_edit'] ) ) {
+			return;
+		}
+		if ( ! wp_verify_nonce( $post_data['_inline_edit'], 'taxinlineeditnonce' ) ) {
+			return;
+		}
+
+		$fields = $this->get_fields_by( 'quick_edit', true );
+
+		if ( empty( $fields ) ) {
+			return;
+		}
+
+		$this->quick_edit_data = array();
+
+		foreach ( $fields as $field ) {
+
+			if ( array_key_exists( $field['name'], $post_data ) ) {
+				$this->quick_edit_data[ $field['name'] ] = $post_data[ $field['name'] ];
+				unset( $_POST[ $field['name'] ] );
+			}
+		}
+	}
+
+	/**
 	 * Save
 	 *
 	 * Saves the form data as individual keys.
@@ -1239,7 +1434,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
-		if ( ! current_user_can( 'manage_categories' ) ) {
+		if ( ! current_user_can( 'edit_term', $term_id ) ) {
 			return;
 		}
 		if ( empty( $post_data ) ) {
@@ -1257,6 +1452,60 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		foreach ( $fields as $field ) {
 
 			if ( isset( $post_data[ $field['name'] ] ) ) {
+
+				$field_class = $this->get_field_class( $field['type'] );
+				$value       = $field_class->sanitize( $post_data[ $field['name'] ] );
+
+				update_term_meta( $term_id, $field['name'], $value );
+
+			} else {
+
+				delete_term_meta( $term_id, $field['name'] );
+
+			}
+		}
+	}
+
+	/**
+	 * Save Quick Edit
+	 *
+	 * Saves quick edit field data without touching fields that are only available
+	 * on the full add/edit term forms.
+	 *
+	 * @since   4.0.0
+	 * @param   int $term_id  The ID of the term being saved.
+	 * @param   int $tt_id    The tt ID of the term being saved.
+	 * @return  void
+	 */
+	public function save_quick_edit( $term_id = 0, $tt_id = 0 ) {
+
+		$request_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
+		$post_data    = is_array( $this->quick_edit_data ) ? $this->quick_edit_data : $request_data;
+
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return;
+		}
+		if ( ! current_user_can( 'edit_term', $term_id ) ) {
+			return;
+		}
+		if ( empty( $request_data ) ) {
+			return;
+		}
+		if ( empty( $request_data['action'] ) || ( 'inline-save-tax' !== $request_data['action'] ) ) {
+			return;
+		}
+		if ( empty( $request_data['_inline_edit'] ) ) {
+			return;
+		}
+		if ( ! wp_verify_nonce( $request_data['_inline_edit'], 'taxinlineeditnonce' ) ) {
+			return;
+		}
+
+		$fields = $this->get_fields_by( 'quick_edit', true );
+
+		foreach ( $fields as $field ) {
+
+			if ( is_array( $post_data ) && array_key_exists( $field['name'], $post_data ) ) {
 
 				$field_class = $this->get_field_class( $field['type'] );
 				$value       = $field_class->sanitize( $post_data[ $field['name'] ] );
@@ -1535,7 +1784,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
+	public function manage_default_hidden_columns( $hidden, $screen ) {
 
 		if ( $this->is_screen( 'taxonomy', $this->slug, $screen ) ) {
 

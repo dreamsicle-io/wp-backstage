@@ -1031,16 +1031,6 @@ Search.appendIndex(
             "summary": "Get\u0020Fields",
             "url": "classes/WP-Backstage-Taxonomy.html#method_get_fields"
         },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aget_quick_add_fields\u0028\u0029",
-            "name": "get_quick_add_fields",
-            "summary": "Get\u0020Quick\u0020Add\u0020Fields",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_get_quick_add_fields"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aget_quick_edit_fields\u0028\u0029",
-            "name": "get_quick_edit_fields",
-            "summary": "Get\u0020Quick\u0020Edit\u0020Fields",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_get_quick_edit_fields"
-        },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_add_fields\u0028\u0029",
             "name": "render_add_fields",
             "summary": "Render\u0020Add\u0020Fields",
@@ -1065,11 +1055,6 @@ Search.appendIndex(
             "name": "render_quick_edit_fields",
             "summary": "Render\u0020Quick\u0020Edit\u0020Fields",
             "url": "classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_fields"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Arender_quick_edit_field_label\u0028\u0029",
-            "name": "render_quick_edit_field_label",
-            "summary": "",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_render_quick_edit_field_label"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Ainline_quick_edit_data\u0028\u0029",
             "name": "inline_quick_edit_data",

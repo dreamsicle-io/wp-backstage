@@ -404,8 +404,9 @@ class WP_Backstage {
 		add_action( 'admin_print_footer_scripts-post.php', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-post-new.php', array( $this, 'inline_post_type_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-edit.php', array( $this, 'inline_post_type_quick_edit_script' ), 10 );
-		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'inline_taxonomy_script' ), 10 );
-		add_action( 'admin_print_footer_scripts-term.php', array( $this, 'inline_taxonomy_script' ), 10 );
+		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'inline_taxonomy_add_script' ), 10 );
+		add_action( 'admin_print_footer_scripts-edit-tags.php', array( $this, 'inline_taxonomy_quick_edit_script' ), 20 );
+		add_action( 'admin_print_footer_scripts-term.php', array( $this, 'inline_taxonomy_edit_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-nav-menus.php', array( $this, 'inline_nav_menu_item_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-profile.php', array( $this, 'inline_user_script' ), 10 );
 		add_action( 'admin_print_footer_scripts-user-new.php', array( $this, 'inline_user_script' ), 10 );
@@ -1061,6 +1062,11 @@ class WP_Backstage {
 				text-shadow: none;
 			}
 
+			/* Quick edit fieldsets */
+			.inline-edit-row td fieldset {
+				padding-right: unset !important;
+			}
+
 			/* Meta box fields */
 			.postbox .wp-backstage-field + .howto {
 				margin-top: 0.2em;
@@ -1098,6 +1104,31 @@ class WP_Backstage {
 			#dashboard-widgets .postbox .wp-backstage-field + .description {
 				display: block;
 				margin-top: 6px;
+			}
+
+			/* Taxonomy quick edit */
+			.wp-backstage-taxonomy-quick-edit-field {
+				display: block;
+				margin: .2em 0;
+				line-height: 2.5;
+				clear: both;
+			}
+
+			.wp-backstage-taxonomy-quick-edit-field .title {
+				display: block;
+				float: left;
+				width: 6em;
+				line-height: 2.5;
+			}
+
+			.wp-backstage-taxonomy-quick-edit-field .input-text-wrap {
+				display: block;
+				margin-left: 6em;
+			}
+
+			.wp-backstage-taxonomy-quick-edit-field .wp-backstage-field::before,
+			.wp-backstage-taxonomy-quick-edit-field .wp-backstage-field::after {
+				content: unset;
 			}
 
 			/* Options pages */
@@ -2305,7 +2336,7 @@ class WP_Backstage {
 					const idPlaceholder = template.dataset.idPlaceholder;
 					const templateContent = template.querySelector('.wp-backstage-post-type-quick-edit');
 					const templateClone = templateContent.cloneNode(true);
-					const templateHTML = template.innerHTML.replaceAll(idPlaceholder, postId);
+					const templateHTML = templateClone.innerHTML.replaceAll(idPlaceholder, postId);
 					templateClone.innerHTML = templateHTML;
 
 					const inserted = wrapper.insertBefore(templateClone, submit);
@@ -2615,14 +2646,109 @@ class WP_Backstage {
 	<?php }
 
 	/**
-	 * Inline Taxonomy Script
+	 * Inline Taxonomy Quick Edit Script
 	 *
-	 * @since   0.0.1
+	 * Extends core taxonomy quick edit by injecting the WP Backstage quick edit
+	 * template after the row is opened and then initializing field scripts for
+	 * the hydrated values.
+	 *
+	 * @since   4.0.0
 	 * @return  void
 	 */
-	public function inline_taxonomy_script() { ?>
+	public function inline_taxonomy_quick_edit_script() { ?>
 
-		<script id="wp_backstage_taxonomy_script">
+		<script id="wp_backstage_taxonomy_quick_edit_script">
+
+			(function($) {
+
+				function setFieldValue(field, value = undefined) {
+					const type = field.dataset.fieldType;
+
+					if (window.wpBackstage.fields[type] && (typeof window.wpBackstage.fields[type].setValue === 'function')) {
+						window.wpBackstage.fields[type].setValue(field, value);
+						return;
+					}
+
+					const input = field.querySelector('#' + field.dataset.fieldId);
+					const normalizedValue = ((value === undefined) || (value === null)) ? '' : value.toString();
+
+					if (input instanceof HTMLInputElement) {
+						if (input.type === 'checkbox') {
+							input.checked = Boolean(value);
+						} else {
+							input.value = normalizedValue;
+						}
+					} else if (input instanceof HTMLTextAreaElement) {
+						input.value = normalizedValue;
+					} else if (input instanceof HTMLSelectElement) {
+						input.value = normalizedValue || input.options[0].value;
+					}
+				}
+
+				function init(termId = 0) {
+					const editRow = document.getElementById('edit-' + termId);
+					const wrapper = editRow.querySelector('.inline-edit-wrapper');
+					const submit = editRow.querySelector('.inline-edit-save');
+					const dataScript = document.getElementById('wp_backstage_quick_edit_data_' + termId);
+					const values = dataScript ? JSON.parse(dataScript.textContent) : {};
+
+					const template = document.getElementById('wp_backstage_taxonomy_quick_edit_template');
+					const idPlaceholder = template.dataset.idPlaceholder;
+					const templateContent = template.querySelector('.wp-backstage-taxonomy-quick-edit');
+					const templateClone = templateContent.cloneNode(true);
+					const templateHTML = templateClone.innerHTML.replaceAll(idPlaceholder, termId);
+					templateClone.innerHTML = templateHTML;
+
+					const inserted = wrapper.insertBefore(templateClone, submit);
+
+					const fieldContainers = inserted.querySelectorAll('.wp-backstage-taxonomy-quick-edit-field');
+					fieldContainers.forEach(function(container) {
+						const fieldName = container.dataset.wpBackstageFieldName;
+						const field = container.querySelector('.wp-backstage-field');
+						setFieldValue(field, values[fieldName]);
+					});
+
+					$(inserted).find('input').on('keydown', function(e) {
+						if (e.key === 'Enter') {
+							e.preventDefault();
+							e.stopPropagation();
+							return window.inlineEditTax.save(this);
+						}
+					});
+
+					window.wpBackstage.initAllFields(inserted);
+				}
+
+				document.addEventListener('DOMContentLoaded', function() {
+					if (window.inlineEditTax) {
+						const originalEdit = window.inlineEditTax.edit;
+						window.inlineEditTax.edit = function(elementOrId) {
+							const result = originalEdit.apply(this, arguments);
+							const termId = (typeof elementOrId === 'object') ? this.getId(elementOrId) : elementOrId;
+							init(termId);
+							return result;
+						};
+					}
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Taxonomy Add Script
+	 *
+	 * Initializes taxonomy add-form fields on the collection screen and resets
+	 * them after successful AJAX term creation.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function inline_taxonomy_add_script() { ?>
+
+		<script id="wp_backstage_taxonomy_add_script">
 
 			(function($) {
 
@@ -2646,8 +2772,38 @@ class WP_Backstage {
 				}
 
 				function init() {
-					window.wpBackstage.initAllFields();
+					const addForm = document.querySelector('#addtag');
+					window.wpBackstage.initAllFields(addForm);
 					$(document).ajaxSuccess(handleSuccess);
+				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					init();
+				});
+
+			})(jQuery);
+
+		</script>
+
+	<?php }
+
+	/**
+	 * Inline Taxonomy Edit Script
+	 *
+	 * Initializes taxonomy edit-form fields on the singular term screen.
+	 *
+	 * @since   4.0.0
+	 * @return  void
+	 */
+	public function inline_taxonomy_edit_script() { ?>
+
+		<script id="wp_backstage_taxonomy_edit_script">
+
+			(function($) {
+
+				function init() {
+					const editForm = document.querySelector('#edittag');
+					window.wpBackstage.initAllFields(editForm);
 				}
 
 				document.addEventListener('DOMContentLoaded', function(e) {

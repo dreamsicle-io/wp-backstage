@@ -495,7 +495,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 
 			(function($) {
 
-				function findParentControl(element = null) {
+				function findParentControl(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-backstage-field--type-address')) {
 						parentNode = parentNode.parentNode;
@@ -507,31 +507,31 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					return container.querySelectorAll('.wp-backstage-field--type-address');
 				}
 
-				function enableField(field = null) {
+				function enableField(field) {
 					const control = field.querySelector('input, select');
 					control.removeAttribute('disabled');
 					field.style.display = 'block';
 				}
 
-				function disableField(field = null) {
+				function disableField(field) {
 					const control = field.querySelector('input, select');
 					control.setAttribute('disabled', true);
 					field.style.display = 'none';
 				}
 
-				function getCountrySelect(control = null) {
+				function getCountrySelect(control) {
 					return control.querySelector('.wp-backstage-address-field__control--country select');
 				}
 
-				function getStateInputContainer(control = null) {
+				function getStateInputContainer(control) {
 					return control.querySelector('.wp-backstage-address-field__control--state');
 				}
 
-				function getUSStateSelectContainer(control = null) {
+				function getUSStateSelectContainer(control) {
 					return control.querySelector('.wp-backstage-address-field__control--us-state');
 				}
 
-				function toggleByCountry(control = null) {
+				function toggleByCountry(control) {
 					const country = getCountry(control);
 					const stateContainer = getStateInputContainer(control);
 					const usStateContainer = getUSStateSelectContainer(control);
@@ -544,12 +544,12 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function handleCountryChange(e = null) {
+				function handleCountryChange(e) {
 					const control = findParentControl(e.target);
 					toggleByCountry(control);
 				}
 
-				function init(control = null) {
+				function init(control) {
 					const countrySelect = getCountrySelect(control);
 					countrySelect.addEventListener('change', handleCountryChange);
 					toggleByCountry(control);
@@ -562,7 +562,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroy(control = null) {
+				function destroy(control) {
 					const countrySelect = getCountrySelect(control);
 					const stateContainer = getStateInputContainer(control);
 					const usStateContainer = getUSStateSelectContainer(control);
@@ -585,16 +585,16 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function getCountry(control = null) {
+				function getCountry(control) {
 					const countrySelect = getCountrySelect(control);
 					return countrySelect.value;
 				}
 
-				function reset(control = null) {
+				function reset(control) {
 					toggleByCountry(control);
 				}
 
-				function setValue(control = null, value = null) {
+				function setValue(control, value = null) {
 					const countrySelect = control.querySelector('.wp-backstage-address-field__control--country select');
 					const address1Input = control.querySelector('.wp-backstage-address-field__control--address-1 input');
 					const address2Input = control.querySelector('.wp-backstage-address-field__control--address-2 input');
@@ -613,7 +613,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 					toggleByCountry(control);
 				}
 
-				function getValue(control = null) {
+				function getValue(control) {
 					const countrySelect = control.querySelector('.wp-backstage-address-field__control--country select');
 					const address1Input = control.querySelector('.wp-backstage-address-field__control--address-1 input');
 					const address2Input = control.querySelector('.wp-backstage-address-field__control--address-2 input');

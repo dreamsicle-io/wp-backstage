@@ -122,14 +122,14 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 
 				var saveTimer = null;
 
-				function handleChange(e = null, ui = null) {
+				function handleChange(e) {
 					if (saveTimer) clearTimeout(saveTimer);
 					saveTimer = setTimeout(function() {
 						$(e.target).trigger('change');
 					}, 500);
 				}
 
-				function init(colorPicker = null) {
+				function init(colorPicker) {
 					const fieldId = colorPicker.getAttribute('data-field-id');
 					const input = colorPicker.querySelector('#' + fieldId);
 					const mode = colorPicker.getAttribute('data-color-picker-mode');
@@ -153,19 +153,19 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					initLabels(colorPicker);
 				}
 
-				function getIrisInstance(colorPicker = null) {
+				function getIrisInstance(colorPicker) {
 					const fieldId = colorPicker.getAttribute('data-field-id');
 					const input = colorPicker.querySelector('#' + fieldId);
 					return $(input).iris('instance');
 				}
 
-				function getWPColorPickerInstance(colorPicker = null) {
+				function getWPColorPickerInstance(colorPicker) {
 					const fieldId = colorPicker.getAttribute('data-field-id');
 					const input = colorPicker.querySelector('#' + fieldId);
 					return $(input).wpColorPicker('instance');
 				}
 
-				function initLabels(colorPicker = null) {
+				function initLabels(colorPicker) {
 					const fieldId = colorPicker.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -173,7 +173,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroyLabels(colorPicker = null) {
+				function destroyLabels(colorPicker) {
 					const fieldId = colorPicker.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -181,19 +181,19 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function handleLabelClick(e = null) {
+				function handleLabelClick(e) {
 					e.preventDefault();
 					const fieldId = e.target.getAttribute('for');
 					const colorPicker = getColorPickerById(fieldId);
 					focus(colorPicker);
 				}
 
-				function focus(colorPicker = null) {
+				function focus(colorPicker) {
 					const button = colorPicker.querySelector('.wp-color-result');
 					button.focus();
 				}
 
-				function getColorPickerById(fieldId = '') {
+				function getColorPickerById(fieldId) {
 					return document.querySelector('.wp-backstage-field--type-color[data-field-id="' + fieldId + '"]');
 				}
 
@@ -204,7 +204,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function reset(colorPicker = null) {
+				function reset(colorPicker) {
 					const resetButton = colorPicker.querySelector('.wp-picker-clear, .wp-picker-default');
 					resetButton.click();
 				}
@@ -216,7 +216,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroy(colorPicker = null) {
+				function destroy(colorPicker) {
 					// wpColorPicker does not destroy in any meaningul way, so it
 					// must be done manually. First, destroy the iris instance AND 
 					// the wpColorPicker instance, then the UI has to be destroyed manually.

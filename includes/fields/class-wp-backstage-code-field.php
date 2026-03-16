@@ -157,7 +157,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 
 				var saveTimer = null;
 
-				function init(codeEditor = null) {
+				function init(codeEditor) {
 					const fieldId = codeEditor.getAttribute('data-field-id');
 					const textarea = codeEditor.querySelector('#' + fieldId);
 					const settingsKey = codeEditor.getAttribute('data-code-editor-language');
@@ -184,7 +184,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					return container.querySelectorAll('.wp-backstage-field--type-code');
 				}
 
-				function initLabels(codeEditor = null) {
+				function initLabels(codeEditor) {
 					const fieldId = codeEditor.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -192,7 +192,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroyLabels(codeEditor = null) {
+				function destroyLabels(codeEditor) {
 					const fieldId = codeEditor.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -200,7 +200,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroy(codeEditor = null) {
+				function destroy(codeEditor) {
 					const codeMirrorInst = getCodeMirrorInstance(codeEditor);
 					codeMirrorInst.toTextArea();
 					destroyLabels(codeEditor);
@@ -213,19 +213,19 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function handleLabelClick(e = null) {
+				function handleLabelClick(e) {
 					e.preventDefault();
 					const fieldId = e.target.getAttribute('for');
 					const codeEditor = getCodeEditorById(fieldId);
 					focus(codeEditor);
 				}
 
-				function getCodeMirrorInstance(codeEditor = null) {
+				function getCodeMirrorInstance(codeEditor) {
 					const codeMirrorEl = codeEditor.querySelector('.CodeMirror');
 					return codeMirrorEl.CodeMirror;
 				}
 
-				function refresh(codeEditor = null) {
+				function refresh(codeEditor) {
 					const codeMirrorInst = getCodeMirrorInstance(codeEditor);
 					codeMirrorInst.refresh();
 				}
@@ -244,7 +244,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function reset(codeEditor = null) {
+				function reset(codeEditor) {
 					const codeMirrorInst = getCodeMirrorInstance(codeEditor);
 					const textarea = codeMirrorInst.getTextArea();
 					codeMirrorInst.setValue(textarea.defaultValue);
@@ -258,12 +258,12 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function focus(codeEditor = null) {
+				function focus(codeEditor) {
 					const codeMirrorInst = getCodeMirrorInstance(codeEditor);
 					codeMirrorInst.focus();
 				} 
 
-				function getCodeEditorById(fieldId = '') {
+				function getCodeEditorById(fieldId) {
 					return document.querySelector('.wp-backstage-field--type-code[data-field-id="' + fieldId + '"]');
 				}
 

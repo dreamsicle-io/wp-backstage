@@ -136,7 +136,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 
 				var saveTimer = null;
 
-				function findParentEditor(element = null) {
+				function findParentEditor(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-backstage-field--type-editor')) {
 						parentNode = parentNode.parentNode;
@@ -144,7 +144,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function destroy(editor = null) {
+				function destroy(editor) {
 					if (saveTimer) {
 						clearTimeout(saveTimer);
 					}
@@ -153,7 +153,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					destroyLabels(editor);
 				}
 
-				function handleSetup(wpEditor = null) {
+				function handleSetup(wpEditor) {
 					wpEditor.on('change', function(e) {
 						if (saveTimer) {
 							clearTimeout(saveTimer);
@@ -169,11 +169,11 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					return container.querySelectorAll('.wp-backstage-field--type-editor');
 				}
 
-				function isInitialized(editor = null) {
+				function isInitialized(editor) {
 					return Boolean(getTinyMCEInstance(editor));
 				}
 
-				function init(editor = null) {
+				function init(editor) {
 					// the wp tinyMCE editor stays attached to the dom in cases like when the widgets
 					// are updated. Therefore we first check if the editor must be destroyed here.
 					if (isInitialized(editor)) {
@@ -214,7 +214,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					initLabels(editor);
 				}
 
-				function initLabels(editor = null) {
+				function initLabels(editor) {
 					const fieldId = editor.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -222,7 +222,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroyLabels(editor = null) {
+				function destroyLabels(editor) {
 					const fieldId = editor.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -230,7 +230,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function handleLabelClick(e = null) {
+				function handleLabelClick(e) {
 					e.preventDefault();
 					const fieldId = e.target.getAttribute('for');
 					const editor = getEditorById(fieldId);
@@ -251,7 +251,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function refresh(editor = null) {
+				function refresh(editor) {
 					destroy(editor);
 					init(editor);
 				}
@@ -261,21 +261,21 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 					initAll(container);
 				}
 
-				function getEditorById(fieldId = '') {
+				function getEditorById(fieldId) {
 					return document.querySelector('.wp-backstage-field--type-editor[data-field-id="' + fieldId + '"]');
 				}
 
-				function getTextarea(editor = null) {
+				function getTextarea(editor) {
 					const fieldId = editor.getAttribute('data-field-id');
 					return editor.querySelector('#' + fieldId);
 				}
 
-				function getTinyMCEInstance(editor = null) {
+				function getTinyMCEInstance(editor) {
 					const fieldId = editor.getAttribute('data-field-id');
 					return tinymce.get(fieldId);
 				}
 
-				function focus(editor = null) {
+				function focus(editor) {
 					const tinyMCEInst = getTinyMCEInstance(editor);
 					tinyMCEInst.focus();
 				}

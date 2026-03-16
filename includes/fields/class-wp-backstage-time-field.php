@@ -150,7 +150,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 
 			(function() {
 
-				function setValue(control = null, value = '00:00:00') {
+				function setValue(control, value = '00:00:00') {
 					value = (typeof value === 'string') ? value : '00:00:00';
 					const values = value.split(':');
 					const hourSelect = control.querySelector('.wp-backstage-time-field__piece--hour select');
@@ -161,7 +161,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 					secondSelect.value = (values && values[2]) ? values[2] : '00';
 				}
 
-				function getValue(control = null) {
+				function getValue(control) {
 					const hourSelect = control.querySelector('.wp-backstage-time-field__piece--hour select');
 					const minuteSelect = control.querySelector('.wp-backstage-time-field__piece--minute select');
 					const secondSelect = control.querySelector('.wp-backstage-time-field__piece--second select');

@@ -2190,7 +2190,7 @@ class WP_Backstage {
 
 				var refreshTimer = null;
 
-				function findParentMetaBox(element = null) {
+				function findParentMetaBox(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('postbox')) {
 						parentNode = parentNode.parentNode;
@@ -2198,7 +2198,7 @@ class WP_Backstage {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function refreshMetaBox(metaBox = null) {
+				function refreshMetaBox(metaBox) {
 					if (refreshTimer) clearTimeout(refreshTimer);
 					refreshTimer = setTimeout(function() {
 						if (! metaBox.classList.contains('closed')) {
@@ -2207,33 +2207,33 @@ class WP_Backstage {
 					}, 500);
 				}
 
-				function handleMetaBoxHandleClick(e = null) {
+				function handleMetaBoxHandleClick(e) {
 					const metaBox = findParentMetaBox(e.target);
 					refreshMetaBox(metaBox);
 				}
 
-				function handleMetaBoxSortStop(e = null, ui = null) {
+				function handleMetaBoxSortStop(e, ui) {
 					if (ui.item[0] instanceof HTMLElement && ui.item[0].classList.contains('postbox')) {
 						const metaBox = ui.item[0];
 						refreshMetaBox(metaBox);
 					}
 				}
 
-				function handleScreenOptionChange(e = null) {
+				function handleScreenOptionChange(e) {
 					const metaBox = document.getElementById(e.target.value);
 					refreshMetaBox(metaBox);
 				}
 
-				function initMetaBoxSortable(sortable = null) {
+				function initMetaBoxSortable(sortable) {
 					$(sortable).on('sortstop', handleMetaBoxSortStop);
 				}
 
-				function initMetaBox(metaBox = null) {
+				function initMetaBox(metaBox) {
 					const handle = metaBox.querySelector('.postbox-header');
 					handle.addEventListener('click', handleMetaBoxHandleClick);
 				}
 
-				function initScreenOption(checkbox = null) {
+				function initScreenOption(checkbox) {
 					checkbox.addEventListener('change', handleScreenOptionChange);
 				}
 
@@ -2324,7 +2324,7 @@ class WP_Backstage {
 					}
 				}
 
-				function init(postId = 0) {
+				function init(postId) {
 					const editRow = document.getElementById('edit-' + postId);
 					const wrapper = editRow.querySelector('.inline-edit-wrapper');
 					const submit = editRow.querySelector('.inline-edit-save');
@@ -2396,7 +2396,7 @@ class WP_Backstage {
 				var refreshTimer = null;
 				var refreshFieldContainersTimer = null;
 
-				function findParentNavMenuItem(element = null) {
+				function findParentNavMenuItem(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('menu-item')) {
 						parentNode = parentNode.parentNode;
@@ -2404,7 +2404,7 @@ class WP_Backstage {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function handleSuccess(e = null, request = null, settings = null) {
+				function handleSuccess(e, request, settings) {
 					if (settings && settings.data) {
 						const params = new URLSearchParams(settings.data);
 						const action = params.get('action');
@@ -2414,7 +2414,7 @@ class WP_Backstage {
 					}
 				}
 
-				function handleNavMenuSortStop(e = null, ui = null) {
+				function handleNavMenuSortStop(e, ui) {
 					const item = ui.item[0];
 					if (item.classList.contains('menu-item')) {
 						refreshItem(item);
@@ -2426,7 +2426,7 @@ class WP_Backstage {
 					$(sortable).on('sortstop', handleNavMenuSortStop);
 				}
 
-				function handleScreenOptionChange(e = null) {
+				function handleScreenOptionChange(e) {
 					const fieldContainers = document.querySelectorAll('.menu-item .field-' + e.target.value);
 					refreshFieldContainers(fieldContainers);
 				}
@@ -2438,7 +2438,7 @@ class WP_Backstage {
 					});
 				}
 
-				function refreshItem(item = null) {
+				function refreshItem(item) {
 					if (refreshTimer) clearTimeout(refreshTimer);
 					refreshTimer = setTimeout(function() {
 						if (item.classList.contains('menu-item-edit-active')) {
@@ -2447,7 +2447,7 @@ class WP_Backstage {
 					}, 500);
 				}
 
-				function refreshFieldContainers(fieldContainers = []) {
+				function refreshFieldContainers(fieldContainers) {
 					if (refreshFieldContainersTimer) clearTimeout(refreshFieldContainersTimer);
 					refreshFieldContainersTimer = setTimeout(function() {
 						fieldContainers.forEach(function(fieldContainer) {
@@ -2458,29 +2458,29 @@ class WP_Backstage {
 					}, 500);
 				}
 
-				function handleItemHandleClick(e = null) {
+				function handleItemHandleClick(e) {
 					const item = findParentNavMenuItem(e.target);
 					refreshItem(item);
 				}
 
-				function handleItemMoveLinkClick(e = null) {
+				function handleItemMoveLinkClick(e) {
 					const item = findParentNavMenuItem(e.target);
 					refreshItem(item);
 				}
 
-				function initItemHandle(item = null) {
+				function initItemHandle(item) {
 					const handle = item.querySelector('.menu-item-handle .item-edit');
 					handle.addEventListener('click', handleItemHandleClick);
 				}
 
-				function initItemMoveLinks(item = null) {
+				function initItemMoveLinks(item) {
 					const links = item.querySelectorAll('.menus-move');
 					links.forEach(function(link) {
 						link.addEventListener('click', handleItemMoveLinkClick);
 					});
 				}
 
-				function initItem(item = null) {
+				function initItem(item) {
 					window.wpBackstage.initAllFields(item);
 					initItemHandle(item);
 					initItemMoveLinks(item);
@@ -2685,7 +2685,7 @@ class WP_Backstage {
 					}
 				}
 
-				function init(termId = 0) {
+				function init(termId) {
 					const editRow = document.getElementById('edit-' + termId);
 					const wrapper = editRow.querySelector('.inline-edit-wrapper');
 					const submit = editRow.querySelector('.inline-edit-save');
@@ -2758,7 +2758,7 @@ class WP_Backstage {
 					window.wpBackstage.resetAllFields(form);
 				}
 
-				function handleSuccess(e = null, request = null, settings = null) {
+				function handleSuccess(e, request, settings) {
 					if (settings && settings.data) {
 						const params = new URLSearchParams(settings.data);
 						const action = params.get('action');
@@ -2860,7 +2860,7 @@ class WP_Backstage {
 					window.wpBackstage.initAllFields();
 				}
 
-				function handleWidgetSorted(e = null, $sortable = null) {
+				function handleWidgetSorted(e, $sortable) {
 					const widget = $sortable.item[0];
 					if (widget && widget.classList.contains('postbox')) {
 						window.wpBackstage.refreshAllFields(widget);
@@ -2893,13 +2893,13 @@ class WP_Backstage {
 
 			(function($) {
 
-				function findWidget(id = '') {
+				function findWidget(id) {
 					const input = document.querySelector('.widget-id[value="' + id + '"]');
 					const widget = findParentWidget(input);
 					return widget;
 				}
 
-				function findParentWidget(element = null) {
+				function findParentWidget(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('widget')) {
 						parentNode = parentNode.parentNode;
@@ -2907,7 +2907,7 @@ class WP_Backstage {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function findParentBlock(element = null) {
+				function findParentBlock(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-block-legacy-widget')) {
 						parentNode = parentNode.parentNode;
@@ -2915,33 +2915,33 @@ class WP_Backstage {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function handleWidgetAdded(e = null, $widget = null) {
+				function handleWidgetAdded(e, $widget) {
 					const widget = $widget[0];
 					setTimeout(function() {
 						initWidget(widget);
 					}, 500);
 				}
 
-				function handleWidgetUpdated(e = null, $widget = null) {
+				function handleWidgetUpdated(e, $widget) {
 					const widget = $widget[0];
 					window.wpBackstage.initAllFields(widget);
 				}
 
-				function handleWidgetSynced(e = null, $widget = null) {
+				function handleWidgetSynced(e, $widget) {
 					// This function is fired when the widget is synced via the customizer 
 					// in the classic widgets experience only. Currently nothing has to be
 					// done here in this instance.
 					// console.log('synced', e, $widget);
 				}
 
-				function initWidgetBlock(widget = null) {
+				function initWidgetBlock(widget) {
 					const block = findParentBlock(widget);
 					if (block) {
 						block.addEventListener('click', handleBlockClick);
 					}
 				}
 
-				function handleBlockClick(e = null) {
+				function handleBlockClick(e) {
 					const parentWidget = findParentWidget(e.target);
 					if (! parentWidget) {
 						const block = e.target.classList.contains('wp-block-legacy-widget') ? e.target : findParentBlock(e.target);
@@ -2950,18 +2950,18 @@ class WP_Backstage {
 					}
 				}
 
-				function initWidgetArea(container = null) {
+				function initWidgetArea(container) {
 					window.wpBackstage.initAllFields(container);
 					initAllWidgetHandles(container);
 				}
 
-				function initWidget(widget = null) {
+				function initWidget(widget) {
 					window.wpBackstage.initAllFields(widget);
 					initAllWidgetHandles(widget);
 					initWidgetBlock(widget);
 				}
 
-				function handleWidgetHandleClick(e = null) {
+				function handleWidgetHandleClick(e) {
 					const widget = findParentWidget(e.target);
 					setTimeout(function() {
 						if (widget.classList.contains('open')) {
@@ -2970,11 +2970,11 @@ class WP_Backstage {
 					}, 500);
 				}
 
-				function initWidgetHandle(handle = null) {
+				function initWidgetHandle(handle) {
 					handle.addEventListener('click', handleWidgetHandleClick);
 				}
 
-				function initAllWidgetHandles(container = null) {
+				function initAllWidgetHandles(container) {
 					container = container || document;
 					const widgetHandles = container.querySelectorAll('.widget-top');
 					widgetHandles.forEach(function(widgetHandle) {
@@ -2982,7 +2982,7 @@ class WP_Backstage {
 					});
 				}
 
-				function handleWidgetSorted(e = null, $sortable = null) {
+				function handleWidgetSorted(e, $sortable) {
 					const $widget = $sortable.item.find('.widget.open');
 					if ($widget && $widget[0]) {
 						const widget = $widget[0];

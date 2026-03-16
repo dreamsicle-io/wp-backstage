@@ -116,14 +116,14 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 
 			(function() {
 
-				function setValue(control = null, value = []) {
+				function setValue(control, value = []) {
 					const checkboxes = control.querySelectorAll('input[type="checkbox"]');
 					checkboxes.forEach(function(checkbox) {
 						checkbox.checked = value.includes(checkbox.value);
 					});
 				}
 
-				function getValue(control = null) {
+				function getValue(control) {
 					const checkboxes = control.querySelectorAll('input[type="checkbox"]:checked');
 					return Array.from(checkboxes).map(function(checkbox) {
 						return checkbox.value;

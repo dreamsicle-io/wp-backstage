@@ -538,7 +538,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 
 			(function($) {
 
-				function renderMedia(uploader = null, attachmentIDs = []) {
+				function renderMedia(uploader, attachmentIDs) {
 					const isMultiple = uploader.wpBackstage.isMultiple;
 					hideError(uploader);
 					hideButtons(uploader);
@@ -571,37 +571,37 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function showButtons(uploader = null) {
+				function showButtons(uploader) {
 					const buttons = uploader.wpBackstage.ui.buttons;
 					buttons.style.display = 'block';
 				}
 
-				function hideButtons(uploader = null) {
+				function hideButtons(uploader) {
 					const buttons = uploader.wpBackstage.ui.buttons;
 					buttons.style.display = 'none';
 				}
 
-				function showLoader(uploader = null) {
+				function showLoader(uploader) {
 					const loader = uploader.wpBackstage.ui.loader;
 					loader.style.display = 'inline-block';
 				}
 
-				function hideLoader(uploader = null) {
+				function hideLoader(uploader) {
 					const loader = uploader.wpBackstage.ui.loader;
 					loader.style.display = 'none';
 				}
 
-				function showError(uploader = null) {
+				function showError(uploader) {
 					const error = uploader.wpBackstage.ui.error;
 					error.style.display = 'inline-block';
 				}
 
-				function hideError(uploader = null) {
+				function hideError(uploader) {
 					const error = uploader.wpBackstage.ui.error;
 					error.style.display = 'none';
 				}
 
-				function findParentUploader(element = null) {
+				function findParentUploader(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.classList.contains('wp-backstage-field--type-media')) {
 						parentNode = parentNode.parentNode;
@@ -609,7 +609,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function findParentAttachment(element = null) {
+				function findParentAttachment(element) {
 					var parentNode = element.parentNode;
 					while (parentNode instanceof HTMLElement && ! parentNode.hasAttribute('data-attachment-id')) {
 						parentNode = parentNode.parentNode;
@@ -617,32 +617,32 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					return parentNode instanceof HTMLElement ? parentNode : null;
 				}
 
-				function handleLegendClick(e = null) {
+				function handleLegendClick(e) {
 					const uploader = findParentUploader(e.target);
 					uploader.wpBackstage.modal.open();
 				}
 
-				function handleAddButtonClick(e = null) {
+				function handleAddButtonClick(e) {
 					const uploader = findParentUploader(e.target);
 					uploader.wpBackstage.modal.open();
 				}
 
-				function handleAddToButtonClick(e = null) {
+				function handleAddToButtonClick(e) {
 					const uploader = findParentUploader(e.target);
 					uploader.wpBackstage.modal.open();
 				}
 
-				function handleReplaceButtonClick(e = null) {
+				function handleReplaceButtonClick(e) {
 					const uploader = findParentUploader(e.target);
 					uploader.wpBackstage.modal.open();
 				}
 
-				function handleRemoveButtonClick(e = null) {
+				function handleRemoveButtonClick(e) {
 					const uploader = findParentUploader(e.target);
 					reset(uploader);
 				}
 
-				function handleTryAgainButtonClick(e = null) {
+				function handleTryAgainButtonClick(e) {
 					const uploader = findParentUploader(e.target);
 					const attachmentIDs = getInputValue(uploader);
 					if (attachmentIDs.length > 0) {
@@ -650,29 +650,29 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function enableButton(button = null) {
+				function enableButton(button) {
 					button.removeAttribute('disabled');
 					button.style.display = 'inline-block';
 				}
 
-				function disableButton(button = null) {
+				function disableButton(button) {
 					button.setAttribute('disabled', true);
 					button.style.display = 'none';
 				}
 
-				function handleSortStop(e = null, ui = null) {
+				function handleSortStop(e, ui) {
 					const previewList = e.target;
 					const uploader = findParentUploader(previewList);
 					const cloneIDs = getCloneIDs(uploader);
 					setInputValue(uploader, cloneIDs);
 				}
 
-				function refreshSortable(uploader = null) {
+				function refreshSortable(uploader) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					$(previewList).sortable('refresh');
 				}
 
-				function initSortable(uploader = null) {
+				function initSortable(uploader) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					$(previewList).sortable({
 						items: '[data-attachment-id]', 
@@ -680,7 +680,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function getCloneIDs(uploader = null) {
+				function getCloneIDs(uploader) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const clones = previewList.querySelectorAll('[data-attachment-id]') || [];
 					return Array.from(clones).map(function(clone) {
@@ -688,7 +688,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					})
 				}
 
-				function handleAttachmentRemoveButtonClick(e = null) {
+				function handleAttachmentRemoveButtonClick(e) {
 					e.preventDefault();
 					e.stopPropagation();
 					const uploader = findParentUploader(e.target);
@@ -709,7 +709,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function initClones(uploader = null) {
+				function initClones(uploader) {
 					const isMultiple = uploader.wpBackstage.isMultiple;
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const clones = previewList.querySelectorAll('[data-attachment-id]') || [];
@@ -722,7 +722,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function appendClones(uploader = null, attachmentIDs = [], replace = false) {
+				function appendClones(uploader, attachmentIDs, replace = false) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const template = uploader.wpBackstage.ui.template;
 					const isMultiple = uploader.wpBackstage.isMultiple;
@@ -740,7 +740,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					renderMedia(uploader, attachmentIDs);
 				}
 
-				function removeClone(uploader = null, attachmentID = 0) {
+				function removeClone(uploader, attachmentID) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					const clone = previewList.querySelector('[data-attachment-id="' + attachmentID + '"]');
 					if (clone) {
@@ -748,25 +748,25 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function removeClones(uploader = null) {
+				function removeClones(uploader) {
 					const previewList = uploader.wpBackstage.ui.previewList;
 					previewList.innerHTML = '';
 				}
 
-				function setInputValue(uploader = null, attachmentIDs = []) {
+				function setInputValue(uploader, attachmentIDs) {
 					const input = uploader.wpBackstage.ui.input;
 					input.value = attachmentIDs.join(',');
 					$(input).trigger('change');
 				}
 
-				function getInputValue(uploader = null) {
+				function getInputValue(uploader) {
 					const input = uploader.wpBackstage.ui.input;
 					return ! input.value ? [] : input.value.split(',').map(function(value) { 
 						return parseInt(value, 10); 
 					})
 				}
 
-				function concatAttachmentIDs(uploader = null, attachmentIDs = []) {
+				function concatAttachmentIDs(uploader, attachmentIDs) {
 					const currentAttachmentIDs = getInputValue(uploader); 
 					const newAttachmentIDs = attachmentIDs.filter(function(attachmentID) {
 						return ! currentAttachmentIDs.includes(attachmentID);
@@ -774,7 +774,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					return currentAttachmentIDs.concat(newAttachmentIDs);
 				}
 
-				function handleModalSelect(uploader = null) {
+				function handleModalSelect(uploader) {
 					const addButton = uploader.wpBackstage.ui.addButton;
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;
@@ -798,7 +798,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function destroy(uploader = null) {
+				function destroy(uploader) {
 					const addButton = uploader.wpBackstage.ui.addButton;
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;
@@ -823,7 +823,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function initPreview(uploader = null) {
+				function initPreview(uploader) {
 					const isMultiple = uploader.wpBackstage.isMultiple;
 					const attachmentIDs = getInputValue(uploader);
 					if (attachmentIDs.length > 0) {
@@ -834,7 +834,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function init(uploader = null) {
+				function init(uploader) {
 					const fieldId = uploader.getAttribute('data-field-id');
 					const input = uploader.querySelector('#' + fieldId);
 					const buttons = uploader.querySelector('#' + fieldId + '_buttons');
@@ -866,6 +866,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					replaceButton.addEventListener('click', handleReplaceButtonClick);
 					removeButton.addEventListener('click', handleRemoveButtonClick);
 					tryAgainButton.addEventListener('click', handleTryAgainButtonClick);
+
 					uploader.wpBackstage = {
 						isMultiple: isMultiple,
 						modal: modal,
@@ -883,6 +884,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 							tryAgainButton: tryAgainButton,
 						},
 					};
+
 					initPreview(uploader);
 					if (input.value) {
 						disableButton(addButton);
@@ -904,7 +906,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					initLabels(uploader);
 				}
 
-				function initLabels(uploader = null) {
+				function initLabels(uploader) {
 					const fieldId = uploader.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -912,7 +914,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function destroyLabels(uploader = null) {
+				function destroyLabels(uploader) {
 					const fieldId = uploader.getAttribute('data-field-id');
 					const labels = document.querySelectorAll('label[for="' + fieldId + '"]');
 					labels.forEach(function(label) {
@@ -920,14 +922,14 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function handleLabelClick(e = null) {
+				function handleLabelClick(e) {
 					e.preventDefault();
 					const fieldId = e.target.getAttribute('for');
 					const uploader = getUploaderById(fieldId);
 					focus(uploader);
 				}
 
-				function focus(uploader = null) {
+				function focus(uploader) {
 					const addButton = uploader.wpBackstage.ui.addButton;
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;
@@ -940,7 +942,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					}
 				}
 
-				function getUploaderById(fieldId = '') {
+				function getUploaderById(fieldId) {
 					return document.querySelector('.wp-backstage-field--type-media[data-field-id="' + fieldId + '"]');
 				}
 
@@ -951,7 +953,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 					});
 				}
 
-				function reset(uploader = null) {
+				function reset(uploader) {
 					const addButton = uploader.wpBackstage.ui.addButton;
 					const addToButton = uploader.wpBackstage.ui.addToButton;
 					const replaceButton = uploader.wpBackstage.ui.replaceButton;

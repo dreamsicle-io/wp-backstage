@@ -71,27 +71,27 @@ class WP_Backstage_Date_Field extends WP_Backstage_Field {
 					return container.querySelectorAll('.wp-backstage-field--type-date');
 				}
 
-				function getInput(datePicker = null) {
+				function getInput(datePicker) {
 					const fieldId = datePicker.getAttribute('data-field-id');
 					return datePicker.querySelector('#' + fieldId);
 				}
 
-				function init(datePicker = null) {
+				function init(datePicker) {
 					const input = getInput(datePicker);
 					$(input).datepicker({ dateFormat: 'yy-mm-dd' });
 				}
 
-				function destroy(datePicker = null) {
+				function destroy(datePicker) {
 					const input = getInput(datePicker);
 					$(input).datepicker('destroy');
 				}
 
-				function refresh(datePicker = null) {
+				function refresh(datePicker) {
 					const input = getInput(datePicker);
 					$(input).datepicker('refresh');
 				}
 
-				function reset(datePicker = null) {
+				function reset(datePicker) {
 					const input = getInput(datePicker);
 					input.value = input.defaultValue;
 				}

@@ -33,7 +33,7 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @param array  $args The widget's args.
 	 * @return void
 	 */
-	public function __construct( $slug = '', $args = array() ) {
+	public function __construct( string $slug, array $args ) {
 
 		$this->slug = $slug;
 		$this->args = $args;

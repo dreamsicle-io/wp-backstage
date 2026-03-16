@@ -58,7 +58,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_field_label\u0028\u0029",
             "name": "render_field_label",
-            "summary": "Render\u0020Field\u0020Description",
+            "summary": "Render\u0020Field\u0020Label",
             "url": "classes/WP-Backstage-Component.html#method_render_field_label"
         },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Arender_field_description\u0028\u0029",
@@ -1333,7 +1333,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WP_Backstage_Widget\u003A\u003Arender_field_label\u0028\u0029",
             "name": "render_field_label",
-            "summary": "Render\u0020Field\u0020Description",
+            "summary": "Render\u0020Field\u0020Label",
             "url": "classes/WP-Backstage-Widget.html#method_render_field_label"
         },                {
             "fqsen": "\\WP_Backstage_Widget\u003A\u003Arender_field_description\u0028\u0029",
@@ -2063,7 +2063,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Adescription\u0028\u0029",
             "name": "description",
-            "summary": "Label",
+            "summary": "Description",
             "url": "classes/WP-Backstage-Field.html#method_description"
         },                {
             "fqsen": "\\WP_Backstage_Field\u003A\u003Aget_filter_args\u0028\u0029",

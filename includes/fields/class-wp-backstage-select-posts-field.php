@@ -84,7 +84,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return int|null The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return is_numeric( $value ) ? absint( $value ) : null;
 	}
 
@@ -97,7 +97,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param mixed            $value The field's value.
 	 * @return WP_REST_Response The augmented response object.
 	 */
-	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
+	public function add_rest_api_link( WP_REST_Response $response, array $field, $value ): WP_REST_Response {
 		$post_id = absint( $value );
 		if ( $post_id > 0 ) {
 			$post_type = get_post_type( $post_id );
@@ -120,7 +120,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return array An array of `get_posts()` arguments.
 	 */
-	protected function get_query( array $field = array() ): array {
+	protected function get_query( array $field ): array {
 		$args = $this->get_args( $field );
 		return wp_parse_args( $args['query'], $this->default_query );
 	}
@@ -132,7 +132,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return WP_Post[] An array of `get_posts()` arguments.
 	 */
-	protected function get_posts( array $field = array() ): array {
+	protected function get_posts( array $field ): array {
 		$query = $this->get_query( $field );
 		return get_posts( $query );
 	}
@@ -144,7 +144,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function post_options( array $field = array() ): void {
+	protected function post_options( array $field ): void {
 		$posts = $this->get_posts( $field );
 		// phpcs:ignore WordPress.Security.EscapeOutput
 		echo walk_page_dropdown_tree(
@@ -165,7 +165,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param mixed $value The value of the filter.
 	 * @return array An array of filter control arguments.
 	 */
-	public function get_filter_args( array $field = array(), $value = null ): array {
+	public function get_filter_args( array $field, $value ): array {
 		$query = $this->get_query( $field );
 		$posts = $this->get_posts( $field );
 
@@ -197,7 +197,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 
 		$post_id    = absint( $value );
 		$url        = $this->get_filter_url( $field, $post_id );
@@ -221,7 +221,7 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @param array $field an array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$args = $this->get_args( $field ); ?>
 

@@ -49,7 +49,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 		if ( is_array( $value ) && ! empty( $value ) ) {
 			foreach ( $value as $key ) {
 				$label    = $this->get_option_label( $field, $key );
@@ -66,7 +66,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return is_array( $value ) ? array_values( array_map( 'sanitize_text_field', $value ) ) : array();
 	}
 
@@ -78,7 +78,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @param array $option An array of option arguments.
 	 * @return bool Whether the option is checked or not.
 	 */
-	public function is_option_checked( array $field = array(), array $option = array() ): bool {
+	public function is_option_checked( array $field, array $option ): bool {
 		$values = is_array( $field['value'] ) ? $field['value'] : array();
 		return in_array( $option['value'], $values );
 	}
@@ -148,7 +148,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$options = $this->get_options( $field ); ?>
 

@@ -444,7 +444,7 @@ class WP_Backstage {
 	 * @param string $context The KSES context identifier.
 	 * @return array A filtered KSES definition list.
 	 */
-	public function manage_kses( array $allowed = array(), string $context = '' ) {
+	public function manage_kses( array $allowed, string $context ): array {
 		switch ( $context ) {
 			case 'wp_backstage_error_message':
 				return $this->kses_description;

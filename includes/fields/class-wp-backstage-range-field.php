@@ -44,7 +44,7 @@ class WP_Backstage_Range_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return null|WP_Error true if valid, or an instance of `WP_Error` if invalid.
 	 */
-	public function validate( array $field = array(), $value = null ): ?WP_Error {
+	public function validate( array $field, $value ): ?WP_Error {
 
 		$min = isset( $field['input_attrs']['min'] ) ? floatval( $field['input_attrs']['min'] ) : null;
 		$max = isset( $field['input_attrs']['max'] ) ? floatval( $field['input_attrs']['max'] ) : null;
@@ -110,7 +110,7 @@ class WP_Backstage_Range_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return float|null The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return is_numeric( $value ) ? floatval( $value ) : null;
 	}
 }

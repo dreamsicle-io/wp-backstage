@@ -425,7 +425,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		$value = wp_parse_args( $value, $this->default_address );
 		return array_map( 'sanitize_text_field', $value );
 	}
@@ -655,7 +655,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 		$value   = is_array( $value ) ? $value : array();
 		$address = array();
 
@@ -696,8 +696,9 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array  $field An array of field arguments.
 	 * @param string $piece The address piece to reference.
+	 * @return void
 	 */
-	protected function piece_name( array $field = array(), string $piece = '' ) {
+	protected function piece_name( array $field, string $piece ): void {
 		printf(
 			'%1$s[%2$s]',
 			esc_attr( $field['name'] ),
@@ -711,7 +712,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$values = wp_parse_args( $field['value'], $this->default_address ); ?>
 

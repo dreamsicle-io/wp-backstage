@@ -65,7 +65,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param   array  $args The args array for this component's instance.
 	 * @return  WP_Backstage_Options  A fully constructed `WP_Backstage_Options` instance.
 	 */
-	public static function add( $slug = '', $args = array() ) {
+	public static function add( string $slug, array $args = array() ): WP_Backstage_Options {
 
 		$component = new WP_Backstage_Options( $slug, $args );
 		$component->init();
@@ -81,7 +81,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param   array  $args The args needed to construct this component's instance.
 	 * @return  void
 	 */
-	public function __construct( $slug = '', $args = array() ) {
+	public function __construct( string $slug, array $args = array() ) {
 
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
@@ -103,7 +103,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param array $args The incoming args for this component's instance.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -253,10 +253,10 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.1
 	 * @param WP_Screen $screen The current WP_Screen instance.
-	 * @param array     $args An array of help tab arguments.
+	 * @param array     $args   An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
 		$rest_namespace = 'wp/v2';
 		$rest_base      = 'settings';
 		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
@@ -478,7 +478,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param array $args The args for this singular setting.
 	 * @return void
 	 */
-	public function render_setting( $args = array() ) {
+	public function render_setting( array $args ): void {
 
 		$args = wp_parse_args(
 			$args,
@@ -539,7 +539,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -629,7 +629,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @param array $args An array of section args.
 	 * @return void
 	 */
-	public function render_section_description( $args = array() ) {
+	public function render_section_description( array $args ): void {
 
 		$section = isset( $args['section'] ) ? $args['section'] : array();
 

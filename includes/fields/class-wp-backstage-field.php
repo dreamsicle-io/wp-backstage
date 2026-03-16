@@ -84,7 +84,7 @@ class WP_Backstage_Field {
 	 * @param string $tag The tag to search for.
 	 * @return bool Whether the tag was found or not.
 	 */
-	public function has_tag( string $tag = '' ): bool {
+	public function has_tag( string $tag ): bool {
 		return in_array( $tag, $this->tags );
 	}
 
@@ -96,7 +96,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The filter's value.
 	 * @return string The formatted filter URL.
 	 */
-	protected function get_filter_url( array $field = array(), $value = null ): string {
+	protected function get_filter_url( array $field, $value ): string {
 
 		$screen = get_current_screen();
 
@@ -162,7 +162,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return mixed The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return sanitize_text_field( $value );
 	}
 
@@ -174,7 +174,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return null|WP_Error true if valid, or an instance of `WP_Error` if invalid.
 	 */
-	public function validate( array $field = array(), $value = null ): ?WP_Error {
+	public function validate( array $field, $value ): ?WP_Error {
 		return null;
 	}
 
@@ -185,7 +185,7 @@ class WP_Backstage_Field {
 	 * @param string $message A formatted message to be passed to an instance of `WP_Error`.
 	 * @return WP_Error An instance of `WP_Error`.
 	 */
-	public function validation_error( $message = '' ): WP_Error {
+	public function validation_error( string $message ): WP_Error {
 		return new WP_Error(
 			'wp_backstage_field_validation',
 			$message
@@ -197,11 +197,11 @@ class WP_Backstage_Field {
 	 *
 	 * @since 3.4.0
 	 * @param WP_REST_Response $response The response object to manipulate.
-	 * @param array            $field An array of field arguments.
-	 * @param mixed            $value The field's value.
+	 * @param array            $field    An array of field arguments.
+	 * @param mixed            $value    The field's value.
 	 * @return WP_REST_Response The augmented response object.
 	 */
-	public function add_rest_api_link( WP_REST_Response $response, array $field = array(), $value = null ): WP_REST_Response {
+	public function add_rest_api_link( WP_REST_Response $response, array $field, $value ): WP_REST_Response {
 		return $response;
 	}
 
@@ -209,7 +209,7 @@ class WP_Backstage_Field {
 	 * Get REST API Link Base
 	 *
 	 * @since 4.0.0
-	 * @return string;
+	 * @return string
 	 */
 	public function get_rest_api_link_base(): string {
 		return $this->rest_api_link_base;
@@ -222,7 +222,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return string The constructed REST API link key for the field.
 	 */
-	public function get_rest_api_link_key( array $field = array() ): string {
+	public function get_rest_api_link_key( array $field ): string {
 		$link_base = $this->get_rest_api_link_base();
 		return sprintf( '%1$s:%2$s', esc_attr( $link_base ), esc_attr( $field['name'] ) );
 	}
@@ -254,7 +254,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return array The parsed field-type-specific args.
 	 */
-	public function get_args( array $field = array() ): array {
+	public function get_args( array $field ): array {
 		$args = is_array( $field['args'] ) ? $field['args'] : array();
 		$args = wp_parse_args( $args, $this->default_args );
 		return $args;
@@ -267,7 +267,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return string The field ID.
 	 */
-	public function get_id( array $field = array() ): string {
+	public function get_id( array $field ): string {
 		return ! empty( $field['id'] ) ? $field['id'] : $field['name'];
 	}
 
@@ -275,11 +275,11 @@ class WP_Backstage_Field {
 	 * Element ID
 	 *
 	 * @since 4.0.0
-	 * @param array  $field An array of field arguments.
+	 * @param array  $field  An array of field arguments.
 	 * @param string $suffix A suffix to append to the ID (will be prefixed by an underscore).
 	 * @return void
 	 */
-	public function element_id( array $field = array(), string $suffix = '' ): void {
+	public function element_id( array $field, string $suffix = '' ): void {
 		$id      = $this->get_id( $field );
 		$suffix  = ! empty( $suffix ) ? "_{$suffix}" : $suffix;
 		$id_attr = sprintf( '%1$s%2$s', $id, $suffix );
@@ -290,12 +290,12 @@ class WP_Backstage_Field {
 	 * Option ID
 	 *
 	 * @since 4.0.0
-	 * @param array  $field An array of field arguments.
+	 * @param array  $field  An array of field arguments.
 	 * @param array  $option An array of option arguments.
 	 * @param string $suffix A suffix to append to the ID (will be prefixed by an underscore).
 	 * @return void
 	 */
-	public function option_id( array $field = array(), array $option = array(), string $suffix = '' ): void {
+	public function option_id( array $field, array $option, string $suffix = '' ): void {
 		// Use the field's `name` argument if no `id` argument is set.
 		$field_piece = $this->get_id( $field );
 		// Use the value prefixed with an underscore for the option portion of the ID. If not set use "_empty".
@@ -313,10 +313,10 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array    $field An array of field arguments.
-	 * @param string[] $more An array of extra classes.
+	 * @param string[] $more  An array of extra classes.
 	 * @return void
 	 */
-	public function root_class( array $field = array(), array $more = array() ): void {
+	public function root_class( array $field, array $more = array() ): void {
 		// Prepare the the array of classes.
 		$classes = array(
 			'wp-backstage-field',
@@ -337,7 +337,7 @@ class WP_Backstage_Field {
 	 * @param array $option An array of option arguments.
 	 * @return void
 	 */
-	public function option_label( array $option = array() ): void {
+	public function option_label( array $option ): void {
 		// Use the option's value if no label is set.
 		$label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 		echo esc_html( $label );
@@ -350,11 +350,11 @@ class WP_Backstage_Field {
 	 * string of sanitized HTML element attributes.
 	 *
 	 * @since   4.0.0
-	 * @param   array $field  An array of field arguments.
+	 * @param   array $field    An array of field arguments.
 	 * @param   array $ignored  An array of attributes to ignore, usefull if preventing setting of existing attributes is necessary.
 	 * @return  void
 	 */
-	public function input_attrs( array $field = array(), array $ignored = array() ): void {
+	public function input_attrs( array $field, array $ignored = array() ): void {
 		// Get the input attributes from the field arguments.
 		$attrs = is_array( $field['input_attrs'] ) ? $field['input_attrs'] : array();
 		// Prepare the array of formatted attributes.
@@ -386,7 +386,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 		echo esc_html( $value );
 	}
 
@@ -401,7 +401,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return array An array of raw option arguments.
 	 */
-	protected function resolve_options( array $field = array() ): array {
+	protected function resolve_options( array $field ): array {
 
 		$options = isset( $field['options'] ) ? $field['options'] : array();
 
@@ -423,7 +423,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return array An array of parsed options arguments.
 	 */
-	public function get_options( array $field = array() ): array {
+	public function get_options( array $field ): array {
 		$options = array();
 		foreach ( $this->resolve_options( $field ) as $option ) {
 			if ( is_array( $option ) ) {
@@ -445,7 +445,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return array An array of `$value => $label` pairs.
 	 */
-	public function get_option_labels( array $field = array() ): array {
+	public function get_option_labels( array $field ): array {
 		$labels = array();
 		foreach ( $this->get_options( $field ) as $option ) {
 			$labels[ $option['value'] ] = $option['label'];
@@ -461,7 +461,7 @@ class WP_Backstage_Field {
 	 * @param string $value A value to find a label for.
 	 * @return string The found option label.
 	 */
-	public function get_option_label( array $field = array(), string $value = '' ): string {
+	public function get_option_label( array $field, string $value ): string {
 		$labels = $this->get_option_labels( $field );
 		return ! empty( $labels[ $value ] ) ? $labels[ $value ] : '';
 	}
@@ -473,7 +473,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return string The field's label.
 	 */
-	public function get_label( array $field = array() ): string {
+	public function get_label( array $field ): string {
 		return ! empty( $field['label'] ) ? $field['label'] : $field['name'];
 	}
 
@@ -484,7 +484,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function label( array $field = array() ): void {
+	public function label( array $field ): void {
 		$label = $this->get_label( $field );
 		echo wp_kses( $label, 'wp_backstage_field_label' );
 	}
@@ -496,18 +496,18 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return string The field's description.
 	 */
-	public function get_description( array $field = array() ): string {
+	public function get_description( array $field ): string {
 		return ! empty( $field['description'] ) ? $field['description'] : '';
 	}
 
 	/**
-	 * Label
+	 * Description
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function description( array $field = array() ): void {
+	public function description( array $field ): void {
 		$description = $this->get_description( $field );
 		echo wp_kses( $description, 'wp_backstage_field_description' );
 	}
@@ -520,7 +520,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The value for the filter.
 	 * @return array An array of filter arguments.
 	 */
-	public function get_filter_args( array $field = array(), $value = null ): array {
+	public function get_filter_args( array $field, $value ): array {
 
 		// Filter out the options that have an empty value.
 		$options = array_filter(
@@ -549,7 +549,7 @@ class WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void { ?>
+	public function render( array $field ): void { ?>
 
 		<span 
 		class="<?php $this->root_class( $field ); ?>"

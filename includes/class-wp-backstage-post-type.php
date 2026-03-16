@@ -129,7 +129,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array  $args  The arguments for this instance.
 	 * @return  WP_Backstage_Post_Type  A fully constructed instance of `WP_Backstage_Post_Type`.
 	 */
-	public static function add( $slug = '', $args = array() ) {
+	public static function add( string $slug, array $args ): WP_Backstage_Post_Type {
 
 		$component = new WP_Backstage_Post_Type( $slug, $args );
 		$component->init();
@@ -147,7 +147,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array  $args  The arguments for this instance.
 	 * @return  WP_Backstage_Post_Type  A fully constructed instance of `WP_Backstage_Post_Type`.
 	 */
-	public static function modify( $slug = '', $args = array() ) {
+	public static function modify( string $slug, array $args ): WP_Backstage_Post_Type {
 
 		$component = new WP_Backstage_Post_Type( $slug, $args, false );
 		$component->init();
@@ -165,7 +165,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   bool   $new   Whether this instance constructs a new post type or modifies an existing one.
 	 * @return  void
 	 */
-	public function __construct( $slug = '', $args = array(), $new = true ) {
+	public function __construct( string $slug, array $args, bool $new = true ) {
 
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
@@ -195,7 +195,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -387,10 +387,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param array $messages A keyed array of messages.
-	 * @param array $counts A keyed array of counts.
+	 * @param array $counts   A keyed array of counts.
 	 * @return array An array of filtered messages.
 	 */
-	public function manage_bulk_updated_messages( $messages = array(), $counts = array() ) {
+	public function manage_bulk_updated_messages( array $messages, array $counts ): array {
 		global $post_type_object;
 
 		// posts updated.
@@ -485,7 +485,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array $messages A keyed array of messages.
 	 * @return array An array of filtered messages.
 	 */
-	public function manage_updated_messages( $messages = array() ) {
+	public function manage_updated_messages( array $messages ): array {
 		global $post;
 		global $post_type;
 		global $post_type_object;
@@ -604,11 +604,11 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_REST_Response $response The current API response.
-	 * @param WP_Post          $post The requested post.
-	 * @param WP_REST_Request  $request The current API request.
+	 * @param WP_Post          $post     The requested post.
+	 * @param WP_REST_Request  $request  The current API request.
 	 * @return WP_REST_Response The filtered API response.
 	 */
-	public function prepare_rest_post( $response = null, $post = null, $request = null ) {
+	public function prepare_rest_post( WP_REST_Response $response, WP_Post $post, WP_REST_Request $request ): WP_REST_Response {
 
 		$fields = $this->get_fields_by( 'show_in_rest', true );
 
@@ -768,10 +768,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_discussion_settings_help_tab( $screen, $args = array() ) {
+	public function render_discussion_settings_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -818,10 +818,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_publish_settings_help_tab( $screen, $args = array() ) {
+	public function render_publish_settings_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj        = get_post_type_object( $screen->post_type );
 		$post_type_taxonomies = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -977,10 +977,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_inserting_media_help_tab( $screen, $args = array() ) {
+	public function render_inserting_media_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1017,10 +1017,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_title_and_editor_help_tab( $screen, $args = array() ) {
+	public function render_title_and_editor_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -1074,10 +1074,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_customize_display_help_tab( $screen, $args = array() ) {
+	public function render_customize_display_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		global $wp_meta_boxes;
@@ -1125,10 +1125,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_bulk_actions_help_tab( $screen, $args = array() ) {
+	public function render_bulk_actions_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1166,10 +1166,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_available_actions_help_tab( $screen, $args = array() ) {
+	public function render_available_actions_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1249,10 +1249,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_screen_content_help_tab( $screen, $args = array() ) {
+	public function render_screen_content_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1350,10 +1350,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
-	 * @param array     $args An array of help tab args.
+	 * @param array     $args   An array of help tab args.
 	 * @return void
 	 */
-	public function render_overview_help_tab( $screen, $args = array() ) {
+	public function render_overview_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1454,10 +1454,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
-	 * @param array     $args An array of help tab arguments.
+	 * @param array     $args   An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
 		$post_id       = get_the_ID();
 		$post_type_obj = get_post_type_object( $this->slug );
 		$path          = sprintf( '/%1$s/%2$s/%3$d', $post_type_obj->rest_namespace, $post_type_obj->rest_base, $post_id );
@@ -1489,10 +1489,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
-	 * @param array     $args An array of help tab arguments.
+	 * @param array     $args   An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( $screen, $args = array() ) {
+	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ): void {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$path = sprintf( '/%1$s/%2$s', $post_type_obj->rest_namespace, $post_type_obj->rest_base );
@@ -1578,7 +1578,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int    $id     The post ID.
 	 * @return  string  The filtered post title.
 	 */
-	public function manage_post_title( $title = '', $id = null ) {
+	public function manage_post_title( string $title, int $id ): string {
 		if ( is_admin() && ! is_customize_preview() ) {
 			// prepend the post type to the post title on the dashboard. This is
 			// useful for the activity dashboard widget.
@@ -1609,7 +1609,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param  string $template  A localized `sprintf()` template where `%1$s` is the post type singular name, `%2$s` is the post type plural name, and `%3$s` is the thumbnail label.
 	 * @return string  The formatted text.
 	 */
-	protected function get_label( $template = '' ) {
+	protected function get_label( string $template ): string {
 
 		return sprintf(
 			/* translators: 1: post type singular name, 2: post type plural name, 3: thumbnail label. */
@@ -1862,15 +1862,15 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Saves the form data as individual keys.
 	 *
 	 * Note that on attachments, the `edit_attachment` hook only sends
-	 * the first parameter ($post_id).
+	 * the first parameter (`$post_id`).
 	 *
 	 * @since   0.0.1
-	 * @param   int     $post_id  The ID of the post being saved.
-	 * @param   WP_Post $post     The full `WP_Post` object for the post being saved.
-	 * @param   bool    $update   Whether the post is being updated or not.
+	 * @param   int          $post_id  The ID of the post being saved.
+	 * @param   WP_Post|null $post     The full `WP_Post` object for the post being saved when available.
+	 * @param   bool         $update   Whether the post is being updated or not.
 	 * @return  void
 	 */
-	public function save( $post_id = 0, $post = null, $update = false ) {
+	public function save( int $post_id, ?WP_Post $post = null, bool $update = false ): void {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -1928,7 +1928,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   bool    $update   Whether the post is being updated or not.
 	 * @return  void
 	 */
-	public function save_quick_edit( $post_id, $post, $update = false ) {
+	public function save_quick_edit( int $post_id, WP_Post $post, bool $update ): void {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -1986,7 +1986,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array     $field    An array of field arguments.
 	 * @return  void
 	 */
-	protected function handle_attachments( $post_id = null, $value = null, $field = array() ) {
+	protected function handle_attachments( int $post_id, $value, array $field ): void {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2072,7 +2072,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array $columns  An array of already-set columns.
 	 * @return  array  The filtered columns.
 	 */
-	public function add_thumbnail_column( $columns = array() ) {
+	public function add_thumbnail_column( array $columns ): array {
 
 		if ( post_type_supports( $this->slug, 'thumbnail' ) && is_array( $columns ) ) {
 
@@ -2115,7 +2115,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int $post_id  The post ID of the post to render the thumbnail for.
 	 * @return  void
 	 */
-	protected function render_thumbnail( $post_id = null ) {
+	protected function render_thumbnail( int $post_id ): void {
 
 		if ( post_type_supports( $this->slug, 'thumbnail' ) ) { ?>
 
@@ -2144,7 +2144,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int    $post_id  The post ID for this row.
 	 * @return  void
 	 */
-	public function render_admin_column( $column = '', $post_id = null ) {
+	public function render_admin_column( string $column, int $post_id ): void {
 
 		if ( $column === 'thumbnail' ) {
 
@@ -2204,10 +2204,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param string $post_type The post type of the current screen.
-	 * @param string $which whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @param string $which     Whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
 	 * @return void
 	 */
-	public function render_table_filter_form( $post_type = '', $which = 'top' ) {
+	public function render_table_filter_form( string $post_type, string $which ): void {
 
 		if ( $post_type === $this->slug ) {
 
@@ -2233,7 +2233,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Query $query  An instance of `WP_Query`.
 	 * @return  void
 	 */
-	public function manage_sorting( $query = null ) {
+	public function manage_sorting( WP_Query $query ): void {
 
 		$query_post_type = $query->get( 'post_type' );
 		$is_post_type    = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
@@ -2295,7 +2295,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Query $query  An instance of `WP_Query`.
 	 * @return  void
 	 */
-	public function manage_filtering( $query = null ) {
+	public function manage_filtering( WP_Query $query ): void {
 
 		$query_post_type = $query->get( 'post_type' );
 		$is_post_type    = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
@@ -2343,7 +2343,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array $query_vars  An array of the currently public query vars.
 	 * @return array The filtered query vars array.
 	 */
-	public function manage_query_vars( $query_vars = array() ) {
+	public function manage_query_vars( array $query_vars ): array {
 
 		$fields = $this->get_fields();
 		foreach ( $fields as $field ) {
@@ -2602,7 +2602,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -2654,10 +2654,10 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Note that the output will be wrapped in `<li>` tags.
 	 *
 	 * @since   0.0.1
-	 * @param   array $items  The array of alread-set glance items.
+	 * @param   array $items  The array of already-set glance items.
 	 * @return  array  The filtered glance items array.
 	 */
-	public function manage_dashboard_glance_items( $items = array() ) {
+	public function manage_dashboard_glance_items( array $items ): array {
 
 		if ( $this->args['glance_item'] ) {
 
@@ -2694,7 +2694,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   array $args  The array of already-set query arguments.
 	 * @return  array  The filtered array of query arguments.
 	 */
-	public function manage_dashboard_activity_query_args( $args = array() ) {
+	public function manage_dashboard_activity_query_args( array $args ): array {
 
 		if ( $this->args['activity'] ) {
 

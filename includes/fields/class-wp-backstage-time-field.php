@@ -35,7 +35,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param string|array $value The unsantized value, as a time string `00:00:00`, or an associative array with keys `hour`, `minute`, `second`.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value = '' ) {
+	public function sanitize( $value ) {
 
 		// If the passed in value is a string, parse it into a time array.
 		if ( is_string( $value ) ) {
@@ -69,7 +69,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param int $number The time option number to be converted to a two character string.
 	 * @return string A two character string.
 	 */
-	public function get_time_piece( int $number = 0 ): string {
+	public function get_time_piece( int $number ): string {
 		$option = strval( $number );
 		if ( strlen( $option ) === 1 ) {
 			$option = '0' . $option;
@@ -84,7 +84,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param string $value The time string.
 	 * @return array An array of values as `[hour] => '00'`, `[minute] => '00'`, `[second] => '00'`.
 	 */
-	public function get_time_pieces( string $value = '' ): array {
+	public function get_time_pieces( string $value ): array {
 		$values = explode( ':', $value );
 		return array_map(
 			array( $this, 'get_time_piece' ),
@@ -187,7 +187,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 		echo esc_html( gmdate( get_option( 'time_format' ), strtotime( $value ) ) );
 	}
 
@@ -198,7 +198,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$hour_label   = _x( 'Hour', 'time field - hour', 'wp_backstage' );
 		$minute_label = _x( 'Minute', 'time field - minute', 'wp_backstage' );

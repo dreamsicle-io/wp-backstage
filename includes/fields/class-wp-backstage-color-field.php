@@ -44,7 +44,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return sanitize_hex_color( $value );
 	}
 
@@ -56,7 +56,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void { ?>
+	public function render_column( array $field, $value ): void { ?>
 
 		<span class="wp-backstage-color-field-column">
 			<i 
@@ -269,7 +269,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$args = $this->get_args( $field );
 

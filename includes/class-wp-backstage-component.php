@@ -435,7 +435,7 @@ class WP_Backstage_Component {
 	 * @param   WP_Screen|null $screen The passed in screen to check. Leave null to call `get_current_screen()`.
 	 * @return  bool If the match was successful or not.
 	 */
-	protected function is_screen( $key = '', $value = '', $screen = null ) {
+	protected function is_screen( string $key, $value, ?WP_Screen $screen = null ): bool {
 
 		$is_screen = false;
 
@@ -524,10 +524,10 @@ class WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array    $field An array of field arguments.
-	 * @param string[] $more An array of field arguments.
+	 * @param string[] $more  Additional classes to merge into the field input classes.
 	 * @return array A filtered list of field arguments.
 	 */
-	public function add_field_input_classes( array $field = array(), array $more = array() ): array {
+	public function add_field_input_classes( array $field, array $more ): array {
 		$classes = ! empty( $field['input_attrs']['class'] ) ? explode( ' ', $field['input_attrs']['class'] ) : array();
 		foreach ( $more as $class ) {
 			if ( ! empty( $class ) && ! in_array( $class, $classes ) ) {
@@ -543,11 +543,11 @@ class WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @param int   $rows An array of field arguments.
-	 * @param int   $cols An array of field arguments.
+	 * @param int   $rows  The textarea row count to apply when one is not already set.
+	 * @param int   $cols  The textarea column count to apply when one is not already set.
 	 * @return array A filtered list of field arguments.
 	 */
-	public function set_field_textarea_dimensions( array $field = array(), int $rows, int $cols ): array {
+	public function set_field_textarea_dimensions( array $field, int $rows, int $cols ): array {
 		$field['input_attrs']['rows'] = ! empty( $field['input_attrs']['rows'] ) ? $field['input_attrs']['rows'] : $rows;
 		$field['input_attrs']['cols'] = ! empty( $field['input_attrs']['cols'] ) ? $field['input_attrs']['cols'] : $cols;
 		return $field;
@@ -558,22 +558,22 @@ class WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @param int   $size An array of field arguments.
+	 * @param int   $size  The input size to apply when one is not already set.
 	 * @return array A filtered list of field arguments.
 	 */
-	public function set_field_input_size( array $field = array(), int $size ): array {
+	public function set_field_input_size( array $field, int $size ): array {
 		$field['input_attrs']['size'] = ! empty( $field['input_attrs']['size'] ) ? $field['input_attrs']['size'] : $size;
 		return $field;
 	}
 
 	/**
-	 * Render Field Description
+	 * Render Field Label
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_label( $field = array() ) {
+	protected function render_field_label( array $field ): void {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -601,7 +601,7 @@ class WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -3564,7 +3564,7 @@ class WP_Backstage_Component {
 	 * @param array  $args Optional preview configuration arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview( $path = '', $args = array() ) {
+	public function render_rest_api_preview( string $path, array $args = array() ): void {
 		$args = wp_parse_args(
 			$args,
 			array(

@@ -53,7 +53,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   array  $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Widget  A fully constructed instance of `WP_Backstage_Widget`.
 	 */
-	public static function add( $slug = '', $args = array() ) {
+	public static function add( string $slug, array $args ): WP_Backstage_Widget {
 
 		$component = new WP_Backstage_Widget( $slug, $args );
 		$component->init();
@@ -65,11 +65,11 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * Construct
 	 *
 	 * @since   2.0.0
-	 * @param   array $slug  The instance's unique identifier.
-	 * @param   array $args  An array of arguments.
+	 * @param   string $slug  The instance's unique identifier.
+	 * @param   array  $args  An array of arguments.
 	 * @return  void
 	 */
-	public function __construct( $slug = '', $args = array() ) {
+	public function __construct( string $slug, array $args ) {
 
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
@@ -88,7 +88,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
@@ -171,12 +171,12 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @link https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/  WP_Widget::get_field_name()
 	 *
 	 * @since   2.0.0
-	 * @param   string $field_name  The field name.
-	 * @param   string $id_base     The current widget instance id base.
-	 * @param   string $number      The current widget instance number.
+	 * @param   string     $field_name  The field name.
+	 * @param   string     $id_base     The current widget instance ID base.
+	 * @param   int|string $number      The current widget instance number.
 	 * @return  string
 	 */
-	public function get_field_name( $field_name = '', $id_base = '', $number = 0 ) {
+	public function get_field_name( string $field_name, string $id_base, $number ): string {
 		$pos = strpos( $field_name, '[' );
 		if ( false !== $pos ) {
 			// Replace the first occurrence of '[' with ']['.
@@ -194,12 +194,12 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * `$number` pluggable.
 	 *
 	 * @since   2.0.0
-	 * @param   array  $field_name  The field name.
-	 * @param   string $id_base     The current widget instance id base.
-	 * @param   string $number      The current widget instance number.
+	 * @param   string     $field_name  The field name.
+	 * @param   string     $id_base     The current widget instance ID base.
+	 * @param   int|string $number      The current widget instance number.
 	 * @return  string
 	 */
-	public function get_field_id( $field_name = '', $id_base = '', $number = 0 ) {
+	public function get_field_id( string $field_name, string $id_base, $number ): string {
 		$field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
 		$field_name = trim( $field_name, '-' );
 
@@ -210,12 +210,12 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * Render Fields
 	 *
 	 * @since   2.0.0
-	 * @param   array  $instance  The current widget instance values.
-	 * @param   string $id_base   The current widget instance id base.
-	 * @param   string $number    The current widget instance number.
+	 * @param   array      $instance  The current widget instance values.
+	 * @param   string     $id_base   The current widget instance ID base.
+	 * @param   int|string $number    The current widget instance number.
 	 * @return  void
 	 */
-	public function render_fields( $instance = array(), $id_base = '', $number = 0 ) {
+	public function render_fields( array $instance, string $id_base, $number ): void {
 
 		$fields = $this->get_fields();
 
@@ -273,13 +273,13 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	}
 
 	/**
-	 * Render Field Description
+	 * Render Field Label
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_label( $field = array() ) {
+	protected function render_field_label( array $field ): void {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -313,7 +313,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -339,7 +339,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   array $old_instance  The old widget instance values.
 	 * @return  array The new instance args.
 	 */
-	public function save( $new_instance = array(), $old_instance = array() ) {
+	public function save( array $new_instance, array $old_instance ): array {
 
 		$fields = $this->get_fields();
 

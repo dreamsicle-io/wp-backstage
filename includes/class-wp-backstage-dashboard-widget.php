@@ -47,7 +47,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param   array  $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Dashboard_Widget  A fully constructed instance.
 	 */
-	public static function add( $slug = '', $args = array() ) {
+	public static function add( string $slug, array $args ): WP_Backstage_Dashboard_Widget {
 
 		$component = new WP_Backstage_Dashboard_Widget( $slug, $args );
 		$component->init();
@@ -63,7 +63,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param   array  $args  An array of arguments.
 	 * @return  void
 	 */
-	public function __construct( $slug = '', $args = array() ) {
+	public function __construct( string $slug, array $args ) {
 
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
@@ -82,7 +82,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
@@ -172,7 +172,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param array $values The dashboard widget values.
 	 * @return void
 	 */
-	protected function update_values( $values = array() ) {
+	protected function update_values( array $values ): void {
 		$widgets = get_option( 'dashboard_widget_options' );
 
 		if ( ! is_array( $widgets ) ) {
@@ -238,29 +238,29 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param mixed $dashboard The current dashboard object.
-	 * @param array $instance The current widget's instance. Access the values through `$instance['args']`.
+	 * @param array $meta_box  The dashboard widget meta box array. Access the saved values through `$meta_box['args']`.
 	 * @return void
 	 */
-	public function render( $dashboard = null, $instance = array() ) {
+	public function render( $dashboard, array $meta_box ): void {
 		/**
 		 * Fires when the dashboard widget is rendered.
 		 *
 		 * @since 4.0.0
-		 * @param array $args The dashboard widget args.
-		 * @param array $values The current widget's instance values`.
+		 * @param array $args   The dashboard widget args.
+		 * @param array $values The current widget's instance values.
 		 */
-		do_action( "wp_backstage_dashboard_widget_output_{$this->slug}", $this->args, $instance['args'] );
+		do_action( "wp_backstage_dashboard_widget_output_{$this->slug}", $this->args, $meta_box['args'] );
 	}
 
 	/**
 	 * Render Form Fields
 	 *
 	 * @since 4.0.0
-	 * @param mixed $dashboard The current dashboard object.
-	 * @param array $instance The current widget's instance. Note that The extra arg is not passed to this callback.
+	 * @param mixed $dashboard The current dashboard object, or an empty string when invoked as a control callback.
+	 * @param array $meta_box  The dashboard widget meta box array.
 	 * @return void
 	 */
-	public function render_fields( $dashboard = array(), $instance = array() ) {
+	public function render_fields( $dashboard, array $meta_box ): void {
 
 		$values = $this->get_values();
 		$fields = $this->get_fields();
@@ -335,7 +335,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param   string $field_name  The field name.
 	 * @return  string
 	 */
-	public function get_field_name( $field_name = '' ) {
+	public function get_field_name( string $field_name ): string {
 		$pos = strpos( $field_name, '[' );
 		if ( false !== $pos ) {
 			$field_name = '[' . substr_replace( $field_name, '][', $pos, strlen( '[' ) );
@@ -352,7 +352,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param   string $field_name  The field name.
 	 * @return  string
 	 */
-	public function get_field_id( $field_name = '' ) {
+	public function get_field_id( string $field_name ): string {
 		$field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
 		$field_name = trim( $field_name, '-' );
 
@@ -366,7 +366,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_label( $field = array() ) {
+	protected function render_field_label( array $field ): void {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -400,7 +400,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 

@@ -33,7 +33,7 @@ class WP_Backstage_Date_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value = null ) {
+	public function sanitize( $value ) {
 		return ( is_string( $value ) && ! empty( $value ) ) ? gmdate( 'Y-m-d', strtotime( $value ) ) : '';
 	}
 
@@ -149,7 +149,7 @@ class WP_Backstage_Date_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 		echo esc_html( gmdate( get_option( 'date_format' ), strtotime( $value ) ) );
 	}
 
@@ -160,7 +160,7 @@ class WP_Backstage_Date_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void { ?>
+	public function render( array $field ): void { ?>
 
 		<span 
 		class="<?php $this->root_class( $field ); ?>"

@@ -93,7 +93,7 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field = array(), $value = null ): void {
+	public function render_column( array $field, $value ): void {
 
 		$url        = $this->get_filter_url( $field, $value );
 		$label      = $this->get_option_label( $field, $value );
@@ -116,7 +116,7 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	public function render( array $field = array() ): void {
+	public function render( array $field ): void {
 
 		$options = $this->get_options( $field ); ?>
 

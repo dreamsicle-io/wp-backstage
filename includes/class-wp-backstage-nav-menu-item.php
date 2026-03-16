@@ -44,7 +44,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_Nav_Menu_Item  A fully constructed instance of `WP_Backstage_Nav_Menu_Item`.
 	 */
-	public static function modify( $args = array() ) {
+	public static function modify( array $args ): WP_Backstage_Nav_Menu_Item {
 
 		$component = new WP_Backstage_Nav_Menu_Item( $args );
 		$component->init();
@@ -59,7 +59,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( array $args ) {
 
 		$this->slug = 'nav_menu_item';
 		$this->set_args( $args );
@@ -78,7 +78,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 		$this->args = wp_parse_args( $args, $this->default_args );
 
 		foreach ( $this->args['fields'] as $i => $field ) {
@@ -192,10 +192,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Adds all values to the Nav Menu Item object.
 	 *
 	 * @since   2.0.0
-	 * @param object $item The incoming nav menu item object.
-	 * @return  object  The nav menu item object with axtra meta hydrated.
+	 * @param WP_Post $item The incoming nav menu item object.
+	 * @return WP_Post The nav menu item object with extra meta hydrated.
 	 */
-	public function setup_nav_menu_item( $item = null ) {
+	public function setup_nav_menu_item( WP_Post $item ): WP_Post {
 
 		$fields = $this->get_fields();
 
@@ -219,7 +219,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -246,7 +246,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   int     $id       The ID of the nav menu that this item is related to.
 	 * @return  void
 	 */
-	public function render_fields( $item_id = 0, $item = null, $depth = 0, $args = null, $id = 0 ) {
+	public function render_fields( int $item_id, WP_Post $item, int $depth, object $args, int $id ): void {
 
 		$fields = $this->get_fields();
 
@@ -279,8 +279,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Post $item The nav menu item object.
+				 * @param array   $field An array of field arguments.
+				 * @param WP_Post $item  The nav menu item object.
 				 */
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
 
@@ -295,8 +295,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
-				 * @param array $field an array of field arguments.
-				 * @param WP_Post $item The nav menu item object.
+				 * @param array   $field An array of field arguments.
+				 * @param WP_Post $item  The nav menu item object.
 				 */
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
 
@@ -367,12 +367,12 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Save
 	 *
 	 * @since   2.0.0
-	 * @param   int   $menu_id  The ID of the menu that the item is in.
-	 * @param   int   $item_id  The ID of the menu item.
+	 * @param   int   $menu_id         The ID of the menu that the item is in.
+	 * @param   int   $item_id         The ID of the menu item.
 	 * @param   array $menu_item_data  The menu item data.
 	 * @return  void
 	 */
-	public function save( $menu_id = 0, $item_id = 0, $menu_item_data = array() ) {
+	public function save( int $menu_id, int $item_id, array $menu_item_data ): void {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -423,7 +423,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   WP_Customize_Manager $wp_customize The current WP Customize instance.
 	 * @return  void
 	 */
-	public function save_customizer( $wp_customize = null ) {
+	public function save_customizer( WP_Customize_Manager $wp_customize ): void {
 
 		foreach ( $wp_customize->settings() as $setting ) {
 
@@ -480,7 +480,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array An array of hidden column keys.
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
+	public function manage_default_hidden_columns( array $hidden, WP_Screen $screen ): array {
 
 		if ( $this->is_screen( 'id', $this->screen_id, $screen ) ) {
 
@@ -517,7 +517,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   WP_Customize_Manager $wp_customize  The WP Customize instance.
 	 * @return  void
 	 */
-	public function manage_customizer_meta_preview( $wp_customize = null ) {
+	public function manage_customizer_meta_preview( WP_Customize_Manager $wp_customize ): void {
 
 		if ( $wp_customize->settings_previewed() ) {
 

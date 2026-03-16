@@ -57,7 +57,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments for this instance.
 	 * @return  WP_Backstage_User  A fully constructed instance of `WP_Backstage_User`.
 	 */
-	public static function modify( $args = array() ) {
+	public static function modify( array $args ): WP_Backstage_User {
 
 		$component = new WP_Backstage_User( $args );
 		$component->init();
@@ -72,7 +72,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( array $args ) {
 
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
@@ -100,7 +100,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   array $args  An array of arguments.
 	 * @return  void
 	 */
-	protected function set_args( $args = array() ) {
+	protected function set_args( array $args ): void {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['field_groups'] as $i => $field_group ) {
 			$this->args['field_groups'][ $i ] = wp_parse_args( $field_group, $this->default_field_group_args );
@@ -182,11 +182,11 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_REST_Response $response The current API response.
-	 * @param WP_User          $user The user being requested.
-	 * @param WP_REST_Request  $request The current API request.
+	 * @param WP_User          $user     The user being requested.
+	 * @param WP_REST_Request  $request  The current API request.
 	 * @return WP_REST_Response The filtered API response.
 	 */
-	public function prepare_rest_user( $response = null, $user = null, $request = null ) {
+	public function prepare_rest_user( WP_REST_Response $response, WP_User $user, WP_REST_Request $request ): WP_REST_Response {
 
 		$fields = $this->get_fields_by( 'show_in_rest', true );
 
@@ -286,10 +286,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
-	 * @param array     $args An array of help tab arguments.
+	 * @param array     $args   An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( $screen, $args = array() ) {
+	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ): void {
 		$rest_namespace = 'wp/v2';
 		$rest_base      = 'users';
 		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
@@ -321,10 +321,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
-	 * @param array     $args An array of help tab arguments.
+	 * @param array     $args   An array of help tab arguments.
 	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( $screen, $args = array() ) {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
 		//phpcs:ignore WordPress.Security.NonceVerification
 		$params         = wp_unslash( $_GET );
 		$user_id        = isset( $params['user_id'] ) ? absint( $params['user_id'] ) : 0;
@@ -395,7 +395,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_User|string $user  An instance of `WP_User` or the string `add-new-user` if on the add new user form.
 	 * @return  void
 	 */
-	public function render_field_groups( $user = null ) {
+	public function render_field_groups( $user ): void {
 
 		$field_groups = $this->get_field_groups();
 
@@ -432,10 +432,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   3.1.0 Checks if there is a user before getting the value as this is also run on the add new user form where there is no user yet.
 	 * @param   array        $field_group  An array of field group arguments.
-	 * @param   WP_User|null $user An instance of `WP_User` if on the edit form or `null` if on the add form.
+	 * @param   WP_User|null $user         An instance of `WP_User` if on the edit form or `null` if on the add form.
 	 * @return  void
 	 */
-	protected function render_fields( $field_group = array(), $user = null ) {
+	protected function render_fields( array $field_group, ?WP_User $user ): void {
 
 		foreach ( $field_group['fields'] as $field ) {
 
@@ -480,8 +480,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 					 *
 					 * @since 0.0.1
 					 *
-					 * @param array $field an array of field arguments.
-					 * @param WP_User $user The user object.
+					 * @param array        $field An array of field arguments.
+					 * @param WP_User|null $user  The user object when editing, or null on the add form.
 					 */
 					do_action( "wp_backstage_{$this->slug}_field_before", $field, $user );
 
@@ -494,8 +494,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 					 *
 					 * @since 0.0.1
 					 *
-					 * @param array $field an array of field arguments.
-					 * @param WP_User $user The user object.
+					 * @param array        $field An array of field arguments.
+					 * @param WP_User|null $user  The user object when editing, or null on the add form.
 					 */
 					do_action( "wp_backstage_{$this->slug}_field_after", $field, $user );
 
@@ -513,7 +513,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param array $field An array of field arguments.
 	 * @return void
 	 */
-	protected function render_field_description( $field = array() ) {
+	protected function render_field_description( array $field ): void {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -535,7 +535,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   int $user_id  The ID of the user to update.
 	 * @return  void
 	 */
-	public function save( $user_id = null ) {
+	public function save( int $user_id ): void {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -581,7 +581,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   int    $user_id  The ID of the user to populate the column for.
 	 * @return  string  The new formatted column content.
 	 */
-	public function manage_admin_column_content( $content = '', $column = '', $user_id = null ) {
+	public function manage_admin_column_content( string $content, string $column, int $user_id ): string {
 
 		$field = $this->get_field_by( 'name', $column );
 
@@ -634,10 +634,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * button here.
 	 *
 	 * @since 3.1.0
-	 * @param string $which whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
+	 * @param string $which Whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
 	 * @return void
 	 */
-	public function render_table_filter_form( $which = 'top' ) {
+	public function render_table_filter_form( string $which ): void {
 
 		if ( $which === 'top' ) { ?>
 
@@ -678,7 +678,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
 	 * @return  void
 	 */
-	public function manage_sorting( $query = null ) {
+	public function manage_sorting( WP_User_Query $query ): void {
 
 		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
 
@@ -731,7 +731,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
 	 * @return  void
 	 */
-	public function manage_filtering( $query = null ) {
+	public function manage_filtering( WP_User_Query $query ): void {
 
 		$fields = $this->get_fields();
 
@@ -775,7 +775,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param array $args The incoming array of arguments.
 	 * @return array The filtered array of arguments.
 	 */
-	public function manage_list_table_query_args( $args = array() ) {
+	public function manage_list_table_query_args( array $args ): array {
 
 		$fields = $this->get_fields();
 
@@ -809,7 +809,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array An array of hidden column keys.
 	 */
-	public function manage_default_hidden_columns( $hidden = array(), $screen ) {
+	public function manage_default_hidden_columns( array $hidden, WP_Screen $screen ): array {
 
 		if ( $this->is_screen( 'id', $this->screen_id, $screen ) ) {
 

@@ -1994,7 +1994,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$args = wp_parse_args( $field['args'], $this->default_media_uploader_args );
+		$field_class = $this->get_field_class( $field['type'] );
+		$args        = $field_class->get_args( $field );
 
 		if ( ! $args['attach'] ) {
 			return;

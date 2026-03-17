@@ -8,7 +8,7 @@
 		"dealerdirect/phpcodesniffer-composer-installer": "~1.2",
 		"wp-coding-standards/wpcs": "~3.3"
 	},
-    "scripts": {
+	"scripts": {
 		"build": "composer run build:pot",
 		"build:pot": "wp i18n make-pot . languages/wp-backstage.pot",
 		"clean": ["composer run clean:pot", "composer run clean:deps"],
@@ -17,8 +17,9 @@
 		"lint": ["composer run lint:php"],
 		"lint:php": ["php -l", "./vendor/bin/phpcs"],
 		"fix": ["composer run fix-php"],
-		"fix:php": "./vendor/bin/phpcbf"
-    },
+		"fix:php": "./vendor/bin/phpcbf",
+		"version": "@php scripts/version.php"
+	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true

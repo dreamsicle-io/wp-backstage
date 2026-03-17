@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-17T18:21:46+00:00\n"
+"POT-Creation-Date: 2026-03-17T18:37:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp_backstage\n"
@@ -40,2680 +40,2680 @@ msgid "https://www.dreamsicle.io"
 msgstr ""
 
 #. translators: 1: error message.
-#: includes/class-wp-backstage-component.php:412
+#: includes/class-wp-backstage-component.php:410
 #, php-format
 msgctxt "component error message"
 msgid "Error: %1$s"
 msgstr ""
 
 #. translators: 1: component slug, 2: field identifier, 3: required field arg key.
-#: includes/class-wp-backstage-component.php:462
+#: includes/class-wp-backstage-component.php:460
 #, php-format
 msgctxt "component - required field arg error"
 msgid "[Component: %1$s] Field \"%2$s\" requires the %3$s key."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:1594
-#: includes/fields/class-wp-backstage-checkbox-field.php:61
+#: includes/class-wp-backstage-component.php:1592
+#: includes/fields/class-wp-backstage-checkbox-field.php:59
 msgctxt "checkbox column - true"
 msgid "True"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/class-wp-backstage-component.php:1730
+#: includes/class-wp-backstage-component.php:1728
 #, php-format
 msgctxt "filterable value link title"
 msgid "Filter by %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2909
+#: includes/class-wp-backstage-component.php:2907
 #, php-format
 msgctxt "media uploader field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2914
+#: includes/class-wp-backstage-component.php:2912
 #, php-format
 msgctxt "media uploader field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2919
+#: includes/class-wp-backstage-component.php:2917
 #, php-format
 msgctxt "media uploader field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2924
+#: includes/class-wp-backstage-component.php:2922
 #, php-format
 msgctxt "media uploader field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2929
+#: includes/class-wp-backstage-component.php:2927
 #, php-format
 msgctxt "media uploader field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/class-wp-backstage-component.php:2934
+#: includes/class-wp-backstage-component.php:2932
 #, php-format
 msgctxt "media uploader field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2937
+#: includes/class-wp-backstage-component.php:2935
 msgctxt "media uploader field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2938
+#: includes/class-wp-backstage-component.php:2936
 msgctxt "media uploader field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:2939
+#: includes/class-wp-backstage-component.php:2937
 msgctxt "media uploader field - try again button"
 msgid "Try again"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3123
-#: includes/fields/class-wp-backstage-address-field.php:734
+#: includes/class-wp-backstage-component.php:3121
+#: includes/fields/class-wp-backstage-address-field.php:732
 msgctxt "address field - country label"
 msgid "Country"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3167
-#: includes/fields/class-wp-backstage-address-field.php:761
+#: includes/class-wp-backstage-component.php:3165
+#: includes/fields/class-wp-backstage-address-field.php:759
 msgctxt "address field - line 1"
 msgid "Address"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3200
-#: includes/fields/class-wp-backstage-address-field.php:778
+#: includes/class-wp-backstage-component.php:3198
+#: includes/fields/class-wp-backstage-address-field.php:776
 msgctxt "address field - line 2"
 msgid "Address (Line 2)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3233
-#: includes/fields/class-wp-backstage-address-field.php:795
+#: includes/class-wp-backstage-component.php:3231
+#: includes/fields/class-wp-backstage-address-field.php:793
 msgctxt "address field - city"
 msgid "City"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3266
-#: includes/fields/class-wp-backstage-address-field.php:812
+#: includes/class-wp-backstage-component.php:3264
+#: includes/fields/class-wp-backstage-address-field.php:810
 msgctxt "address field - state input"
 msgid "State / Province / Region"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3298
-#: includes/fields/class-wp-backstage-address-field.php:830
+#: includes/class-wp-backstage-component.php:3296
+#: includes/fields/class-wp-backstage-address-field.php:828
 msgctxt "address field - state select"
 msgid "State"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3342
-#: includes/fields/class-wp-backstage-address-field.php:857
+#: includes/class-wp-backstage-component.php:3340
+#: includes/fields/class-wp-backstage-address-field.php:855
 msgctxt "address field - zip"
 msgid "Zip Code"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3404
+#: includes/class-wp-backstage-component.php:3402
 msgctxt "select posts field - default option none label"
 msgid "Select"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3500
+#: includes/class-wp-backstage-component.php:3498
 msgctxt "select users field - default option none label"
 msgid "Select"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/class-wp-backstage-component.php:3547
-#: includes/fields/class-wp-backstage-select-users-field.php:231
+#: includes/class-wp-backstage-component.php:3545
+#: includes/fields/class-wp-backstage-select-users-field.php:229
 #, php-format
 msgctxt "select users field - option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3604
+#: includes/class-wp-backstage-component.php:3602
 msgctxt "rest api preview - loading"
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3605
+#: includes/class-wp-backstage-component.php:3603
 msgctxt "rest api preview - instructions"
 msgid "<strong>No data fetched yet</strong> ― Click the fetch button to get started."
 msgstr ""
 
-#: includes/class-wp-backstage-component.php:3628
+#: includes/class-wp-backstage-component.php:3626
 msgctxt "rest api preview - form submit"
 msgid "Fetch"
 msgstr ""
 
 #. translators: 1: required arg key.
-#: includes/class-wp-backstage-dashboard-widget.php:110
+#: includes/class-wp-backstage-dashboard-widget.php:108
 #, php-format
 msgctxt "dashboard widget - required arg error"
 msgid "[Dashboard Widget] The %1$s key is required."
 msgstr ""
 
 #. translators: 1: field name.
-#: includes/class-wp-backstage-dashboard-widget.php:375
+#: includes/class-wp-backstage-dashboard-widget.php:373
 #, php-format
 msgctxt "dashboard widget - field label"
 msgid "%1$s:"
 msgstr ""
 
 #. translators: 1: required arg key.
-#: includes/class-wp-backstage-nav-menu-item.php:103
+#: includes/class-wp-backstage-nav-menu-item.php:101
 #, php-format
 msgctxt "nav menu item - required arg error"
 msgid "[Nav Menu Item] The %1$s key is required."
 msgstr ""
 
 #. translators: 1: options page slug.
-#: includes/class-wp-backstage-options.php:151
+#: includes/class-wp-backstage-options.php:149
 #, php-format
 msgctxt "options - required slug error"
 msgid "[Options: %1$s] A slug is required when adding a new options page."
 msgstr ""
 
 #. translators: 1: options page slug, 2:required arg key.
-#: includes/class-wp-backstage-options.php:165
+#: includes/class-wp-backstage-options.php:163
 #, php-format
 msgctxt "options - required arg error"
 msgid "[Options: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: options page slug, 2: section number, 3: required section arg key.
-#: includes/class-wp-backstage-options.php:191
+#: includes/class-wp-backstage-options.php:189
 #, php-format
 msgctxt "options - required section arg error"
 msgid "[Options: %1$s] Section \"%2$s\" requires the %3$s key."
 msgstr ""
 
-#: includes/class-wp-backstage-options.php:281
+#: includes/class-wp-backstage-options.php:279
 msgctxt "options rest api help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-options.php:311
+#: includes/class-wp-backstage-options.php:309
 msgctxt "options rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the site settings endpoint. This endpoint returns the global settings object and may include REST-exposed settings beyond those shown on this options page. The native settings endpoint does not expose preview contexts or embeddable linked resources the way other core REST endpoints do."
 msgstr ""
 
-#: includes/class-wp-backstage-options.php:343
+#: includes/class-wp-backstage-options.php:341
 msgctxt "options - tool card link"
 msgid "Go to tool"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:210
+#: includes/class-wp-backstage-post-type.php:208
 msgctxt "post type - default thumbnail label"
 msgid "Featured Image"
 msgstr ""
 
 #. translators: 1: post type slug.
-#: includes/class-wp-backstage-post-type.php:256
+#: includes/class-wp-backstage-post-type.php:254
 #, php-format
 msgctxt "post type - required slug error"
 msgid "[Post Type: %1$s] A slug is required when adding a new post type."
 msgstr ""
 
 #. translators: 1: post type slug.
-#: includes/class-wp-backstage-post-type.php:267
+#: includes/class-wp-backstage-post-type.php:265
 #, php-format
 msgctxt "post type - slug length error"
 msgid "[Post Type: %1$s] A post type slug must be between 1 and 20 characters."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
-#: includes/class-wp-backstage-post-type.php:278
+#: includes/class-wp-backstage-post-type.php:276
 #, php-format
 msgctxt "post type - existing slug error"
 msgid "[Post Type: %1$s] A post type with this slug already exists. Use the %2$s method to modify an existing post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: method suggestion
-#: includes/class-wp-backstage-post-type.php:290
+#: includes/class-wp-backstage-post-type.php:288
 #, php-format
 msgctxt "post type - nonexisting slug error"
 msgid "[Post Type: %1$s] A post type with this slug does not exist. Use the %2$s method to create a new post type."
 msgstr ""
 
 #. translators: 1: post type slug, 2: required arg key.
-#: includes/class-wp-backstage-post-type.php:310
+#: includes/class-wp-backstage-post-type.php:308
 #, php-format
 msgctxt "post type - required arg error"
 msgid "[Post Type: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: post type slug, 2: meta box identifier, 3: required meta box arg key.
-#: includes/class-wp-backstage-post-type.php:337
+#: includes/class-wp-backstage-post-type.php:335
 #, php-format
 msgctxt "post type - required meta box arg error"
 msgid "[Post Type: %1$s] Meta box \"%2$s\" requires the %3$s key."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: updated count.
-#: includes/class-wp-backstage-post-type.php:423
+#: includes/class-wp-backstage-post-type.php:421
 #, php-format
 msgctxt "post bulk updated message - updated plural"
 msgid "%2$d %1$s updated."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:430
+#: includes/class-wp-backstage-post-type.php:428
 #, php-format
 msgctxt "post bulk updated message - updated singular"
 msgid "1 %1$s updated."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: locked count.
-#: includes/class-wp-backstage-post-type.php:437
+#: includes/class-wp-backstage-post-type.php:435
 #, php-format
 msgctxt "post bulk updated message - locked plural"
 msgid "%2$d %1$s not updated, somebody is editing them."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:444
+#: includes/class-wp-backstage-post-type.php:442
 #, php-format
 msgctxt "post bulk updated message - locked singular"
 msgid "1 %1$s not updated, somebody is editing it."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: deleted count.
-#: includes/class-wp-backstage-post-type.php:451
+#: includes/class-wp-backstage-post-type.php:449
 #, php-format
 msgctxt "post bulk updated message - deleted plural"
 msgid "%2$d %1$s permanently deleted."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:458
+#: includes/class-wp-backstage-post-type.php:456
 #, php-format
 msgctxt "post bulk updated message - deleted singular"
 msgid "1 %1$s permanently deleted."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: trashed count.
-#: includes/class-wp-backstage-post-type.php:465
+#: includes/class-wp-backstage-post-type.php:463
 #, php-format
 msgctxt "post bulk updated message - trashed plural"
 msgid "%2$d %1$s moved to the Trash."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:472
+#: includes/class-wp-backstage-post-type.php:470
 #, php-format
 msgctxt "post bulk updated message - trashed singular"
 msgid "1 %1$s moved to the Trash."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: untrashed count.
-#: includes/class-wp-backstage-post-type.php:479
+#: includes/class-wp-backstage-post-type.php:477
 #, php-format
 msgctxt "post bulk updated message - untrashed plural"
 msgid "%2$d %1$s restored from the Trash."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:486
+#: includes/class-wp-backstage-post-type.php:484
 #, php-format
 msgctxt "post bulk updated message - untrashed singular"
 msgid "1 %1$s restored from the Trash."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:525
+#: includes/class-wp-backstage-post-type.php:523
 msgctxt "post updated messages - scheduled date template"
 msgid "M j, Y"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:529
+#: includes/class-wp-backstage-post-type.php:527
 msgctxt "post updated messages - scheduled time template"
 msgid "H:i"
 msgstr ""
 
 #. translators: 1: scheduled date, 2: scheduled time.
-#: includes/class-wp-backstage-post-type.php:534
+#: includes/class-wp-backstage-post-type.php:532
 #, php-format
 msgctxt "post updated messages - scheduled datetime"
 msgid "%1$s at %2$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:541
+#: includes/class-wp-backstage-post-type.php:539
 #, php-format
 msgctxt "post updated messages - preview post link"
 msgid "Preview %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:546
+#: includes/class-wp-backstage-post-type.php:544
 #, php-format
 msgctxt "post updated messages - saved singular"
 msgid "%1$s saved."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:551
+#: includes/class-wp-backstage-post-type.php:549
 #, php-format
 msgctxt "post updated messages - submitted singular"
 msgid "%1$s submitted."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: scheduled datetime.
-#: includes/class-wp-backstage-post-type.php:556
+#: includes/class-wp-backstage-post-type.php:554
 #, php-format
 msgctxt "post updated messages - scheduled singular"
 msgid "%1$s scheduled for: %2$s."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:562
+#: includes/class-wp-backstage-post-type.php:560
 #, php-format
 msgctxt "post updated messages - draft updated singular"
 msgid "%1$s draft updated."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: revision title.
-#: includes/class-wp-backstage-post-type.php:570
+#: includes/class-wp-backstage-post-type.php:568
 #, php-format
 msgctxt "post updated messages - revision restored singular"
 msgid "%1$s restored to revision from %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:672
+#: includes/class-wp-backstage-post-type.php:670
 msgctxt "post type overview help tab - title"
 msgid "Overview"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:681
+#: includes/class-wp-backstage-post-type.php:679
 msgctxt "post type screen content help tab - title"
 msgid "Screen Content"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:690
+#: includes/class-wp-backstage-post-type.php:688
 msgctxt "post type available actions help tab - title"
 msgid "Available Actions"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:699
+#: includes/class-wp-backstage-post-type.php:697
 msgctxt "post type bulk actions help tab - title"
 msgid "Bulk Actions"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:710
+#: includes/class-wp-backstage-post-type.php:708
 msgctxt "post type rest api collection preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:723
+#: includes/class-wp-backstage-post-type.php:721
 msgctxt "post type customize display help tab - title"
 msgid "Customizing This Display"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:734
+#: includes/class-wp-backstage-post-type.php:732
 msgctxt "post type title and editor help tab - title"
 msgid "Title and Editor"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:746
+#: includes/class-wp-backstage-post-type.php:744
 msgctxt "post type inserting media help tab - title"
 msgid "Inserting Media"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:757
+#: includes/class-wp-backstage-post-type.php:755
 msgctxt "post type publish settings help tab - title"
 msgid "Publish Settings"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:768
+#: includes/class-wp-backstage-post-type.php:766
 msgctxt "post type discussion settings help tab - title"
 msgid "Discussion Settings"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:780
+#: includes/class-wp-backstage-post-type.php:778
 msgctxt "post type rest api preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:804
+#: includes/class-wp-backstage-post-type.php:802
 msgctxt "discussion settings help tab - trackbacks"
 msgid "<strong>Send Trackbacks</strong> — Trackbacks are a way to notify legacy blog systems that you've linked to them. Enter the URL(s) you want to send trackbacks. If you link to other WordPress sites they'll be notified automatically using pingbacks, and this field is unnecessary."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:812
+#: includes/class-wp-backstage-post-type.php:810
 #, php-format
 msgctxt "discussion settings help tab - comments"
 msgid "<strong>Discussion</strong> — You can turn comments and pings on or off, and if there are comments on the %1$s, you can see them here and moderate them."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:859
+#: includes/class-wp-backstage-post-type.php:857
 msgctxt "post publish settings help tab - overview"
 msgid "Several boxes on this screen contain settings for how your content will be published, including:"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:865
+#: includes/class-wp-backstage-post-type.php:863
 #, php-format
 msgctxt "post publish settings help tab - publish"
 msgid "<strong>Publish</strong> — You can set the terms of publishing your %1$s in the Publish box. For Status, Visibility, and Publish (immediately), click on the Edit link to reveal more options. Visibility includes options for password-protecting a %1$s. The Password protected option allows you to set an arbitrary password for each %1$s. The Private option hides the %1$s from everyone except editors and administrators. Publish (immediately) allows you to set a future or past date and time, so you can schedule a %1$s to be published in the future or backdate a %1$s."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:871
+#: includes/class-wp-backstage-post-type.php:869
 #, php-format
 msgctxt "post publish settings help tab - format"
 msgid "<strong>Format</strong> — Formats designate how your theme will display a specific %1$s. For example, you could have a <em>standard</em> %1$s with a title and paragraphs, or a short <em>aside</em> that omits the title and contains a short text blurb. Your theme could enable all or some of 10 possible formats. <a href=\"https://wordpress.org/support/article/post-formats/\" target=\"_blank\" rel=\"noopener\">Learn more about formats</a>."
 msgstr ""
 
 #. translators: 1: featured image label, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:878
+#: includes/class-wp-backstage-post-type.php:876
 #, php-format
 msgctxt "post publish settings help tab - thumbnail"
 msgid "<strong>%1$s</strong> — This allows you to associate an image with your %2$s without inserting it. This is usually useful only if your theme makes use of the image as a thumbnail on the home page, a custom header, etc."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:886
+#: includes/class-wp-backstage-post-type.php:884
 msgctxt "post publish settings help tab - excerpt"
 msgid "<strong>Excerpt</strong> — Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href=\"https://wordpress.org/support/article/excerpt/\" target=\"_blank\" rel=\"noopener\">Learn more about manual excerpts</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:893
+#: includes/class-wp-backstage-post-type.php:891
 #, php-format
 msgctxt "post publish settings help tab - slug"
 msgid "<strong>Slug</strong> — The slug of the post is a unique, URL-friendly identifier of the %1$s and will be used when constructing the permalink. <a href=\"https://wordpress.org/support/article/using-permalinks/\" target=\"_blank\" rel=\"noopener\">Learn more about permalinks</a>."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: post type plural name.
-#: includes/class-wp-backstage-post-type.php:900
+#: includes/class-wp-backstage-post-type.php:898
 #, php-format
 msgctxt "post publish settings help tab - page attributes order"
 msgid "<strong>%1$s Attributes</strong> — Set the numerical order of this %1$s. This can be used to sort the %2$s when querying them."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: post type plural name.
-#: includes/class-wp-backstage-post-type.php:908
+#: includes/class-wp-backstage-post-type.php:906
 #, php-format
 msgctxt "post publish settings help tab - page attributes hierarchy"
 msgid "The parent %1$s can be set here inorder to create a hierarchy of %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:914
+#: includes/class-wp-backstage-post-type.php:912
 msgctxt "post publish settings help tab - page attributes learn more"
 msgid "<a href=\"https://make.wordpress.org/support/user-manual/pages/page-attributes/\" target=\"_blank\" rel=\"noopener\">Learn more about attributes</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:919
+#: includes/class-wp-backstage-post-type.php:917
 #, php-format
 msgctxt "post publish settings help tab - author"
 msgid "<strong>Author</strong> — The user attributed as the author of the %1$s."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:926
+#: includes/class-wp-backstage-post-type.php:924
 #, php-format
 msgctxt "post publish settings help tab - custom fields"
 msgid "<strong>Custom Fields</strong> — Custom fields can be used to add extra metadata to the %1$s that you can use in your theme. <a href=\"https://wordpress.org/support/article/custom-fields/\" target=\"_blank\" rel=\"noopener\">Learn more about custom fields</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:933
+#: includes/class-wp-backstage-post-type.php:931
 #, php-format
 msgctxt "post publish settings help tab - revisions"
 msgid "<strong>Revisions</strong> — This allows you to view the %1$s revisions. <a href=\"https://wordpress.org/support/article/revisions/\" target=\"_blank\" rel=\"noopener\">Learn more about revisions</a>."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: post type singular name, 3: post type plural name.
-#: includes/class-wp-backstage-post-type.php:941
+#: includes/class-wp-backstage-post-type.php:939
 #, php-format
 msgctxt "post publish settings help tab - taxonomy"
 msgid "<strong>%1$s</strong> ― Manage the %1$s attached to the %2$s. <a href=\"https://wordpress.org/support/article/taxonomies/\" target=\"_blank\" rel=\"noopener\">Learn more about taxonomies</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1012
+#: includes/class-wp-backstage-post-type.php:1010
 #, php-format
 msgctxt "post inserting media help tab - overview"
 msgid "You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your %1$s. To create an image gallery, select the images to add and click the “Create a new gallery” button.<br/><br/>You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the content of your %1$s. <a href=\"https://wordpress.org/support/article/embeds/\" target=\"_blank\" rel=\"noopener\">Learn more about embeds</a>."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1054
+#: includes/class-wp-backstage-post-type.php:1052
 #, php-format
 msgctxt "post title and editor help tab - title support"
 msgid "<strong>Title</strong> — Enter a title for your %1$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1059
+#: includes/class-wp-backstage-post-type.php:1057
 msgctxt "post title and editor help tab - permalink support"
 msgid "After you enter a title, you'll see the permalink below if the post, which you can edit."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1068
+#: includes/class-wp-backstage-post-type.php:1066
 #, php-format
 msgctxt "post title and editor help tab - editor support"
 msgid "<strong>Editor</strong> — Enter the text for your %1$s. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab.<br/><br/>Visual mode gives you an editor that is similar to a word processor. Click the Toolbar Toggle button to get a second row of controls.<br/><br/>The Text mode allows you to enter HTML along with your %1$s text. Note that &lt;p&gt; and &lt;br&gt; tags are converted to line breaks when switching to the Text editor to make it less cluttered. When you type, a single line break can be used instead of typing &lt;br&gt;, and two line breaks instead of paragraph tags. The line breaks are converted back to tags automatically.<br/><br/>You can insert media files by clicking the button above the editor and following the directions. You can align or edit images using the inline formatting toolbar available in Visual mode.<br/><br/>You can enable distraction-free writing mode using the icon to the right. This feature is not available for old browsers or devices with small screens, and requires that the full-height editor be enabled in Screen Options.<br/><br/>Keyboard users: When you are working in the visual editor, you can use <code>Alt + F10</code> to access the toolbar."
 msgstr ""
 
 #. translators: 1: post type singular name, 2: list of meta box titles.
-#: includes/class-wp-backstage-post-type.php:1119
+#: includes/class-wp-backstage-post-type.php:1117
 #, php-format
 msgctxt "post customize display help tab - overview"
 msgid "The title field and the big %1$s Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (%2$s) or to choose a 1- or 2-column layout for this screen."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1160
+#: includes/class-wp-backstage-post-type.php:1158
 #, php-format
 msgctxt "post bulk actions help tab - overview"
 msgid "You can also edit or move multiple %1$s to the Trash at once. Select the %1$s you want to act on using the checkboxes, then select the action you want to take from the Bulk actions menu and click Apply.<br/><br/>When using Bulk Edit, you can change the metadata for all selected %1$s at once. To remove a %2$s from the grouping, just click the x next to its name in the Bulk Edit area that appears."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1201
+#: includes/class-wp-backstage-post-type.php:1199
 #, php-format
 msgctxt "post available actions help tab - overview"
 msgid "Hovering over a row in the %1$s list will display action links that allow you to manage your %2$s. You can perform the following actions:"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1221
+#: includes/class-wp-backstage-post-type.php:1219
 #, php-format
 msgctxt "post available actions help tab - edit action"
 msgid "<strong>Edit</strong> takes you to the editing screen for that %1$s. You can also reach that screen by clicking on the %1$s title."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1226
+#: includes/class-wp-backstage-post-type.php:1224
 #, php-format
 msgctxt "post available actions help tab - quick edit action"
 msgid "<strong>Quick Edit</strong> provides inline access to the metadata of your %1$s, allowing you to update %1$s details without leaving this screen."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1231
+#: includes/class-wp-backstage-post-type.php:1229
 #, php-format
 msgctxt "post available actions help tab - trash action"
 msgid "<strong>Trash</strong> removes your %1$s from this list and places it in the Trash, from which you can permanently delete it."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1236
+#: includes/class-wp-backstage-post-type.php:1234
 #, php-format
 msgctxt "post available actions help tab - view and preview actions"
 msgid "<strong>Preview</strong> will show you what your draft %1$s will look like if you publish it. <strong>View</strong> will take you to your live site to view the %1$s. Which link is available depends on your post's status."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1283
+#: includes/class-wp-backstage-post-type.php:1281
 msgctxt "post screen content help tab - overview"
 msgid "You can customize the display of this screen's contents in a number of ways:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1309
+#: includes/class-wp-backstage-post-type.php:1307
 #, php-format
 msgctxt "post screen content help tab - columns"
 msgid "You can hide/display columns based on your needs and decide how many %1$s to list per screen using the Screen Options tab."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1314
+#: includes/class-wp-backstage-post-type.php:1312
 #, php-format
 msgctxt "post screen content help tab - statuses"
 msgid "You can filter the list of %1$s by post status using the text links above the %1$s list to only show %1$s with that status. The default view is to show all %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1319
+#: includes/class-wp-backstage-post-type.php:1317
 #, php-format
 msgctxt "post screen content help tab - view mode"
 msgid "You can view %1$s in a simple title list or with an excerpt using the Screen Options tab."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: taxonomy labels 3: filterable field labels.
-#: includes/class-wp-backstage-post-type.php:1324
+#: includes/class-wp-backstage-post-type.php:1322
 #, php-format
 msgctxt "post screen content help tab - filter"
 msgid "You can refine the list to show only %1$s from a specific month, those in a specific taxonomy (%2$s), or those with a specific value for filterable fields (%3$s) by using the dropdown menus above the %1$s list. Click the Filter button after making your selection. You can also refine the list by clicking on the author, taxonomies (%2$s), and filterable fields (%3$s) in the %1$s list."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1386
+#: includes/class-wp-backstage-post-type.php:1384
 #, php-format
 msgctxt "post type overview help tab - overview"
 msgid "This screen provides access to all of your %1$s. You can customize the display of this screen to suit your workflow."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: post post type plural name.
-#: includes/class-wp-backstage-post-type.php:1398
+#: includes/class-wp-backstage-post-type.php:1396
 #, php-format
 msgctxt "post type overview help tab - capability type: page"
 msgid "%1$s are similar to %2$s in that they have the same management capability, meaning the same user roles that can manage %2$s can manage %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: page post type plural name.
-#: includes/class-wp-backstage-post-type.php:1411
+#: includes/class-wp-backstage-post-type.php:1409
 #, php-format
 msgctxt "post type overview help tab - capability type: post"
 msgid "%1$s are similar to %2$s in that they have the same management capability, meaning the same user roles that can manage %2$s can manage %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1423
+#: includes/class-wp-backstage-post-type.php:1421
 #, php-format
 msgctxt "post type overview help tab - hierarchy"
 msgid "%1$s can have a hierarchy. You can nest %1$s under other %1$s by making one the \"Parent\" of the other, creating a group of %1$s."
 msgstr ""
 
 #. translators: 1: post type plural name, 2: taxonomy links.
-#: includes/class-wp-backstage-post-type.php:1449
+#: includes/class-wp-backstage-post-type.php:1447
 #, php-format
 msgctxt "post overview help tab - taxonomies"
 msgid "%1$s can be organized using their related taxonomies: %2$s."
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1498
+#: includes/class-wp-backstage-post-type.php:1496
 msgctxt "post type rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this post. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1537
+#: includes/class-wp-backstage-post-type.php:1535
 #, php-format
 msgctxt "post type rest api collection help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the %1$s collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
 #. translators: 1: post type, 2: post title.
-#: includes/class-wp-backstage-post-type.php:1616
+#: includes/class-wp-backstage-post-type.php:1614
 #, php-format
 msgctxt "dashboard activity post link title"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-post-type.php:1670
+#: includes/class-wp-backstage-post-type.php:1668
 msgctxt "post type - add new"
 msgid "Add New"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1673
+#: includes/class-wp-backstage-post-type.php:1671
 #, php-format
 msgctxt "post type - archives"
 msgid "%1$s Archives"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1678
+#: includes/class-wp-backstage-post-type.php:1676
 #, php-format
 msgctxt "post type - attributes"
 msgid "%1$s Attributes"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1683
+#: includes/class-wp-backstage-post-type.php:1681
 #, php-format
 msgctxt "post type - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1688
+#: includes/class-wp-backstage-post-type.php:1686
 #, php-format
 msgctxt "post type - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1693
+#: includes/class-wp-backstage-post-type.php:1691
 #, php-format
 msgctxt "post type - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1698
+#: includes/class-wp-backstage-post-type.php:1696
 #, php-format
 msgctxt "post type - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1703
+#: includes/class-wp-backstage-post-type.php:1701
 #, php-format
 msgctxt "post type - new item"
 msgid "New %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1708
+#: includes/class-wp-backstage-post-type.php:1706
 #, php-format
 msgctxt "post type - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1713
+#: includes/class-wp-backstage-post-type.php:1711
 #, php-format
 msgctxt "post type - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1718
+#: includes/class-wp-backstage-post-type.php:1716
 #, php-format
 msgctxt "post type - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1723
+#: includes/class-wp-backstage-post-type.php:1721
 #, php-format
 msgctxt "post type - view items"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1728
+#: includes/class-wp-backstage-post-type.php:1726
 #, php-format
 msgctxt "post type - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1733
+#: includes/class-wp-backstage-post-type.php:1731
 #, php-format
 msgctxt "post type - not found"
 msgid "No %1$s found"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1738
+#: includes/class-wp-backstage-post-type.php:1736
 #, php-format
 msgctxt "post type - not found in trash"
 msgid "No %1$s found in trash"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1743
+#: includes/class-wp-backstage-post-type.php:1741
 #, php-format
 msgctxt "post type - set featured image"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1748
+#: includes/class-wp-backstage-post-type.php:1746
 #, php-format
 msgctxt "post type - remove featured image"
 msgid "Remove %1$s"
 msgstr ""
 
 #. translators: 1: post type thumbnail label.
-#: includes/class-wp-backstage-post-type.php:1753
+#: includes/class-wp-backstage-post-type.php:1751
 #, php-format
 msgctxt "post type - use featured image"
 msgid "Use as %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1758
+#: includes/class-wp-backstage-post-type.php:1756
 #, php-format
 msgctxt "post type - insert into item"
 msgid "Insert into %1$s"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1763
+#: includes/class-wp-backstage-post-type.php:1761
 #, php-format
 msgctxt "post type - uploaded to this item"
 msgid "Uploaded to this %1$s"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1768
+#: includes/class-wp-backstage-post-type.php:1766
 #, php-format
 msgctxt "post type - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1773
+#: includes/class-wp-backstage-post-type.php:1771
 #, php-format
 msgctxt "post type - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: post type plural name.
-#: includes/class-wp-backstage-post-type.php:1778
+#: includes/class-wp-backstage-post-type.php:1776
 #, php-format
 msgctxt "post type - filter items list"
 msgid "Filter %1$s list"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1783
+#: includes/class-wp-backstage-post-type.php:1781
 #, php-format
 msgctxt "post type - item published"
 msgid "%1$s published."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1788
+#: includes/class-wp-backstage-post-type.php:1786
 #, php-format
 msgctxt "post type - item published privately"
 msgid "%1$s published privately."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1793
+#: includes/class-wp-backstage-post-type.php:1791
 #, php-format
 msgctxt "post type - item reverted to draft"
 msgid "%1$s reverted to draft."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1798
+#: includes/class-wp-backstage-post-type.php:1796
 #, php-format
 msgctxt "post type - item scheduled"
 msgid "%1$s scheduled."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1803
+#: includes/class-wp-backstage-post-type.php:1801
 #, php-format
 msgctxt "post type - item updated"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1808
+#: includes/class-wp-backstage-post-type.php:1806
 #, php-format
 msgctxt "post type - item link"
 msgid "%1$s Link"
 msgstr ""
 
 #. translators: 1: post type singular name.
-#: includes/class-wp-backstage-post-type.php:1813
+#: includes/class-wp-backstage-post-type.php:1811
 #, php-format
 msgctxt "post type - item link description"
 msgid "A link to a %1$s"
 msgstr ""
 
 #. translators: 1: published count, 2: post type label
-#: includes/class-wp-backstage-post-type.php:2682
+#: includes/class-wp-backstage-post-type.php:2680
 #, php-format
 msgctxt "dashboard glance item"
 msgid "%1$d %2$s"
 msgstr ""
 
 #. translators: 1: taxonomy slug.
-#: includes/class-wp-backstage-taxonomy.php:205
+#: includes/class-wp-backstage-taxonomy.php:203
 #, php-format
 msgctxt "taxonomy - required slug error"
 msgid "[Taxonomy: %1$s] A slug is required when adding a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug.
-#: includes/class-wp-backstage-taxonomy.php:216
+#: includes/class-wp-backstage-taxonomy.php:214
 #, php-format
 msgctxt "taxonomy - slug length error"
 msgid "[Taxonomy: %1$s] A taxonomy slug must be between 1 and 32 characters."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
-#: includes/class-wp-backstage-taxonomy.php:227
+#: includes/class-wp-backstage-taxonomy.php:225
 #, php-format
 msgctxt "taxonomy - existing slug error"
 msgid "[Taxonomy: %1$s] A taxonomy with this slug already exists. Use the %2$s method to modify an existing taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2: method suggestion
-#: includes/class-wp-backstage-taxonomy.php:239
+#: includes/class-wp-backstage-taxonomy.php:237
 #, php-format
 msgctxt "taxonomy - nonexisting slug error"
 msgid "[Taxonomy: %1$s] A taxonomy with this slug does not exist. Use the %2$s method to create a new taxonomy."
 msgstr ""
 
 #. translators: 1: taxonomy slug, 2:required arg key.
-#: includes/class-wp-backstage-taxonomy.php:259
+#: includes/class-wp-backstage-taxonomy.php:257
 #, php-format
 msgctxt "taxonomy - required arg error"
 msgid "[Taxonomy: %1$s] The %2$s key is required."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:394
+#: includes/class-wp-backstage-taxonomy.php:392
 #, php-format
 msgctxt "term updated messages - added singular"
 msgid "%1$s added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:399
+#: includes/class-wp-backstage-taxonomy.php:397
 #, php-format
 msgctxt "term updated messages - deleted singular"
 msgid "%1$s deleted."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:404
+#: includes/class-wp-backstage-taxonomy.php:402
 #, php-format
 msgctxt "term updated messages - updated singular"
 msgid "%1$s updated."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:409
+#: includes/class-wp-backstage-taxonomy.php:407
 #, php-format
 msgctxt "term updated messages - not added singular"
 msgid "%1$s not added."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:414
+#: includes/class-wp-backstage-taxonomy.php:412
 #, php-format
 msgctxt "term updated messages - not updated singular"
 msgid "%1$s not updated."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:419
+#: includes/class-wp-backstage-taxonomy.php:417
 #, php-format
 msgctxt "term updated messages - deleted plural"
 msgid "%1$s deleted."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:459
+#: includes/class-wp-backstage-taxonomy.php:457
 msgctxt "taxonomy overview help tab - title"
 msgid "Overview"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:470
+#: includes/class-wp-backstage-taxonomy.php:468
 #, php-format
 msgctxt "taxonomy adding terms help tab - title"
 msgid "Adding %1$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:483
+#: includes/class-wp-backstage-taxonomy.php:481
 msgctxt "taxonomy collection rest api help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:495
+#: includes/class-wp-backstage-taxonomy.php:493
 msgctxt "taxonomy rest api help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:516
+#: includes/class-wp-backstage-taxonomy.php:514
 msgid "<strong>Name</strong> — The name is how it appears on your site."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:518
+#: includes/class-wp-backstage-taxonomy.php:516
 msgid "<strong>Slug</strong> — The \"slug\" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:523
+#: includes/class-wp-backstage-taxonomy.php:521
 #, php-format
 msgid "<strong>Parent</strong> — %1$s can have a hierarchy. You can create a more general parent %2$s, and under that optional child %1$s for more refinement. To create a child %2$s, just choose another %2$s from the Parent dropdown."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:529
+#: includes/class-wp-backstage-taxonomy.php:527
 msgid "<strong>Description</strong> — The description is not prominent by default; however, some themes may display it."
 msgstr ""
 
 #. translators: 1: taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:543
+#: includes/class-wp-backstage-taxonomy.php:541
 #, php-format
 msgctxt "taxonomy adding terms help tab - overview"
 msgid "When adding a new %1$s on this screen, you'll fill in the following fields:"
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:549
+#: includes/class-wp-backstage-taxonomy.php:547
 #, php-format
 msgctxt "taxonomy adding terms help tab - screen options"
 msgid "You can change the display of this screen using the Screen Options tab to set how many %1$s are displayed per screen and to display/hide columns in the table."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:626
+#: includes/class-wp-backstage-taxonomy.php:624
 #, php-format
 msgctxt "taxonomy overview help tab - overview"
 msgid "You can use %1$s to define sections of your site and group related content."
 msgstr ""
 
 #. translators: 1: taxonomy plural name, 2: post type links.
-#: includes/class-wp-backstage-taxonomy.php:636
+#: includes/class-wp-backstage-taxonomy.php:634
 #, php-format
 msgctxt "taxonomy overview help tab - post types"
 msgid "%1$s can be used to organize items from their related post types: %2$s"
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:687
+#: includes/class-wp-backstage-taxonomy.php:685
 msgctxt "taxonomy rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this term. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
 #. translators: 1: taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:725
+#: includes/class-wp-backstage-taxonomy.php:723
 #, php-format
 msgctxt "taxonomy rest api collection help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the %1$s collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-taxonomy.php:805
+#: includes/class-wp-backstage-taxonomy.php:803
 msgctxt "taxonomy table filter - submit"
 msgid "Filter"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:877
+#: includes/class-wp-backstage-taxonomy.php:875
 #, php-format
 msgctxt "taxonomy labels - all items"
 msgid "All %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:882
+#: includes/class-wp-backstage-taxonomy.php:880
 #, php-format
 msgctxt "taxonomy labels - parent item"
 msgid "Parent %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:887
+#: includes/class-wp-backstage-taxonomy.php:885
 #, php-format
 msgctxt "taxonomy labels - parent item colon"
 msgid "Parent %1$s:"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:892
+#: includes/class-wp-backstage-taxonomy.php:890
 #, php-format
 msgctxt "taxonomy labels - new item name"
 msgid "New %1$s Name"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:897
+#: includes/class-wp-backstage-taxonomy.php:895
 #, php-format
 msgctxt "taxonomy labels - add new item"
 msgid "Add New %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:902
+#: includes/class-wp-backstage-taxonomy.php:900
 #, php-format
 msgctxt "taxonomy labels - edit item"
 msgid "Edit %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:907
+#: includes/class-wp-backstage-taxonomy.php:905
 #, php-format
 msgctxt "taxonomy labels - update item"
 msgid "Update %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy singular name.
-#: includes/class-wp-backstage-taxonomy.php:912
+#: includes/class-wp-backstage-taxonomy.php:910
 #, php-format
 msgctxt "taxonomy labels - view item"
 msgid "View %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:917
+#: includes/class-wp-backstage-taxonomy.php:915
 #, php-format
 msgctxt "taxonomy labels - separate items with commas"
 msgid "Separate %1$s with commas"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:922
+#: includes/class-wp-backstage-taxonomy.php:920
 #, php-format
 msgctxt "taxonomy labels - add or remove items"
 msgid "Add or remove %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:927
+#: includes/class-wp-backstage-taxonomy.php:925
 #, php-format
 msgctxt "taxonomy labels - choose from most used"
 msgid "Choose from the most used %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:932
+#: includes/class-wp-backstage-taxonomy.php:930
 #, php-format
 msgctxt "taxonomy labels - popular items"
 msgid "Popular %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:937
+#: includes/class-wp-backstage-taxonomy.php:935
 #, php-format
 msgctxt "taxonomy labels - search items"
 msgid "Search %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:942
+#: includes/class-wp-backstage-taxonomy.php:940
 #, php-format
 msgctxt "taxonomy labels - not found"
 msgid "No %1$s Found"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:947
+#: includes/class-wp-backstage-taxonomy.php:945
 #, php-format
 msgctxt "taxonomy labels - no terms"
 msgid "No %1$s"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:952
+#: includes/class-wp-backstage-taxonomy.php:950
 #, php-format
 msgctxt "taxonomy labels - items list"
 msgid "%1$s list"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:957
+#: includes/class-wp-backstage-taxonomy.php:955
 #, php-format
 msgctxt "taxonomy labels - items list navigation"
 msgid "%1$s list navigation"
 msgstr ""
 
 #. translators: 1: Taxonomy plural name.
-#: includes/class-wp-backstage-taxonomy.php:962
+#: includes/class-wp-backstage-taxonomy.php:960
 #, php-format
 msgctxt "taxonomy labels - back to items"
 msgid "&larr; Go to %1$s"
 msgstr ""
 
 #. translators: 1:required arg key.
-#: includes/class-wp-backstage-user.php:127
+#: includes/class-wp-backstage-user.php:125
 #, php-format
 msgctxt "user - required arg error"
 msgid "[User] The %1$s key is required."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:265
+#: includes/class-wp-backstage-user.php:263
 msgctxt "user rest api collection preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:275
+#: includes/class-wp-backstage-user.php:273
 msgctxt "user rest api preview help tab - title"
 msgid "REST API"
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:305
+#: includes/class-wp-backstage-user.php:303
 msgctxt "user rest api collection help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for the users collection. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:347
+#: includes/class-wp-backstage-user.php:345
 msgctxt "user rest api preview help tab - title"
 msgid "<strong>REST API</strong> ― Preview the WordPress REST API response for this user. All contexts can be previewed including <code>view</code>, <code>embed</code>, and <code>edit</code>. The <code>_embed</code> flag can be also be enabled by checking the checkbox to preview embedded records."
 msgstr ""
 
-#: includes/class-wp-backstage-user.php:646
+#: includes/class-wp-backstage-user.php:644
 msgctxt "users table filter - submit"
 msgid "Filter"
 msgstr ""
 
 #. translators: 1:required arg key.
-#: includes/class-wp-backstage-widget.php:110
+#: includes/class-wp-backstage-widget.php:108
 #, php-format
 msgctxt "widget - required arg error"
 msgid "[Widget] The %1$s key is required."
 msgstr ""
 
 #. translators: 1: field name.
-#: includes/class-wp-backstage-widget.php:283
+#: includes/class-wp-backstage-widget.php:281
 #, php-format
 msgctxt "widget - field label"
 msgid "%1$s:"
 msgstr ""
 
-#: includes/class-wp-backstage.php:3073
-#: includes/fields/class-wp-backstage-media-field.php:126
+#: includes/class-wp-backstage.php:3071
+#: includes/fields/class-wp-backstage-media-field.php:124
 msgctxt "media item - remove"
 msgid "Remove"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:100
+#: includes/fields/class-wp-backstage-address-field.php:98
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:101
+#: includes/fields/class-wp-backstage-address-field.php:99
 msgid "Albania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:102
+#: includes/fields/class-wp-backstage-address-field.php:100
 msgid "Algeria"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:103
+#: includes/fields/class-wp-backstage-address-field.php:101
 msgid "American Samoa"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:104
+#: includes/fields/class-wp-backstage-address-field.php:102
 msgid "Andorra"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:105
+#: includes/fields/class-wp-backstage-address-field.php:103
 msgid "Angola"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:106
+#: includes/fields/class-wp-backstage-address-field.php:104
 msgid "Anguilla"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:107
+#: includes/fields/class-wp-backstage-address-field.php:105
 msgid "Antarctica"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:108
+#: includes/fields/class-wp-backstage-address-field.php:106
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:109
+#: includes/fields/class-wp-backstage-address-field.php:107
 msgid "Argentina"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:110
+#: includes/fields/class-wp-backstage-address-field.php:108
 msgid "Armenia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:111
+#: includes/fields/class-wp-backstage-address-field.php:109
 msgid "Aruba"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:112
+#: includes/fields/class-wp-backstage-address-field.php:110
 msgid "Australia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:113
+#: includes/fields/class-wp-backstage-address-field.php:111
 msgid "Austria"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:114
+#: includes/fields/class-wp-backstage-address-field.php:112
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:115
+#: includes/fields/class-wp-backstage-address-field.php:113
 msgid "Bahamas"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:116
+#: includes/fields/class-wp-backstage-address-field.php:114
 msgid "Bahrain"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:117
+#: includes/fields/class-wp-backstage-address-field.php:115
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:118
+#: includes/fields/class-wp-backstage-address-field.php:116
 msgid "Barbados"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:119
+#: includes/fields/class-wp-backstage-address-field.php:117
 msgid "Belarus"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:120
+#: includes/fields/class-wp-backstage-address-field.php:118
 msgid "Belgium"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:121
+#: includes/fields/class-wp-backstage-address-field.php:119
 msgid "Belize"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:122
+#: includes/fields/class-wp-backstage-address-field.php:120
 msgid "Benin"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:123
+#: includes/fields/class-wp-backstage-address-field.php:121
 msgid "Bermuda"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:124
+#: includes/fields/class-wp-backstage-address-field.php:122
 msgid "Bhutan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:125
+#: includes/fields/class-wp-backstage-address-field.php:123
 msgid "Bolivia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:126
+#: includes/fields/class-wp-backstage-address-field.php:124
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:127
+#: includes/fields/class-wp-backstage-address-field.php:125
 msgid "Botswana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:128
+#: includes/fields/class-wp-backstage-address-field.php:126
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:129
+#: includes/fields/class-wp-backstage-address-field.php:127
 msgid "Brazil"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:130
+#: includes/fields/class-wp-backstage-address-field.php:128
 msgid "British Antarctic Territory"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:131
+#: includes/fields/class-wp-backstage-address-field.php:129
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:132
+#: includes/fields/class-wp-backstage-address-field.php:130
 msgid "British Virgin Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:133
+#: includes/fields/class-wp-backstage-address-field.php:131
 msgid "Brunei"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:134
+#: includes/fields/class-wp-backstage-address-field.php:132
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:135
+#: includes/fields/class-wp-backstage-address-field.php:133
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:136
+#: includes/fields/class-wp-backstage-address-field.php:134
 msgid "Burundi"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:137
+#: includes/fields/class-wp-backstage-address-field.php:135
 msgid "Cambodia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:138
+#: includes/fields/class-wp-backstage-address-field.php:136
 msgid "Cameroon"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:139
+#: includes/fields/class-wp-backstage-address-field.php:137
 msgid "Canada"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:140
+#: includes/fields/class-wp-backstage-address-field.php:138
 msgid "Canton and Enderbury Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:141
+#: includes/fields/class-wp-backstage-address-field.php:139
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:142
+#: includes/fields/class-wp-backstage-address-field.php:140
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:143
+#: includes/fields/class-wp-backstage-address-field.php:141
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:144
+#: includes/fields/class-wp-backstage-address-field.php:142
 msgid "Chad"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:145
+#: includes/fields/class-wp-backstage-address-field.php:143
 msgid "Chile"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:146
+#: includes/fields/class-wp-backstage-address-field.php:144
 msgid "China"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:147
+#: includes/fields/class-wp-backstage-address-field.php:145
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:148
+#: includes/fields/class-wp-backstage-address-field.php:146
 msgid "Cocos [Keeling] Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:149
+#: includes/fields/class-wp-backstage-address-field.php:147
 msgid "Colombia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:150
+#: includes/fields/class-wp-backstage-address-field.php:148
 msgid "Comoros"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:151
+#: includes/fields/class-wp-backstage-address-field.php:149
 msgid "Congo - Brazzaville"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:152
+#: includes/fields/class-wp-backstage-address-field.php:150
 msgid "Congo - Kinshasa"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:153
+#: includes/fields/class-wp-backstage-address-field.php:151
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:154
+#: includes/fields/class-wp-backstage-address-field.php:152
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:155
+#: includes/fields/class-wp-backstage-address-field.php:153
 msgid "Croatia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:156
+#: includes/fields/class-wp-backstage-address-field.php:154
 msgid "Cuba"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:157
+#: includes/fields/class-wp-backstage-address-field.php:155
 msgid "Cyprus"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:158
+#: includes/fields/class-wp-backstage-address-field.php:156
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:159
+#: includes/fields/class-wp-backstage-address-field.php:157
 msgid "Côte d’Ivoire"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:160
+#: includes/fields/class-wp-backstage-address-field.php:158
 msgid "Denmark"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:161
+#: includes/fields/class-wp-backstage-address-field.php:159
 msgid "Djibouti"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:162
+#: includes/fields/class-wp-backstage-address-field.php:160
 msgid "Dominica"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:163
+#: includes/fields/class-wp-backstage-address-field.php:161
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:164
+#: includes/fields/class-wp-backstage-address-field.php:162
 msgid "Dronning Maud Land"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:165
+#: includes/fields/class-wp-backstage-address-field.php:163
 msgid "East Germany"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:166
+#: includes/fields/class-wp-backstage-address-field.php:164
 msgid "Ecuador"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:167
+#: includes/fields/class-wp-backstage-address-field.php:165
 msgid "Egypt"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:168
+#: includes/fields/class-wp-backstage-address-field.php:166
 msgid "El Salvador"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:169
+#: includes/fields/class-wp-backstage-address-field.php:167
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:170
+#: includes/fields/class-wp-backstage-address-field.php:168
 msgid "Eritrea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:171
+#: includes/fields/class-wp-backstage-address-field.php:169
 msgid "Estonia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:172
+#: includes/fields/class-wp-backstage-address-field.php:170
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:173
+#: includes/fields/class-wp-backstage-address-field.php:171
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:174
+#: includes/fields/class-wp-backstage-address-field.php:172
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:175
+#: includes/fields/class-wp-backstage-address-field.php:173
 msgid "Fiji"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:176
+#: includes/fields/class-wp-backstage-address-field.php:174
 msgid "Finland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:177
+#: includes/fields/class-wp-backstage-address-field.php:175
 msgid "France"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:178
+#: includes/fields/class-wp-backstage-address-field.php:176
 msgid "French Guiana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:179
+#: includes/fields/class-wp-backstage-address-field.php:177
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:180
+#: includes/fields/class-wp-backstage-address-field.php:178
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:181
+#: includes/fields/class-wp-backstage-address-field.php:179
 msgid "French Southern and Antarctic Territories"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:182
+#: includes/fields/class-wp-backstage-address-field.php:180
 msgid "Gabon"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:183
+#: includes/fields/class-wp-backstage-address-field.php:181
 msgid "Gambia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:184
-#: includes/fields/class-wp-backstage-address-field.php:375
+#: includes/fields/class-wp-backstage-address-field.php:182
+#: includes/fields/class-wp-backstage-address-field.php:373
 msgid "Georgia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:185
+#: includes/fields/class-wp-backstage-address-field.php:183
 msgid "Germany"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:186
+#: includes/fields/class-wp-backstage-address-field.php:184
 msgid "Ghana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:187
+#: includes/fields/class-wp-backstage-address-field.php:185
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:188
+#: includes/fields/class-wp-backstage-address-field.php:186
 msgid "Greece"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:189
+#: includes/fields/class-wp-backstage-address-field.php:187
 msgid "Greenland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:190
+#: includes/fields/class-wp-backstage-address-field.php:188
 msgid "Grenada"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:191
+#: includes/fields/class-wp-backstage-address-field.php:189
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:192
+#: includes/fields/class-wp-backstage-address-field.php:190
 msgid "Guam"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:193
+#: includes/fields/class-wp-backstage-address-field.php:191
 msgid "Guatemala"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:194
+#: includes/fields/class-wp-backstage-address-field.php:192
 msgid "Guernsey"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:195
+#: includes/fields/class-wp-backstage-address-field.php:193
 msgid "Guinea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:196
+#: includes/fields/class-wp-backstage-address-field.php:194
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:197
+#: includes/fields/class-wp-backstage-address-field.php:195
 msgid "Guyana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:198
+#: includes/fields/class-wp-backstage-address-field.php:196
 msgid "Haiti"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:199
+#: includes/fields/class-wp-backstage-address-field.php:197
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:200
+#: includes/fields/class-wp-backstage-address-field.php:198
 msgid "Honduras"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:201
+#: includes/fields/class-wp-backstage-address-field.php:199
 msgid "Hong Kong SAR China"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:202
+#: includes/fields/class-wp-backstage-address-field.php:200
 msgid "Hungary"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:203
+#: includes/fields/class-wp-backstage-address-field.php:201
 msgid "Iceland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:204
+#: includes/fields/class-wp-backstage-address-field.php:202
 msgid "India"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:205
+#: includes/fields/class-wp-backstage-address-field.php:203
 msgid "Indonesia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:206
+#: includes/fields/class-wp-backstage-address-field.php:204
 msgid "Iran"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:207
+#: includes/fields/class-wp-backstage-address-field.php:205
 msgid "Iraq"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:208
+#: includes/fields/class-wp-backstage-address-field.php:206
 msgid "Ireland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:209
+#: includes/fields/class-wp-backstage-address-field.php:207
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:210
+#: includes/fields/class-wp-backstage-address-field.php:208
 msgid "Israel"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:211
+#: includes/fields/class-wp-backstage-address-field.php:209
 msgid "Italy"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:212
+#: includes/fields/class-wp-backstage-address-field.php:210
 msgid "Jamaica"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:213
+#: includes/fields/class-wp-backstage-address-field.php:211
 msgid "Japan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:214
+#: includes/fields/class-wp-backstage-address-field.php:212
 msgid "Jersey"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:215
+#: includes/fields/class-wp-backstage-address-field.php:213
 msgid "Johnston Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:216
+#: includes/fields/class-wp-backstage-address-field.php:214
 msgid "Jordan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:217
+#: includes/fields/class-wp-backstage-address-field.php:215
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:218
+#: includes/fields/class-wp-backstage-address-field.php:216
 msgid "Kenya"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:219
+#: includes/fields/class-wp-backstage-address-field.php:217
 msgid "Kiribati"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:220
+#: includes/fields/class-wp-backstage-address-field.php:218
 msgid "Kuwait"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:221
+#: includes/fields/class-wp-backstage-address-field.php:219
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:222
+#: includes/fields/class-wp-backstage-address-field.php:220
 msgid "Laos"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:223
+#: includes/fields/class-wp-backstage-address-field.php:221
 msgid "Latvia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:224
+#: includes/fields/class-wp-backstage-address-field.php:222
 msgid "Lebanon"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:225
+#: includes/fields/class-wp-backstage-address-field.php:223
 msgid "Lesotho"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:226
+#: includes/fields/class-wp-backstage-address-field.php:224
 msgid "Liberia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:227
+#: includes/fields/class-wp-backstage-address-field.php:225
 msgid "Libya"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:228
+#: includes/fields/class-wp-backstage-address-field.php:226
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:229
+#: includes/fields/class-wp-backstage-address-field.php:227
 msgid "Lithuania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:230
+#: includes/fields/class-wp-backstage-address-field.php:228
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:231
+#: includes/fields/class-wp-backstage-address-field.php:229
 msgid "Macau SAR China"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:232
+#: includes/fields/class-wp-backstage-address-field.php:230
 msgid "Macedonia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:233
+#: includes/fields/class-wp-backstage-address-field.php:231
 msgid "Madagascar"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:234
+#: includes/fields/class-wp-backstage-address-field.php:232
 msgid "Malawi"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:235
+#: includes/fields/class-wp-backstage-address-field.php:233
 msgid "Malaysia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:236
+#: includes/fields/class-wp-backstage-address-field.php:234
 msgid "Maldives"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:237
+#: includes/fields/class-wp-backstage-address-field.php:235
 msgid "Mali"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:238
+#: includes/fields/class-wp-backstage-address-field.php:236
 msgid "Malta"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:239
+#: includes/fields/class-wp-backstage-address-field.php:237
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:240
+#: includes/fields/class-wp-backstage-address-field.php:238
 msgid "Martinique"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:241
+#: includes/fields/class-wp-backstage-address-field.php:239
 msgid "Mauritania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:242
+#: includes/fields/class-wp-backstage-address-field.php:240
 msgid "Mauritius"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:243
+#: includes/fields/class-wp-backstage-address-field.php:241
 msgid "Mayotte"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:244
+#: includes/fields/class-wp-backstage-address-field.php:242
 msgid "Metropolitan France"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:245
+#: includes/fields/class-wp-backstage-address-field.php:243
 msgid "Mexico"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:246
+#: includes/fields/class-wp-backstage-address-field.php:244
 msgid "Micronesia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:247
+#: includes/fields/class-wp-backstage-address-field.php:245
 msgid "Midway Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:248
+#: includes/fields/class-wp-backstage-address-field.php:246
 msgid "Moldova"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:249
+#: includes/fields/class-wp-backstage-address-field.php:247
 msgid "Monaco"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:250
+#: includes/fields/class-wp-backstage-address-field.php:248
 msgid "Mongolia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:251
+#: includes/fields/class-wp-backstage-address-field.php:249
 msgid "Montenegro"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:252
+#: includes/fields/class-wp-backstage-address-field.php:250
 msgid "Montserrat"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:253
+#: includes/fields/class-wp-backstage-address-field.php:251
 msgid "Morocco"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:254
+#: includes/fields/class-wp-backstage-address-field.php:252
 msgid "Mozambique"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:255
+#: includes/fields/class-wp-backstage-address-field.php:253
 msgid "Myanmar [Burma]"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:256
+#: includes/fields/class-wp-backstage-address-field.php:254
 msgid "Namibia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:257
+#: includes/fields/class-wp-backstage-address-field.php:255
 msgid "Nauru"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:258
+#: includes/fields/class-wp-backstage-address-field.php:256
 msgid "Nepal"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:259
+#: includes/fields/class-wp-backstage-address-field.php:257
 msgid "Netherlands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:260
+#: includes/fields/class-wp-backstage-address-field.php:258
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:261
+#: includes/fields/class-wp-backstage-address-field.php:259
 msgid "Neutral Zone"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:262
+#: includes/fields/class-wp-backstage-address-field.php:260
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:263
+#: includes/fields/class-wp-backstage-address-field.php:261
 msgid "New Zealand"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:264
+#: includes/fields/class-wp-backstage-address-field.php:262
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:265
+#: includes/fields/class-wp-backstage-address-field.php:263
 msgid "Niger"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:266
+#: includes/fields/class-wp-backstage-address-field.php:264
 msgid "Nigeria"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:267
+#: includes/fields/class-wp-backstage-address-field.php:265
 msgid "Niue"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:268
+#: includes/fields/class-wp-backstage-address-field.php:266
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:269
+#: includes/fields/class-wp-backstage-address-field.php:267
 msgid "North Korea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:270
+#: includes/fields/class-wp-backstage-address-field.php:268
 msgid "North Vietnam"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:271
+#: includes/fields/class-wp-backstage-address-field.php:269
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:272
+#: includes/fields/class-wp-backstage-address-field.php:270
 msgid "Norway"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:273
+#: includes/fields/class-wp-backstage-address-field.php:271
 msgid "Oman"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:274
+#: includes/fields/class-wp-backstage-address-field.php:272
 msgid "Pacific Islands Trust Territory"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:275
+#: includes/fields/class-wp-backstage-address-field.php:273
 msgid "Pakistan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:276
+#: includes/fields/class-wp-backstage-address-field.php:274
 msgid "Palau"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:277
+#: includes/fields/class-wp-backstage-address-field.php:275
 msgid "Palestinian Territories"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:278
+#: includes/fields/class-wp-backstage-address-field.php:276
 msgid "Panama"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:279
+#: includes/fields/class-wp-backstage-address-field.php:277
 msgid "Panama Canal Zone"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:280
+#: includes/fields/class-wp-backstage-address-field.php:278
 msgid "Papua New Guinea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:281
+#: includes/fields/class-wp-backstage-address-field.php:279
 msgid "Paraguay"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:282
+#: includes/fields/class-wp-backstage-address-field.php:280
 msgid "People's Democratic Republic of Yemen"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:283
+#: includes/fields/class-wp-backstage-address-field.php:281
 msgid "Peru"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:284
+#: includes/fields/class-wp-backstage-address-field.php:282
 msgid "Philippines"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:285
+#: includes/fields/class-wp-backstage-address-field.php:283
 msgid "Pitcairn Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:286
+#: includes/fields/class-wp-backstage-address-field.php:284
 msgid "Poland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:287
+#: includes/fields/class-wp-backstage-address-field.php:285
 msgid "Portugal"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:288
+#: includes/fields/class-wp-backstage-address-field.php:286
 msgid "Puerto Rico"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:289
+#: includes/fields/class-wp-backstage-address-field.php:287
 msgid "Qatar"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:290
+#: includes/fields/class-wp-backstage-address-field.php:288
 msgid "Romania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:291
+#: includes/fields/class-wp-backstage-address-field.php:289
 msgid "Russia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:292
+#: includes/fields/class-wp-backstage-address-field.php:290
 msgid "Rwanda"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:293
+#: includes/fields/class-wp-backstage-address-field.php:291
 msgid "Saint Barthélemy"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:294
+#: includes/fields/class-wp-backstage-address-field.php:292
 msgid "Saint Helena"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:295
+#: includes/fields/class-wp-backstage-address-field.php:293
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:296
+#: includes/fields/class-wp-backstage-address-field.php:294
 msgid "Saint Lucia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:297
+#: includes/fields/class-wp-backstage-address-field.php:295
 msgid "Saint Martin"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:298
+#: includes/fields/class-wp-backstage-address-field.php:296
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:299
+#: includes/fields/class-wp-backstage-address-field.php:297
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:300
+#: includes/fields/class-wp-backstage-address-field.php:298
 msgid "Samoa"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:301
+#: includes/fields/class-wp-backstage-address-field.php:299
 msgid "San Marino"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:302
+#: includes/fields/class-wp-backstage-address-field.php:300
 msgid "Saudi Arabia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:303
+#: includes/fields/class-wp-backstage-address-field.php:301
 msgid "Senegal"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:304
+#: includes/fields/class-wp-backstage-address-field.php:302
 msgid "Serbia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:305
+#: includes/fields/class-wp-backstage-address-field.php:303
 msgid "Serbia and Montenegro"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:306
+#: includes/fields/class-wp-backstage-address-field.php:304
 msgid "Seychelles"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:307
+#: includes/fields/class-wp-backstage-address-field.php:305
 msgid "Sierra Leone"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:308
+#: includes/fields/class-wp-backstage-address-field.php:306
 msgid "Singapore"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:309
+#: includes/fields/class-wp-backstage-address-field.php:307
 msgid "Slovakia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:310
+#: includes/fields/class-wp-backstage-address-field.php:308
 msgid "Slovenia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:311
+#: includes/fields/class-wp-backstage-address-field.php:309
 msgid "Solomon Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:312
+#: includes/fields/class-wp-backstage-address-field.php:310
 msgid "Somalia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:313
+#: includes/fields/class-wp-backstage-address-field.php:311
 msgid "South Africa"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:314
+#: includes/fields/class-wp-backstage-address-field.php:312
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:315
+#: includes/fields/class-wp-backstage-address-field.php:313
 msgid "South Korea"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:316
+#: includes/fields/class-wp-backstage-address-field.php:314
 msgid "Spain"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:317
+#: includes/fields/class-wp-backstage-address-field.php:315
 msgid "Sri Lanka"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:318
+#: includes/fields/class-wp-backstage-address-field.php:316
 msgid "Sudan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:319
+#: includes/fields/class-wp-backstage-address-field.php:317
 msgid "Suriname"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:320
+#: includes/fields/class-wp-backstage-address-field.php:318
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:321
+#: includes/fields/class-wp-backstage-address-field.php:319
 msgid "Swaziland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:322
+#: includes/fields/class-wp-backstage-address-field.php:320
 msgid "Sweden"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:323
+#: includes/fields/class-wp-backstage-address-field.php:321
 msgid "Switzerland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:324
+#: includes/fields/class-wp-backstage-address-field.php:322
 msgid "Syria"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:325
+#: includes/fields/class-wp-backstage-address-field.php:323
 msgid "São Tomé and Príncipe"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:326
+#: includes/fields/class-wp-backstage-address-field.php:324
 msgid "Taiwan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:327
+#: includes/fields/class-wp-backstage-address-field.php:325
 msgid "Tajikistan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:328
+#: includes/fields/class-wp-backstage-address-field.php:326
 msgid "Tanzania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:329
+#: includes/fields/class-wp-backstage-address-field.php:327
 msgid "Thailand"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:330
+#: includes/fields/class-wp-backstage-address-field.php:328
 msgid "Timor-Leste"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:331
+#: includes/fields/class-wp-backstage-address-field.php:329
 msgid "Togo"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:332
+#: includes/fields/class-wp-backstage-address-field.php:330
 msgid "Tokelau"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:333
+#: includes/fields/class-wp-backstage-address-field.php:331
 msgid "Tonga"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:334
+#: includes/fields/class-wp-backstage-address-field.php:332
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:335
+#: includes/fields/class-wp-backstage-address-field.php:333
 msgid "Tunisia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:336
+#: includes/fields/class-wp-backstage-address-field.php:334
 msgid "Turkey"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:337
+#: includes/fields/class-wp-backstage-address-field.php:335
 msgid "Turkmenistan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:338
+#: includes/fields/class-wp-backstage-address-field.php:336
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:339
+#: includes/fields/class-wp-backstage-address-field.php:337
 msgid "Tuvalu"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:340
+#: includes/fields/class-wp-backstage-address-field.php:338
 msgid "U.S. Minor Outlying Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:341
+#: includes/fields/class-wp-backstage-address-field.php:339
 msgid "U.S. Miscellaneous Pacific Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:342
+#: includes/fields/class-wp-backstage-address-field.php:340
 msgid "U.S. Virgin Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:343
+#: includes/fields/class-wp-backstage-address-field.php:341
 msgid "Uganda"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:344
+#: includes/fields/class-wp-backstage-address-field.php:342
 msgid "Ukraine"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:345
+#: includes/fields/class-wp-backstage-address-field.php:343
 msgid "Union of Soviet Socialist Republics"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:346
+#: includes/fields/class-wp-backstage-address-field.php:344
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:347
+#: includes/fields/class-wp-backstage-address-field.php:345
 msgid "United Kingdom"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:348
+#: includes/fields/class-wp-backstage-address-field.php:346
 msgid "United States"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:349
+#: includes/fields/class-wp-backstage-address-field.php:347
 msgid "Uruguay"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:350
+#: includes/fields/class-wp-backstage-address-field.php:348
 msgid "Uzbekistan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:351
+#: includes/fields/class-wp-backstage-address-field.php:349
 msgid "Vanuatu"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:352
+#: includes/fields/class-wp-backstage-address-field.php:350
 msgid "Vatican City"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:353
+#: includes/fields/class-wp-backstage-address-field.php:351
 msgid "Venezuela"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:354
+#: includes/fields/class-wp-backstage-address-field.php:352
 msgid "Vietnam"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:355
+#: includes/fields/class-wp-backstage-address-field.php:353
 msgid "Wake Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:356
+#: includes/fields/class-wp-backstage-address-field.php:354
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:357
+#: includes/fields/class-wp-backstage-address-field.php:355
 msgid "Western Sahara"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:358
+#: includes/fields/class-wp-backstage-address-field.php:356
 msgid "Yemen"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:359
+#: includes/fields/class-wp-backstage-address-field.php:357
 msgid "Zambia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:360
+#: includes/fields/class-wp-backstage-address-field.php:358
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:361
+#: includes/fields/class-wp-backstage-address-field.php:359
 msgid "Åland Islands"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:365
+#: includes/fields/class-wp-backstage-address-field.php:363
 msgid "Alabama"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:366
+#: includes/fields/class-wp-backstage-address-field.php:364
 msgid "Alaska"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:367
+#: includes/fields/class-wp-backstage-address-field.php:365
 msgid "Arizona"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:368
+#: includes/fields/class-wp-backstage-address-field.php:366
 msgid "Arkansas"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:369
+#: includes/fields/class-wp-backstage-address-field.php:367
 msgid "California"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:370
+#: includes/fields/class-wp-backstage-address-field.php:368
 msgid "Colorado"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:371
+#: includes/fields/class-wp-backstage-address-field.php:369
 msgid "Connecticut"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:372
+#: includes/fields/class-wp-backstage-address-field.php:370
 msgid "Delaware"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:373
+#: includes/fields/class-wp-backstage-address-field.php:371
 msgid "District Of Columbia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:374
+#: includes/fields/class-wp-backstage-address-field.php:372
 msgid "Florida"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:376
+#: includes/fields/class-wp-backstage-address-field.php:374
 msgid "Hawaii"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:377
+#: includes/fields/class-wp-backstage-address-field.php:375
 msgid "Idaho"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:378
+#: includes/fields/class-wp-backstage-address-field.php:376
 msgid "Illinois"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:379
+#: includes/fields/class-wp-backstage-address-field.php:377
 msgid "Indiana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:380
+#: includes/fields/class-wp-backstage-address-field.php:378
 msgid "Iowa"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:381
+#: includes/fields/class-wp-backstage-address-field.php:379
 msgid "Kansas"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:382
+#: includes/fields/class-wp-backstage-address-field.php:380
 msgid "Kentucky"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:383
+#: includes/fields/class-wp-backstage-address-field.php:381
 msgid "Louisiana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:384
+#: includes/fields/class-wp-backstage-address-field.php:382
 msgid "Maine"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:385
+#: includes/fields/class-wp-backstage-address-field.php:383
 msgid "Maryland"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:386
+#: includes/fields/class-wp-backstage-address-field.php:384
 msgid "Massachusetts"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:387
+#: includes/fields/class-wp-backstage-address-field.php:385
 msgid "Michigan"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:388
+#: includes/fields/class-wp-backstage-address-field.php:386
 msgid "Minnesota"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:389
+#: includes/fields/class-wp-backstage-address-field.php:387
 msgid "Mississippi"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:390
+#: includes/fields/class-wp-backstage-address-field.php:388
 msgid "Missouri"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:391
+#: includes/fields/class-wp-backstage-address-field.php:389
 msgid "Montana"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:392
+#: includes/fields/class-wp-backstage-address-field.php:390
 msgid "Nebraska"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:393
+#: includes/fields/class-wp-backstage-address-field.php:391
 msgid "Nevada"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:394
+#: includes/fields/class-wp-backstage-address-field.php:392
 msgid "New Hampshire"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:395
+#: includes/fields/class-wp-backstage-address-field.php:393
 msgid "New Jersey"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:396
+#: includes/fields/class-wp-backstage-address-field.php:394
 msgid "New Mexico"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:397
+#: includes/fields/class-wp-backstage-address-field.php:395
 msgid "New York"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:398
+#: includes/fields/class-wp-backstage-address-field.php:396
 msgid "North Carolina"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:399
+#: includes/fields/class-wp-backstage-address-field.php:397
 msgid "North Dakota"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:400
+#: includes/fields/class-wp-backstage-address-field.php:398
 msgid "Ohio"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:401
+#: includes/fields/class-wp-backstage-address-field.php:399
 msgid "Oklahoma"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:402
+#: includes/fields/class-wp-backstage-address-field.php:400
 msgid "Oregon"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:403
+#: includes/fields/class-wp-backstage-address-field.php:401
 msgid "Pennsylvania"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:404
+#: includes/fields/class-wp-backstage-address-field.php:402
 msgid "Rhode Island"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:405
+#: includes/fields/class-wp-backstage-address-field.php:403
 msgid "South Carolina"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:406
+#: includes/fields/class-wp-backstage-address-field.php:404
 msgid "South Dakota"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:407
+#: includes/fields/class-wp-backstage-address-field.php:405
 msgid "Tennessee"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:408
+#: includes/fields/class-wp-backstage-address-field.php:406
 msgid "Texas"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:409
+#: includes/fields/class-wp-backstage-address-field.php:407
 msgid "Utah"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:410
+#: includes/fields/class-wp-backstage-address-field.php:408
 msgid "Vermont"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:411
+#: includes/fields/class-wp-backstage-address-field.php:409
 msgid "Virginia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:412
+#: includes/fields/class-wp-backstage-address-field.php:410
 msgid "Washington"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:413
+#: includes/fields/class-wp-backstage-address-field.php:411
 msgid "West Virginia"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:414
+#: includes/fields/class-wp-backstage-address-field.php:412
 msgid "Wisconsin"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-address-field.php:415
+#: includes/fields/class-wp-backstage-address-field.php:413
 msgid "Wyoming"
 msgstr ""
 
 #. translators: 1: field label.
-#: includes/fields/class-wp-backstage-email-field.php:46
+#: includes/fields/class-wp-backstage-email-field.php:44
 #, php-format
 msgctxt "email field - validate"
 msgid "The value for %1$s is not a valid email address."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-field.php:535
+#: includes/fields/class-wp-backstage-field.php:533
 msgctxt "field filter - option none label"
 msgid "All options"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1008
+#: includes/fields/class-wp-backstage-media-field.php:1006
 #, php-format
 msgctxt "media field - modal single button"
 msgid "Set %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1013
+#: includes/fields/class-wp-backstage-media-field.php:1011
 #, php-format
 msgctxt "media field - modal multiple button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1018
+#: includes/fields/class-wp-backstage-media-field.php:1016
 #, php-format
 msgctxt "media field - add button"
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1023
+#: includes/fields/class-wp-backstage-media-field.php:1021
 #, php-format
 msgctxt "media field - add to button"
 msgid "Add to %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1028
+#: includes/fields/class-wp-backstage-media-field.php:1026
 #, php-format
 msgctxt "media field - replace button"
 msgid "Replace %1$s"
 msgstr ""
 
 #. translators: 1: field label
-#: includes/fields/class-wp-backstage-media-field.php:1033
+#: includes/fields/class-wp-backstage-media-field.php:1031
 #, php-format
 msgctxt "media field - remove button"
 msgid "Remove %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1036
+#: includes/fields/class-wp-backstage-media-field.php:1034
 msgctxt "media field - loader"
 msgid "Loading preview..."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1037
+#: includes/fields/class-wp-backstage-media-field.php:1035
 msgctxt "media field - error"
 msgid "There was an error rendering the preview."
 msgstr ""
 
-#: includes/fields/class-wp-backstage-media-field.php:1038
+#: includes/fields/class-wp-backstage-media-field.php:1036
 msgctxt "media field - try again button"
 msgid "Try again"
 msgstr ""
 
 #. translators: 1: field label, 2: field minimum.
-#: includes/fields/class-wp-backstage-number-field.php:69
+#: includes/fields/class-wp-backstage-number-field.php:67
 #, php-format
 msgctxt "number field - validate minimum"
 msgid "The value for %1$s must be greater than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: field label, 2: field maximum.
-#: includes/fields/class-wp-backstage-number-field.php:83
+#: includes/fields/class-wp-backstage-number-field.php:81
 #, php-format
 msgctxt "number field - validate maximum"
 msgid "The value for %1$s must be less than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-radio-field.php:102
+#: includes/fields/class-wp-backstage-radio-field.php:100
 #, php-format
 msgctxt "radio field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
 #. translators: 1: field label, 2: field minimum.
-#: includes/fields/class-wp-backstage-range-field.php:58
+#: includes/fields/class-wp-backstage-range-field.php:56
 #, php-format
 msgctxt "range field - validate minimum"
 msgid "The value for %1$s must be greater than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: field label, 2: field maximum.
-#: includes/fields/class-wp-backstage-range-field.php:72
+#: includes/fields/class-wp-backstage-range-field.php:70
 #, php-format
 msgctxt "range field - validate maximum"
 msgid "The value for %1$s must be less than or equal to %2$d."
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-select-field.php:46
+#: includes/fields/class-wp-backstage-select-field.php:44
 #, php-format
 msgctxt "select field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-select-posts-field.php:75
+#: includes/fields/class-wp-backstage-select-posts-field.php:73
 msgctxt "select posts field - default option none label"
 msgid "Select a Post"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-select-posts-field.php:207
+#: includes/fields/class-wp-backstage-select-posts-field.php:205
 #, php-format
 msgctxt "select posts field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-select-users-field.php:74
+#: includes/fields/class-wp-backstage-select-users-field.php:72
 msgctxt "select users field - default option none label"
 msgid "Select a User"
 msgstr ""
 
 #. translators: 1: user display name, 2: user username
-#: includes/fields/class-wp-backstage-select-users-field.php:154
+#: includes/fields/class-wp-backstage-select-users-field.php:152
 #, php-format
 msgctxt "select users field - filter option label"
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-select-users-field.php:167
+#: includes/fields/class-wp-backstage-select-users-field.php:165
 msgctxt "select users field - filter option none label"
 msgid "All Users"
 msgstr ""
 
 #. translators: 1: value label.
-#: includes/fields/class-wp-backstage-select-users-field.php:187
+#: includes/fields/class-wp-backstage-select-users-field.php:185
 #, php-format
 msgctxt "select users field - column filter link title"
 msgid "Filter by %1$s"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:203
+#: includes/fields/class-wp-backstage-time-field.php:201
 msgctxt "time field - hour"
 msgid "Hour"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:204
+#: includes/fields/class-wp-backstage-time-field.php:202
 msgctxt "time field - minute"
 msgid "Minute"
 msgstr ""
 
-#: includes/fields/class-wp-backstage-time-field.php:205
+#: includes/fields/class-wp-backstage-time-field.php:203
 msgctxt "time field - second"
 msgid "Second"
 msgstr ""
 
 #. translators: 1: field label.
-#: includes/fields/class-wp-backstage-url-field.php:46
+#: includes/fields/class-wp-backstage-url-field.php:44
 #, php-format
 msgctxt "url field - validate"
 msgid "The value for %1$s is not a valid URL."

@@ -4,8 +4,6 @@
  *
  * @since       0.0.1
  * @since       3.0.0  linted and formatted with phpcs
- * @package     WPBackstage
- * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

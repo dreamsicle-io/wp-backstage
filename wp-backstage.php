@@ -2,8 +2,6 @@
 /**
  * WP Backstage
  *
- * @package WPBackstage
- *
  * @wordpress-plugin
  * Plugin Name:       WP Backstage
  * Plugin URI:        https://github.com/dreamsicle-io/wp-backstage

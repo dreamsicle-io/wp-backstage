@@ -3,8 +3,6 @@
  * WP Backstage Dashboard Widget
  *
  * @since       4.0.0
- * @package     WPBackstage
- * @subpackage  Includes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -3,8 +3,6 @@
  * WP Backstage Media Field
  *
  * @since       4.0.0
- * @package     WPBackstage
- * @subpackage  Includes/Fields
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

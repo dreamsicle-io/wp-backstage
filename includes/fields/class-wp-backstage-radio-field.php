@@ -3,8 +3,6 @@
  * WP Backstage Radio Field
  *
  * @since       4.0.0
- * @package     WPBackstage
- * @subpackage  Includes/Fields
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

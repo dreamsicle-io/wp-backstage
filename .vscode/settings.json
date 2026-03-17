@@ -1,12 +1,19 @@
 {
-	"phpSniffer.autoDetect": true,
-	"phpSniffer.run": "onType",
-	"phpSniffer.onTypeDelay": 500,
 	"[php]": {
 		"editor.defaultFormatter": "wongjn.php-sniffer",
-		"editor.formatOnSave": true,
+		"editor.formatOnSave": true
 	},
-	"intelephense.environment.phpVersion": "7.4.1",
+	"files.insertFinalNewline": true,
+	"files.eol": "\n",
+	"editor.quickSuggestions": {
+		"strings": "on"
+	},
+	"phpSniffer.run": "onType",
+	"phpSniffer.autoDetect": true,
+	"phpSniffer.onTypeDelay": 500,
+	"intelephense.diagnostics.enable": true,
+	"intelephense.diagnostics.run": "onType",
+	"intelephense.environment.phpVersion": "^8.2",
 	"intelephense.format.braces": "k&r",
 	"intelephense.stubs": [
 		"apache",

@@ -188,7 +188,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'show_in_rest'  => true,
 			'quick_add'     => true,
 			'quick_edit'    => true,
-			'options'       => function() {
+			'options'       => function () {
 				return array(
 					array(
 						'value' => '',
@@ -256,7 +256,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'show_in_rest'  => true,
 			'quick_add'     => true,
 			'quick_edit'    => true,
-			'options'       => function() {
+			'options'       => function () {
 				return array(
 					array(
 						'value' => 'option_1',
@@ -316,7 +316,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'show_in_rest' => true,
 			'quick_add'    => true,
 			'quick_edit'   => true,
-			'options'      => function() {
+			'options'      => function () {
 				return array(
 					array(
 						'value' => 'option_1',
@@ -707,7 +707,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 	if ( ! empty( $types ) ) {
 		$fields = array_filter(
 			$fields,
-			function( array $field ) use ( $types ) {
+			function ( array $field ) use ( $types ) {
 				return in_array( $field['type'], $types );
 			}
 		);
@@ -715,7 +715,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 
 	if ( ! empty( $name_suffix ) ) {
 		$fields = array_map(
-			function( array $field ) use ( $name_suffix ) {
+			function ( array $field ) use ( $name_suffix ) {
 				$field['name'] = sprintf( '%1$s_%2$s', $field['name'], $name_suffix );
 				return $field;
 			},
@@ -1038,7 +1038,6 @@ function wp_backstage_init_tests(): void {
 			'fields'      => wp_backstage_get_test_fields(),
 		)
 	);
-
 }
 
 add_action( 'wp_backstage_init', 'wp_backstage_init_tests', 10 );

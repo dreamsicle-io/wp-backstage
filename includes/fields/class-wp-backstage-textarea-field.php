@@ -35,7 +35,7 @@ class WP_Backstage_Textarea_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 		return sanitize_textarea_field( $value );
 	}
 
@@ -47,7 +47,7 @@ class WP_Backstage_Textarea_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void { ?>
+	public function render_column( array $field, mixed $value ): void { ?>
 		<textrea readonly><?php echo esc_textarea( $value ?? '' ); ?></textrea>
 	<?php }
 
@@ -76,5 +76,4 @@ class WP_Backstage_Textarea_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

@@ -74,7 +74,6 @@ class WP_Backstage_Field {
 	 * @since 4.0.0
 	 */
 	public function __construct() {
-
 	}
 
 	/**
@@ -96,7 +95,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The filter's value.
 	 * @return string The formatted filter URL.
 	 */
-	protected function get_filter_url( array $field, $value ): string {
+	protected function get_filter_url( array $field, mixed $value ): string {
 
 		$screen = get_current_screen();
 
@@ -160,9 +159,9 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param mixed $value The unsantized value.
-	 * @return mixed The santizied value.
+	 * @return mixed The santizied value (Intentionally typed as `mixed` so extension classes can declare concrete types).
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): mixed {
 		return sanitize_text_field( $value );
 	}
 
@@ -172,9 +171,9 @@ class WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
-	 * @return null|WP_Error true if valid, or an instance of `WP_Error` if invalid.
+	 * @return ?WP_Error true if valid, or an instance of `WP_Error` if invalid.
 	 */
-	public function validate( array $field, $value ): ?WP_Error {
+	public function validate( array $field, mixed $value ): ?WP_Error {
 		return null;
 	}
 
@@ -201,7 +200,7 @@ class WP_Backstage_Field {
 	 * @param mixed            $value    The field's value.
 	 * @return WP_REST_Response The augmented response object.
 	 */
-	public function add_rest_api_link( WP_REST_Response $response, array $field, $value ): WP_REST_Response {
+	public function add_rest_api_link( WP_REST_Response $response, array $field, mixed $value ): WP_REST_Response {
 		return $response;
 	}
 
@@ -234,7 +233,6 @@ class WP_Backstage_Field {
 	 * @return void
 	 */
 	public function inline_style(): void {
-
 	}
 
 	/**
@@ -244,7 +242,6 @@ class WP_Backstage_Field {
 	 * @return void
 	 */
 	public function inline_script(): void {
-
 	}
 
 	/**
@@ -386,7 +383,7 @@ class WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ): void {
 		echo esc_html( $value );
 	}
 
@@ -520,12 +517,12 @@ class WP_Backstage_Field {
 	 * @param mixed $value The value for the filter.
 	 * @return array An array of filter arguments.
 	 */
-	public function get_filter_args( array $field, $value ): array {
+	public function get_filter_args( array $field, mixed $value ): array {
 
 		// Filter out the options that have an empty value.
 		$options = array_filter(
 			$this->get_options( $field ),
-			function( $option ) {
+			function ( $option ) {
 				return ! empty( $option['value'] );
 			}
 		);

@@ -65,7 +65,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * @param mixed            $value The field's value.
 	 * @return WP_REST_Response The augmented response object.
 	 */
-	public function add_rest_api_link( WP_REST_Response $response, array $field, $value ): WP_REST_Response {
+	public function add_rest_api_link( WP_REST_Response $response, array $field, mixed $value ): WP_REST_Response {
 		$attachment_ids = is_array( $value ) ? array_map( 'absint', $value ) : array();
 		foreach ( $attachment_ids as $attachment_id ) {
 			if ( $attachment_id > 0 ) {
@@ -279,7 +279,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): array {
 		if ( is_string( $value ) && ! empty( $value ) ) {
 			$value = explode( ',', $value );
 		}
@@ -294,7 +294,7 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ): void {
 		$thumbnail_size  = 20;
 		$thumbnail_style = 'height:' . $thumbnail_size . 'px;width:auto;display:inline-block;border:1px solid #e1e1e1;';
 		foreach ( $value as $attachment_id ) {

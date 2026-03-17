@@ -44,7 +44,7 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 		return sanitize_hex_color( $value );
 	}
 
@@ -297,5 +297,4 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

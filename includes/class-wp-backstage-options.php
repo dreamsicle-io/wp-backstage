@@ -25,7 +25,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_args  An array of default arguments for this instance.
 	 */
-	protected $default_args = array(
+	protected array $default_args = array(
 		'type'        => 'settings', // settings, theme, tools.
 		'title'       => '',
 		'menu_title'  => '',
@@ -40,7 +40,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_section_args  An array of default section arguments.
 	 */
-	protected $default_section_args = array(
+	protected array $default_section_args = array(
 		'id'          => '',
 		'title'       => '',
 		'description' => '',
@@ -53,7 +53,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $required_args  An array of required argument keys.
 	 */
-	protected $required_args = array(
+	protected array $required_args = array(
 		'type',
 	);
 
@@ -70,7 +70,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		$component = new WP_Backstage_Options( $slug, $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -93,7 +92,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -121,7 +119,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 				$this->args['sections'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}
 		}
-
 	}
 
 	/**
@@ -217,7 +214,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		}
 
 		parent::init();
-
 	}
 
 	/**
@@ -332,7 +328,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			</div>
 
 		<?php }
-
 	}
 
 	/**
@@ -415,7 +410,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			);
 
 		}
-
 	}
 
 	/**
@@ -466,7 +460,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -529,7 +522,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		 * @param array $field an array of field arguments.
 		 */
 		do_action( "wp_backstage_{$this->slug}_field_after", $field );
-
 	}
 
 	/**
@@ -552,7 +544,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -586,14 +577,13 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 						break;
 					}
 
-					$i++;
+					++$i;
 
 				}
 			}
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -619,7 +609,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -642,7 +631,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -714,7 +702,5 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		}
 
 		return $fields;
-
 	}
-
 }

@@ -75,7 +75,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 		return wp_kses_post( $value );
 	}
 
@@ -128,7 +128,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script(): void {
+		?>
 
 		<script id="wp_backstage_editor_field_script">
 
@@ -301,7 +302,7 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ): void {
 
 		// Ensure the value is a string.
 		$value = is_string( $value ) ? $value : '';
@@ -355,5 +356,4 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

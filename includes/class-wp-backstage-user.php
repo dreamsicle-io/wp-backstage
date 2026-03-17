@@ -25,7 +25,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
-	protected $default_args = array(
+	protected array $default_args = array(
 		'field_groups' => array(),
 	);
 
@@ -35,7 +35,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_field_group_args  The default field group arguments for this instance.
 	 */
-	protected $default_field_group_args = array(
+	protected array $default_field_group_args = array(
 		'id'          => '',
 		'title'       => '',
 		'description' => '',
@@ -48,7 +48,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
-	protected $required_args = array();
+	protected array $required_args = array();
 
 	/**
 	 * Add
@@ -62,7 +62,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$component = new WP_Backstage_User( $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -90,7 +89,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -166,7 +164,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		add_filter( 'rest_prepare_user', array( $this, 'prepare_rest_user' ), 10, 3 );
 
 		parent::init();
-
 	}
 
 	/**
@@ -384,7 +381,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		}
 
 		return $fields;
-
 	}
 
 	/**
@@ -525,7 +521,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -569,7 +564,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			}
 		}
-
 	}
 
 	/**
@@ -623,7 +617,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		}
 
 		return $content;
-
 	}
 
 	/**
@@ -821,7 +814,5 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		}
 
 		return $hidden;
-
 	}
-
 }

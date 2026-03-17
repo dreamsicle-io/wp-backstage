@@ -661,10 +661,10 @@ Search.appendIndex(
             "summary": "WP\u0020Backstage\u0020Post\u0020Type",
             "url": "classes/WP-Backstage-Post-Type.html"
         },                {
-            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Aadd\u0028\u0029",
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024add",
             "name": "add",
-            "summary": "Add",
-            "url": "classes/WP-Backstage-Post-Type.html#method_add"
+            "summary": "New",
+            "url": "classes/WP-Backstage-Post-Type.html#property_add"
         },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003Amodify\u0028\u0029",
             "name": "modify",
@@ -896,11 +896,6 @@ Search.appendIndex(
             "summary": "Inline\u0020Dashboard\u0020Glance\u0020Item\u0020Style",
             "url": "classes/WP-Backstage-Post-Type.html#method_inline_dashboard_glance_item_style"
         },                {
-            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024new",
-            "name": "new",
-            "summary": "New",
-            "url": "classes/WP-Backstage-Post-Type.html#property_new"
-        },                {
             "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024hidden_meta_boxes",
             "name": "hidden_meta_boxes",
             "summary": "Hidden\u0020Meta\u0020Boxes",
@@ -931,10 +926,10 @@ Search.appendIndex(
             "summary": "WP\u0020Backstage\u0020Taxonomy",
             "url": "classes/WP-Backstage-Taxonomy.html"
         },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Aadd\u0028\u0029",
+            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024add",
             "name": "add",
-            "summary": "Add",
-            "url": "classes/WP-Backstage-Taxonomy.html#method_add"
+            "summary": "New",
+            "url": "classes/WP-Backstage-Taxonomy.html#property_add"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003Amodify\u0028\u0029",
             "name": "modify",
@@ -1095,11 +1090,6 @@ Search.appendIndex(
             "name": "manage_default_hidden_columns",
             "summary": "Manage\u0020Default\u0020Hidden\u0020Columns",
             "url": "classes/WP-Backstage-Taxonomy.html#method_manage_default_hidden_columns"
-        },                {
-            "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024new",
-            "name": "new",
-            "summary": "New",
-            "url": "classes/WP-Backstage-Taxonomy.html#property_new"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy\u003A\u003A\u0024quick_edit_data",
             "name": "quick_edit_data",

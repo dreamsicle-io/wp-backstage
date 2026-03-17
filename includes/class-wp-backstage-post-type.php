@@ -23,9 +23,9 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * New
 	 *
 	 * @since 2.0.0
-	 * @var string $new Whether the instance is creating a new taxonomy or modifying an existing one.
+	 * @var bool $add Whether the instance is creating a new taxonomy or modifying an existing one.
 	 */
-	protected $new = true;
+	protected bool $add = true;
 
 	/**
 	 * Hidden Meta Boxes
@@ -33,7 +33,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $hidden_meta_boxes  An array of hidden meta box IDs.
 	 */
-	protected $hidden_meta_boxes = array(
+	protected array $hidden_meta_boxes = array(
 		'trackbacksdiv',
 		'slugdiv',
 		'authordiv',
@@ -48,7 +48,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since  3.2.0 Adds support for post formats.
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
-	protected $default_args = array(
+	protected array $default_args = array(
 		'menu_name'       => '',
 		'singular_name'   => '',
 		'plural_name'     => '',
@@ -89,7 +89,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $required_args  The required argument keys for this instance if adding.
 	 */
-	protected $required_args = array(
+	protected array $required_args = array(
 		'singular_name',
 		'plural_name',
 	);
@@ -100,7 +100,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 2.0.0
 	 * @var   array  $required_args  The required argument keys for this instance if modifying.
 	 */
-	protected $required_args_modify = array();
+	protected array $required_args_modify = array();
 
 	/**
 	 * Default Meta Box Args
@@ -108,7 +108,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_meta_box_args  The default meta box arguments for this instance.
 	 */
-	protected $default_meta_box_args = array(
+	protected array $default_meta_box_args = array(
 		'id'          => '',
 		'title'       => '',
 		'description' => '',
@@ -134,7 +134,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$component = new WP_Backstage_Post_Type( $slug, $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -152,20 +151,19 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$component = new WP_Backstage_Post_Type( $slug, $args, false );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
 	 * Construct
 	 *
 	 * @since   0.0.1
-	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
+	 * @since   2.0.0   Adds $add parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string $slug  The developer-provided slug for the post type.
 	 * @param   array  $args  The developer-provided arguments for this instance.
-	 * @param   bool   $new   Whether this instance constructs a new post type or modifies an existing one.
+	 * @param   bool   $add   Whether this instance constructs a add post type or modifies an existing one.
 	 * @return  void
 	 */
-	public function __construct( string $slug, array $args, bool $new = true ) {
+	public function __construct( string $slug, array $args, bool $add = true ) {
 
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
@@ -177,7 +175,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			)
 		);
 
-		$this->new  = boolval( $new );
+		$this->add  = boolval( $add );
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
@@ -185,7 +183,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -240,7 +237,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				$this->args['meta_boxes'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}
 		}
-
 	}
 
 	/**
@@ -273,7 +269,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( $this->new && in_array( $this->slug, get_post_types() ) ) {
+		} elseif ( $this->add && in_array( $this->slug, get_post_types() ) ) {
 
 			$this->errors[] = new WP_Error(
 				'post_type_exists',
@@ -285,7 +281,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( ! $this->new && ! in_array( $this->slug, get_post_types() ) ) {
+		} elseif ( ! $this->add && ! in_array( $this->slug, get_post_types() ) ) {
 
 			$this->errors[] = new WP_Error(
 				'post_type_not_exists',
@@ -299,7 +295,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		}
 
-		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
+		$required_args = ! $this->add ? $this->required_args_modify : $this->required_args;
 
 		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
 
@@ -320,7 +316,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -336,7 +331,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	public function init() {
 
 		// These actions are only fired if a new custom post type is being added.
-		if ( $this->new ) {
+		if ( $this->add ) {
 			add_action( 'init', array( $this, 'register' ), 0 );
 			add_filter( 'dashboard_glance_items', array( $this, 'manage_dashboard_glance_items' ), 10 );
 			add_filter( 'dashboard_recent_posts_query_args', array( $this, 'manage_dashboard_activity_query_args' ), 10 );
@@ -375,7 +370,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
 
 		parent::init();
-
 	}
 
 	/**
@@ -639,7 +633,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		if ( $screen->base === 'edit' && $screen->post_type === $this->slug ) {
 
-			if ( $this->new ) {
+			if ( $this->add ) {
 
 				// overview help tab.
 				$screen->add_help_tab(
@@ -691,7 +685,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		} elseif ( $screen->base === 'post' && $screen->post_type === $this->slug ) {
 
-			if ( $this->new ) {
+			if ( $this->add ) {
 				// customize display help tab.
 				$screen->add_help_tab(
 					array(
@@ -1618,7 +1612,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			$this->args['plural_name'],
 			$this->args['thumbnail_label']
 		);
-
 	}
 
 	/**
@@ -1824,7 +1817,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		);
 
 		register_post_type( $this->slug, $args );
-
 	}
 
 	/**
@@ -1853,7 +1845,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		}
 
 		return $fields;
-
 	}
 
 	/**
@@ -1913,7 +1904,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			}
 		}
-
 	}
 
 	/**
@@ -1971,7 +1961,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			}
 		}
-
 	}
 
 	/**
@@ -2062,7 +2051,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		}
 
 		return $hidden;
-
 	}
 
 	/**
@@ -2105,7 +2093,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		}
 
 		return $columns;
-
 	}
 
 	/**
@@ -2133,7 +2120,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			?></a>
 
 		<?php }
-
 	}
 
 	/**
@@ -2192,7 +2178,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -2214,7 +2199,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			$this->render_table_filter_controls();
 
 		}
-
 	}
 
 	/**
@@ -2277,7 +2261,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -2382,7 +2365,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 			}
 		}
-
 	}
 
 	/**
@@ -2461,7 +2443,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			</div>
 
 		<?php }
-
 	}
 
 	/**
@@ -2615,7 +2596,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -2645,7 +2625,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		}
 
 		return $hidden;
-
 	}
 
 	/**
@@ -2738,5 +2717,4 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		?></style>
 
 	<?php }
-
 }

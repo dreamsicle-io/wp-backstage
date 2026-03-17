@@ -23,9 +23,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * New
 	 *
 	 * @since 2.0.0
-	 * @var string $new Whether the instance is creating a new taxonomy or modifying an existing one.
+	 * @var string $add Whether the instance is creating a add taxonomy or modifying an existing one.
 	 */
-	protected $new = true;
+	protected bool $add = true;
 
 	/**
 	 * Quick Edit Data
@@ -34,9 +34,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * hands the request payload to `wp_update_term()`.
 	 *
 	 * @since 4.0.0
-	 * @var array|null $quick_edit_data An array of quick edit field values if available.
+	 * @var array $quick_edit_data An array of quick edit field values if available.
 	 */
-	protected $quick_edit_data = null;
+	protected array $quick_edit_data = array();
 
 	/**
 	 * Default Args
@@ -90,7 +90,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$component = new WP_Backstage_Taxonomy( $slug, $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -108,20 +107,19 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$component = new WP_Backstage_Taxonomy( $slug, $args, false );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
 	 * Construct
 	 *
 	 * @since   0.0.1
-	 * @since   2.0.0   Adds $new parameter for distinguishing between `add` and `modify` behavior.
+	 * @since   2.0.0   Adds $add parameter for distinguishing between `add` and `modify` behavior.
 	 * @param   string $slug  The developer-provided slug for the taxonomy.
 	 * @param   array  $args  The developer-provided arguments for this instance.
-	 * @param   bool   $new   Whether this instance constructs a new taxonomy or modifies an existing one.
+	 * @param   bool   $add   Whether this instance constructs a add taxonomy or modifies an existing one.
 	 * @return  void
 	 */
-	public function __construct( string $slug, array $args, bool $new = true ) {
+	public function __construct( string $slug, array $args, bool $add = true ) {
 
 		$this->default_field_args = array_merge(
 			$this->default_field_args,
@@ -134,7 +132,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			)
 		);
 
-		$this->new  = boolval( $new );
+		$this->add  = boolval( $add );
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
 		$this->screen_id = sprintf( 'edit-%1$s', $this->slug );
@@ -142,7 +140,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -188,7 +185,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
 		}
-
 	}
 
 	/**
@@ -221,7 +217,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( $this->new && in_array( $this->slug, get_taxonomies() ) ) {
+		} elseif ( $this->add && in_array( $this->slug, get_taxonomies() ) ) {
 
 			$this->errors[] = new WP_Error(
 				'taxonomy_exists',
@@ -233,7 +229,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( ! $this->new && ! in_array( $this->slug, get_taxonomies() ) ) {
+		} elseif ( ! $this->add && ! in_array( $this->slug, get_taxonomies() ) ) {
 
 			$this->errors[] = new WP_Error(
 				'taxonomy_not_exists',
@@ -247,7 +243,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 		}
 
-		$required_args = ! $this->new ? $this->required_args_modify : $this->required_args;
+		$required_args = ! $this->add ? $this->required_args_modify : $this->required_args;
 
 		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
 
@@ -268,7 +264,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -284,7 +279,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	public function init() {
 
 		// Only perform these hooks and filters if the taxonomy is new.
-		if ( $this->new ) {
+		if ( $this->add ) {
 			add_action( 'init', array( $this, 'register' ), 0 );
 			add_filter( 'term_updated_messages', array( $this, 'manage_term_updated_messages' ), 10 );
 		}
@@ -314,7 +309,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 10 );
 
 		parent::init();
-
 	}
 
 	/**
@@ -453,7 +447,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 
 			$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 
-			if ( $this->new ) {
+			if ( $this->add ) {
 
 				// Overview help tab.
 				$screen->add_help_tab(
@@ -987,7 +981,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		);
 
 		register_taxonomy( $this->slug, $this->args['post_types'], $args );
-
 	}
 
 	/**
@@ -1210,7 +1203,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -1233,7 +1225,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -1361,7 +1352,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		}
 
 		return $actions;
-
 	}
 
 	/**
@@ -1567,7 +1557,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		}
 
 		return $content;
-
 	}
 
 	/**
@@ -1794,7 +1783,5 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		}
 
 		return $hidden;
-
 	}
-
 }

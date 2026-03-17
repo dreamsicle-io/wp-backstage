@@ -25,7 +25,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
-	protected $default_args = array(
+	protected array $default_args = array(
 		'fields' => array(),
 	);
 
@@ -35,7 +35,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $required_args  The required arguments for this instance. Arguments in this array will throw an error if empty.
 	 */
-	protected $required_args = array();
+	protected array $required_args = array();
 
 	/**
 	 * Add
@@ -49,7 +49,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		$component = new WP_Backstage_Nav_Menu_Item( $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -68,7 +67,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -133,7 +131,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		add_action( 'customize_controls_print_styles', array( $this, 'inline_customizer_style' ), 10 );
 
 		parent::init();
-
 	}
 
 	/**
@@ -209,7 +206,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		}
 
 		return $item;
-
 	}
 
 	/**
@@ -232,7 +228,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 			?></span>
 
 		<?php }
-
 	}
 
 	/**
@@ -409,7 +404,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -460,7 +454,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -494,7 +487,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 		}
 
 		return $hidden;
-
 	}
 
 	/**
@@ -527,7 +519,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 					add_filter(
 						'get_post_metadata',
-						function( $value, $object_id, $meta_key, $single ) use ( $setting ) {
+						function ( mixed $value, string|int $object_id, string $meta_key, bool $single ) use ( $setting ) {
 
 							if ( $object_id === $setting->post_id ) {
 
@@ -564,5 +556,4 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 			}
 		}
 	}
-
 }

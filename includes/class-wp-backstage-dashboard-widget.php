@@ -24,7 +24,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since  4.0.0
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
-	protected $default_args = array(
+	protected array $default_args = array(
 		'title'    => '',
 		'context'  => 'normal',
 		'priority' => 'core',
@@ -37,7 +37,9 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since  4.0.0
 	 * @var    array  $required_args  The required arguments for this instance.
 	 */
-	protected $required_args = array();
+	protected array $required_args = array(
+		'title',
+	);
 
 	/**
 	 * Add
@@ -52,7 +54,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 		$component = new WP_Backstage_Dashboard_Widget( $slug, $args );
 		$component->init();
 		return $component;
-
 	}
 
 	/**
@@ -72,7 +73,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 		$this->set_errors();
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -128,7 +128,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 		add_action( 'wp_dashboard_setup', array( $this, 'register' ), 10 );
 
 		parent::init();
-
 	}
 
 	/**
@@ -230,7 +229,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 		}
 
 		$this->update_values( $values );
-
 	}
 
 	/**
@@ -260,7 +258,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @param array $meta_box  The dashboard widget meta box array.
 	 * @return void
 	 */
-	public function render_fields( $dashboard, array $meta_box ): void {
+	public function render_fields( mixed $dashboard, array $meta_box ): void {
 
 		$values = $this->get_values();
 		$fields = $this->get_fields();
@@ -413,7 +411,5 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 			?></span>
 
 		<?php }
-
 	}
-
 }

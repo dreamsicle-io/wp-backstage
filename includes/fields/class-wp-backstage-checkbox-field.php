@@ -45,7 +45,7 @@ class WP_Backstage_Checkbox_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return bool The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): bool {
 		return boolval( $value );
 	}
 

@@ -37,7 +37,7 @@ class WP_Backstage_Select_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ): void {
 
 		$url        = $this->get_filter_url( $field, $value );
 		$label      = $this->get_option_label( $field, $value );

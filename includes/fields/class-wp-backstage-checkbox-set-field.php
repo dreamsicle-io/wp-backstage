@@ -66,7 +66,7 @@ class WP_Backstage_Checkbox_Set_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): array {
 		return is_array( $value ) ? array_values( array_map( 'sanitize_text_field', $value ) ) : array();
 	}
 

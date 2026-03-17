@@ -108,9 +108,9 @@ class WP_Backstage_Range_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param mixed $value The unsantized value.
-	 * @return float|null The santizied value.
+	 * @return ?float The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): ?float {
 		return is_numeric( $value ) ? floatval( $value ) : null;
 	}
 }

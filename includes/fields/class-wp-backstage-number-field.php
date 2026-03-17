@@ -41,9 +41,9 @@ class WP_Backstage_Number_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param mixed $value The unsantized value.
-	 * @return float|null The santizied value.
+	 * @return ?float The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): ?float {
 		return is_numeric( $value ) ? floatval( $value ) : null;
 	}
 
@@ -55,7 +55,7 @@ class WP_Backstage_Number_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return null|WP_Error null if valid, or an instance of `WP_Error` if invalid.
 	 */
-	public function validate( array $field, $value ): ?WP_Error {
+	public function validate( array $field, mixed $value ): ?WP_Error {
 
 		$min = isset( $field['input_attrs']['min'] ) ? floatval( $field['input_attrs']['min'] ) : null;
 		$max = isset( $field['input_attrs']['max'] ) ? floatval( $field['input_attrs']['max'] ) : null;

@@ -25,7 +25,7 @@ class WP_Backstage {
 	 * @since 4.0.0
 	 * @var WP_Backstage_Field[] $fields An array of field classes.
 	 */
-	protected $fields = array();
+	protected array $fields = array();
 
 	/**
 	 * KSES Description
@@ -35,7 +35,7 @@ class WP_Backstage {
 	 * @since  4.0.0
 	 * @var    array  $kses_description  KSES configuration for descriptions.
 	 */
-	protected $kses_description = array(
+	protected array $kses_description = array(
 		'span'   => array(
 			'id'    => true,
 			'class' => true,
@@ -105,7 +105,7 @@ class WP_Backstage {
 	 * @since  4.0.0
 	 * @var    array  $kses_label  KSES configuration for label tags.
 	 */
-	protected $kses_label = array(
+	protected array $kses_label = array(
 		'span'   => array(
 			'id'    => true,
 			'class' => true,
@@ -166,7 +166,7 @@ class WP_Backstage {
 	 * @since  4.0.0
 	 * @var    array  $kses_title  KSES configuration for titles.
 	 */
-	protected $kses_title = array(
+	protected array $kses_title = array(
 		'span'   => array(
 			'id'    => true,
 			'class' => true,
@@ -236,7 +236,7 @@ class WP_Backstage {
 	 * @since  4.0.0
 	 * @var    array  $kses_list_item  KSES configuration for list items.
 	 */
-	protected $kses_list_item = array(
+	protected array $kses_list_item = array(
 		'span'   => array(
 			'id'    => true,
 			'class' => true,
@@ -306,7 +306,7 @@ class WP_Backstage {
 	 * @since  4.0.0
 	 * @var    array  $kses_button  KSES configuration for buttons and links.
 	 */
-	protected $kses_button = array(
+	protected array $kses_button = array(
 		'span'   => array(
 			'id'    => true,
 			'class' => true,
@@ -3180,7 +3180,6 @@ class WP_Backstage {
 			</span>
 
 		<?php }
-
 	}
 
 	/**
@@ -3209,5 +3208,4 @@ class WP_Backstage {
 
 		wp_die();
 	}
-
 }

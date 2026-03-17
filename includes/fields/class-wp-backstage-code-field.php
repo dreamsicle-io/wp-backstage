@@ -100,7 +100,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 		return is_string( $value ) ? $value : '';
 	}
 
@@ -311,5 +311,4 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

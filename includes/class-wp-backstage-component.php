@@ -35,7 +35,7 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    string  $slug  the text slug that identifies the instance.
 	 */
-	protected $slug = '';
+	protected string $slug = '';
 
 	/**
 	 * Args
@@ -43,7 +43,7 @@ class WP_Backstage_Component {
 	 * @since 0.0.1
 	 * @var array $args An array of component arguments.
 	 */
-	protected $args = array();
+	protected array $args = array();
 
 	/**
 	 * Errors
@@ -51,7 +51,7 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $errors  The array of all errors on the instance.
 	 */
-	protected $errors = array();
+	protected array $errors = array();
 
 	/**
 	 * Screen ID
@@ -61,7 +61,7 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    string|array  $screen_id  The screen ID or IDs that apply to this instance.
 	 */
-	protected $screen_id = '';
+	protected string|array $screen_id = '';
 
 	/**
 	 * Countries
@@ -368,7 +368,6 @@ class WP_Backstage_Component {
 	 * @return  void
 	 */
 	protected function __construct() {
-
 	}
 
 	/**
@@ -418,7 +417,6 @@ class WP_Backstage_Component {
 				<?php }
 			}
 		}
-
 	}
 
 	/**
@@ -435,7 +433,7 @@ class WP_Backstage_Component {
 	 * @param   WP_Screen|null $screen The passed in screen to check. Leave null to call `get_current_screen()`.
 	 * @return  bool If the match was successful or not.
 	 */
-	protected function is_screen( string $key, $value, ?WP_Screen $screen = null ): bool {
+	protected function is_screen( string $key, string|array $value, ?WP_Screen $screen = null ): bool {
 
 		$is_screen = false;
 
@@ -452,7 +450,6 @@ class WP_Backstage_Component {
 		}
 
 		return $is_screen;
-
 	}
 
 	/**
@@ -497,7 +494,6 @@ class WP_Backstage_Component {
 		}
 
 		wp_nonce_field( 'edit', $this->nonce_key );
-
 	}
 
 	/**
@@ -516,7 +512,6 @@ class WP_Backstage_Component {
 		}
 
 		wp_nonce_field( 'add', $this->nonce_key );
-
 	}
 
 	/**
@@ -612,7 +607,6 @@ class WP_Backstage_Component {
 			?></p>
 
 		<?php }
-
 	}
 
 	/**
@@ -1012,7 +1006,6 @@ class WP_Backstage_Component {
 		}
 
 		return $value;
-
 	}
 
 	/**
@@ -1187,14 +1180,13 @@ class WP_Backstage_Component {
 						break;
 					}
 
-					$i++;
+					++$i;
 
 				}
 			}
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -1204,15 +1196,12 @@ class WP_Backstage_Component {
 	 *
 	 * @since   3.4.0
 	 * @param   array $query  An array of key values to check against.
-	 * @param   int   $number  the number of fields to return.
 	 * @return  array   an array of field arg arrays if found, or an empty array.
 	 */
-	protected function get_fields_by_query( $query = array(), $number = 0 ) {
+	protected function get_fields_by_query( $query = array() ) {
 
 		$fields = $this->get_fields();
 		$result = array();
-
-		$i = 0;
 
 		foreach ( $fields as $field ) {
 
@@ -1228,16 +1217,9 @@ class WP_Backstage_Component {
 			if ( $matches_query ) {
 				$result[] = $field;
 			}
-
-			if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
-				break;
-			}
-
-			$i++;
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -1262,7 +1244,6 @@ class WP_Backstage_Component {
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -1658,7 +1639,6 @@ class WP_Backstage_Component {
 		}
 
 		return $content;
-
 	}
 
 	/**
@@ -1772,7 +1752,6 @@ class WP_Backstage_Component {
 		}
 
 		return $columns;
-
 	}
 
 	/**
@@ -1803,7 +1782,6 @@ class WP_Backstage_Component {
 		}
 
 		return $columns;
-
 	}
 
 	/**
@@ -2053,7 +2031,6 @@ class WP_Backstage_Component {
 				selected( $option, $selected )
 			);
 		}
-
 	}
 
 	/**
@@ -2147,7 +2124,7 @@ class WP_Backstage_Component {
 					</span>
 
 					<?php
-					$i++;
+					++$i;
 
 				} ?>
 
@@ -3759,5 +3736,4 @@ class WP_Backstage_Component {
 			})();
 		</script>
 	<?php }
-
 }

@@ -425,7 +425,7 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return array The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): array {
 		$value = wp_parse_args( $value, $this->default_address );
 		return array_map( 'sanitize_text_field', $value );
 	}
@@ -871,5 +871,4 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

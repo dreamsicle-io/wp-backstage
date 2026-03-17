@@ -25,7 +25,7 @@ class WP_Backstage_Email_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 		return sanitize_email( $value );
 	}
 
@@ -35,9 +35,9 @@ class WP_Backstage_Email_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The unsantized value.
-	 * @return null|WP_Error null if valid, or an instance of `WP_Error` if invalid.
+	 * @return ?WP_Error null if valid, or an instance of `WP_Error` if invalid.
 	 */
-	public function validate( array $field, $value ): ?WP_Error {
+	public function validate( array $field, mixed $value ): ?WP_Error {
 		// Validate email.
 		if ( ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
 			return $this->validation_error(
@@ -65,5 +65,4 @@ class WP_Backstage_Email_Field extends WP_Backstage_Field {
 			echo esc_html( $value );
 		?></a>
 	<?php }
-
 }

@@ -26,10 +26,9 @@ class WP_Backstage_Tel_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void { ?>
+	public function render_column( array $field, mixed $value ): void { ?>
 		<a href="<?php printf( 'tel:%1$s', esc_attr( preg_replace( '/[^0-9x]/', '', $value ) ) ); ?>" target="_blank" rel="noopener noreferrer"><?php
 			echo esc_html( $value );
 		?></a>
 	<?php }
-
 }

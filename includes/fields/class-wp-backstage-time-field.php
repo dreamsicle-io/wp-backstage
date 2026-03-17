@@ -32,10 +32,10 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * Sanitize
 	 *
 	 * @since 4.0.0
-	 * @param string|array $value The unsantized value, as a time string `00:00:00`, or an associative array with keys `hour`, `minute`, `second`.
+	 * @param mixed $value The unsantized value, as a time string `00:00:00`, or an associative array with keys `hour`, `minute`, `second`.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( mixed $value ): string {
 
 		// If the passed in value is a string, parse it into a time array.
 		if ( is_string( $value ) ) {
@@ -187,7 +187,7 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @param mixed $value The field's value.
 	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ): void {
 		echo esc_html( gmdate( get_option( 'time_format' ), strtotime( $value ) ) );
 	}
 
@@ -310,5 +310,4 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 		</span>
 
 	<?php }
-
 }

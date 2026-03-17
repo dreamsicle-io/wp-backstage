@@ -123,5 +123,4 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 		 */
 		return apply_filters( "wp_backstage_widget_save_{$this->slug}", $new_instance, $old_instance );
 	}
-
 }

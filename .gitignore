@@ -1,8 +1,8 @@
 # Deps
 vendor/
 
-# Doc files
-.phpdoc/
+# Build
+languages/*.pot
 
 # Log Files
 *.log

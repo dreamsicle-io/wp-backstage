@@ -52,6 +52,8 @@
 	Use the WordPress ruleset.
 	-->
 	<rule ref="WordPress">
+		<exclude name="Universal.ControlStructures.DisallowLonelyIf.Found" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed" />
 		<exclude name="Squiz.PHP.EmbeddedPhp" />
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
 		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace" />

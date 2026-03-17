@@ -58,6 +58,16 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	);
 
 	/**
+	 * Required Section Args
+	 *
+	 * @since  4.0.0
+	 * @var    array  $required_section_args  An array of required section argument keys.
+	 */
+	protected array $required_section_args = array(
+		'id',
+	);
+
+	/**
 	 * Add
 	 *
 	 * @since   0.0.1
@@ -115,6 +125,9 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 		foreach ( $this->args['sections'] as $i => $field_group ) {
 			$this->args['sections'][ $i ] = wp_parse_args( $field_group, $this->default_section_args );
+			if ( empty( $this->args['sections'][ $i ]['title'] ) ) {
+				$this->args['sections'][ $i ]['title'] = $this->args['sections'][ $i ]['id'];
+			}
 			foreach ( $this->args['sections'][ $i ]['fields'] as $ii => $field ) {
 				$this->args['sections'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}
@@ -139,7 +152,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 					$this->slug
 				)
 			);
-
 		}
 
 		foreach ( $this->required_args as $required_arg ) {
@@ -158,6 +170,36 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 			}
 		}
+
+		foreach ( $this->args['sections'] as $i => $section ) {
+
+			$identifier = "section ({$i})";
+			if ( ! empty( $section['title'] ) ) {
+				$identifier = $section['title'];
+			} elseif ( ! empty( $section['id'] ) ) {
+				$identifier = $section['id'];
+			}
+
+			foreach ( $this->required_section_args as $required_section_arg ) {
+
+				if ( empty( $section[ $required_section_arg ] ) ) {
+
+					$this->errors[] = new WP_Error(
+						'required_options_section_arg',
+						sprintf(
+							/* translators: 1: options page slug, 2: section number, 3: required section arg key. */
+							_x( '[Options: %1$s] Section "%2$s" requires the %3$s key.', 'options - required section arg error', 'wp_backstage' ),
+							$this->slug,
+							$identifier,
+							'<code>' . $required_section_arg . '</code>'
+						)
+					);
+
+				}
+			}
+		}
+
+		parent::set_errors();
 	}
 
 	/**
@@ -224,7 +266,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
 	 *
-	 * @since   4.0.1
+	 * @since   4.0.0
 	 * @param   WP_Screen $screen an instance of `WP_Screen`.
 	 * @return  void
 	 */
@@ -247,7 +289,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	/**
 	 * Render REST API Preview Help Tab
 	 *
-	 * @since 4.0.1
+	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
 	 * @return void
@@ -260,7 +302,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		/**
 		 * Fires before the options REST API preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */
@@ -278,7 +320,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 		/**
 		 * Fires after the options REST API preview help tab content.
 		 *
-		 * @since  4.0.1
+		 * @since  4.0.0
 		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
 		 * @param  array      $args An array of help tab arguments.
 		 */

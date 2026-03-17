@@ -107,6 +107,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 			}
 		}
+
+		parent::set_errors();
 	}
 
 	/**

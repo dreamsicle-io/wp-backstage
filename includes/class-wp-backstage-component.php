@@ -93,7 +93,6 @@ class WP_Backstage_Component {
 		'type'         => 'text',
 		'name'         => '',
 		'label'        => '',
-		'title'        => '',
 		'value'        => null,
 		'description'  => '',
 		'help'         => '',
@@ -102,6 +101,16 @@ class WP_Backstage_Component {
 		'options'      => array(),
 		'input_attrs'  => array(),
 		'args'         => array(),
+	);
+
+	/**
+	 * Required Field Args
+	 *
+	 * @since  4.0.0
+	 * @var    array  $required_field_args  An array of required field argument keys.
+	 */
+	protected array $required_field_args = array(
+		'name',
 	);
 
 	/**
@@ -420,6 +429,49 @@ class WP_Backstage_Component {
 	}
 
 	/**
+	 * Set Errors
+	 *
+	 * Validates parsed field arguments that are required across all components.
+	 *
+	 * @since  4.0.0
+	 * @return void
+	 */
+	protected function set_errors() {
+
+		foreach ( $this->get_fields() as $i => $field ) {
+
+			$field = wp_parse_args( $field, $this->default_field_args );
+
+			$identifier = "field ({$i})";
+			if ( ! empty( $field['label'] ) ) {
+				$identifier = $field['label'];
+			} elseif ( ! empty( $field['name'] ) ) {
+				$identifier = $field['name'];
+			} elseif ( ! empty( $field['id'] ) ) {
+				$identifier = $field['id'];
+			}
+
+			foreach ( $this->required_field_args as $required_field_arg ) {
+
+				if ( empty( $field[ $required_field_arg ] ) ) {
+
+					$this->errors[] = new WP_Error(
+						'required_component_field_arg',
+						sprintf(
+							/* translators: 1: component slug, 2: field identifier, 3: required field arg key. */
+							_x( '[Component: %1$s] Field "%2$s" requires the %3$s key.', 'component - required field arg error', 'wp_backstage' ),
+							$this->slug,
+							$identifier,
+							'<code>' . $required_field_arg . '</code>'
+						)
+					);
+
+				}
+			}
+		}
+	}
+
+	/**
 	 * Is Screen
 	 *
 	 * A utility method to easily check values returned by `get_current_screen()`.
@@ -474,7 +526,6 @@ class WP_Backstage_Component {
 
 		if ( $this->has_errors() ) {
 			add_action( 'admin_notices', array( $this, 'print_errors' ) );
-			return;
 		}
 	}
 

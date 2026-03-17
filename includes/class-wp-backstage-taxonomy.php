@@ -53,6 +53,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		'with_front'    => false,
 		'archive_base'  => '',
 		'rest_base'     => '',
+		'post_types'    => array(),
 		'fields'        => array(),
 	);
 
@@ -264,6 +265,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				}
 			}
 		}
+
+		parent::set_errors();
 	}
 
 	/**

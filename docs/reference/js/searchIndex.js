@@ -21,6 +21,11 @@ Search.appendIndex(
             "summary": "Print\u0020Errors",
             "url": "classes/WP-Backstage-Component.html#method_print_errors"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003Aset_errors\u0028\u0029",
+            "name": "set_errors",
+            "summary": "Set\u0020Errors",
+            "url": "classes/WP-Backstage-Component.html#method_set_errors"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003Ais_screen\u0028\u0029",
             "name": "is_screen",
             "summary": "Is\u0020Screen",
@@ -351,6 +356,11 @@ Search.appendIndex(
             "summary": "Default\u0020Field\u0020Args",
             "url": "classes/WP-Backstage-Component.html#property_default_field_args"
         },                {
+            "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024required_field_args",
+            "name": "required_field_args",
+            "summary": "Required\u0020Field\u0020Args",
+            "url": "classes/WP-Backstage-Component.html#property_required_field_args"
+        },                {
             "fqsen": "\\WP_Backstage_Component\u003A\u003A\u0024default_filter_control_args",
             "name": "default_filter_control_args",
             "summary": "Default\u0020Filter\u0020Control\u0020Args",
@@ -656,6 +666,11 @@ Search.appendIndex(
             "summary": "Required\u0020Args",
             "url": "classes/WP-Backstage-Options.html#property_required_args"
         },                {
+            "fqsen": "\\WP_Backstage_Options\u003A\u003A\u0024required_section_args",
+            "name": "required_section_args",
+            "summary": "Required\u0020Section\u0020Args",
+            "url": "classes/WP-Backstage-Options.html#property_required_section_args"
+        },                {
             "fqsen": "\\WP_Backstage_Post_Type",
             "name": "WP_Backstage_Post_Type",
             "summary": "WP\u0020Backstage\u0020Post\u0020Type",
@@ -920,6 +935,11 @@ Search.appendIndex(
             "name": "default_meta_box_args",
             "summary": "Default\u0020Meta\u0020Box\u0020Args",
             "url": "classes/WP-Backstage-Post-Type.html#property_default_meta_box_args"
+        },                {
+            "fqsen": "\\WP_Backstage_Post_Type\u003A\u003A\u0024required_meta_box_args",
+            "name": "required_meta_box_args",
+            "summary": "Required\u0020Meta\u0020Box\u0020Args",
+            "url": "classes/WP-Backstage-Post-Type.html#property_required_meta_box_args"
         },                {
             "fqsen": "\\WP_Backstage_Taxonomy",
             "name": "WP_Backstage_Taxonomy",

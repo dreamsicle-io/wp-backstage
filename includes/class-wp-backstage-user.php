@@ -131,6 +131,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 
 			}
 		}
+
+		parent::set_errors();
 	}
 
 	/**

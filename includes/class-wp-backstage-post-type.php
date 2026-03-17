@@ -120,6 +120,16 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	);
 
 	/**
+	 * Required Meta Box Args
+	 *
+	 * @since  4.0.0
+	 * @var    array  $required_meta_box_args  The required meta box argument keys for this instance.
+	 */
+	protected array $required_meta_box_args = array(
+		'id',
+	);
+
+	/**
 	 * Add
 	 *
 	 * @link    https://developer.wordpress.org/reference/classes/wp_post/ WP_Post
@@ -197,42 +207,32 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$this->args = wp_parse_args( $args, $this->default_args );
 
 		if ( empty( $this->args['thumbnail_label'] ) ) {
-
 			$this->args['thumbnail_label'] = _x( 'Featured Image', 'post type - default thumbnail label', 'wp_backstage' );
-
 		}
 
 		if ( empty( $this->args['singular_base'] ) ) {
-
 			$this->args['singular_base'] = $this->slug;
-
 		}
 
 		if ( empty( $this->args['archive_base'] ) ) {
-
 			$this->args['archive_base'] = $this->slug;
-
 		}
 
 		if ( empty( $this->args['menu_name'] ) ) {
-
 			if ( ! empty( $this->args['plural_name'] ) ) {
-
 				$this->args['menu_name'] = $this->args['plural_name'];
-
 			} elseif ( ! empty( $this->args['singular_name'] ) ) {
-
 				$this->args['menu_name'] = $this->args['singular_name'];
-
 			} else {
-
 				$this->args['menu_name'] = $this->slug;
-
 			}
 		}
 
 		foreach ( $this->args['meta_boxes'] as $i => $field_group ) {
 			$this->args['meta_boxes'][ $i ] = wp_parse_args( $field_group, $this->default_meta_box_args );
+			if ( empty( $this->args['meta_boxes'][ $i ]['title'] ) ) {
+				$this->args['meta_boxes'][ $i ]['title'] = $this->args['meta_boxes'][ $i ]['id'];
+			}
 			foreach ( $this->args['meta_boxes'][ $i ]['fields'] as $ii => $field ) {
 				$this->args['meta_boxes'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}
@@ -316,6 +316,36 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				}
 			}
 		}
+
+		foreach ( $this->args['meta_boxes'] as $i => $meta_box ) {
+
+			$identifier = "meta box ({$i})";
+			if ( ! empty( $meta_box['title'] ) ) {
+				$identifier = $meta_box['title'];
+			} elseif ( ! empty( $meta_box['id'] ) ) {
+				$identifier = $meta_box['id'];
+			}
+
+			foreach ( $this->required_meta_box_args as $required_meta_box_arg ) {
+
+				if ( empty( $meta_box[ $required_meta_box_arg ] ) ) {
+
+					$this->errors[] = new WP_Error(
+						'required_post_type_meta_box_arg',
+						sprintf(
+							/* translators: 1: post type slug, 2: meta box identifier, 3: required meta box arg key. */
+							_x( '[Post Type: %1$s] Meta box "%2$s" requires the %3$s key.', 'post type - required meta box arg error', 'wp_backstage' ),
+							$this->slug,
+							$identifier,
+							'<code>' . $required_meta_box_arg . '</code>'
+						)
+					);
+
+				}
+			}
+		}
+
+		parent::set_errors();
 	}
 
 	/**

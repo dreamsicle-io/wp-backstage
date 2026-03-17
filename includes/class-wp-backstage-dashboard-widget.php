@@ -114,6 +114,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 
 			}
 		}
+
+		parent::set_errors();
 	}
 
 	/**

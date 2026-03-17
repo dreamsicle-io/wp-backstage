@@ -20,14 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WP_Backstage_Widget extends WP_Backstage_Component {
 
 	/**
-	 * Slug
-	 *
-	 * @since  2.0.0
-	 * @var    string  $slug  The widget slug.
-	 */
-	protected string $slug = '';
-
-	/**
 	 * Default Args
 	 *
 	 * @since  0.0.1

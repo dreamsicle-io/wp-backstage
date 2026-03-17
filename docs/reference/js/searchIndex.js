@@ -1336,11 +1336,6 @@ Search.appendIndex(
             "summary": "Save",
             "url": "classes/WP-Backstage-Widget.html#method_save"
         },                {
-            "fqsen": "\\WP_Backstage_Widget\u003A\u003A\u0024slug",
-            "name": "slug",
-            "summary": "Slug",
-            "url": "classes/WP-Backstage-Widget.html#property_slug"
-        },                {
             "fqsen": "\\WP_Backstage_Widget\u003A\u003A\u0024default_args",
             "name": "default_args",
             "summary": "Default\u0020Args",

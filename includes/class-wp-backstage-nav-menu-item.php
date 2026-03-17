@@ -189,20 +189,26 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Adds all values to the Nav Menu Item object.
 	 *
 	 * @since   2.0.0
-	 * @param WP_Post $item The incoming nav menu item object.
-	 * @return WP_Post The nav menu item object with extra meta hydrated.
+	 * @since   4.0.0 Ensures post meta is only prepared when there is a positive `db_id`.
+	 * @param object $item The incoming nav menu item object.
+	 * @return object The nav menu item object with extra meta hydrated.
 	 */
-	public function setup_nav_menu_item( WP_Post $item ): WP_Post {
+	public function setup_nav_menu_item( object $item ): object {
 
-		$fields = $this->get_fields();
+		$item_id = intval( $item->db_id );
 
-		if ( ! isset( $item->meta ) || ! is_array( $item->meta ) ) {
-			$item->meta = array();
-		}
+		if ( $item_id > 0 ) {
 
-		foreach ( $fields as $field ) {
-			$field_name                = $field['name'];
-			$item->meta[ $field_name ] = get_post_meta( $item->ID, $field_name, true );
+			$fields = $this->get_fields();
+
+			if ( ! isset( $item->meta ) || ! is_array( $item->meta ) ) {
+				$item->meta = array();
+			}
+
+			foreach ( $fields as $field ) {
+				$field_name                = $field['name'];
+				$item->meta[ $field_name ] = get_post_meta( $item_id, $field_name, true );
+			}
 		}
 
 		return $item;
@@ -234,23 +240,23 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Render Fields
 	 *
 	 * @since   2.0.0
-	 * @param   int     $item_id  The nav menu item ID.
-	 * @param   WP_Post $item     The nav menu item post object.
-	 * @param   int     $depth    The depth of menu item.
-	 * @param   object  $args     An object of menu item arguments.
-	 * @param   int     $id       The ID of the nav menu that this item is related to.
+	 * @param   int    $item_id  The nav menu item ID.
+	 * @param   object $item     The nav menu item object.
+	 * @param   int    $depth    The depth of menu item.
+	 * @param   object $args     An object of menu item arguments.
+	 * @param   int    $id       The ID of the nav menu that this item is related to.
 	 * @return  void
 	 */
-	public function render_fields( int $item_id, WP_Post $item, int $depth, object $args, int $id ): void {
+	public function render_fields( int $item_id, object $item, int $depth, object $args, int $id ): void {
 
 		$fields = $this->get_fields();
 
 		foreach ( $fields as $field ) {
 
 			$field_name     = $field['name'];
-			$field['name']  = "{$field_name}[{$item->ID}]";
-			$field['id']    = "edit-menu-item-{$field_name}_{$item->ID}";
-			$field['value'] = get_post_meta( $item->ID, $field_name, true );
+			$field['name']  = "{$field_name}[{$item_id}]";
+			$field['id']    = "edit-menu-item-{$field_name}_{$item_id}";
+			$field['value'] = get_post_meta( $item_id, $field_name, true );
 
 			$field = apply_filters( "wp_backstage_{$this->slug}_field_args", $field, $item );
 
@@ -274,8 +280,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
-				 * @param array   $field An array of field arguments.
-				 * @param WP_Post $item  The nav menu item object.
+				 * @param  array   $field  An array of field arguments.
+				 * @param  object  $item   The nav menu item object.
 				 */
 				do_action( "wp_backstage_{$this->slug}_field_before", $field, $item );
 
@@ -290,8 +296,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				 *
 				 * @since 0.0.1
 				 *
-				 * @param array   $field An array of field arguments.
-				 * @param WP_Post $item  The nav menu item object.
+				 * @param  array   $field  An array of field arguments.
+				 * @param  object  $item   The nav menu item object.
 				 */
 				do_action( "wp_backstage_{$this->slug}_field_after", $field, $item );
 
@@ -506,6 +512,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since 2.0.0
 	 * @since 3.5.0 Always cast value to array, more strict checks of value existence, upped the priority so this always runs last.
+	 * @since 4.0.0
 	 * @param   WP_Customize_Manager $wp_customize  The WP Customize instance.
 	 * @return  void
 	 */

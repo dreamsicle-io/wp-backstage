@@ -2427,7 +2427,7 @@ class WP_Backstage {
 				}
 
 				function handleScreenOptionChange(e) {
-					const fieldContainers = document.querySelectorAll('.menu-item .field-' + e.target.value);
+					const fieldContainers = document.querySelectorAll('.menu-item .field-' + e.currentTarget.value);
 					refreshFieldContainers(fieldContainers);
 				}
 

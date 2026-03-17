@@ -1,0 +1,4 @@
+interface:
+  display_name: "Field Creator"
+  short_description: "Create WP Backstage field classes"
+  default_prompt: "Use $field-creator to add or update a WP Backstage field class that extends WP_Backstage_Field and follows the repo's render, REST, styling, and JS conventions."

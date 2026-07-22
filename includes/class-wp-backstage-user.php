@@ -516,7 +516,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 			$field_class = $this->get_field_class( $field['type'] ); ?>
 
 			<p class="description"
-			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+			id="<?php $field_class->element_id( $field, 'description' ); ?>"><?php
 				$field_class->description( $field );
 			?></p>
 

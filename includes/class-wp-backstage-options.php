@@ -579,76 +579,11 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 			<p 
 			class="description" 
-			id="<?php printf( '%1$s-description', esc_attr( $field_class->get_id( $field ) ) ); ?>"><?php
+			id="<?php $field_class->element_id( $field, 'description' ); ?>"><?php
 				$field_class->description( $field );
 			?></p>
 
 		<?php }
-	}
-
-	/**
-	 * Get Sections By
-	 *
-	 * @since   0.0.1
-	 * @param string $key The section key to run the search against.
-	 * @param mixed  $value The value of the set key to run the search against.
-	 * @param int    $number The max number of sections to find.
-	 * @return array  the sections if found, or an empty array.
-	 * @deprecated 4.0.0
-	 */
-	protected function get_sections_by( $key = '', $value = null, $number = 0 ) {
-
-		_deprecated_function( __METHOD__, '4.0.0' );
-
-		$sections = $this->get_sections();
-		$result   = array();
-
-		if ( ! empty( $key ) && ( is_array( $sections ) && ! empty( $sections ) ) ) {
-
-			$i = 0;
-
-			foreach ( $sections as $section ) {
-
-				if ( isset( $section[ $key ] ) && ( $section[ $key ] === $value ) ) {
-
-					$result[] = $section;
-
-					if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
-						break;
-					}
-
-					++$i;
-
-				}
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Get Section By
-	 *
-	 * @since   0.0.1
-	 * @param string $key The section key to run the search against.
-	 * @param mixed  $value The value of the set key to run the search against.
-	 * @return array the first section if found, or null.
-	 * @deprecated 4.0.0
-	 */
-	protected function get_section_by( $key = '', $value = null ) {
-
-		_deprecated_function( __METHOD__, '4.0.0' );
-
-		$sections = $this->get_sections_by( $key, $value, 1 );
-		$result   = null;
-
-		if ( is_array( $sections ) && ! empty( $sections ) ) {
-
-			$result = $sections[0];
-
-		}
-
-		return $result;
 	}
 
 	/**

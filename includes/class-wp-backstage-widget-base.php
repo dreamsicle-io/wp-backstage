@@ -29,7 +29,6 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @since 2.0.0
 	 * @param string $slug The widget's slug.
 	 * @param array  $args The widget's args.
-	 * @return void
 	 */
 	public function __construct( string $slug, array $args ) {
 
@@ -110,7 +109,7 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 	 * @param  array $new_instance  The new settings to store.
 	 * @param  array $old_instance  The currentylu stored settings.
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ): array {
 
 		/**
 		 * Filters the instance for saving.
@@ -118,6 +117,7 @@ class WP_Backstage_Widget_Base extends WP_Widget {
 		 * @since  2.0.0
 		 * @param  array $new_instance  The new settings to store.
 		 * @param  array $old_instance  The currentylu stored settings.
+		 * @return  array The new filtered instance.
 		 */
 		return apply_filters( "wp_backstage_widget_save_{$this->slug}", $new_instance, $old_instance );
 	}

@@ -45,9 +45,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * Init
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function init(): void {
+	public function init() {
 		add_action( 'wp_ajax_wp_backstage_render_media', array( $this, 'ajax_render_media' ), 10 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_media_mixin_overrides_script' ), 20 );
 
@@ -86,7 +85,6 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * preview.
 	 *
 	 * @since 3.3.0
-	 * @return void
 	 */
 	public function ajax_render_media() {
 
@@ -113,9 +111,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * @since 3.3.0
 	 * @param int  $attachment_id The ID of the attachment to render.
 	 * @param bool $is_multiple Whether the media uploader allows multiple attachments or not.
-	 * @return void
 	 */
-	protected function render_media_item( int $attachment_id, bool $is_multiple ): void {
+	protected function render_media_item( int $attachment_id, bool $is_multiple ) {
 
 		$attachment = wp_prepare_attachment_for_js( absint( $attachment_id ) ); ?>
 
@@ -247,7 +244,6 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * adds a simple check for a `wp-mediaelement-keep` class to ignore removal.
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function inline_media_mixin_overrides_script() { ?>
 
@@ -290,9 +286,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 		$thumbnail_size  = 20;
 		$thumbnail_style = 'height:' . $thumbnail_size . 'px;width:auto;display:inline-block;border:1px solid #e1e1e1;';
 		foreach ( $value as $attachment_id ) {
@@ -312,9 +307,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_media_field_style">
 
@@ -528,9 +522,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 * Inline Script
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_media_field_script">
 
@@ -994,9 +987,8 @@ class WP_Backstage_Media_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args = $this->get_args( $field );
 

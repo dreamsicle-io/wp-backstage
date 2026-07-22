@@ -116,7 +116,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param   string $slug  The developer-provided slug for the taxonomy.
 	 * @param   array  $args  The developer-provided arguments for this instance.
 	 * @param   bool   $add   Whether this instance constructs a add taxonomy or modifies an existing one.
-	 * @return  void
 	 */
 	public function __construct( string $slug, array $args, bool $add = true ) {
 
@@ -146,9 +145,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   array $args The developer-provided arguments for this instance.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -190,7 +188,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * Set Errors
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -275,7 +272,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   3.4.0  Adds help tabs, term update messages, and registers meta with the REST API.
 	 * @since   3.6.0  Removes `sprintf` templates from hook names.
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -321,11 +317,11 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param array|string    $args     Array or query string of arguments passed to `wp_insert_term()`.
 	 * @return string|WP_Error The original term name or a new WP_Error.
 	 */
-	public function validate_term( $term, string $taxonomy, $args ) {
+	public function validate_term( string|WP_Error $term, string $taxonomy, array|string $args ): string|WP_Error {
 
 		if ( $taxonomy === $this->slug ) {
 			$args   = wp_parse_args( $args );
-			$fields = $this->get_fields_by( 'quick_add', true );
+			$fields = $this->get_fields_by_query( array( 'quick_add' => true ) );
 
 			foreach ( $fields as $field ) {
 
@@ -363,7 +359,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function prepare_rest_term( WP_REST_Response $response, WP_Term $term, WP_REST_Request $request ): WP_REST_Response {
 
-		$fields = $this->get_fields_by( 'show_in_rest', true );
+		$fields = $this->get_fields_by_query( array( 'show_in_rest' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -440,9 +436,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
 	 * @since   3.4.0
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
-	 * @return  void
 	 */
-	public function add_help_tabs( $screen ) {
+	public function add_help_tabs( WP_Screen $screen ) {
 
 		if ( $screen->base === 'edit-tags' && $screen->taxonomy === $this->slug ) {
 
@@ -504,9 +499,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_adding_terms_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_adding_terms_help_tab( WP_Screen $screen, array $args ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 		$bullets      = array();
 
@@ -596,9 +590,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_overview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_overview_help_tab( WP_Screen $screen, array $args ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 
 		$post_type_links = array();
@@ -664,9 +657,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ) {
 		// phpcs:ignore WordPress.Security.NonceVerification
 		$params       = wp_unslash( $_GET );
 		$term_id      = isset( $params['tag_ID'] ) ? absint( $params['tag_ID'] ) : 0;
@@ -701,9 +693,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ) {
 		$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 		$path         = sprintf( '/%1$s/%2$s', $taxonomy_obj->rest_namespace, $taxonomy_obj->rest_base );
 
@@ -744,7 +735,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * and generating the schema for each.
 	 *
 	 * @since 3.4.0
-	 * @return void
 	 */
 	public function register_api_meta() {
 
@@ -789,9 +779,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param string $taxonomy The taxonomy of the current screen.
-	 * @return void
 	 */
-	public function render_table_filter_form( string $taxonomy ): void { ?>
+	public function render_table_filter_form( string $taxonomy ) { ?>
 
 		<div id="wp-backstage-taxonomy-table-filters" class="align-left actions">
 
@@ -862,7 +851,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @link   https://developer.wordpress.org/reference/classes/wp_taxonomy/ WP_Taxonomy
 	 *
 	 * @since  0.0.1
-	 * @return void
 	 */
 	public function register() {
 
@@ -990,7 +978,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  An array of field arguments if there are any, or an empty array.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return $this->args['fields'];
 	}
 
@@ -1006,11 +994,10 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   string $taxonomy The taxonomy slug as registered.
-	 * @return  void
 	 */
-	public function render_add_fields( string $taxonomy ): void {
+	public function render_add_fields( string $taxonomy ) {
 
-		$fields = $this->get_fields_by( 'quick_add', true );
+		$fields = $this->get_fields_by_query( array( 'quick_add' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -1098,9 +1085,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   WP_Term $term     An instance of `WP_Term`.
 	 * @param   string  $taxonomy The taxonomy slug as registered.
-	 * @return  void
 	 */
-	public function render_edit_fields( WP_Term $term, string $taxonomy ): void {
+	public function render_edit_fields( WP_Term $term, string $taxonomy ) {
 
 		$fields = $this->get_fields();
 
@@ -1191,9 +1177,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_add_field_description( array $field ): void {
+	protected function render_add_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -1211,9 +1196,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_edit_field_description( array $field ): void {
+	protected function render_edit_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -1236,7 +1220,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * field scripts initialize.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function render_quick_edit_fields() {
 
@@ -1244,7 +1227,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields         = $this->get_fields_by( 'quick_edit', true );
+		$fields         = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 		$id_placeholder = '{{ term_id }}';
 
 		if ( empty( $fields ) ) {
@@ -1335,9 +1318,9 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @param   WP_Term $term     The current term.
 	 * @return  array   The filtered row action array.
 	 */
-	public function inline_quick_edit_data( $actions, $term ) {
+	public function inline_quick_edit_data( array $actions, WP_Term $term ): array {
 		if ( current_user_can( 'edit_term', $term->term_id ) ) {
-			$fields = $this->get_fields_by( 'quick_edit', true );
+			$fields = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 			$values = array();
 			foreach ( $fields as $field ) {
 				$values[ $field['name'] ] = get_term_meta( $term->term_id, $field['name'], true );
@@ -1363,7 +1346,6 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * are removed from `$_POST` so core only receives term fields it understands.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function capture_quick_edit_request_data() {
 
@@ -1388,7 +1370,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields = $this->get_fields_by( 'quick_edit', true );
+		$fields = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 
 		if ( empty( $fields ) ) {
 			return;
@@ -1415,9 +1397,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   int $term_id The ID of the term being saved.
 	 * @param   int $tt_id   The term taxonomy ID of the term being saved.
-	 * @return  void
 	 */
-	public function save( int $term_id, int $tt_id ): void {
+	public function save( int $term_id, int $tt_id ) {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -1462,9 +1443,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 * @since   4.0.0
 	 * @param   int $term_id The ID of the term being saved.
 	 * @param   int $tt_id   The term taxonomy ID of the term being saved.
-	 * @return  void
 	 */
-	public function save_quick_edit( int $term_id, int $tt_id ): void {
+	public function save_quick_edit( int $term_id, int $tt_id ) {
 
 		$request_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 		$post_data    = is_array( $this->quick_edit_data ) ? $this->quick_edit_data : $request_data;
@@ -1488,7 +1468,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields = $this->get_fields_by( 'quick_edit', true );
+		$fields = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -1518,7 +1498,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function manage_admin_column_content( string $content, string $column, int $term_id ): string {
 
-		$field = $this->get_field_by( 'name', $column );
+		$field = $this->get_field( $column );
 
 		if ( ! empty( $field ) ) {
 
@@ -1573,9 +1553,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
-	 * @return void
 	 */
-	public function add_list_table_query_actions( WP_Term_Query $query ): void {
+	public function add_list_table_query_actions( WP_Term_Query $query ) {
 
 		$query_taxonomy = $query->query_vars['taxonomy'];
 		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );
@@ -1627,9 +1606,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param WP_Term_Query $query The incoming `WP_Term_Query` instance.
-	 * @return void
 	 */
-	public function manage_list_table_query( WP_Term_Query $query ): void {
+	public function manage_list_table_query( WP_Term_Query $query ) {
 
 		$fields = $this->get_fields();
 
@@ -1657,16 +1635,15 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
-	 * @return void
 	 */
-	public function manage_sorting( WP_Term_Query $query ): void {
+	public function manage_sorting( WP_Term_Query $query ) {
 
 		$query_taxonomy = $query->query_vars['taxonomy'];
 		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );
 
 		if ( $is_taxonomy ) {
 
-			$field = $this->get_field_by( 'name', $query->query_vars['orderby'] );
+			$field = $this->get_field( $query->query_vars['orderby'] );
 
 			if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
 
@@ -1714,9 +1691,8 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param WP_Term_Query $query The currently set `WP_Term_Query` instance.
-	 * @return void
 	 */
-	public function manage_filtering( WP_Term_Query $query ): void {
+	public function manage_filtering( WP_Term_Query $query ) {
 
 		$query_taxonomy = $query->query_vars['taxonomy'];
 		$is_taxonomy    = is_array( $query_taxonomy ) ? in_array( $this->slug, $query_taxonomy ) : ( $query_taxonomy === $this->slug );

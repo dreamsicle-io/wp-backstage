@@ -363,7 +363,6 @@ class WP_Backstage {
 	 * @since 2.0.0
 	 * @since 3.7.0 Removes plugin dependencies.
 	 * @since 4.0.0 Removes error construction and refactors setting of global instance.
-	 * @return void
 	 */
 	public function __construct() {
 		global $wp_backstage;
@@ -389,7 +388,6 @@ class WP_Backstage {
 	 * @since   3.7.0 Removes filter to disable block editor for widgets.
 	 * @since   3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 		add_action( 'after_setup_theme', array( $this, 'register_field_classes' ), 10 );
@@ -421,7 +419,6 @@ class WP_Backstage {
 	 * Register Init Hook
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function register_init_hook() {
 
@@ -429,7 +426,6 @@ class WP_Backstage {
 		 * Fires when it is safe to initialize WP Backstage components.
 		 *
 		 * @since 4.0.0
-		 * @return void
 		 */
 		do_action( 'wp_backstage_init' );
 	}
@@ -480,7 +476,6 @@ class WP_Backstage {
 	 * Register Field Classes
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function register_field_classes() {
 		// Register the default field classes.
@@ -521,9 +516,8 @@ class WP_Backstage {
 	 * @since 4.0.0
 	 * @param string             $type The field type identifier.
 	 * @param WP_Backstage_Field $instance The field class instance.
-	 * @return void
 	 */
-	public function register_field_class( $type, $instance ) {
+	public function register_field_class( string $type, WP_Backstage_Field $instance ) {
 		$instance->init();
 		$this->fields[ sanitize_key( $type ) ] = $instance;
 	}
@@ -532,9 +526,9 @@ class WP_Backstage {
 	 * Get Field Classes
 	 *
 	 * @since 4.0.0
-	 * @return WP_Backstage_Field[]
+	 * @return array
 	 */
-	public function get_field_classes() {
+	public function get_field_classes(): array {
 		return $this->fields;
 	}
 
@@ -545,7 +539,7 @@ class WP_Backstage {
 	 * @param string $type The field type identidier.
 	 * @return WP_Backstage_Field
 	 */
-	public function get_field_class( $type ) {
+	public function get_field_class( string $type ): WP_Backstage_Field {
 		return isset( $this->fields[ $type ] ) ? $this->fields[ $type ] : $this->fields['default'];
 	}
 
@@ -556,7 +550,6 @@ class WP_Backstage {
 	 * it is available when the REST API preview script needs it.
 	 *
 	 * @since 3.4.0
-	 * @return void
 	 */
 	public function inline_rest_api_preview_code_editor_script() {
 
@@ -587,7 +580,6 @@ class WP_Backstage {
 	 * Inlines the customizer style.
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	public function inline_customizer_style() { ?>
 
@@ -625,7 +617,6 @@ class WP_Backstage {
 	 * @link    https://developer.wordpress.org/themes/basics/including-css-javascript/ Including CSS and Javascript in WP
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	public function enqueue_admin_scripts() {
 
@@ -681,7 +672,6 @@ class WP_Backstage {
 	 * Inline Thumbnail Column Style
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	public function inline_thumbnail_column_style() { ?>
 
@@ -710,7 +700,6 @@ class WP_Backstage {
 	 * Inline Global Style
 	 *
 	 * @since   3.1.0
-	 * @return  void
 	 */
 	public function inline_global_style() { ?>
 
@@ -811,7 +800,6 @@ class WP_Backstage {
 	 * Inlines the script that initializes the global `wpBackstage` JavaScript object.
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	public function inline_global_script() { ?>
 
@@ -854,7 +842,6 @@ class WP_Backstage {
 	 *
 	 * @since   2.0.0
 	 * @since   3.4.0  Adds support for block editor.
-	 * @return  void
 	 */
 	public function inline_post_type_script() { ?>
 
@@ -966,7 +953,6 @@ class WP_Backstage {
 	 * the hydrated values.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function inline_post_type_quick_edit_script() { ?>
 
@@ -1048,7 +1034,6 @@ class WP_Backstage {
 	 *
 	 * @since   2.0.0
 	 * @since   3.4.1  Only renders the script on the "Edit Menus" page and bails on the "Manage Locations" and "Add New" page.
-	 * @return  void
 	 */
 	public function inline_nav_menu_item_script() {
 
@@ -1193,7 +1178,6 @@ class WP_Backstage {
 	 *
 	 * @since   2.0.0
 	 * @since   3.5.0 Uses the menu item ID instead of the instance number for dynamic portion of the id/name attributes.
-	 * @return  void
 	 */
 	public function inline_nav_menu_item_customizer_script() { ?>
 
@@ -1327,7 +1311,6 @@ class WP_Backstage {
 	 * the hydrated values.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function inline_taxonomy_quick_edit_script() { ?>
 
@@ -1418,7 +1401,6 @@ class WP_Backstage {
 	 * them after successful AJAX term creation.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function inline_taxonomy_add_script() { ?>
 
@@ -1467,7 +1449,6 @@ class WP_Backstage {
 	 * Initializes taxonomy edit-form fields on the singular term screen.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function inline_taxonomy_edit_script() { ?>
 
@@ -1494,7 +1475,6 @@ class WP_Backstage {
 	 * Inline Options Script
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	public function inline_options_script() { ?>
 
@@ -1522,7 +1502,6 @@ class WP_Backstage {
 	 * Inline Dashboard Widget Script
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function inline_dashboard_widget_script() { ?>
 
@@ -1557,7 +1536,6 @@ class WP_Backstage {
 	 *
 	 * @since   2.0.0
 	 * @since   3.7.0 Refactors to use the jQuery events for `widget-added` and `widget-updated` for support accross legacy, customizer, and block editing screens.
-	 * @return  void
 	 */
 	public function inline_widget_script() { ?>
 
@@ -1701,7 +1679,6 @@ class WP_Backstage {
 	 * Inline User Script
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	public function inline_user_script() { ?>
 

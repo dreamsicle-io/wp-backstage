@@ -432,9 +432,8 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_address_field_style">
 
@@ -485,9 +484,8 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * Inline Script
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_address_field_script">
 
@@ -651,9 +649,8 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ) {
 		$value   = is_array( $value ) ? $value : array();
 		$address = array();
 
@@ -694,9 +691,8 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array  $field An array of field arguments.
 	 * @param string $piece The address piece to reference.
-	 * @return void
 	 */
-	protected function piece_name( array $field, string $piece ): void {
+	protected function piece_name( array $field, string $piece ) {
 		printf(
 			'%1$s[%2$s]',
 			esc_attr( $field['name'] ),
@@ -708,9 +704,8 @@ class WP_Backstage_Address_Field extends WP_Backstage_Field {
 	 * Render
 	 *
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$values = wp_parse_args( $field['value'], $this->default_address ); ?>
 

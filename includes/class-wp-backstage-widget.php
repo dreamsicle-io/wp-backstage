@@ -60,7 +60,6 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @since   2.0.0
 	 * @param   string $slug  The instance's unique identifier.
 	 * @param   array  $args  An array of arguments.
-	 * @return  void
 	 */
 	public function __construct( string $slug, array $args ) {
 
@@ -78,9 +77,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
@@ -93,7 +91,6 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @todo  Set error when existing registered widget has same slug.
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -122,7 +119,6 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @since   2.0.0
 	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -137,7 +133,6 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * Register
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	public function register() {
 		$widget = new WP_Backstage_Widget_Base( $this->slug, $this->args );
@@ -150,7 +145,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return $this->args['fields'];
 	}
 
@@ -169,7 +164,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   int|string $number      The current widget instance number.
 	 * @return  string
 	 */
-	public function get_field_name( string $field_name, string $id_base, $number ): string {
+	public function get_field_name( string $field_name, string $id_base, int|string $number ): string {
 		$pos = strpos( $field_name, '[' );
 		if ( false !== $pos ) {
 			// Replace the first occurrence of '[' with ']['.
@@ -192,7 +187,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   int|string $number      The current widget instance number.
 	 * @return  string
 	 */
-	public function get_field_id( string $field_name, string $id_base, $number ): string {
+	public function get_field_id( string $field_name, string $id_base, int|string $number ): string {
 		$field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
 		$field_name = trim( $field_name, '-' );
 
@@ -206,9 +201,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 * @param   array      $instance  The current widget instance values.
 	 * @param   string     $id_base   The current widget instance ID base.
 	 * @param   int|string $number    The current widget instance number.
-	 * @return  void
 	 */
-	public function render_fields( array $instance, string $id_base, $number ): void {
+	public function render_fields( array $instance, string $id_base, int|string $number ) {
 
 		$fields = $this->get_fields();
 
@@ -270,9 +264,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_label( array $field ): void {
+	protected function render_field_label( array $field ) {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -304,9 +297,8 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 

@@ -62,31 +62,13 @@ class WP_Backstage_Component {
 	protected string|array $screen_id = '';
 
 	/**
-	 * Countries
-	 *
-	 * @since  0.0.1
-	 * @var    array  $countries  An array of localized countries.
-	 * @deprecated 4.0.0
-	 */
-	protected $countries = array();
-
-	/**
-	 * US States
-	 *
-	 * @since  0.0.1
-	 * @var    array  $us_states  An array of localized US states.
-	 * @deprecated 4.0.0
-	 */
-	protected $us_states = array();
-
-	/**
 	 * Default Field Args
 	 *
 	 * @since  0.0.1
 	 * @since  3.4.0  Added `show_in_rest` argument.
 	 * @var    array  $default_field_args  An array of default field args.
 	 */
-	protected $default_field_args = array(
+	protected array $default_field_args = array(
 		'id'           => '',
 		'type'         => 'text',
 		'name'         => '',
@@ -117,7 +99,7 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $default_filter_control_args  The default filter control args for this instance.
 	 */
-	protected $default_filter_control_args = array(
+	protected array $default_filter_control_args = array(
 		'name'              => '',
 		'value'             => null,
 		'label'             => '',
@@ -126,146 +108,15 @@ class WP_Backstage_Component {
 	);
 
 	/**
-	 * Date Format
-	 *
-	 * @since  0.0.1
-	 * @var    string  $date_format  The php date format.
-	 * @deprecated 4.0.0
-	 */
-	protected $date_format = '';
-
-	/**
 	 * Default Option Args
 	 *
 	 * @since  0.0.1
 	 * @var    array  $default_option_args  An array of default option arguments.
 	 */
-	protected $default_option_args = array(
+	protected array $default_option_args = array(
 		'value'    => '',
 		'label'    => '',
 		'disabled' => false,
-	);
-
-	/**
-	 * Default Media Uploader Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_media_uploader_args  An array of default media field arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_media_uploader_args = array(
-		'type'     => '',
-		'multiple' => false,
-		'attach'   => false,
-	);
-
-	/**
-	 * Default Date Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_date_args  An array of default date field arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_date_args = array(
-		'format' => 'yy-mm-dd',
-	);
-
-	/**
-	 * Default Color Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_color_args  An array of default color field arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_color_args = array(
-		'mode'     => '', // hsl, hsv.
-		'palettes' => true,
-	);
-
-	/**
-	 * Default Editor Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_editor_args  An array of default editor field arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_editor_args = array(
-		'max_width'     => '100%',
-		'format_select' => false,
-		'media_buttons' => false,
-		'kitchen_sink'  => false,
-	);
-
-	/**
-	 * Default Code Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_code_args  An array of default code editor arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_code_args = array(
-		'settings_key' => '',
-		'mime'         => 'text/html',
-		'max_width'    => '100%',
-	);
-
-	/**
-	 * Default Address Args
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_address_args  An array of default address arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_address_args = array(
-		'max_width' => '100%',
-	);
-
-	/**
-	 * Default Select Posts Args
-	 *
-	 * @since  3.0.0
-	 * @since  3.1.0  Allows for full query args to be passed.
-	 * @var    array  $default_select_posts_args  An array of default select posts arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_select_posts_args = array(
-		'option_none_label' => '',
-		'query'             => array(
-			'posts_per_page' => -1,
-			'post_type'      => 'page',
-			'post_status'    => 'any',
-		),
-	);
-
-	/**
-	 * Default Select Users Args
-	 *
-	 * @since  3.0.0
-	 * @var    array  $default_select_users_args  An array of default select users arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_select_users_args = array(
-		'option_none_label' => '',
-		'query'             => array(
-			'number' => -1,
-			'count'  => false,
-		),
-	);
-
-	/**
-	 * Default Address Values
-	 *
-	 * @since  0.0.1
-	 * @var    array  $default_address_values  An array of default address field arguments.
-	 * @deprecated 4.0.0
-	 */
-	protected $default_address_values = array(
-		'country'   => 'US',
-		'address_1' => '',
-		'address_2' => '',
-		'city'      => '',
-		'state'     => 'AL',
-		'zip'       => '',
 	);
 
 	/**
@@ -274,87 +125,11 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    array  $filterable_fields  Field types that should have the `for` attribute removed labels.
 	 */
-	protected $filterable_fields = array(
+	protected array $filterable_fields = array(
 		'select',
 		'radio',
 		'select_posts',
 		'select_users',
-	);
-
-	/**
-	 * Remove Label For Fields
-	 *
-	 * @since  0.0.1
-	 * @var    array  $remove_label_for_fields  Field types that should have the `for` attribute removed labels.
-	 */
-	protected $remove_label_for_fields = array(
-		'radio',
-		'checkbox_set',
-		'time',
-		'address',
-	);
-
-	/**
-	 * Non Regular Text Fields
-	 *
-	 * @since  0.0.1
-	 * @var    array  $non_regular_text_fields  Field types that do not include text-style inputs.
-	 */
-	protected $non_regular_text_fields = array(
-		'number',
-		'textarea',
-		'editor',
-		'select',
-		'checkbox',
-		'checkbox_set',
-		'radio',
-		'media',
-		'code',
-		'date',
-		'time',
-		'address',
-		'select_posts',
-		'select_users',
-	);
-
-	/**
-	 * Textarea Control Fields
-	 *
-	 * @since  0.0.1
-	 * @var    array  $textarea_control_fields  Field types that use a textarea input as a control.
-	 */
-	protected $textarea_control_fields = array(
-		'textarea',
-		'editor',
-		'code',
-	);
-
-	/**
-	 * Time Pieces
-	 *
-	 * This configuration is used in order to create the 3 `<select>` fields
-	 * needed to create a time string as `00:00:00`. This will register the
-	 * localized label and set the number of options that are necessary for each
-	 * time piece (`hour`, `minute`, `second`) respectively.
-	 *
-	 * @since  0.0.1
-	 * @var    array  $time_pieces  The configuration for time fields.
-	 * @deprecated 4.0.0
-	 */
-	protected $time_pieces = array();
-
-	/**
-	 * Global Code Settings
-	 *
-	 * @link  https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ wp_enqueue_code_editor()
-	 *
-	 * @since  0.0.1
-	 * @var    array $global_code_settings  Global settings for CodeMirror.
-	 */
-	protected $global_code_settings = array(
-		'codemirror' => array(
-			'lineWrapping' => false,
-		),
 	);
 
 	/**
@@ -366,13 +141,12 @@ class WP_Backstage_Component {
 	 * @since  0.0.1
 	 * @var    string  $nonce_key  The key for nonce fields.
 	 */
-	protected $nonce_key = '_wp_backstage_nonce';
+	protected string $nonce_key = '_wp_backstage_nonce';
 
 	/**
 	 * Construct
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	protected function __construct() {
 	}
@@ -385,7 +159,7 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  bool  Whether the instance has errors or not.
 	 */
-	public function has_errors() {
+	public function has_errors(): bool {
 		return is_array( $this->errors ) && ! empty( $this->errors );
 	}
 
@@ -395,7 +169,6 @@ class WP_Backstage_Component {
 	 * @link     https://developer.wordpress.org/reference/classes/wp_error/ WP_Error()
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	public function print_errors() {
 
@@ -432,7 +205,6 @@ class WP_Backstage_Component {
 	 * Validates parsed field arguments that are required across all components.
 	 *
 	 * @since  4.0.0
-	 * @return void
 	 */
 	protected function set_errors() {
 
@@ -518,7 +290,6 @@ class WP_Backstage_Component {
 	 * @since 0.0.1
 	 * @since 3.7.2 Moves code editor inline script to priority 20 to solve customizer "Additional CSS" panel bug.
 	 * @since 4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return void
 	 */
 	public function init() {
 
@@ -534,7 +305,6 @@ class WP_Backstage_Component {
 	 * `edit`.
 	 *
 	 * @since   0.0.1
-	 * @return  string  The formatted `edit` nonce.
 	 */
 	public function render_edit_nonce() {
 
@@ -552,7 +322,6 @@ class WP_Backstage_Component {
 	 * `add`.
 	 *
 	 * @since   0.0.1
-	 * @return  string  The formatted `add` nonce.
 	 */
 	public function render_add_nonce() {
 
@@ -615,9 +384,8 @@ class WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_label( array $field ): void {
+	protected function render_field_label( array $field ) {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -643,9 +411,8 @@ class WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -664,47 +431,8 @@ class WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  an array of field arg arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return array();
-	}
-
-	/**
-	 * Get Fields By
-	 *
-	 * Get all fields that matches the passed `$key` and `$value`.
-	 *
-	 * @since   0.0.1
-	 * @param   string $key     the key of the field arg to check.
-	 * @param   mixed  $value   the value of the passed field arg key to check.
-	 * @param   int    $number  the number of fields to return.
-	 * @return  array   an array of field arg arrays if found, or an empty array.
-	 */
-	protected function get_fields_by( $key = '', $value = null, $number = 0 ) {
-
-		$fields = $this->get_fields();
-		$result = array();
-
-		if ( ! empty( $key ) && ( is_array( $fields ) && ! empty( $fields ) ) ) {
-
-			$i = 0;
-
-			foreach ( $fields as $field ) {
-
-				if ( isset( $field[ $key ] ) && ( $field[ $key ] === $value ) ) {
-
-					$result[] = $field;
-
-					if ( ( $number > 0 ) && ( $number === ( $i + 1 ) ) ) {
-						break;
-					}
-
-					++$i;
-
-				}
-			}
-		}
-
-		return $result;
 	}
 
 	/**
@@ -716,7 +444,7 @@ class WP_Backstage_Component {
 	 * @param   array $query  An array of key values to check against.
 	 * @return  array   an array of field arg arrays if found, or an empty array.
 	 */
-	protected function get_fields_by_query( $query = array() ) {
+	protected function get_fields_by_query( array $query ): array {
 
 		$fields = $this->get_fields();
 		$result = array();
@@ -741,24 +469,24 @@ class WP_Backstage_Component {
 	}
 
 	/**
-	 * Get Field By
+	 * Get Field
 	 *
-	 * Get the first field that matches the passed `$key` and `$value`.
+	 * Get a field by name.
 	 *
-	 * @since   0.0.1
-	 * @param   string $key     the key of the field arg to check.
-	 * @param   mixed  $value   the value of the passed field arg key to check.
-	 * @return  array   the first field arg array if found, or an empty array.
+	 * @since   4.0.0
+	 * @param   string $name The field's name to search for.
+	 * @return  ?array The field if found.
 	 */
-	protected function get_field_by( $key = '', $value = null ) {
+	protected function get_field( string $name ): ?array {
 
-		$fields = $this->get_fields_by( $key, $value, 1 );
+		$fields = $this->get_fields();
 		$result = null;
 
-		if ( is_array( $fields ) && ! empty( $fields ) ) {
-
-			$result = $fields[0];
-
+		foreach ( $fields as $field ) {
+			if ( $field['name'] === $name ) {
+				$result = $field;
+				break;
+			}
 		}
 
 		return $result;
@@ -772,7 +500,6 @@ class WP_Backstage_Component {
 	 * select as defined in `WP_Backstage_Component::render_table_filter_control()`.
 	 *
 	 * @since 3.1.0
-	 * @return void
 	 */
 	public function render_table_filter_controls() {
 
@@ -808,9 +535,8 @@ class WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param array $args The incoming args for this control.
-	 * @return void
 	 */
-	public function render_table_filter_control( $args = array() ) {
+	public function render_table_filter_control( array $args = array() ) {
 
 		$args  = wp_parse_args( $args, $this->default_filter_control_args );
 		$label = ! empty( $args['label'] ) ? $args['label'] : $args['name']; ?>
@@ -885,7 +611,7 @@ class WP_Backstage_Component {
 	 * @param string $label The label that will be printed.
 	 * @param string $query_arg The key of the query arg that will be added to the URL.
 	 */
-	protected function format_filterable_value( $value = null, $label = '', $query_arg = '' ) {
+	protected function format_filterable_value( mixed $value = null, string $label = '', string $query_arg = '' ): string {
 		$url_base   = admin_url( '/' );
 		$query_args = array();
 
@@ -934,10 +660,10 @@ class WP_Backstage_Component {
 	 * @link    https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/ hook: manage_{$post_type}_posts_columns
 	 *
 	 * @since   0.0.1
-	 * @param   string $columns  The columns that are currently set.
+	 * @param   array $columns  The columns that are currently set.
 	 * @return  array   The filtered columns with the new columns added.
 	 */
-	public function add_field_columns( $columns = array() ) {
+	public function add_field_columns( array $columns = array() ): array {
 
 		if ( is_array( $columns ) ) {
 
@@ -1000,7 +726,7 @@ class WP_Backstage_Component {
 	 * @param   array $columns  The sortable columns that are currently set.
 	 * @return  array  The sortable columns with the new sortable columns added.
 	 */
-	public function manage_sortable_columns( $columns = array() ) {
+	public function manage_sortable_columns( array $columns = array() ): array {
 
 		$fields = $this->get_fields();
 
@@ -1029,7 +755,7 @@ class WP_Backstage_Component {
 	 * @param   array $field  An array of field arguments.
 	 * @return  array  An array of `$value => $label` pairs.
 	 */
-	protected function get_option_labels( $field = array() ) {
+	protected function get_option_labels( array $field = array() ): array {
 
 		$option_labels = array();
 
@@ -1057,9 +783,8 @@ class WP_Backstage_Component {
 	 * @since 4.0.0 Adds arguments.
 	 * @param string $path An API path to fetch.
 	 * @param array  $args Optional preview configuration arguments.
-	 * @return void
 	 */
-	public function render_rest_api_preview( string $path, array $args = array() ): void {
+	public function render_rest_api_preview( string $path, array $args = array() ) {
 		$args = wp_parse_args(
 			$args,
 			array(

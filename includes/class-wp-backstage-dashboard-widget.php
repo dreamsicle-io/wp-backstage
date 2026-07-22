@@ -60,7 +60,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since   4.0.0
 	 * @param   string $slug  The instance's unique identifier.
 	 * @param   array  $args  An array of arguments.
-	 * @return  void
 	 */
 	public function __construct( string $slug, array $args ) {
 
@@ -78,9 +77,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 *
 	 * @since   4.0.0
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
@@ -93,7 +91,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @todo  Set error when existing registered dashboard widget has same slug.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -120,7 +117,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * Init
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function init() {
 
@@ -134,7 +130,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * Register
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function register() {
 		wp_add_dashboard_widget(
@@ -154,7 +149,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @return array The saved dashboard widget instance args.
 	 */
-	protected function get_values() {
+	protected function get_values(): array {
 		$widgets = get_option( 'dashboard_widget_options' );
 
 		if ( ! is_array( $widgets ) || ! isset( $widgets[ $this->slug ] ) || ! is_array( $widgets[ $this->slug ] ) ) {
@@ -169,9 +164,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $values The dashboard widget values.
-	 * @return void
 	 */
-	protected function update_values( array $values ): void {
+	protected function update_values( array $values ) {
 		$widgets = get_option( 'dashboard_widget_options' );
 
 		if ( ! is_array( $widgets ) ) {
@@ -186,7 +180,6 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * Save
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function save() {
 
@@ -237,9 +230,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param mixed $dashboard The current dashboard object.
 	 * @param array $meta_box  The dashboard widget meta box array. Access the saved values through `$meta_box['args']`.
-	 * @return void
 	 */
-	public function render( $dashboard, array $meta_box ): void {
+	public function render( $dashboard, array $meta_box ) {
 		/**
 		 * Fires when the dashboard widget is rendered.
 		 *
@@ -256,9 +248,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param mixed $dashboard The current dashboard object, or an empty string when invoked as a control callback.
 	 * @param array $meta_box  The dashboard widget meta box array.
-	 * @return void
 	 */
-	public function render_fields( mixed $dashboard, array $meta_box ): void {
+	public function render_fields( mixed $dashboard, array $meta_box ) {
 
 		$values = $this->get_values();
 		$fields = $this->get_fields();
@@ -322,7 +313,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @since   4.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return $this->args['fields'];
 	}
 
@@ -362,9 +353,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_label( array $field ): void {
+	protected function render_field_label( array $field ) {
 
 		$field_class = $this->get_field_class( $field['type'] );
 
@@ -396,9 +386,8 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 

@@ -52,9 +52,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @see https://developer.wordpress.org/reference/functions/convert_smilies/ convert_smilies()
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function init(): void {
+	public function init() {
 		add_filter( 'wp_backstage_editor_field_render_column', 'wptexturize', 10 );
 		add_filter( 'wp_backstage_editor_field_render_column', 'wpautop', 10 );
 		add_filter( 'wp_backstage_editor_field_render_column', 'shortcode_unautop', 10 );
@@ -81,9 +80,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_editor_field_style">
 
@@ -124,9 +122,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @link https://www.tiny.cloud/docs/demo/basic-example/ Tiny MCE Example
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void {
+	public function inline_script() {
 		?>
 
 		<script id="wp_backstage_editor_field_script">
@@ -298,9 +295,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 
 		// Ensure the value is a string.
 		$value = is_string( $value ) ? $value : '';
@@ -328,9 +324,8 @@ class WP_Backstage_Editor_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args = $this->get_args( $field ); ?>
 

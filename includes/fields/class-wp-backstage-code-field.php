@@ -54,9 +54,8 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * Init
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function init(): void {
+	public function init() {
 		add_action( 'admin_print_scripts', array( $this, 'enqueue_settings' ), 20 );
 
 		parent::init();
@@ -66,7 +65,6 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * Enqueue Settings
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function enqueue_settings() {
 		foreach ( $this->mime_types as $language => $mime_type ) {
@@ -108,9 +106,8 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, $value ): void { ?>
+	public function render_column( array $field, mixed $value ) { ?>
 		<textrea readonly><?php echo esc_textarea( $value ?? '' ); ?></textrea>
 	<?php }
 
@@ -118,9 +115,8 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * Inline Code Editor Style
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_code_field_style">
 
@@ -145,9 +141,8 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * Inline Script
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_code_field_script">
 
@@ -285,9 +280,8 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args = $this->get_args( $field ); ?>
 

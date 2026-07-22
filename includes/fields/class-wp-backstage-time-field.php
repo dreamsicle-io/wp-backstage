@@ -98,9 +98,8 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_time_field_style">
 
@@ -140,9 +139,8 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * Inline Sript
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_time_field_script">
 
@@ -183,9 +181,8 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 		echo esc_html( gmdate( get_option( 'time_format' ), strtotime( $value ) ) );
 	}
 
@@ -194,9 +191,8 @@ class WP_Backstage_Time_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$hour_label   = _x( 'Hour', 'time field - hour', 'wp_backstage' );
 		$minute_label = _x( 'Minute', 'time field - minute', 'wp_backstage' );

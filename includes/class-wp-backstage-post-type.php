@@ -169,7 +169,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   string $slug  The developer-provided slug for the post type.
 	 * @param   array  $args  The developer-provided arguments for this instance.
 	 * @param   bool   $add   Whether this instance constructs a add post type or modifies an existing one.
-	 * @return  void
 	 */
 	public function __construct( string $slug, array $args, bool $add = true ) {
 
@@ -198,9 +197,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -241,7 +239,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Set Errors
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -354,7 +351,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   3.4.0 Hooks nonces to `edit_form_after_title` instead of `edit_form_top` to support the Block Editor.
 	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -632,7 +628,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	public function prepare_rest_post( WP_REST_Response $response, WP_Post $post, WP_REST_Request $request ): WP_REST_Response {
 
-		$fields = $this->get_fields_by( 'show_in_rest', true );
+		$fields = $this->get_fields_by_query( array( 'show_in_rest' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -655,9 +651,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   3.4.0
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
-	 * @return  void
 	 */
-	public function add_help_tabs( $screen ) {
+	public function add_help_tabs( WP_Screen $screen ) {
 
 		if ( $screen->base === 'edit' && $screen->post_type === $this->slug ) {
 
@@ -791,9 +786,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_discussion_settings_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_discussion_settings_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -841,9 +835,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_publish_settings_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_publish_settings_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj        = get_post_type_object( $screen->post_type );
 		$post_type_taxonomies = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1000,9 +993,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_inserting_media_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_inserting_media_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1040,9 +1032,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_title_and_editor_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_title_and_editor_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = '';
@@ -1097,9 +1088,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_customize_display_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_customize_display_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		global $wp_meta_boxes;
@@ -1148,9 +1138,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_bulk_actions_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_bulk_actions_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1189,9 +1178,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_available_actions_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_available_actions_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$content = sprintf(
@@ -1272,9 +1260,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_screen_content_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_screen_content_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1373,9 +1360,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current `WP_Screen` object.
 	 * @param array     $args   An array of help tab args.
-	 * @return void
 	 */
-	public function render_overview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_overview_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 		$taxonomies    = get_object_taxonomies( $screen->post_type, 'objects' );
 
@@ -1477,9 +1463,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ) {
 		$post_id       = get_the_ID();
 		$post_type_obj = get_post_type_object( $this->slug );
 		$path          = sprintf( '/%1$s/%2$s/%3$d', $post_type_obj->rest_namespace, $post_type_obj->rest_base, $post_id );
@@ -1512,9 +1497,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ) {
 		$post_type_obj = get_post_type_object( $screen->post_type );
 
 		$path = sprintf( '/%1$s/%2$s', $post_type_obj->rest_namespace, $post_type_obj->rest_base );
@@ -1560,7 +1544,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @link https://developer.wordpress.org/reference/functions/register_post_meta/ register_post_meta()
 	 *
 	 * @since 3.4.0
-	 * @return void
 	 */
 	public function register_api_meta() {
 
@@ -1655,7 +1638,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @link   https://developer.wordpress.org/reference/classes/wp_post_type/ WP_Post_Type
 	 *
 	 * @since  0.0.1
-	 * @return void
 	 */
 	public function register() {
 
@@ -1853,7 +1835,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  An array of meta box argument arrays.
 	 */
-	protected function get_meta_boxes() {
+	protected function get_meta_boxes(): array {
 		return $this->args['meta_boxes'];
 	}
 
@@ -1863,7 +1845,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  an array of field arg arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 
 		$meta_boxes = $this->get_meta_boxes();
 		$fields     = array();
@@ -1887,9 +1869,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int          $post_id  The ID of the post being saved.
 	 * @param   WP_Post|null $post     The full `WP_Post` object for the post being saved when available.
 	 * @param   bool         $update   Whether the post is being updated or not.
-	 * @return  void
 	 */
-	public function save( int $post_id, ?WP_Post $post = null, bool $update = false ): void {
+	public function save( int $post_id, ?WP_Post $post = null, bool $update = false ) {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -1944,9 +1925,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int     $post_id  The ID of the post being saved.
 	 * @param   WP_Post $post     The full `WP_Post` object for the post being saved.
 	 * @param   bool    $update   Whether the post is being updated or not.
-	 * @return  void
 	 */
-	public function save_quick_edit( int $post_id, WP_Post $post, bool $update ): void {
+	public function save_quick_edit( int $post_id, WP_Post $post, bool $update ) {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -1969,7 +1949,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields = $this->get_fields_by( 'quick_edit', true );
+		$fields = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -2001,9 +1981,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   int       $post_id  The ID of the post being saved.
 	 * @param   int|array $value    The attachment ID or array of attachment IDs to attach.
 	 * @param   array     $field    An array of field arguments.
-	 * @return  void
 	 */
-	protected function handle_attachments( int $post_id, $value, array $field ): void {
+	protected function handle_attachments( int $post_id, int|array $value, array $field ) {
 
 		$field = wp_parse_args( $field, $this->default_field_args );
 
@@ -2057,7 +2036,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of meta box ids
 	 */
-	public function manage_default_hidden_meta_boxes( $hidden, $screen ) {
+	public function manage_default_hidden_meta_boxes( array $hidden, WP_Screen $screen ): array {
 
 		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
@@ -2128,9 +2107,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   int $post_id  The post ID of the post to render the thumbnail for.
-	 * @return  void
 	 */
-	protected function render_thumbnail( int $post_id ): void {
+	protected function render_thumbnail( int $post_id ) {
 
 		if ( post_type_supports( $this->slug, 'thumbnail' ) ) { ?>
 
@@ -2156,9 +2134,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $column   The column name.
 	 * @param   int    $post_id  The post ID for this row.
-	 * @return  void
 	 */
-	public function render_admin_column( string $column, int $post_id ): void {
+	public function render_admin_column( string $column, int $post_id ) {
 
 		if ( $column === 'thumbnail' ) {
 
@@ -2166,7 +2143,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		} else {
 
-			$field = $this->get_field_by( 'name', $column );
+			$field = $this->get_field( $column );
 
 			if ( ! empty( $field ) ) {
 
@@ -2218,9 +2195,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since 3.1.0
 	 * @param string $post_type The post type of the current screen.
 	 * @param string $which     Whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
-	 * @return void
 	 */
-	public function render_table_filter_form( string $post_type, string $which ): void {
+	public function render_table_filter_form( string $post_type, string $which ) {
 
 		if ( $post_type === $this->slug ) {
 
@@ -2242,17 +2218,18 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   3.1.0  Added a check to see if there is already a meta query before setting the meta query that is added in order to get posts both with or without a value set for the field.
+	 * @since   4.0.0  Added a check to see if the orderby key is a string. If not, it is the user's responsibility to set the query properly.
 	 * @param   WP_Query $query  An instance of `WP_Query`.
-	 * @return  void
 	 */
-	public function manage_sorting( WP_Query $query ): void {
+	public function manage_sorting( WP_Query $query ) {
 
 		$query_post_type = $query->get( 'post_type' );
 		$is_post_type    = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
+		$orderby         = $query->get( 'orderby' );
 
-		if ( $is_post_type ) {
+		if ( $is_post_type && is_string( $orderby ) ) {
 
-			$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
+			$field = $this->get_field( $orderby );
 
 			if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
 
@@ -2304,9 +2281,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   3.1.0
 	 * @param   WP_Query $query  An instance of `WP_Query`.
-	 * @return  void
 	 */
-	public function manage_filtering( WP_Query $query ): void {
+	public function manage_filtering( WP_Query $query ) {
 
 		$query_post_type = $query->get( 'post_type' );
 		$is_post_type    = is_array( $query_post_type ) ? in_array( $this->slug, $query_post_type ) : ( $query_post_type === $this->slug );
@@ -2368,7 +2344,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * Add Meta Boxes
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	public function add_meta_boxes() {
 
@@ -2401,9 +2376,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   WP_Post $post      An instance of `WP_Post`.
 	 * @param   array   $meta_box  An array of WP meta box args passed from the `add_meta_box()` function.
-	 * @return  void
 	 */
-	public function render_meta_box( $post, $meta_box ) {
+	public function render_meta_box( WP_Post $post, array $meta_box ) {
 
 		$meta_box = wp_parse_args(
 			$meta_box,
@@ -2481,7 +2455,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * field scripts initialize.
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
 	public function render_quick_edit_fields() {
 
@@ -2489,7 +2462,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			return;
 		}
 
-		$fields         = $this->get_fields_by( 'quick_edit', true );
+		$fields         = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 		$id_placeholder = '{{ post_id }}';
 
 		if ( empty( $fields ) ) {
@@ -2577,15 +2550,14 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @since   4.0.0
 	 * @param   WP_Post      $post              The current post.
 	 * @param   WP_Post_Type $post_type_object  The current post type object.
-	 * @return  void
 	 */
-	public function inline_quick_edit_data( $post, $post_type_object ) {
+	public function inline_quick_edit_data( WP_Post $post, WP_Post_Type $post_type_object ) {
 
 		if ( $post->post_type !== $this->slug ) {
 			return;
 		}
 
-		$fields = $this->get_fields_by( 'quick_edit', true );
+		$fields = $this->get_fields_by_query( array( 'quick_edit' => true ) );
 
 		if ( ! empty( $fields ) ) {
 
@@ -2609,9 +2581,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -2639,7 +2610,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 * @param   WP_Screen $screen  An instance of `WP_Screen`.
 	 * @return  array      An array of column names
 	 */
-	public function manage_default_hidden_columns( $hidden, $screen ) {
+	public function manage_default_hidden_columns( array $hidden, WP_Screen $screen ): array {
 
 		if ( $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
@@ -2731,7 +2702,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   3.4.0 Updated dashicon color.
-	 * @return  void
 	 */
 	public function inline_dashboard_glance_item_style() { ?>
 

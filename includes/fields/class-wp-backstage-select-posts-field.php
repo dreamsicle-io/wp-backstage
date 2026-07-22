@@ -64,7 +64,6 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * Construct
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function __construct() {
 		$this->default_args = array_merge(
@@ -140,9 +139,8 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function post_options( array $field ): void {
+	protected function post_options( array $field ) {
 		$posts = $this->get_posts( $field );
 		// phpcs:ignore WordPress.Security.EscapeOutput
 		echo walk_page_dropdown_tree(
@@ -193,9 +191,8 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 
 		$post_id    = absint( $value );
 		$url        = $this->get_filter_url( $field, $post_id );
@@ -217,9 +214,8 @@ class WP_Backstage_Select_Posts_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field an array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args = $this->get_args( $field ); ?>
 

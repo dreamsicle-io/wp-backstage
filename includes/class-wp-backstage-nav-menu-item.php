@@ -54,7 +54,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
 	public function __construct( array $args ) {
 
@@ -72,9 +71,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
 
 		foreach ( $this->args['fields'] as $i => $field ) {
@@ -86,7 +84,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * Set Errors
 	 *
 	 * @since   2.0.0
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -115,7 +112,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @since   2.0.0
 	 * @since   3.5.0 Hooks the `manage_customizer_meta_preview` method at a much later priority.
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -139,7 +135,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * This method is responsible for inlint field specific customizer styles.
 	 *
 	 * @since 2.0.0
-	 * @return void
 	 */
 	public function inline_customizer_style() {
 
@@ -179,7 +174,7 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @since   2.0.0
 	 * @return  array  An array of field argument arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return $this->args['fields'];
 	}
 
@@ -219,9 +214,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -245,9 +239,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   int    $depth    The depth of menu item.
 	 * @param   object $args     An object of menu item arguments.
 	 * @param   int    $id       The ID of the nav menu that this item is related to.
-	 * @return  void
 	 */
-	public function render_fields( int $item_id, object $item, int $depth, object $args, int $id ): void {
+	public function render_fields( int $item_id, object $item, int $depth, object $args, int $id ) {
 
 		$fields = $this->get_fields();
 
@@ -315,7 +308,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @since   3.5.0 Uses the menu item ID as the dynamic portion of the name/id instead of the instance number.
-	 * @return  void
 	 */
 	public function render_customizer_fields() {
 
@@ -371,9 +363,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @param   int   $menu_id         The ID of the menu that the item is in.
 	 * @param   int   $item_id         The ID of the menu item.
 	 * @param   array $menu_item_data  The menu item data.
-	 * @return  void
 	 */
-	public function save( int $menu_id, int $item_id, array $menu_item_data ): void {
+	public function save( int $menu_id, int $item_id, array $menu_item_data ) {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -421,9 +412,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 *
 	 * @since   2.0.0
 	 * @param   WP_Customize_Manager $wp_customize The current WP Customize instance.
-	 * @return  void
 	 */
-	public function save_customizer( WP_Customize_Manager $wp_customize ): void {
+	public function save_customizer( WP_Customize_Manager $wp_customize ) {
 
 		foreach ( $wp_customize->settings() as $setting ) {
 
@@ -514,9 +504,8 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 * @since 3.5.0 Always cast value to array, more strict checks of value existence, upped the priority so this always runs last.
 	 * @since 4.0.0
 	 * @param   WP_Customize_Manager $wp_customize  The WP Customize instance.
-	 * @return  void
 	 */
-	public function manage_customizer_meta_preview( WP_Customize_Manager $wp_customize ): void {
+	public function manage_customizer_meta_preview( WP_Customize_Manager $wp_customize ) {
 
 		if ( $wp_customize->settings_previewed() ) {
 
@@ -526,11 +515,11 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 
 					add_filter(
 						'get_post_metadata',
-						function ( mixed $value, string|int $object_id, string $meta_key, bool $single ) use ( $setting ) {
+						function ( mixed $value, string|int $object_id, string $meta_key, bool $single ) use ( $setting ): mixed {
 
 							if ( $object_id === $setting->post_id ) {
 
-								$field = $this->get_field_by( 'name', $meta_key );
+								$field = $this->get_field( $meta_key );
 
 								if ( ! empty( $field ) ) {
 

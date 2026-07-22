@@ -67,7 +67,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
 	public function __construct( array $args ) {
 
@@ -94,9 +93,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   array $args  An array of arguments.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
 		foreach ( $this->args['field_groups'] as $i => $field_group ) {
 			$this->args['field_groups'][ $i ] = wp_parse_args( $field_group, $this->default_field_group_args );
@@ -110,7 +108,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * Set Errors
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -138,7 +135,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   4.0.0 Removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -185,7 +181,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	public function prepare_rest_user( WP_REST_Response $response, WP_User $user, WP_REST_Request $request ): WP_REST_Response {
 
-		$fields = $this->get_fields_by( 'show_in_rest', true );
+		$fields = $this->get_fields_by_query( array( 'show_in_rest' => true ) );
 
 		foreach ( $fields as $field ) {
 
@@ -209,7 +205,6 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @link https://developer.wordpress.org/reference/functions/register_post_meta/ register_post_meta()
 	 *
 	 * @since 3.4.0
-	 * @return void
 	 */
 	public function register_api_meta() {
 
@@ -251,9 +246,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   3.4.0
 	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
-	 * @return  void
 	 */
-	public function add_help_tabs( $screen ) {
+	public function add_help_tabs( WP_Screen $screen ) {
 
 		if ( $screen->id === 'users' ) {
 			// REST API collection preview help tab.
@@ -284,9 +278,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_collection_preview_help_tab( WP_Screen $screen, array $args ) {
 		$rest_namespace = 'wp/v2';
 		$rest_base      = 'users';
 		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
@@ -319,9 +312,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since 3.4.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ) {
 		//phpcs:ignore WordPress.Security.NonceVerification
 		$params         = wp_unslash( $_GET );
 		$user_id        = isset( $params['user_id'] ) ? absint( $params['user_id'] ) : 0;
@@ -361,7 +353,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  An array of field group argument arrays.
 	 */
-	protected function get_field_groups() {
+	protected function get_field_groups(): array {
 		return $this->args['field_groups'];
 	}
 
@@ -371,7 +363,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array  An array of field argument arrays.
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 
 		$field_groups = $this->get_field_groups();
 		$fields       = array();
@@ -389,9 +381,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @since   3.1.0 Sends null to `render_fields` instead of user instance if this is the new user screen.
 	 * @param   WP_User|string $user  An instance of `WP_User` or the string `add-new-user` if on the add new user form.
-	 * @return  void
 	 */
-	public function render_field_groups( $user ): void {
+	public function render_field_groups( WP_User|string $user ) {
 
 		$field_groups = $this->get_field_groups();
 
@@ -427,11 +418,10 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   3.1.0 Checks if there is a user before getting the value as this is also run on the add new user form where there is no user yet.
-	 * @param   array        $field_group  An array of field group arguments.
-	 * @param   WP_User|null $user         An instance of `WP_User` if on the edit form or `null` if on the add form.
-	 * @return  void
+	 * @param   array    $field_group  An array of field group arguments.
+	 * @param   ?WP_User $user         An instance of `WP_User` if on the edit form or `null` if on the add form.
 	 */
-	protected function render_fields( array $field_group, ?WP_User $user ): void {
+	protected function render_fields( array $field_group, ?WP_User $user ) {
 
 		foreach ( $field_group['fields'] as $field ) {
 
@@ -507,9 +497,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -528,9 +517,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param   int $user_id  The ID of the user to update.
-	 * @return  void
 	 */
-	public function save( int $user_id ): void {
+	public function save( int $user_id ) {
 
 		$post_data = ! empty( $_POST ) ? wp_unslash( $_POST ) : null;
 
@@ -577,7 +565,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	public function manage_admin_column_content( string $content, string $column, int $user_id ): string {
 
-		$field = $this->get_field_by( 'name', $column );
+		$field = $this->get_field( $column );
 
 		if ( ! empty( $field ) ) {
 
@@ -628,9 +616,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since 3.1.0
 	 * @param string $which Whether the form is displayed at the top or bottom, or both. Possible values are `top`, `bottom`, or an empty string.
-	 * @return void
 	 */
-	public function render_table_filter_form( string $which ): void {
+	public function render_table_filter_form( string $which ) {
 
 		if ( $which === 'top' ) { ?>
 
@@ -668,43 +655,48 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   3.1.0  Added a check to see if there is already a meta query before setting the meta query that is added in order to get users both with or without a value set for the field.
+	 * @since   4.0.0  Added a check to see if orderby is a string. If not, it is the users responsibility to ensure the query is set properly.
 	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
-	 * @return  void
 	 */
-	public function manage_sorting( WP_User_Query $query ): void {
+	public function manage_sorting( WP_User_Query $query ) {
 
-		$field = $this->get_field_by( 'name', $query->get( 'orderby' ) );
+		$orderby = $query->get( 'orderby' );
 
-		if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
+		if ( is_string( $orderby ) ) {
 
-			$field_class = $this->get_field_class( $field['type'] );
-			$schema      = $field_class->get_schema();
-			$is_numeric  = in_array( $schema['type'], array( 'number', 'integer' ) );
+			$field = $this->get_field( $query->get( 'orderby' ) );
 
-			$meta_query = $query->get( 'meta_query' );
-			if ( empty( $meta_query ) ) {
-				$query->set(
-					'meta_query',
-					array(
-						'relation' => 'OR',
+			if ( is_array( $field ) && ! empty( $field ) && $field['is_sortable'] ) {
+
+				$field_class = $this->get_field_class( $field['type'] );
+				$schema      = $field_class->get_schema();
+				$is_numeric  = in_array( $schema['type'], array( 'number', 'integer' ) );
+
+				$meta_query = $query->get( 'meta_query' );
+				if ( empty( $meta_query ) ) {
+					$query->set(
+						'meta_query',
 						array(
-							'key'     => $field['name'],
-							'compare' => 'NOT EXISTS',
-						),
-						array(
-							'key'     => $field['name'],
-							'compare' => 'EXISTS',
-						),
-					)
-				);
-			} else {
-				$query->set( 'meta_key', $field['name'] );
-			}
+							'relation' => 'OR',
+							array(
+								'key'     => $field['name'],
+								'compare' => 'NOT EXISTS',
+							),
+							array(
+								'key'     => $field['name'],
+								'compare' => 'EXISTS',
+							),
+						)
+					);
+				} else {
+					$query->set( 'meta_key', $field['name'] );
+				}
 
-			if ( $is_numeric ) {
-				$query->set( 'orderby', 'meta_value_num' );
-			} else {
-				$query->set( 'orderby', 'meta_value' );
+				if ( $is_numeric ) {
+					$query->set( 'orderby', 'meta_value_num' );
+				} else {
+					$query->set( 'orderby', 'meta_value' );
+				}
 			}
 		}
 	}
@@ -722,9 +714,8 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 *
 	 * @since   3.1.0
 	 * @param   WP_User_Query $query  An instance of `WP_User_Query`.
-	 * @return  void
 	 */
-	public function manage_filtering( WP_User_Query $query ): void {
+	public function manage_filtering( WP_User_Query $query ) {
 
 		$fields = $this->get_fields();
 

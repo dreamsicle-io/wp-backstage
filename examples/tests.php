@@ -186,7 +186,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 			'show_in_rest'  => true,
 			'quick_add'     => true,
 			'quick_edit'    => true,
-			'options'       => function () {
+			'options'       => function (): array {
 				return array(
 					array(
 						'value' => '',
@@ -705,7 +705,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 	if ( ! empty( $types ) ) {
 		$fields = array_filter(
 			$fields,
-			function ( array $field ) use ( $types ) {
+			function ( array $field ) use ( $types ): bool {
 				return in_array( $field['type'], $types );
 			}
 		);
@@ -713,7 +713,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
 
 	if ( ! empty( $name_suffix ) ) {
 		$fields = array_map(
-			function ( array $field ) use ( $name_suffix ) {
+			function ( array $field ) use ( $name_suffix ): array {
 				$field['name'] = sprintf( '%1$s_%2$s', $field['name'], $name_suffix );
 				return $field;
 			},
@@ -731,7 +731,7 @@ function wp_backstage_get_test_fields( array $types = array(), string $name_suff
  * @param string $text Text to prepend to the test description.
  * @return string A text description.
  */
-function wp_backstage_get_test_description( $text = '' ) {
+function wp_backstage_get_test_description( string $text = '' ): string {
 	return sprintf(
 		'%1$s%2$s',
 		! empty( $text ) ? "{$text} " : '',
@@ -837,9 +837,8 @@ function wp_backstage_get_test_field_groups( string $field_name_suffix = '' ): a
  *
  * @since   0.0.1
  * @since   2.0.0  Added ability to turn tests on and off using `theme_support`.
- * @return  void
  */
-function wp_backstage_init_tests(): void {
+function wp_backstage_init_tests() {
 
 	WP_Backstage_Post_Type::add(
 		'wp_backstage_page',
@@ -1046,9 +1045,8 @@ add_action( 'wp_backstage_init', 'wp_backstage_init_tests', 10 );
  * @since 3.7.0
  * @param array $args The widget arguments.
  * @param array $instance The widget's saved instance settings.
- * @return void
  */
-function wp_backstage_test_widget( array $args = array(), array $instance = array() ): void { ?>
+function wp_backstage_test_widget( array $args = array(), array $instance = array() ) { ?>
 	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;width:100%;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions
 		print_r( $instance );
@@ -1063,9 +1061,8 @@ add_action( 'wp_backstage_widget_output_wp_backstage_widget', 'wp_backstage_test
  * @since 4.0.0
  * @param array $args The dashboard widget arguments.
  * @param array $instance The dashboard widget's saved settings.
- * @return void
  */
-function wp_backstage_test_dashboard_widget( array $args = array(), array $instance = array() ): void { ?>
+function wp_backstage_test_dashboard_widget( array $args = array(), array $instance = array() ) { ?>
 	<textarea readonly rows="20" style="display:block;margin:0;white-space:pre;width:100%;max-width:100%;max-height:400px;overflow:auto;font-size:10px;background-color:rgba(0, 0, 0, 0.05);padding:4px 8px;box-sizing:border-box;min-width:0;"><?php
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions
 		print_r( $instance );

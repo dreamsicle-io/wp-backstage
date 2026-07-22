@@ -135,9 +135,8 @@ class WP_Backstage_Field {
 	 * Init
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function init(): void {
+	public function init() {
 		add_action( 'admin_print_styles', array( $this, 'inline_style' ), 30 );
 		add_action( 'admin_print_footer_scripts', array( $this, 'inline_script' ), 10 );
 	}
@@ -228,18 +227,16 @@ class WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void {
+	public function inline_style() {
 	}
 
 	/**
 	 * Inline Script
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void {
+	public function inline_script() {
 	}
 
 	/**
@@ -272,9 +269,8 @@ class WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array  $field  An array of field arguments.
 	 * @param string $suffix A suffix to append to the ID (will be prefixed by an underscore).
-	 * @return void
 	 */
-	public function element_id( array $field, string $suffix = '' ): void {
+	public function element_id( array $field, string $suffix = '' ) {
 		$id      = $this->get_id( $field );
 		$suffix  = ! empty( $suffix ) ? "_{$suffix}" : $suffix;
 		$id_attr = sprintf( '%1$s%2$s', $id, $suffix );
@@ -288,9 +284,8 @@ class WP_Backstage_Field {
 	 * @param array  $field  An array of field arguments.
 	 * @param array  $option An array of option arguments.
 	 * @param string $suffix A suffix to append to the ID (will be prefixed by an underscore).
-	 * @return void
 	 */
-	public function option_id( array $field, array $option, string $suffix = '' ): void {
+	public function option_id( array $field, array $option, string $suffix = '' ) {
 		// Use the field's `name` argument if no `id` argument is set.
 		$field_piece = $this->get_id( $field );
 		// Use the value prefixed with an underscore for the option portion of the ID. If not set use "_empty".
@@ -309,9 +304,8 @@ class WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array    $field An array of field arguments.
 	 * @param string[] $more  An array of extra classes.
-	 * @return void
 	 */
-	public function root_class( array $field, array $more = array() ): void {
+	public function root_class( array $field, array $more = array() ) {
 		// Prepare the the array of classes.
 		$classes = array(
 			'wp-backstage-field',
@@ -330,9 +324,8 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $option An array of option arguments.
-	 * @return void
 	 */
-	public function option_label( array $option ): void {
+	public function option_label( array $option ) {
 		// Use the option's value if no label is set.
 		$label = ! empty( $option['label'] ) ? $option['label'] : $option['value'];
 		echo esc_html( $label );
@@ -347,9 +340,8 @@ class WP_Backstage_Field {
 	 * @since   4.0.0
 	 * @param   array $field    An array of field arguments.
 	 * @param   array $ignored  An array of attributes to ignore, usefull if preventing setting of existing attributes is necessary.
-	 * @return  void
 	 */
-	public function input_attrs( array $field, array $ignored = array() ): void {
+	public function input_attrs( array $field, array $ignored = array() ) {
 		// Get the input attributes from the field arguments.
 		$attrs = is_array( $field['input_attrs'] ) ? $field['input_attrs'] : array();
 		// Prepare the array of formatted attributes.
@@ -379,9 +371,8 @@ class WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 		echo esc_html( $value );
 	}
 
@@ -477,9 +468,8 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function label( array $field ): void {
+	public function label( array $field ) {
 		$label = $this->get_label( $field );
 		echo wp_kses( $label, 'wp_backstage_field_label' );
 	}
@@ -500,9 +490,8 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function description( array $field ): void {
+	public function description( array $field ) {
 		$description = $this->get_description( $field );
 		echo wp_kses( $description, 'wp_backstage_field_description' );
 	}
@@ -520,7 +509,7 @@ class WP_Backstage_Field {
 		// Filter out the options that have an empty value.
 		$options = array_filter(
 			$this->get_options( $field ),
-			function ( $option ) {
+			function ( array $option ) {
 				return ! empty( $option['value'] );
 			}
 		);
@@ -542,9 +531,8 @@ class WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void { ?>
+	public function render( array $field ) { ?>
 
 		<span 
 		class="<?php $this->root_class( $field ); ?>"

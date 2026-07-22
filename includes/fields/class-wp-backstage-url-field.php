@@ -23,7 +23,7 @@ class WP_Backstage_URL_Field extends WP_Backstage_Field {
 	 * @param mixed $value The unsantized value.
 	 * @return string The santizied value.
 	 */
-	public function sanitize( $value ): string {
+	public function sanitize( mixed $value ): string {
 		return esc_url_raw( $value );
 	}
 
@@ -56,9 +56,8 @@ class WP_Backstage_URL_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void { ?>
+	public function render_column( array $field, mixed $value ) { ?>
 		<a href="<?php echo esc_url( $value ) ?>" target="_blank" rel="noopener noreferrer"><?php
 			echo esc_html( $value );
 		?></a>

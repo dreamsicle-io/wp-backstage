@@ -86,7 +86,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @param   string $slug The slug of this component's instance.
 	 * @param   array  $args The args needed to construct this component's instance.
-	 * @return  void
 	 */
 	public function __construct( string $slug, array $args = array() ) {
 
@@ -107,9 +106,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @param array $args The incoming args for this component's instance.
-	 * @return  void
 	 */
-	protected function set_args( array $args ): void {
+	protected function set_args( array $args ) {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
@@ -136,7 +134,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * Set Errors
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	protected function set_errors() {
 
@@ -209,7 +206,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * the `WP_Backstage` setup class.
 	 *
 	 * @since  2.0.0
-	 * @return void
 	 */
 	public function hook_script_action() {
 
@@ -233,7 +229,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since   2.0.0 Added `hook_script_action` actions to all types of options pages.
 	 * @since   3.6.0 Removes `sprintf` templates from hook names.
 	 * @since   4.0.0 Registers settings with REST API and removes error checking of the `WP_Backstage` class as it no longer reports errors.
-	 * @return  void
 	 */
 	public function init() {
 
@@ -266,9 +261,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since   4.0.0
 	 * @param   WP_Screen $screen an instance of `WP_Screen`.
-	 * @return  void
 	 */
-	public function add_help_tabs( $screen ) {
+	public function add_help_tabs( WP_Screen $screen ) {
 
 		if ( $this->is_screen( 'id', $this->screen_id, $screen ) ) {
 
@@ -290,9 +284,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since 4.0.0
 	 * @param WP_Screen $screen The current WP_Screen instance.
 	 * @param array     $args   An array of help tab arguments.
-	 * @return void
 	 */
-	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ): void {
+	public function render_rest_api_preview_help_tab( WP_Screen $screen, array $args ) {
 		$rest_namespace = 'wp/v2';
 		$rest_base      = 'settings';
 		$path           = sprintf( '/%1$s/%2$s', $rest_namespace, $rest_base );
@@ -331,7 +324,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * This function adds the tool card when this component is of type `tools`.
 	 *
 	 * @since 0.0.1
-	 * @return void
 	 */
 	public function add_tool_card() {
 
@@ -383,7 +375,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @link    https://codex.wordpress.org/Function_Reference/add_options_page add_options_page()
 	 *
 	 * @since   0.0.1
-	 * @return  void
 	 */
 	public function add_page() {
 
@@ -457,7 +448,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since   0.0.1
 	 * @since   4.0.0 Moves setting registration out to `register_settings` so that it can be hooked to REST API init independently.
-	 * @return  void
 	 */
 	public function add_settings() {
 
@@ -509,9 +499,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since 0.0.1
 	 * @param array $args The args for this singular setting.
-	 * @return void
 	 */
-	public function render_setting( array $args ): void {
+	public function render_setting( array $args ) {
 
 		$args = wp_parse_args(
 			$args,
@@ -569,9 +558,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	protected function render_field_description( array $field ): void {
+	protected function render_field_description( array $field ) {
 
 		if ( ! empty( $field['description'] ) ) {
 
@@ -591,9 +579,8 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 *
 	 * @since 0.0.1
 	 * @param array $args An array of section args.
-	 * @return void
 	 */
-	public function render_section_description( array $args ): void {
+	public function render_section_description( array $args ) {
 
 		$section = isset( $args['section'] ) ? $args['section'] : array();
 
@@ -615,7 +602,6 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * form, submit button and all settings fields.
 	 *
 	 * @since 0.0.1
-	 * @return void
 	 */
 	public function render_page() { ?>
 
@@ -657,7 +643,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array
 	 */
-	protected function get_sections() {
+	protected function get_sections(): array {
 		return $this->args['sections'];
 	}
 
@@ -667,7 +653,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 * @since   0.0.1
 	 * @return  array
 	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 
 		$sections = $this->get_sections();
 		$fields   = array();

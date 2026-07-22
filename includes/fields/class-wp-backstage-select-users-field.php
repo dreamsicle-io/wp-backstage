@@ -63,7 +63,6 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 	 * Construct
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
 	public function __construct() {
 		$this->default_args = array_merge(
@@ -172,9 +171,8 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, mixed $value ): void {
+	public function render_column( array $field, mixed $value ) {
 
 		$user_id    = absint( $value );
 		$user       = get_user_by( 'ID', $value );
@@ -197,9 +195,8 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field an array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args  = $this->get_args( $field );
 		$users = $this->get_users( $field ); ?>

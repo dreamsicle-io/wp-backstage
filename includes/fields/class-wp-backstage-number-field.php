@@ -94,9 +94,8 @@ class WP_Backstage_Number_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_number_field_style">
 

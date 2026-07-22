@@ -52,9 +52,8 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, $value ): void { ?>
+	public function render_column( array $field, mixed $value ) { ?>
 
 		<span class="wp-backstage-color-field-column">
 			<i 
@@ -74,9 +73,8 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 		<style id="wp_backstage_color_field_style">
 
 			.wp-backstage-color-field-column {
@@ -110,9 +108,8 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 * @link    https://codex.wordpress.org/Javascript_Reference WP JavaScript Reference
 	 *
 	 * @since   4.0.0
-	 * @return  void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_color_field_script">
 
@@ -265,9 +262,8 @@ class WP_Backstage_Color_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$args = $this->get_args( $field );
 

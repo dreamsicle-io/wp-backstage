@@ -53,9 +53,8 @@ class WP_Backstage_Checkbox_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ) {
 		$text = _x( 'True', 'checkbox column - true', 'wp_backstage' ); ?>
 		<span title="<?php echo esc_attr( $text ); ?>">
 			<i class="dashicons dashicons-yes"></i>
@@ -70,9 +69,8 @@ class WP_Backstage_Checkbox_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void { ?>
+	public function render( array $field ) { ?>
 
 		<span 
 		class="<?php $this->root_class( $field ); ?>"

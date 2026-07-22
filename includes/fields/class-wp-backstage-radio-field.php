@@ -2,7 +2,7 @@
 /**
  * WP Backstage Radio Field
  *
- * @since       4.0.0
+ * @since 4.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,9 +31,8 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * Inline Style
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_style(): void { ?>
+	public function inline_style() { ?>
 
 		<style id="wp_backstage_radio_field_style">
 
@@ -52,9 +51,8 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * Inline Script
 	 *
 	 * @since 4.0.0
-	 * @return void
 	 */
-	public function inline_script(): void { ?>
+	public function inline_script() { ?>
 
 		<script id="wp_backstage_radio_field_script">
 
@@ -89,9 +87,8 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
 	 * @param mixed $value The field's value.
-	 * @return void
 	 */
-	public function render_column( array $field, $value ): void {
+	public function render_column( array $field, mixed $value ) {
 
 		$url        = $this->get_filter_url( $field, $value );
 		$label      = $this->get_option_label( $field, $value );
@@ -112,9 +109,8 @@ class WP_Backstage_Radio_Field extends WP_Backstage_Field {
 	 *
 	 * @since 4.0.0
 	 * @param array $field An array of field arguments.
-	 * @return void
 	 */
-	public function render( array $field ): void {
+	public function render( array $field ) {
 
 		$options = $this->get_options( $field ); ?>
 

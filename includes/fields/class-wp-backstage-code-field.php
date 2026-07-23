@@ -43,7 +43,7 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 	 * @var array $mime_types A map of language mime types.
 	 */
 	protected array $mime_types = array(
-		'php'        => 'application/x-httpd-php',
+		'php'        => 'text/x-php',
 		'html'       => 'text/html',
 		'css'        => 'text/css',
 		'javascript' => 'text/javascript',

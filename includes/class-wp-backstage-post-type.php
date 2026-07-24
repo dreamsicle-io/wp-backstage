@@ -1189,17 +1189,6 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			$post_type_obj->labels->singular_name
 		);
 
-		/**
-		 * Fires before the post type available actions help tab content.
-		 *
-		 * @since  3.4.0
-		 * @param  WP_Screen  $screen  the current instance of the WP_Screen object.
-		 * @param  array      $args    An array of help tab arguments.
-		 */
-		do_action( 'wp_backstage_post_type_available_actions_help_tab_before', $screen, $args );
-
-		echo wp_kses_post( wpautop( $content ) );
-
 		$bullets = array();
 
 		$bullets['edit'] = sprintf(
@@ -1222,6 +1211,17 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			_x( '<strong>Preview</strong> will show you what your draft %1$s will look like if you publish it. <strong>View</strong> will take you to your live site to view the %1$s. Which link is available depends on your post\'s status.', 'post available actions help tab - view and preview actions', 'wp_backstage' ),
 			$post_type_obj->labels->singular_name
 		);
+
+		/**
+		 * Fires before the post type available actions help tab content.
+		 *
+		 * @since  3.4.0
+		 * @param  WP_Screen  $screen  the current instance of the WP_Screen object.
+		 * @param  array      $args    An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_post_type_available_actions_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( $content ) );
 
 		/**
 		 * Filters the bullets printed in the post type available actions help tab.

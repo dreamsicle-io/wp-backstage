@@ -26,6 +26,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	protected array $default_args = array(
 		'title'       => '',
 		'description' => '',
+		'help'        => '',
 		'fields'      => array(),
 	);
 
@@ -125,6 +126,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 		add_action( 'widgets_init', array( $this, 'register' ), 10 );
 		add_action( "wp_backstage_widget_form_{$this->slug}", array( $this, 'render_fields' ), 10, 3 );
 		add_filter( "wp_backstage_widget_save_{$this->slug}", array( $this, 'save' ), 10, 2 );
+		add_action( 'current_screen', array( $this, 'add_help_tab' ), 10 );
 
 		parent::init();
 	}
@@ -137,6 +139,97 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	public function register() {
 		$widget = new WP_Backstage_Widget_Base( $this->slug, $this->args );
 		register_widget( $widget );
+	}
+
+	/**
+	 * Add Help Tab
+	 *
+	 * Registers widget help tab.
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 *
+	 * @since   4.0.0
+	 * @param   WP_Screen $screen  an instance of `WP_Screen`.
+	 */
+	public function add_help_tab( WP_Screen $screen ) {
+
+		if ( $screen->base === 'widgets' ) {
+
+			// overview help tab.
+			$screen->add_help_tab(
+				array(
+					'id'       => "wp_backstage_widget_{$this->slug}",
+					'title'    => $this->args['title'],
+					'callback' => array( $this, 'render_help_tab' ),
+					'priority' => 40,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Render Help Tab
+	 *
+	 * This method is responsible for rendering the widget help tab content.
+	 *
+	 * @since 4.0.0
+	 * @param WP_Screen $screen The current `WP_Screen` object.
+	 * @param array     $args   An array of help tab args.
+	 */
+	public function render_help_tab( WP_Screen $screen, array $args ) {
+
+		$content = ! empty( $this->args['help'] ) ? $this->args['help'] : $this->args['description'];
+		$bullets = array();
+
+		foreach ( $this->get_fields() as $field ) {
+			$field_help                = ! empty( $field['help'] ) ? $field['help'] : $field['description'];
+			$bullets[ $field['name'] ] = sprintf(
+				/* translators: 1: field label, 2: field help text. */
+				_x( '<strong>%1$s</strong> ― %2$s', 'widget help tab - field description', 'wp_backstage' ),
+				$field['label'],
+				$field_help
+			);
+		}
+
+		/**
+		 * Fires before the post type overview help tab content.
+		 *
+		 * @since  4.0.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_widget_help_tab_before', $screen, $args );
+
+		echo wp_kses_post( wpautop( $content ) );
+
+		/**
+		 * Filters the bullets printed in the post type available actions help tab.
+		 *
+		 * @since   4.0.0
+		 * @param   array      $bullets  An array of bullet strings.
+		 * @param   WP_Screen  $screen   the current instance of the WP_Screen object.
+		 * @param   array      $args     An array of help tab arguments.
+		 * @return  array      The filtered array of bullet strings.
+		 */
+		$bullets = apply_filters( 'wp_backstage_widget_help_tab_bullets', $bullets, $screen, $args );
+
+		if ( ! empty( $bullets ) ) { ?>
+			<ul>
+				<?php foreach ( $bullets as $bullet ) { ?>
+					<li><?php echo wp_kses( $bullet, 'wp_backstage_help_list_item' ); ?></li>
+				<?php } ?>
+			</ul>
+		<?php }
+
+		/**
+		 * Fires after the post type overview help tab content.
+		 *
+		 * @since  4.0.0
+		 * @param  WP_Screen  $screen the current instance of the WP_Screen object.
+		 * @param  array      $args An array of help tab arguments.
+		 */
+		do_action( 'wp_backstage_widget_help_tab_after', $screen, $args );
 	}
 
 	/**

@@ -1045,7 +1045,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			);
 			if ( $post_type_obj->public ) {
 				$content .= ' ';
-				$content .= _x( 'After you enter a title, you\'ll see the permalink below if the post, which you can edit.', 'post title and editor help tab - permalink support', 'wp_backstage' );
+				$content .= _x( 'After you enter a title, you\'ll see the permalink below, which you can edit.', 'post title and editor help tab - permalink support', 'wp_backstage' );
 			}
 		}
 		if ( post_type_supports( $screen->post_type, 'editor' ) ) {

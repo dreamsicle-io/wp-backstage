@@ -714,19 +714,17 @@ class WP_Backstage {
 				text-shadow: none;
 			}
 
-			/* Quick edit fieldsets */
-			.inline-edit-row td fieldset {
-				padding-right: unset !important;
-			}
-
 			/* Meta box fields */
 			.postbox .wp-backstage-field + .howto {
 				margin-top: 0.2em;
 			}
 
 			/* Widget fields */
-			.widget .widget-field-description {
-				margin-top: -0.8em;
+			.widget .wp-backstage-field + .description,
+			#widgets-right .widget .wp-backstage-field + .description {
+				padding: 0;
+				margin: 8px 0 0 0;
+				display: block;
 			}
 
 			/* Table filters */
@@ -758,11 +756,10 @@ class WP_Backstage {
 				margin-top: 6px;
 			}
 
-			/* Taxonomy quick edit */
+			/* Quick edit */
 			.wp-backstage-quick-edit__field {
 				display: block;
 				margin: .2em 0;
-				line-height: 2.5;
 				clear: both;
 			}
 
@@ -1602,7 +1599,7 @@ class WP_Backstage {
 					}
 				}
 
-				function initWidgetArea(container) {
+				function initWidgetArea(container = document) {
 					window.wpBackstage.initAllFields(container);
 					initAllWidgetHandles(container);
 				}
@@ -1626,8 +1623,7 @@ class WP_Backstage {
 					handle.addEventListener('click', handleWidgetHandleClick);
 				}
 
-				function initAllWidgetHandles(container) {
-					container = container || document;
+				function initAllWidgetHandles(container = document) {
 					const widgetHandles = container.querySelectorAll('.widget-top');
 					widgetHandles.forEach(function(widgetHandle) {
 						initWidgetHandle(widgetHandle);
@@ -1656,9 +1652,17 @@ class WP_Backstage {
 					}
 				}
 
+				function initWidgetAccessibility() {
+					const container = document.querySelector('.editwidget');
+					if (container) {
+						initWidgetArea(container);
+					}
+				}
+
 				function init() {
 					initActiveWidgetsArea();
 					initInactiveWidgetsArea();
+					initWidgetAccessibility();
 					$(document).on('widget-added', handleWidgetAdded);
 					$(document).on('widget-updated', handleWidgetUpdated);
 					$(document).on('widget-synced', handleWidgetSynced);

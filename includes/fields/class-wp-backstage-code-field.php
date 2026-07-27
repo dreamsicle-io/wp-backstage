@@ -160,6 +160,12 @@ class WP_Backstage_Code_Field extends WP_Backstage_Field {
 
 					const codeMirrorInst = getCodeMirrorInstance(codeEditor);
 
+					codeMirrorInst.setOption("extraKeys", {
+						"Esc": function(instance) {
+							instance.getInputField().blur();
+						}
+					});
+
 					codeMirrorInst.on('change', function(instance, changes) {
 						if (saveTimer) {
 							clearTimeout(saveTimer);

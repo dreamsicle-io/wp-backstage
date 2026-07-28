@@ -439,7 +439,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 	 */
 	public function add_help_tabs( WP_Screen $screen ) {
 
-		if ( $screen->base === 'edit-tags' && $screen->taxonomy === $this->slug ) {
+		if ( $this->is_screen( 'base', 'edit-tags', $screen ) && $this->is_screen( 'taxonomy', $this->slug, $screen ) ) {
 
 			$taxonomy_obj = get_taxonomy( $screen->taxonomy );
 
@@ -479,7 +479,7 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( $screen->base === 'term' && $screen->taxonomy === $this->slug ) {
+		} elseif ( $this->is_screen( 'base', 'term', $screen ) && $this->is_screen( 'taxonomy', $this->slug, $screen ) ) {
 
 			// REST API preview help tab.
 			$screen->add_help_tab(

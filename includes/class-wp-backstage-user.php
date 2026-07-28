@@ -249,7 +249,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	 */
 	public function add_help_tabs( WP_Screen $screen ) {
 
-		if ( $screen->id === 'users' ) {
+		if ( $this->is_screen( 'id', 'users', $screen ) ) {
 			// REST API collection preview help tab.
 			$screen->add_help_tab(
 				array(
@@ -259,7 +259,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 					'priority' => 90,
 				)
 			);
-		} elseif ( $screen->id === 'user-edit' || $screen->id === 'profile' ) {
+		} elseif ( $this->is_screen( 'id', array( 'user-edit', 'profile' ), $screen ) ) {
 			// REST API preview help tab.
 			$screen->add_help_tab(
 				array(
@@ -321,7 +321,7 @@ class WP_Backstage_User extends WP_Backstage_Component {
 		$rest_base      = 'users';
 
 		$path = sprintf( '/%1$s/%2$s/%3$d', $rest_namespace, $rest_base, $user_id );
-		if ( $screen->id === 'profile' ) {
+		if ( $this->is_screen( 'id', 'profile', $screen ) ) {
 			$path = sprintf( '/%1$s/%2$s/me', $rest_namespace, $rest_base );
 		}
 

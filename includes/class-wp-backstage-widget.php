@@ -154,7 +154,7 @@ class WP_Backstage_Widget extends WP_Backstage_Component {
 	 */
 	public function add_help_tab( WP_Screen $screen ) {
 
-		if ( $screen->base === 'widgets' ) {
+		if ( $this->is_screen( 'base', 'widgets', $screen ) ) {
 
 			// overview help tab.
 			$screen->add_help_tab(

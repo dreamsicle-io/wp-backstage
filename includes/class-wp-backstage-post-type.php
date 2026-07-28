@@ -654,7 +654,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	public function add_help_tabs( WP_Screen $screen ) {
 
-		if ( $screen->base === 'edit' && $screen->post_type === $this->slug ) {
+		if ( $this->is_screen( 'base', 'edit', $screen ) && $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
 			if ( $this->add ) {
 
@@ -706,7 +706,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 				)
 			);
 
-		} elseif ( $screen->base === 'post' && $screen->post_type === $this->slug ) {
+		} elseif ( $this->is_screen( 'base', 'post', $screen ) && $this->is_screen( 'post_type', $this->slug, $screen ) ) {
 
 			if ( $this->add ) {
 				// customize display help tab.

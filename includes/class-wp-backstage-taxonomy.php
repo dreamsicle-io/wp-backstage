@@ -151,32 +151,15 @@ class WP_Backstage_Taxonomy extends WP_Backstage_Component {
 		$this->args = wp_parse_args( $args, $this->default_args );
 
 		if ( empty( $this->args['singular_base'] ) ) {
-
 			$this->args['singular_base'] = $this->slug;
-
 		}
 
 		if ( empty( $this->args['archive_base'] ) ) {
-
 			$this->args['archive_base'] = $this->slug;
-
 		}
 
 		if ( empty( $this->args['menu_name'] ) ) {
-
-			if ( ! empty( $this->args['plural_name'] ) ) {
-
-				$this->args['menu_name'] = $this->args['plural_name'];
-
-			} elseif ( ! empty( $this->args['singular_name'] ) ) {
-
-				$this->args['menu_name'] = $this->args['singular_name'];
-
-			} else {
-
-				$this->args['menu_name'] = $this->slug;
-
-			}
+			$this->args['menu_name'] = $this->args['plural_name'];
 		}
 
 		foreach ( $this->args['fields'] as $i => $field ) {

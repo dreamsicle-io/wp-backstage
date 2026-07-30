@@ -49,7 +49,18 @@ class WP_Backstage_User extends WP_Backstage_Component {
 	protected array $required_args = array();
 
 	/**
-	 * Add
+	 * Required Meta Box Args
+	 *
+	 * @since  4.0.0
+	 * @var    array  $required_field_group_args  The required field group argument keys for this instance.
+	 */
+	protected array $required_field_group_args = array(
+		'id',
+		'title',
+	);
+
+	/**
+	 * Modify
 	 *
 	 * @since   0.0.1
 	 * @param   array $args  An array of arguments for this instance.
@@ -124,6 +135,33 @@ class WP_Backstage_User extends WP_Backstage_Component {
 					)
 				);
 
+			}
+		}
+
+		foreach ( $this->args['field_groups'] as $i => $field_group ) {
+
+			$identifier = "field group ({$i})";
+			if ( ! empty( $field_group['title'] ) ) {
+				$identifier = $field_group['title'];
+			} elseif ( ! empty( $field_group['id'] ) ) {
+				$identifier = $field_group['id'];
+			}
+
+			foreach ( $this->required_field_group_args as $required_field_group_arg ) {
+
+				if ( empty( $field_group[ $required_field_group_arg ] ) ) {
+
+					$this->errors[] = new WP_Error(
+						'required_user_field_group_arg',
+						sprintf(
+							/* translators: 1: field group identifier, 2: required field group arg key. */
+							_x( '[User] Field group "%1$s" requires the %2$s key.', 'user - required field group arg error', 'wp_backstage' ),
+							$identifier,
+							'<code>' . $required_field_group_arg . '</code>'
+						)
+					);
+
+				}
 			}
 		}
 

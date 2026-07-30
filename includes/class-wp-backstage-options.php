@@ -53,6 +53,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 */
 	protected array $required_args = array(
 		'type',
+		'title',
 	);
 
 	/**
@@ -63,6 +64,7 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 	 */
 	protected array $required_section_args = array(
 		'id',
+		'title',
 	);
 
 	/**
@@ -111,19 +113,12 @@ class WP_Backstage_Options extends WP_Backstage_Component {
 
 		$this->args = wp_parse_args( $args, $this->default_args );
 
-		if ( empty( $this->args['title'] ) ) {
-			$this->args['title'] = $this->slug;
-		}
-
 		if ( empty( $this->args['menu_title'] ) ) {
 			$this->args['menu_title'] = $this->args['title'];
 		}
 
 		foreach ( $this->args['sections'] as $i => $field_group ) {
 			$this->args['sections'][ $i ] = wp_parse_args( $field_group, $this->default_section_args );
-			if ( empty( $this->args['sections'][ $i ]['title'] ) ) {
-				$this->args['sections'][ $i ]['title'] = $this->args['sections'][ $i ]['id'];
-			}
 			foreach ( $this->args['sections'][ $i ]['fields'] as $ii => $field ) {
 				$this->args['sections'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}

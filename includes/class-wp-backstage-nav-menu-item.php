@@ -74,7 +74,6 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 	 */
 	protected function set_args( array $args ) {
 		$this->args = wp_parse_args( $args, $this->default_args );
-
 		foreach ( $this->args['fields'] as $i => $field ) {
 			$this->args['fields'][ $i ] = wp_parse_args( $field, $this->default_field_args );
 		}

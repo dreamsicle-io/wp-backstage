@@ -125,6 +125,7 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 	 */
 	protected array $required_meta_box_args = array(
 		'id',
+		'title',
 	);
 
 	/**
@@ -215,20 +216,11 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		}
 
 		if ( empty( $this->args['menu_name'] ) ) {
-			if ( ! empty( $this->args['plural_name'] ) ) {
-				$this->args['menu_name'] = $this->args['plural_name'];
-			} elseif ( ! empty( $this->args['singular_name'] ) ) {
-				$this->args['menu_name'] = $this->args['singular_name'];
-			} else {
-				$this->args['menu_name'] = $this->slug;
-			}
+			$this->args['menu_name'] = $this->args['plural_name'];
 		}
 
 		foreach ( $this->args['meta_boxes'] as $i => $field_group ) {
 			$this->args['meta_boxes'][ $i ] = wp_parse_args( $field_group, $this->default_meta_box_args );
-			if ( empty( $this->args['meta_boxes'][ $i ]['title'] ) ) {
-				$this->args['meta_boxes'][ $i ]['title'] = $this->args['meta_boxes'][ $i ]['id'];
-			}
 			foreach ( $this->args['meta_boxes'][ $i ]['fields'] as $ii => $field ) {
 				$this->args['meta_boxes'][ $i ]['fields'][ $ii ] = wp_parse_args( $field, $this->default_field_args );
 			}
@@ -292,23 +284,20 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 
 		$required_args = ! $this->add ? $this->required_args_modify : $this->required_args;
 
-		if ( is_array( $required_args ) && ! empty( $required_args ) ) {
+		foreach ( $required_args as $required_arg ) {
 
-			foreach ( $required_args as $required_arg ) {
+			if ( empty( $this->args[ $required_arg ] ) ) {
 
-				if ( empty( $this->args[ $required_arg ] ) ) {
+				$this->errors[] = new WP_Error(
+					'required_post_type_arg',
+					sprintf(
+						/* translators: 1: post type slug, 2: required arg key. */
+						_x( '[Post Type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
+						$this->slug,
+						'<code>' . $required_arg . '</code>'
+					)
+				);
 
-					$this->errors[] = new WP_Error(
-						'required_post_type_arg',
-						sprintf(
-							/* translators: 1: post type slug, 2: required arg key. */
-							_x( '[Post Type: %1$s] The %2$s key is required.', 'post type - required arg error', 'wp_backstage' ),
-							$this->slug,
-							'<code>' . $required_arg . '</code>'
-						)
-					);
-
-				}
 			}
 		}
 

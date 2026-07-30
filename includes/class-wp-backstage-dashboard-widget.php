@@ -23,10 +23,12 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 	 * @var    array  $default_args  The default arguments for this instance.
 	 */
 	protected array $default_args = array(
-		'title'    => '',
-		'context'  => 'normal',
-		'priority' => 'core',
-		'fields'   => array(),
+		'title'       => '',
+		'description' => '',
+		'help'        => '',
+		'context'     => 'normal',
+		'priority'    => 'core',
+		'fields'      => array(),
 	);
 
 	/**
@@ -122,6 +124,7 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 
 		add_action( 'wp_dashboard_setup', array( $this, 'save' ), 5 );
 		add_action( 'wp_dashboard_setup', array( $this, 'register' ), 10 );
+		add_action( 'admin_head', array( $this, 'extend_dashboard_content_help_tab' ), 9999 );
 
 		parent::init();
 	}
@@ -141,6 +144,35 @@ class WP_Backstage_Dashboard_Widget extends WP_Backstage_Component {
 			$this->args['context'],
 			$this->args['priority']
 		);
+	}
+
+	/**
+	 * Extend Dashboard Content Help Tab.
+	 *
+	 * @link    https://developer.wordpress.org/reference/classes/wp_screen/ WP_Screen
+	 * @link    https://developer.wordpress.org/reference/hooks/current_screen/ Current Screen
+	 *
+	 * @since   4.0.0
+	 */
+	public function extend_dashboard_content_help_tab() {
+
+		$screen = get_current_screen();
+
+		if ( $this->is_screen( 'id', 'dashboard', $screen ) ) {
+
+			$content_help_tab = $screen->get_help_tab( 'help-content' );
+
+			if ( ! empty( $content_help_tab ) ) {
+				$help_content = sprintf(
+					/* translators: 1: dashboard widget title, 2: dashboard widget help text. */
+					_x( '<strong>%1$s</strong> ― %2$s', 'dashboard widget - content help tab description template', 'wp_backstage' ),
+					$this->args['title'],
+					! empty( $this->args['help'] ) ? $this->args['help'] : $this->args['description'],
+				);
+				$content_help_tab['content'] .= wp_kses_post( wpautop( $help_content ) );
+				$screen->add_help_tab( $content_help_tab );
+			}
+		}
 	}
 
 	/**

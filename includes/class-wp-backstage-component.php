@@ -825,9 +825,9 @@ class WP_Backstage_Component {
 			type="url" 
 			value="<?php echo esc_url( $full_url ); ?>" 
 			style="background-color:#ffffff;display:block;width:100%;border-radius:4px 4px 0 0;margin:0;border:1px solid #c3c4c7;border-bottom:none;box-sizing:border-box;" />
-			<div style="position:relative;">
+			<div style="position:relative;border:1px solid #c3c4c7;">
 				<textarea readonly id="wp_backstage_rest_api_preview_code"></textarea>
-				<div id="wp_backstage_rest_api_preview_loader" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;border:1px solid #c3c4c7;box-sizing:border-box;z-index:10;">
+				<div id="wp_backstage_rest_api_preview_loader" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;box-sizing:border-box;z-index:10;">
 					<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
 						<img 
 						src="/wp-admin/images/spinner.gif" 
@@ -839,7 +839,7 @@ class WP_Backstage_Component {
 						?></span>
 					</div>
 				</div>
-				<div id="wp_backstage_rest_api_preview_instructions" style="position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;border:1px solid #c3c4c7;box-sizing:border-box;z-index:10;">
+				<div id="wp_backstage_rest_api_preview_instructions" style="position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:#f7f7f7;box-sizing:border-box;z-index:10;">
 					<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
 						<span style="display:inline-block;vertical-align:middle;"><?php
 							echo wp_kses_post( $instructions_text );

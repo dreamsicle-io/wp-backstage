@@ -120,19 +120,6 @@ class WP_Backstage_Component {
 	);
 
 	/**
-	 * Filterable Fields
-	 *
-	 * @since  0.0.1
-	 * @var    array  $filterable_fields  Field types that should have the `for` attribute removed labels.
-	 */
-	protected array $filterable_fields = array(
-		'select',
-		'radio',
-		'select_posts',
-		'select_users',
-	);
-
-	/**
 	 * Nonce Key
 	 *
 	 * @link  https://developer.wordpress.org/reference/functions/wp_nonce_field/ wp_nonce_field

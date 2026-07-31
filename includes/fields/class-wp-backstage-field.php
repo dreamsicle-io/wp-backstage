@@ -19,7 +19,7 @@ class WP_Backstage_Field {
 	/**
 	 * Tags
 	 *
-	 * Possible tags: `text_control`, `textarea_control`, `select_control`, `remove_label_for`.
+	 * Possible tags: `text_control`, `textarea_control`, `select_control`, `remove_label_for`, `is_filterable`.
 	 *
 	 * @since 4.0.0
 	 * @var array $tags An array of tags used to organize fields and add extra functionality.

@@ -1263,17 +1263,18 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 			)
 		);
 
+		$filterable_field_labels = array();
+
+		foreach ( $filterable_fields as $field ) {
+			$field_class = $this->get_field_class( $field['type'] );
+			if ( $field_class->has_tag( 'is_filterable' ) ) {
+				$filterable_field_labels[] = ! empty( $field['label'] ) ? $field['label'] : $field['name'];
+			}
+		}
+
 		$taxonomy_labels = array();
 		foreach ( $taxonomies as $taxonomy ) {
 			$taxonomy_labels[] = $taxonomy->labels->name;
-		}
-
-		$filterable_field_labels = array();
-		foreach ( $filterable_fields as $field ) {
-			$field = wp_parse_args( $field, $this->default_field_args );
-			if ( in_array( $field['type'], $this->filterable_fields ) ) {
-				$filterable_field_labels[] = ! empty( $field['label'] ) ? $field['label'] : $field['name'];
-			}
 		}
 
 		$bullets = array();

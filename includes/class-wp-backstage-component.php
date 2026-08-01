@@ -76,7 +76,6 @@ class WP_Backstage_Component {
 		'value'        => null,
 		'description'  => '',
 		'help'         => '',
-		'show_label'   => true,
 		'show_in_rest' => false,
 		'options'      => array(),
 		'input_attrs'  => array(),
@@ -195,7 +194,9 @@ class WP_Backstage_Component {
 	 */
 	protected function set_errors() {
 
-		foreach ( $this->get_fields() as $i => $field ) {
+		$fields = $this->get_fields();
+
+		foreach ( $fields as $i => $field ) {
 
 			$field = wp_parse_args( $field, $this->default_field_args );
 

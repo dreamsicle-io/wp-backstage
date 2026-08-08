@@ -186,8 +186,8 @@ class WP_Backstage_Post_Type extends WP_Backstage_Component {
 		$this->add  = boolval( $add );
 		$this->slug = sanitize_key( $slug );
 		$this->set_args( $args );
-		$this->screen_id = array( $this->slug, sprintf( 'edit-%1$s', $this->slug ) );
-		$this->nonce_key = sprintf( '_wp_backstage_post_type_%1$s_nonce', $this->slug );
+		$this->screen_id = array( $this->slug, "edit-{$this->slug}" );
+		$this->nonce_key = "_wp_backstage_post_type_{$this->slug}_nonce";
 		$this->set_errors();
 
 		parent::__construct();

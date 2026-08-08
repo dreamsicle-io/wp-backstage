@@ -51,6 +51,21 @@ class WP_Backstage_Select_Field extends WP_Backstage_Field {
 	<?php }
 
 	/**
+	 * Inline Style
+	 *
+	 * @since 4.0.0
+	 */
+	public function inline_style() { ?>
+		<style id="wp_backstage_select_field_style">
+
+			.menu-item-settings .wp-backstage-field--type-select select {
+				width: 100%;
+			}
+
+		</style>
+	<?php }
+
+	/**
 	 * Render
 	 *
 	 * @since 4.0.0

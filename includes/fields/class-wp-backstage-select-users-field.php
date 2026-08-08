@@ -166,6 +166,21 @@ class WP_Backstage_Select_Users_Field extends WP_Backstage_Field {
 	}
 
 	/**
+	 * Inline Style
+	 *
+	 * @since 4.0.0
+	 */
+	public function inline_style() { ?>
+		<style id="wp_backstage_select_users_field_style">
+
+			.menu-item-settings .wp-backstage-field--type-select_users select {
+				width: 100%;
+			}
+
+		</style>
+	<?php }
+
+	/**
 	 * Render Column
 	 *
 	 * @since 4.0.0

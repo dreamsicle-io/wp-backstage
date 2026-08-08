@@ -422,10 +422,10 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 				$posted_values = $setting->manager->unsanitized_post_values()[ $setting->id ];
 
 				if ( ! current_user_can( 'edit_post', $item_id ) ) {
-					return;
+					continue;
 				}
 				if ( ! is_array( $posted_values ) ) {
-					return;
+					continue;
 				}
 
 				$posted_meta = ( isset( $posted_values['meta'] ) && is_array( $posted_values['meta'] ) ) ? $posted_values['meta'] : array();
@@ -535,8 +535,9 @@ class WP_Backstage_Nav_Menu_Item extends WP_Backstage_Component {
 											$field_class = $this->get_field_class( $field['type'] );
 											$value       = $field_class->sanitize( $setting_meta[ $meta_key ] );
 
-											// Cast this to an array, or array values will have their first index plucked.
-											$value = array( $value );
+											// Cast this to an array if `$single` is false,
+											// or array values will have their first index plucked.
+											$value = $single ? $value : array( $value );
 										}
 									}
 								}

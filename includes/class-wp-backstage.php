@@ -394,7 +394,6 @@ class WP_Backstage {
 		add_action( 'after_setup_theme', array( $this, 'register_init_hook' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_print_styles', array( $this, 'inline_global_style' ), 10 );
-		add_action( 'admin_print_styles', array( $this, 'inline_thumbnail_column_style' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_global_script' ), 10 );
 		add_action( 'admin_print_scripts', array( $this, 'inline_rest_api_preview_code_editor_script' ), 20 );
 		add_action( 'admin_print_footer_scripts-post.php', array( $this, 'inline_post_type_script' ), 10 );
@@ -628,7 +627,7 @@ class WP_Backstage {
 		if ( ! wp_script_is( 'jquery-ui-core', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 		}
-		if ( ! wp_script_is( 'jquery-ui-theme-base', 'enqueued' ) ) {
+		if ( ! wp_style_is( 'jquery-ui-theme-base', 'enqueued' ) ) {
 			$wp_scripts        = wp_scripts();
 			$jquery_ui_version = $wp_scripts->registered['jquery-ui-core']->ver;
 			wp_enqueue_style(
@@ -669,14 +668,15 @@ class WP_Backstage {
 	}
 
 	/**
-	 * Inline Thumbnail Column Style
+	 * Inline Global Style
 	 *
-	 * @since   0.0.1
+	 * @since   3.1.0
 	 */
-	public function inline_thumbnail_column_style() { ?>
+	public function inline_global_style() { ?>
 
-		<style id="wp_backstage_thumbnail_column_style">
+		<style id="wp_backstage_global_style">
 
+			/* Thumbnail column */
 			table.wp-list-table th.column-thumbnail,
 			table.wp-list-table td.column-thumbnail {
 				text-align: center;
@@ -692,20 +692,7 @@ class WP_Backstage {
 				}
 			}
 
-		</style>
-
-	<?php }
-
-	/**
-	 * Inline Global Style
-	 *
-	 * @since   3.1.0
-	 */
-	public function inline_global_style() { ?>
-
-		<style id="wp_backstage_global_style">
-
-			/* legends as labels */
+			/* Legends as labels */
 			.form-wrap legend {
 				display: block;
 				padding: 2px 0;

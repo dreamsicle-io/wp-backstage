@@ -62,7 +62,6 @@ add_action( 'plugins_loaded', array( new WP_Backstage(), 'init' ), 10 );
  * WP Backstage Require Tests
  *
  * @since 4.0.0
- * @return void
  */
 function wp_backstage_require_tests() {
 	if ( apply_filters( 'wp_backstage_tests_enabled', false ) ) {
@@ -76,7 +75,6 @@ add_action( 'after_setup_theme', 'wp_backstage_require_tests', 0 );
  * WP Backstage Activation
  *
  * @since   0.0.1
- * @return  void
  */
 function wp_backstage_activation() {
 	// ensure this runs after post types are initialized.
@@ -89,7 +87,6 @@ register_activation_hook( __FILE__, 'wp_backstage_activation' );
  * WP Backstage Deactivation
  *
  * @since   0.0.1
- * @return  void
  */
 function wp_backstage_deactivation() {
 	// ensure this runs after post types are initialized.
@@ -102,7 +99,6 @@ register_deactivation_hook( __FILE__, 'wp_backstage_deactivation' );
  * WP Backstage Uninstall
  *
  * @since   3.2.0
- * @return  void
  */
 function wp_backstage_uninstall() {
 	// ensure this runs after post types are initialized.
